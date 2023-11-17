@@ -4,7 +4,24 @@ import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
 
  // ROOT
-     :root{}
+     :root{
+   --font-color:#191919; 
+   --sub-font--color:#767676;
+   --border-color:#DBDBDB;   
+   --btn-border-color:#724FFF;
+   --btn-background-color:#724FFF;
+   --error-color: #FF003E;
+   --font-xl : 22px;
+   --font-lg: 16px;
+   --font-md: 14px; 
+   --font-sm : 12px;
+   letter-spacing: -0.02em;
+     }
+
+     :root {
+    --font-bold: 700;
+    --font-regular: 400;;
+  }
     
  // Reset
 	${reset}
@@ -32,11 +49,12 @@ const GlobalStyle = createGlobalStyle`
     button {
     cursor: pointer;
     color: inherit;
-    border:none
+    border:none;
     background-color: transparent;
     }
     
   a{
+    
         text-decoration: none;
         color: inherit;
         cursor: pointer;
@@ -64,7 +82,7 @@ const GlobalStyle = createGlobalStyle`
     ol, ul{
             list-style: none;
         }
-    
+     
     `;
 
 export default GlobalStyle;
