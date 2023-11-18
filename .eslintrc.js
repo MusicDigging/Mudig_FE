@@ -25,5 +25,8 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'prettier'],
-  rules: {},
+  rules: {
+    'react/prop-types': 0,
+    'react/react-in-jsx-scope': 0,
+  },
 };
