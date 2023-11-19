@@ -2,6 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
+import usePasswordToggle from '../../../hooks/ussPasswordToggle';
 export const AuthForm = () => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
@@ -17,7 +18,7 @@ export const AuthForm = () => {
   const onSubmit = (data) => console.log(data);
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
-
+  const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
       <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
@@ -45,6 +46,8 @@ export const AuthForm = () => {
           placeholder='비밀번호를 입력하세요 '
           type='password'
           name='password'
+          showPassword={showPassword}
+          toggleShowPassword={toggleShowPassword}
         />
         <CheckboxContainer>
           <CheckboxInput
@@ -73,7 +76,7 @@ const FormContainer = styled.form`
   margin-top: 24px;
   align-items: center;
   flex-direction: column;
-  /* gap: 10px; */
+  position: relative;
 `;
 
 const ErrorMsg = styled.span`
