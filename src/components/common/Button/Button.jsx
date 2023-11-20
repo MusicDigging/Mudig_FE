@@ -1,27 +1,29 @@
+import styled from 'styled-components';
 export function Button(props) {
   const {
     type,
     text,
     onClick,
-    bgColor,
-    btnwidth,
-    btnpadding,
-    btnradius,
-    textColor,
+    disabled,
+    btnBgColor,
+    btnColor,
+    btnMargin,
+    btnBorder,
+    imgSrc,
   } = props;
-
-  // const btnStyleChange = {
-  //   width: btnwidth || ' 328px',
-  //   borderRadius: btnradius || '8px',
-  //   padding: btnpadding || '13px',
-  // };
 
   return (
     <ButtonStyle
       type={type ? type : 'button'}
       onClick={onClick}
-      bgColor={bgColor}
-      textColor={textColor}
+      style={{
+        background: imgSrc ? `url(${imgSrc}) no-repeat 16px 50%` : 'none',
+        backgroundColor: btnBgColor || 'var(--btn-background-color)',
+        border: btnBorder || '1px solid var(--btn-border-color)',
+        margin: btnMargin || '0px',
+        color: btnColor || 'white',
+      }}
+      disabled={disabled}
     >
       {text}
     </ButtonStyle>
@@ -31,13 +33,16 @@ export function Button(props) {
 const ButtonStyle = styled.button`
   width: 328px;
   border-radius: 8px;
-  color: ${(props) => props.textColor || 'white'};
   height: 44px;
-
-  border: 1px solid lightgray;
   cursor: pointer;
-
-  background-color: ${(props) => props.bgColor || 'transparent'};
+  &:not(:disabled) {
+    cursor: pointer;
+    opacity: 1;
+  }
+  &:disabled {
+    cursor: initial;
+    opacity: 0.5;
+  }
 `;
 
 export function miniButton() {
