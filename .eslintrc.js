@@ -4,6 +4,8 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    'react-app',
+    'prettier',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
@@ -29,5 +31,6 @@ module.exports = {
   rules: {
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
 };
