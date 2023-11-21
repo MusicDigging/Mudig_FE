@@ -49,9 +49,7 @@ export default function Signup() {
         <Span>또는</Span>
         <Button
           text='이메일로 시작하기'
-          btnBgColor='#FFF'
           btnBorder='1px solid #DBDBDB'
-          btnColor={'var(--font-color)'}
           alt='구글로 로그인하기 버튼'
         />
         <NavLoign>
