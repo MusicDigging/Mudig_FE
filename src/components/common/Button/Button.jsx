@@ -9,6 +9,8 @@ export function Button(props) {
     btnColor,
     btnMargin,
     btnBorder,
+    btnWidth,
+    btnHeigth,
     imgSrc,
   } = props;
 
@@ -21,7 +23,10 @@ export function Button(props) {
         backgroundColor: btnBgColor || 'var(--btn-background-color)',
         border: btnBorder || '1px solid var(--btn-border-color)',
         margin: btnMargin || '0px',
+
         color: btnColor || 'white',
+        width: btnWidth || '328px',
+        height: btnHeigth || '44px',
       }}
       disabled={disabled}
     >
@@ -32,6 +37,7 @@ export function Button(props) {
 
 const ButtonStyle = styled.button`
   width: 328px;
+
   border-radius: 8px;
   height: 44px;
   cursor: pointer;
