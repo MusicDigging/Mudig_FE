@@ -31,6 +31,7 @@ module.exports = {
   rules: {
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 0,
+    'no-unused-vars': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
 };
