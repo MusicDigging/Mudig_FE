@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
    --btn-background-color:#724FFF;
    --error-color: #FF003E;
    --font-xl : 22px;
-   --font-lg: 16px;
+   --font-lg: 18px;
    --font-md: 14px; 
    --font-sm : 12px;
    letter-spacing: -0.02em;
