@@ -26,7 +26,7 @@ export default function Login() {
             alt='카카오로 로그인하기 버튼'
           />
           <Button
-            text='구글로 시작하기'
+            text='Google로 시작하기'
             btnBgColor='#FFF'
             btnBorder='1px solid #DBDBDB'
             btnColor={'var(--font-color)'}
@@ -76,7 +76,8 @@ const LoginMain = styled.main`
   width: 328px;
   position: relative;
   text-align: center;
-  top: 132px;
+  top: 149px;
+  //top:132px
 `;
 
 const LoginBtnBox = styled.div`
@@ -90,26 +91,7 @@ const Span = styled.span`
   position: relative;
   display: block;
   color: var(--font-color);
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 131px;
-    height: 1px;
-
-    background-color: black;
-  }
-
-  &:before {
-    left: -4px;
-    background-color: var(--border-color);
-  }
-
-  &:after {
-    right: -4px;
-    background-color: var(--border-color);
-  }
+  font-weight: 300;
 `;
 
 //footer
