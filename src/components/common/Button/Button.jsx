@@ -11,7 +11,7 @@ export function Button(props) {
     btnMargin,
     btnBorder,
     btnWidth,
-    btnHeigth,
+    btnHeight,
     imgSrc,
   } = props;
 
@@ -19,17 +19,14 @@ export function Button(props) {
     <ButtonStyle
       type={type ? type : 'button'}
       onClick={onClick}
-      style={{
-        background: imgSrc ? `url(${imgSrc}) no-repeat 16px 50%` : 'none',
-        backgroundColor: btnBgColor || 'var(--btn-background-color)',
-        border: btnBorder || '1px solid var(--btn-border-color)',
-        margin: btnMargin || '0px',
-
-        color: btnColor || 'white',
-        width: btnWidth || '328px',
-        height: btnHeigth || '44px',
-      }}
+      btnBgColor={btnBgColor}
+      btnBorder={btnBorder}
+      btnMargin={btnMargin}
+      btnColor={btnColor}
+      btnWidth={btnWidth}
+      btnHeight={btnHeight}
       disabled={disabled}
+      imgSrc={imgSrc}
     >
       {text}
     </ButtonStyle>
@@ -37,32 +34,36 @@ export function Button(props) {
 }
 
 const ButtonStyle = styled.button`
-  width: ${(props) => props.width || '328px'};
-  height: ${(props) => props.height || '44px'};
-  border-radius: 8px;
+  width: ${(props) => props.btnWidth || '328px'};
+  height: ${(props) => props.btnHeight || '44px'};
+  margin: ${(props) => props.btnMargin || '0px'};
+  background: ${(props) =>
+    props.imgSrc ? `url(${props.imgSrc}) no-repeat 16px 50%` : 'none'};
+  background-color: ${(props) =>
+    props.btnBgColor || 'var(--btn-background-color)'};
+  border: ${(props) => props.btnBorder || '1px solid var(--btn-border-color)'};
+  color: ${(props) => props.btnColor || 'white'};
   cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
-
+  //변하지 않는 값
+  border-radius: 10px;
   &:not(:disabled) {
     cursor: pointer;
     opacity: 1;
   }
 `;
 
-// 예시로 miniButton에도 props를 사용하는 코드를 추가하였습니다.
-export function MiniButton(props) {
-  return <MiniButtonStyle {...props}></MiniButtonStyle>;
+export function MiniButton() {
+  return <MiniButtonStyle></MiniButtonStyle>;
 }
 
 const MiniButtonStyle = styled.button`
-  width: ${(props) => props.width || '103px'};
-  height: ${(props) => props.height || '120px'};
+  width: 103px;
+  height: 120px;
   font-size: 14px;
   border: 1px solid #9747ff;
   border-radius: 16px;
   background-color: #f6f6f6;
-
-  padding: ${(props) => props.padding || '8px 16px'};
-  cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
-  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
+  padding: 8px 16px;
+  cursor: pointer;
 `;
