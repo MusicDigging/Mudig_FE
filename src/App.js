@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
+import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import MyProfile from './pages/Profile/MyProfile';
 import OtherProfile from './pages/Profile/MyProfile';
@@ -9,7 +10,7 @@ function App() {
   return (
     <Wrap>
       <GlobalStyle />
-      <Login />
+      <Signup />
     </Wrap>
   );
 }
