@@ -36,8 +36,8 @@ const PageNum = styled.span`
   position: absolute;
   top: 24px;
   left: 317px;
-  font-size: var(--font-lg);
-  color: var(--btn-background-color);
+  font-size: var(--font-l);
+  color: var(--sub-font--color);
   font-weight: 500;
 `;
 

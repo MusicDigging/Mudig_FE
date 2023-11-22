@@ -34,8 +34,8 @@ const SignupMain = styled.main`
   position: absolute;
   top: 287px;
   text-align: center;
-
   left: 16px;
+  right: 16px;
 `;
 
 const SignupBtnBox = styled.div`
@@ -50,26 +50,6 @@ const Span = styled.span`
   display: block;
   margin-bottom: 24px;
   color: var(--font-color);
-  &:before,
-  &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    width: 131px;
-    height: 1px;
-
-    background-color: black;
-  }
-
-  &:before {
-    left: -4px;
-    background-color: var(--border-color);
-  }
-
-  &:after {
-    right: -4px;
-    background-color: var(--border-color);
-  }
 `;
 
 const NavLoign = styled.nav`
@@ -100,15 +80,14 @@ const Footer = styled.footer`
   width: 220px;
   height: 34px;
   display: flex;
-  left: 70px;
-
+  left: 16px;
+  right: 16px;
   text-align: center;
 `;
 
 const FooterSpan = styled.span`
   font-size: var(--font-sm);
   color: #575757;
-  padding-right: 4px;
   line-height: 17px;
 `;
 
