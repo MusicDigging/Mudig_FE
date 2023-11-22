@@ -14,9 +14,8 @@ function App() {
 export default App;
 
 const Wrap = styled.div`
-  width: 390px;
-  height: 100vh;
-  /* position: relative; */
+  width: 360px;
+  height: 800px;
   margin: 0 auto;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   overflow: hidden;
