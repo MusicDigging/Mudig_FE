@@ -84,8 +84,9 @@ const ErrorMsg = styled.span`
   font-size: 12px;
   text-align: left;
   margin-top: 8px;
-
+  margin-right: 36px;
   line-height: 18px;
+  white-space: pre-wrap;
 `;
 const CheckboxContainer = styled.div`
   display: flex;
