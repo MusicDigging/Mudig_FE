@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export function Button(props) {
   const {
     type,
@@ -36,33 +37,32 @@ export function Button(props) {
 }
 
 const ButtonStyle = styled.button`
-  width: 328px;
-
+  width: ${(props) => props.width || '328px'};
+  height: ${(props) => props.height || '44px'};
   border-radius: 8px;
-  height: 44px;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
+
   &:not(:disabled) {
     cursor: pointer;
     opacity: 1;
   }
-  &:disabled {
-    cursor: initial;
-    opacity: 0.5;
-  }
 `;
 
-export function miniButton() {
-  return <MiniButtonStlye></MiniButtonStlye>;
+// 예시로 miniButton에도 props를 사용하는 코드를 추가하였습니다.
+export function MiniButton(props) {
+  return <MiniButtonStyle {...props}></MiniButtonStyle>;
 }
 
-const MiniButtonStlye = styled.button`
-  width: 103px;
-  height: 120px;
+const MiniButtonStyle = styled.button`
+  width: ${(props) => props.width || '103px'};
+  height: ${(props) => props.height || '120px'};
   font-size: 14px;
   border: 1px solid #9747ff;
   border-radius: 16px;
   background-color: #f6f6f6;
 
-  padding: 8px, 16px, 8px, 16px;
-  cursor: pointer;
+  padding: ${(props) => props.padding || '8px 16px'};
+  cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
 `;
