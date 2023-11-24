@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
-import SignupDetail from './pages/Signup/SignupDetail';
+
 function App() {
   return (
     <Wrap>

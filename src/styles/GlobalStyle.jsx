@@ -1,12 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { fonts } from './fonts';
 
 const GlobalStyle = createGlobalStyle`
 
  // ROOT
      :root{
    --font-color:#191919; 
-   --sub-font--color:#767676;
+   --sub-font-color:#767676;
+   --extra-font-color: #909090;
    --border-color:#DBDBDB;   
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;
@@ -20,12 +22,15 @@ const GlobalStyle = createGlobalStyle`
      }
 
      :root {
-    --font-bold: 700;
-    --font-regular: 400;;
+       --font-bold: 700;
+       --font-regular: 400;
+       --font-semi-bold: 500;
   }
     
  // Reset
 	${reset}
+  ${fonts} // font
+
   .a11y-hidden {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
@@ -39,10 +44,22 @@ const GlobalStyle = createGlobalStyle`
   
   *,*::before, *::after{
 		box-sizing: border-box;
+    font-family: 'Noto Sans KR'; 
+
 	}
 
-  html, body, div, span, h1, h2, h3, h4, h5, h6, p, 
-	a, dl, dt, dd, ol, ul, li, form, label, table, input,button {
+  main{
+    overflow-y: scroll;
+    &::-webkit-scrollbar{
+        display:none;
+      } 
+  }// 메인 화면 overflow scroll 처리
+
+
+
+  html, body, div, span, h1, h2, h3, h4, h5, h6, p, strong,
+	a, dl, dt, dd, ol, ul, li, form, label, table, input, button, textarea {
+    font-family: 'Noto Sans KR', sans-serif; 
 		margin: 0;
 		padding: 0;
     }
@@ -80,7 +97,7 @@ const GlobalStyle = createGlobalStyle`
             }
 }
 
-    ol, ul{
+    ol, ul, li{
             list-style: none;
         }
      
