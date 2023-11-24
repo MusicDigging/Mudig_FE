@@ -45,6 +45,8 @@
     ]
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
+    "@types/styled-components": "^5.1.31",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",

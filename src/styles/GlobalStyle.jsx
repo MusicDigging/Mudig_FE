@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
    --btn-background-color:#724FFF;
    --error-color: #FF003E;
    --font-xl : 22px;
+   --font-l: 18px;
    --font-lg: 16px;
    --font-md: 14px; 
    --font-sm : 12px;
