@@ -16,13 +16,11 @@ const SignupHeader = styled.header`
 `;
 
 const SignupTitle = styled.h1`
-  width: 149px;
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
 `;
 
 const SignupText = styled.span`
-  width: 198px;
   color: var(--sub-font--color);
   font-size: var(--font-md);
   line-height: 33px;
