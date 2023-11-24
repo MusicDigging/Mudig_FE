@@ -17,12 +17,14 @@ export const AuthInput = (props) => {
 
   return (
     <>
+      <Label htmlFor={name}></Label>
       <InputStyle
         {...register(name, validation)}
         placeholder={placeholder}
         type={showPassword ? 'text' : type}
         id={name}
         name={name}
+        autoComplete={name === 'email' ? 'email' : 'current-password'}
         marginBottom={marginBottom}
       />
       {type === 'password' && (
@@ -38,11 +40,11 @@ const InputStyle = styled.input`
   width: 328px;
   height: 44px;
   border-radius: 8px;
-  border: 1px solid lightgray;
+  border: 1px solid var(--border-color);
   padding-left: 16px;
   margin-bottom: ${(props) => (props.marginBottom ? '8px' : '0')};
-  /* box-shadow: 0 0 10px red inset; */
 `;
+const Label = styled.label``;
 
 const EyeIcon = styled.span`
   cursor: pointer;
