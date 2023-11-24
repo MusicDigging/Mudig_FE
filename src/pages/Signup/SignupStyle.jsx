@@ -72,14 +72,12 @@ const LinkLogin = styled.span`
 `;
 
 const Footer = styled.footer`
-  margin: 0 auto;
   position: absolute;
   top: 742px;
-  width: 220px;
-  height: 34px;
   display: flex;
   left: 16px;
   right: 16px;
+  justify-content: center;
   text-align: center;
 `;
 
