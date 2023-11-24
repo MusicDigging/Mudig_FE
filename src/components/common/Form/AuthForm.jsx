@@ -46,8 +46,8 @@ export const AuthForm = () => {
           placeholder='비밀번호를 입력하세요 '
           type='password'
           name='password'
-          showPassword={showPassword}
-          toggleShowPassword={toggleShowPassword}
+          showPassword={showPassword.password}
+          toggleShowPassword={() => toggleShowPassword('password')}
         />
         <CheckboxContainer>
           <CheckboxInput
