@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
    --border-color:#DBDBDB;   
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;
+   --btn-point-color: #7D4FFF;
    --error-color: #FF003E;
    --font-xl : 22px;
    --font-l: 18px;
