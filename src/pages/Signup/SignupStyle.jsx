@@ -16,13 +16,11 @@ const SignupHeader = styled.header`
 `;
 
 const SignupTitle = styled.h1`
-  width: 149px;
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
 `;
 
 const SignupText = styled.span`
-  width: 198px;
   color: var(--sub-font--color);
   font-size: var(--font-md);
   line-height: 33px;
@@ -74,14 +72,12 @@ const LinkLogin = styled.span`
 `;
 
 const Footer = styled.footer`
-  margin: 0 auto;
   position: absolute;
   top: 742px;
-  width: 220px;
-  height: 34px;
   display: flex;
   left: 16px;
   right: 16px;
+  justify-content: center;
   text-align: center;
 `;
 

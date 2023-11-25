@@ -60,13 +60,11 @@ const LoginHeader = styled.header`
 `;
 
 const LoginTitle = styled.h1`
-  width: 149px;
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
 `;
 
 const LoginText = styled.span`
-  width: 198px;
   color: var(--sub-font--color);
   font-size: var(--font-md);
   line-height: 33px;
