@@ -3,7 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import BgImg from '../../../img/background-img.svg';
 import { Link } from 'react-router-dom';
 
-export const NewPlaylistWrap = styled.main`
+export const NewPlaylistQuestionWrap = styled.main`
   position: relative;
   background-image: url(${BgImg}); // 임시 적용
   height: calc(100% - 88px);

@@ -8,9 +8,9 @@ import Home from '../pages/Home/Home';
 import Signup from '../pages/Signup/Signup';
 import Login from '../pages/Login/Login';
 import MyProfile from '../pages/Profile/MyProfile';
-import NewPlaylist from '../pages/NewPlaylist/Create/NewPlaylist';
-import NewPlaylist2 from '../pages/NewPlaylist/Create/NewPlaylist2';
-import NewPlaylist3 from '../pages/NewPlaylist/Create/NewPlaylist3';
+import NewPlaylistQuestion1 from '../pages/NewPlaylist/Create/NewPlaylistQuestion1';
+import NewPlaylistQuestion2 from '../pages/NewPlaylist/Create/NewPlaylistQuestion2';
+import NewPlaylistQuestion3 from '../pages/NewPlaylist/Create/NewPlaylistQuestion3';
 
 export function Router() {
   return (
@@ -22,9 +22,9 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path='/main' element={<Home />} />
           <Route path='/user/profile' element={<MyProfile />} />
-          <Route path='/playlist/create' element={<NewPlaylist />} />
-          <Route path='/playlist/create2' element={<NewPlaylist2 />} />
-          <Route path='/playlist/create3' element={<NewPlaylist3 />} />
+          <Route path='/playlist/create' element={<NewPlaylistQuestion1 />} />
+          <Route path='/playlist/create2' element={<NewPlaylistQuestion2 />} />
+          <Route path='/playlist/create3' element={<NewPlaylistQuestion3 />} />
         </Route>
       </Routes>
     </AnimatePresence>

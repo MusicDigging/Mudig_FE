@@ -1,11 +1,11 @@
 import React from 'react';
 
 import CharacterImg from '../../../img/character-img.svg';
-import * as S from './NewPlaylistStyle';
+import * as S from './NewPlaylistQuestionStyle';
 
-export default function NewPlaylist() {
+export default function NewPlaylistQuestion1() {
   return (
-    <S.NewPlaylistWrap>
+    <S.NewPlaylistQuestionWrap>
       <S.PageNum>1/3</S.PageNum>
       <S.NewPlaylistBox>
         <S.QuestionBox>
@@ -23,6 +23,6 @@ export default function NewPlaylist() {
           다음
         </S.LinkBtn>
       </S.NewPlaylistBox>
-    </S.NewPlaylistWrap>
+    </S.NewPlaylistQuestionWrap>
   );
 }

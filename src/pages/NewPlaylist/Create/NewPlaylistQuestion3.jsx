@@ -3,13 +3,13 @@ import { motion } from 'framer-motion';
 
 import CharacterImg from '../../../img/character-img.svg';
 
-import * as S from './NewPlaylistStyle';
+import * as S from './NewPlaylistQuestionStyle';
 
-export default function NewPlaylist() {
+export default function NewPlaylistQuestion3() {
   function handleBtnclick() {}
 
   return (
-    <S.NewPlaylistWrap>
+    <S.NewPlaylistQuestionWrap>
       <S.PageNum>3/3</S.PageNum>
 
       <S.NewPlaylistBox>
@@ -40,6 +40,6 @@ export default function NewPlaylist() {
       <S.LinkBtn text='확인' to='' onClick={handleBtnclick} disabled={false}>
         확인
       </S.LinkBtn>
-    </S.NewPlaylistWrap>
+    </S.NewPlaylistQuestionWrap>
   );
 }

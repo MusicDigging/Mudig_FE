@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 import NewPlaylistChip from '../../../components/NewPlaylist/NewPlaylistChip';
 
 import CharacterImg from '../../../img/character-img.svg';
-import * as S from './NewPlaylistStyle';
+import * as S from './NewPlaylistQuestionStyle';
 
-export default function NewPlaylist2() {
+export default function NewPlaylistQuestion2() {
   return (
-    <S.NewPlaylistWrap>
+    <S.NewPlaylistQuestionWrap>
       <S.PageNum>2/3</S.PageNum>
 
       <S.NewPlaylistBox>
@@ -32,6 +32,6 @@ export default function NewPlaylist2() {
       <S.LinkBtn to='/playlist/create3' disabled={false}>
         다음
       </S.LinkBtn>
-    </S.NewPlaylistWrap>
+    </S.NewPlaylistQuestionWrap>
   );
 }
