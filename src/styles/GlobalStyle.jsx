@@ -6,10 +6,12 @@ const GlobalStyle = createGlobalStyle`
 
  // ROOT
      :root{
+   --main-color:#724FFF;
    --font-color:#191919; 
    --sub-font-color:#767676;
    --extra-font-color: #909090;
    --border-color:#DBDBDB;   
+   --input-background-color:#F1F1F5;
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;
    --btn-point-color: #7D4FFF;
