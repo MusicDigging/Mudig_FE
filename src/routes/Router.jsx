@@ -8,6 +8,7 @@ import Signup from '../pages/Signup/Signup';
 import Login from '../pages/Login/Login';
 import MyProfile from '../pages/Profile/MyProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
+import SearchResult from '../pages/Search/SearchResult';
 
 export function Router() {
   return (
@@ -17,6 +18,7 @@ export function Router() {
       <Route path='/register' element={<Signup />} />
       <Route element={<PrivateRoute />}>
         <Route path='/main' element={<Home />} />
+        <Route path='/search' element={<SearchResult />} />
         <Route path='/user/profile' element={<MyProfile />} />
         <Route path='/playlist/create' element={<NewPlaylist />} />
       </Route>
