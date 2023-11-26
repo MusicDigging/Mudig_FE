@@ -1,16 +1,24 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
+
+import { Router } from './routes/Router';
+import Layout from './components/common/Layout/Layout';
+
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
-import MyProfile from './pages/Profile/MyProfile';
-import OtherProfile from './pages/Profile/MyProfile';
+import NewPlaylist from './pages/NewPlaylist/NewPlaylist';
 
 function App() {
   return (
     <Wrap>
       <GlobalStyle />
-      <Signup />
+      <BrowserRouter>
+        <Layout>
+          <Router />
+        </Layout>
+      </BrowserRouter>
     </Wrap>
   );
 }
@@ -18,6 +26,7 @@ function App() {
 export default App;
 
 const Wrap = styled.div`
+  position: relative;
   width: 360px;
   height: 800px;
   margin: 0 auto;

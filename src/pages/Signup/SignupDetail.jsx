@@ -42,7 +42,6 @@ const PageNum = styled.span`
 `;
 
 const DetailTitle = styled.h1`
-  width: 252px;
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
 `;
