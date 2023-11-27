@@ -69,13 +69,10 @@ const LoginText = styled.span`
   font-size: var(--font-md);
 `;
 const LoginMain = styled.main`
-  /* margin: 0 auto; */
   padding: 8px 16px;
-
   position: relative;
   text-align: center;
   top: 149px;
-  //top:132px
 `;
 
 const LoginBtnBox = styled.div`
