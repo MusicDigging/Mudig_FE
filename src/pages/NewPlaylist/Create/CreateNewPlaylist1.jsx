@@ -1,11 +1,12 @@
 import React from 'react';
 
-import CharacterImg from '../../../img/character-img.svg';
-import * as S from './NewPlaylistQuestionStyle';
+import CharacterImg from '../../../img/character-img2.svg';
+import * as S from './CreateNewPlaylistStyle';
 
-export default function NewPlaylistQuestion1() {
+export default function CreateNewPlaylist1() {
   return (
-    <S.NewPlaylistQuestionWrap>
+    <S.CreateNewPlaylistWrap>
+      <h1 className='a11y-hidden'>플레이리스트 생성하기</h1>
       <S.PageNum>1/3</S.PageNum>
       <S.NewPlaylistBox>
         <S.QuestionBox>
@@ -23,6 +24,6 @@ export default function NewPlaylistQuestion1() {
           다음
         </S.LinkBtn>
       </S.NewPlaylistBox>
-    </S.NewPlaylistQuestionWrap>
+    </S.CreateNewPlaylistWrap>
   );
 }
