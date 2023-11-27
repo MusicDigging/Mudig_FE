@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import KakaoIcon from '../../img/kakao-icon.svg';
-import { Button } from '../common/Button/Button';
+import { Button } from '../../components/common/Button/Button';
 import closeIcon from '../../img/close-icon.svg';
 import GoogleGrayIcon from '../../img/google-gray-icon.svg';
 export default function Intro() {

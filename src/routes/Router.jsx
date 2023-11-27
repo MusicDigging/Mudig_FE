@@ -13,7 +13,7 @@ import NewPlaylistQuestion2 from '../pages/NewPlaylist/Create/NewPlaylistQuestio
 import NewPlaylistQuestion3 from '../pages/NewPlaylist/Create/NewPlaylistQuestion3';
 import EditProfile from '../pages/Profile/EditProfile';
 import SearchResult from '../pages/Search/SearchResult';
-import Intro from '../components/Home/Intro';
+import Intro from '../pages/Home/Intro';
 export function Router() {
   return (
     <AnimatePresence>
