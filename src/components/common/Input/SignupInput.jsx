@@ -69,7 +69,7 @@ const EyeIcon = styled.span`
   cursor: pointer;
   position: absolute;
   top: 32%;
-  left: 91%;
+  right: 19px;
 `;
 
 const ErrorMsg = styled.span`
