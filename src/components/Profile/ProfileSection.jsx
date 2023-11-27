@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import ProfileImage from './ProfileImage';
+import ProfileImage from '../common/Image/ProfileImage';
 import { Button } from '../common/Button/Button';
 
 export default function ProfileSection(props) {
