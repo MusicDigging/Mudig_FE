@@ -21,14 +21,11 @@ const SignupTitle = styled.h1`
 `;
 
 const SignupText = styled.span`
-  color: var(--sub-font--color);
+  color: var(--sub-font-color);
   font-size: var(--font-md);
-  line-height: 33px;
 `;
 
 const SignupMain = styled.main`
-  margin: 0 auto;
-  width: 328px;
   position: absolute;
   top: 287px;
   text-align: center;
@@ -71,22 +68,6 @@ const LinkLogin = styled.span`
   line-height: 17px;
 `;
 
-const Footer = styled.footer`
-  position: absolute;
-  top: 742px;
-  display: flex;
-  left: 16px;
-  right: 16px;
-  justify-content: center;
-  text-align: center;
-`;
-
-const FooterSpan = styled.span`
-  font-size: var(--font-sm);
-  color: #575757;
-  line-height: 17px;
-`;
-
 export {
   SignupWrap,
   SignupHeader,
@@ -98,6 +79,4 @@ export {
   NavLoign,
   NavSpan,
   LinkLogin,
-  Footer,
-  FooterSpan,
 };
