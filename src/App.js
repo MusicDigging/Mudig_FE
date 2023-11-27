@@ -1,14 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
-
-import { Router } from './routes/Router';
-import Layout from './components/common/Layout/Layout';
-
-import Signup from './pages/Signup/Signup';
-
 import { Router } from './routes/Router';
 import Layout from './components/common/Layout/Layout';
 
