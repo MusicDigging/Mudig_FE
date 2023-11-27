@@ -13,7 +13,7 @@ import NewPlaylistQuestion2 from '../pages/NewPlaylist/Create/NewPlaylistQuestio
 import NewPlaylistQuestion3 from '../pages/NewPlaylist/Create/NewPlaylistQuestion3';
 import EditProfile from '../pages/Profile/EditProfile';
 import SearchResult from '../pages/Search/SearchResult';
-
+import RandomMusic from '../pages/RandomMusic/RandomMusic';
 export function Router() {
   return (
     <AnimatePresence>
@@ -24,9 +24,9 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path='/main' element={<Home />} />
           <Route path='/search' element={<SearchResult />} />
+          <Route path='/randomplay' element={<RandomMusic />} />
           <Route path='/user/profile' element={<MyProfile />} />
           <Route path='/user/profile/edit' element={<EditProfile />} />
-
           <Route path='/playlist/create' element={<NewPlaylistQuestion1 />} />
           <Route path='/playlist/create2' element={<NewPlaylistQuestion2 />} />
           <Route path='/playlist/create3' element={<NewPlaylistQuestion3 />} />
