@@ -1,58 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-import Iframe from 'react-iframe';
-import addIcon from '../../src/img/add-icon.svg';
+import VideoPlayer from '../components/RandomMv/VideoPlayer';
+import VideoInfo from '../components/RandomMv/VideoInfo';
 export default function RandomMv() {
   return (
-    <PlayerWrap>
-      <VideoBox>
-        <Iframe
-          url='https://www.youtube.com/embed/iUw3LPM7OBU?si=7FvkFDbPbyUI8OPN'
-          title='randomMv'
-          width='100%'
-          height='100%'
-          allowFullScreen
+    <>
+      <PlayerWrap>
+        <VideoPlayer
+          url={'https://www.youtube.com/embed/jIG4AaIy-5k?si=uaOtD3J9A6ul7_ix'}
         />
-      </VideoBox>
-      <InfoWrap>
-        <InfoBox>
-          <p>지극히 사적인 얘기</p>
-          <span>다비치 · 조회수 105만회 </span>
-        </InfoBox>
-        <img src={addIcon} alt='뮤비 추가 버튼' />
-      </InfoWrap>
-    </PlayerWrap>
+        <VideoInfo title={'Get A Guitar'} views={'RIIZE · 조회수 428만회'} />
+      </PlayerWrap>
+      <PlayerWrap>
+        <VideoPlayer
+          url={'https://www.youtube.com/embed/iTWYa0t5COk?si=Ie3Aly8haYDOIMkM'}
+        />
+        <VideoInfo
+          title={'Sleep Well'}
+          views={`${'d4dv'} · 조회수 ${1125}만회 `}
+        />
+      </PlayerWrap>
+      <PlayerWrap>
+        <VideoPlayer
+          url={'https://www.youtube.com/embed/hLvWy2b857I?si=5PFepg7TfnH6H8we'}
+        />
+        <VideoInfo
+          title={'Perfect Night'}
+          views={`${'LE SSERAFIM (르세라핌)'} · 조회수 ${3959}만회 `}
+        />
+      </PlayerWrap>
+    </>
   );
 }
 
 const PlayerWrap = styled.div`
-  padding: 0 16px;
+  padding: 8px 16px;
   font-size: var(--font-md);
-`;
-
-const VideoBox = styled.div`
-  width: 328px;
-  height: 200px;
-  border-radius: 10px;
-  overflow: hidden;
-`;
-
-const InfoWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-`;
-
-const InfoBox = styled.div`
-  display: flex;
-  gap: 3px;
-  flex-direction: column;
-
-  p {
-    font-weight: var(--font-bold);
-  }
-
-  span {
-    color: #575757;
-  }
 `;
