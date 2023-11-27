@@ -36,6 +36,7 @@ const SetProfileWrap = styled.main`
 `;
 
 const SetProfileBox = styled.div`
+  height: 100%;
   margin-top: 58px;
   display: flex;
   flex-direction: column;
