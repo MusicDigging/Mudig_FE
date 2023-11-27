@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CircleImage } from '../../components/common/Image/Image';
+import { CircleImage } from './Image';
 
-import ProfileDecoImg from '../../img/profile-deco-img.svg';
+import ProfileDecoImg from '../../../img/profile-deco-img.svg';
 
-export default function ProfileImage() {
+export default function ProfileImage(props) {
+  const { src, alt, children } = props;
   return (
     <ProfileImgBox>
-      <CircleImage src='https://picsum.photos/200/300' alt='프로필 이미지' />
+      <CircleImage src={src} alt={alt || '프로필 이미지'} />
+      {children}
     </ProfileImgBox>
   );
 }
@@ -17,7 +19,6 @@ const ProfileImgBox = styled.div`
   position: relative;
   width: 80px;
   height: 80px;
-  margin-bottom: 16px;
 
   &::after {
     content: '';
