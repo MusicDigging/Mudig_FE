@@ -65,13 +65,13 @@ const LoginTitle = styled.h1`
 `;
 
 const LoginText = styled.span`
-  color: var(--sub-font--color);
+  color: var(--sub-font-color);
   font-size: var(--font-md);
-  line-height: 33px;
 `;
 const LoginMain = styled.main`
-  margin: 0 auto;
-  width: 328px;
+  /* margin: 0 auto; */
+  padding: 8px 16px;
+
   position: relative;
   text-align: center;
   top: 149px;
@@ -87,7 +87,6 @@ const LoginBtnBox = styled.div`
 
 const Span = styled.span`
   position: relative;
-  display: block;
   color: var(--font-color);
   font-weight: 300;
 `;
