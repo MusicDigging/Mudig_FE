@@ -4,7 +4,8 @@ import { Button } from '../Button/Button';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import Chip from '../Chip';
-export default function ProfileInput() {
+export default function ProfileInput(props) {
+  const { btnText } = props;
   const [nickNameCount, setNickNameCount] = useState(0);
 
   //React-Hook-Form 사용법
@@ -33,51 +34,45 @@ export default function ProfileInput() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <InputWrap>
-        <Label htmlFor='nickName'>닉네임</Label>
-        <InputBox>
-          <InputStyle
-            {...register('nickName', {
-              required: true,
-
-              maxLength: {
-                value: 8,
-                message: '닉네임은 8글자 이내로 작성해주세요',
-              },
-            })}
-            onChange={handleNickNameLengthChange}
-            placeholder='8글자 내로 작성해주세요'
-            type='text'
-            id='nickName'
-          />
-          <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
-          <ButtonBox>
-            <Button text='다음' type='submit' disabled={!isValid}></Button>
-          </ButtonBox>
-        </InputBox>
-
-        <Label htmlFor='intro'>소개글</Label>
+    <FormWrap onSubmit={handleSubmit(onSubmit)}>
+      <Label htmlFor='nickName'>닉네임</Label>
+      <InputBox>
         <InputStyle
-          {...register('intro')}
-          placeholder='소개글을 작성해주세요'
-          type='text'
-          id='intro'
-        />
-        <Chip />
+          {...register('nickName', {
+            required: true,
 
-        <DevTool control={control} />
-      </InputWrap>
-    </form>
+            maxLength: {
+              value: 8,
+              message: '닉네임은 8글자 이내로 작성해주세요',
+            },
+          })}
+          onChange={handleNickNameLengthChange}
+          placeholder='8글자 내로 작성해주세요'
+          type='text'
+          id='nickName'
+        />
+        <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
+      </InputBox>
+
+      <Label htmlFor='intro'>소개글</Label>
+      <InputStyle
+        {...register('intro')}
+        placeholder='소개글을 작성해주세요'
+        type='text'
+        id='intro'
+      />
+      <Chip />
+      <ButtonBox>
+        <Button text={btnText} type='submit' disabled={!isValid}></Button>
+      </ButtonBox>
+      <DevTool control={control} />
+    </FormWrap>
   );
 }
 
-const InputWrap = styled.div`
-  padding: 16px;
+const FormWrap = styled.form`
   font-size: var(--font-md);
   height: 100%;
-  position: absolute;
-  top: 308px;
 `;
 
 const Label = styled.label``;
@@ -98,7 +93,7 @@ const InputStyle = styled.input`
 
 const ButtonBox = styled.div`
   position: absolute;
-  top: 397px;
+  bottom: 24px;
 `;
 
 const CharacterCount = styled.div`

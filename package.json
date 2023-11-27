@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "browser-image-compression": "^2.0.2",
     "eslint-plugin-jsx-a11y": "^6.8.0",
+    "framer-motion": "^10.16.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

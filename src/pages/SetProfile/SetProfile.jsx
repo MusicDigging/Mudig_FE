@@ -1,48 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CircleImage } from '../../components/common/Image/Image';
-import ProfileDecoImg from '../../img/profile-deco-img.svg';
+
+import ProfileImage from '../../components/common/Image/ProfileImage';
+
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 export default function SetProfile() {
   return (
     <SetProfileWrap>
       <PageNum>2/2</PageNum>
+      <SetProfileTitle>
+        가입을 축하드려요! <br />
+        프로필을 설정해주세요
+      </SetProfileTitle>
       <SetProfileBox>
-        <SetProfileTitle>
-          가입을 축하드려요! <br />
-          프로필을 설정해주세요
-        </SetProfileTitle>
-      </SetProfileBox>
-      <ProfileImgBox>
-        <CircleImage src='https://picsum.photos/200/300' alt='프로필 이미지' />
-        <ImgUploadBtn type='button'>
-          <img src={UploadImgBtn} alt='이미지 업로드 버튼' />
-          <input
-            type='file'
-            accept='image/jpg,impge/png,image/jpeg'
-            style={{ display: 'none' }}
-          />
-        </ImgUploadBtn>
-      </ProfileImgBox>
+        <ProfileImage src='https://picsum.photos/200/300'>
+          <ImgUploadBtn type='button'>
+            <img src={UploadImgBtn} alt='이미지 업로드 버튼' />
+            <input
+              type='file'
+              accept='image/jpg,impge/png,image/jpeg'
+              style={{ display: 'none' }}
+            />
+          </ImgUploadBtn>
+        </ProfileImage>
 
-      <ProfileInput />
+        <ProfileInput btnText='다음' />
+      </SetProfileBox>
     </SetProfileWrap>
   );
 }
 
-const SetProfileWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
+const SetProfileWrap = styled.main`
+  padding: 56px 16px 24px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SetProfileBox = styled.div`
+  margin-top: 58px;
   display: flex;
-  position: relative;
-  top: 56px;
-  left: 16px;
-  line-height: 27px;
+  flex-direction: column;
+  align-items: center;
+  gap: 53px;
 `;
 
 const PageNum = styled.span`
@@ -59,26 +59,6 @@ const SetProfileTitle = styled.h1`
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
   line-height: 33px;
-`;
-
-const ProfileImgBox = styled.div`
-  position: relative;
-  width: 80px;
-  height: 80px;
-  top: 179px;
-  left: 50%;
-  transform: translate(-50%, -70%);
-  &::after {
-    content: '';
-    background: url(${ProfileDecoImg}) no-repeat center/contain;
-    display: inline-block;
-    position: absolute;
-    width: 120px;
-    height: 60px;
-    top: -50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
-  }
 `;
 
 const ImgUploadBtn = styled.button`
