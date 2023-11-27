@@ -3,10 +3,10 @@ import TextareaAutosize from 'react-textarea-autosize';
 import BgImg from '../../../img/background-img.svg';
 import { Link } from 'react-router-dom';
 
-export const NewPlaylistQuestionWrap = styled.main`
+export const CreateNewPlaylistWrap = styled.main`
   position: relative;
   background-image: url(${BgImg}); // 임시 적용
-  height: calc(100% - 88px);
+  height: 100%;
   padding-top: 60px;
   img {
     height: 234px;
@@ -56,7 +56,7 @@ export const Answer = styled(TextareaAutosize)`
     color: var(--sub-font-color);
   }
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
     /* width: 15px; */ //여백 있을 때
   }
   &::-webkit-scrollbar-thumb {
