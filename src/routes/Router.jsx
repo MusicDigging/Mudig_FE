@@ -9,6 +9,7 @@ import Login from '../pages/Login/Login';
 import MyProfile from '../pages/Profile/MyProfile';
 import EditProfile from '../pages/Profile/EditProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
+import Follow from '../pages/Profile/Follow';
 
 export function Router() {
   return (
@@ -20,6 +21,7 @@ export function Router() {
         <Route path='/main' element={<Home />} />
         <Route path='/user/profile' element={<MyProfile />} />
         <Route path='/user/profile/edit' element={<EditProfile />} />
+        <Route path='/user/profile/follow' element={<Follow />} />
         <Route path='/playlist/create' element={<NewPlaylist />} />
       </Route>
     </Routes>
