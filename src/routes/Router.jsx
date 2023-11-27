@@ -9,6 +9,7 @@ import Login from '../pages/Login/Login';
 import MyProfile from '../pages/Profile/MyProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
+import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
 export function Router() {
   return (
     <Routes>
@@ -20,6 +21,7 @@ export function Router() {
         <Route path='/user/profile' element={<MyProfile />} />
         <Route path='/playlist/detail/:id' element={<PlaylistDetail />} />
         <Route path='/playlist/create' element={<NewPlaylist />} />
+        <Route path='/playlist/summary' element={<PlaylistSummary />} />
       </Route>
     </Routes>
   );
