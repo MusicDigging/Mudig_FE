@@ -1,7 +1,7 @@
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import TestImg from '../../img/thumbnail-img.svg';
-import ExtendIcon from '../../img/extend-icon.svg';
+import ExtendIcon from '../../img/arrow-icon.svg';
 import styled from 'styled-components';
 export default function DetailList() {
   return (
