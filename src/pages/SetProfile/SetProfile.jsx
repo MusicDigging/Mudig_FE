@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import ProfileImage from '../../components/common/Image/ProfileImage';
-
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 export default function SetProfile() {
@@ -49,8 +47,8 @@ const PageNum = styled.span`
   position: absolute;
   top: 24px;
   left: 317px;
-  font-size: var(--font-lg);
-  color: var(--sub-font--color);
+  font-size: var(--font-l);
+  color: var(--sub-font-color);
   font-weight: 500;
 `;
 

@@ -16,8 +16,7 @@ export const AuthForm = () => {
   const { formState } = methods;
   const { isValid, errors } = formState;
   const onSubmit = (data) => console.log(data);
-  const errorMessage =
-    '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
+  const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. \n입력하신 내용을 다시 확인해 주세요`;
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
@@ -46,8 +45,8 @@ export const AuthForm = () => {
           placeholder='비밀번호를 입력하세요 '
           type='password'
           name='password'
-          showPassword={showPassword}
-          toggleShowPassword={toggleShowPassword}
+          showPassword={showPassword.password}
+          toggleShowPassword={() => toggleShowPassword('password')}
         />
         <CheckboxContainer>
           <CheckboxInput
@@ -84,7 +83,7 @@ const ErrorMsg = styled.span`
   font-size: 12px;
   text-align: left;
   margin-top: 8px;
-  margin-right: 36px;
+  /* margin-right: 36px; */
   line-height: 18px;
   white-space: pre-wrap;
 `;
