@@ -48,6 +48,7 @@ export default function RandomMusic() {
 
 const PlayerWrap = styled.div`
   overflow-y: auto;
+  margin-top: 6px;
 `;
 const PlayerBox = styled.div`
   padding: 8px 16px;
