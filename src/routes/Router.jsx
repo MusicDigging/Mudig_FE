@@ -18,6 +18,7 @@ import SearchResult from '../pages/Search/SearchResult';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
+import Intro from '../pages/Home/Intro';
 export function Router() {
   return (
     <AnimatePresence>
@@ -29,6 +30,7 @@ export function Router() {
         <Route path='/setprofile' element={<SetProfile />} />
         <Route element={<PrivateRoute />}>
           <Route path='/main' element={<Home />} />
+          <Route path='/intro' element={<Intro />} />
           <Route path='/search' element={<SearchResult />} />
           <Route path='/randomplay' element={<RandomMusic />} />
           <Route path='/user/profile' element={<MyProfile />} />

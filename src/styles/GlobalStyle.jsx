@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
    --font-color:#191919; 
    --sub-font-color:#767676;
    --extra-font-color: #909090;
+   --tertiary-font-color: #575757;
    --border-color:#DBDBDB;   
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;
