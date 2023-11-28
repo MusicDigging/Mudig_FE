@@ -68,8 +68,8 @@ const MusicPlayerWrap = styled.div`
   width: 328px;
   height: 180px;
   left: 50%;
-  transform: translate(-50%, 0);
-  margin: 80px 0 25px;
+  transform: translate(-50%, 20%);
+  /* margin: 80px 0 25px; */
   z-index: 2;
   .player {
     position: absolute;

@@ -15,7 +15,7 @@ export default function CommentSection() {
 }
 
 const CommentSectionWrap = styled.section`
-  padding: 16px;
+  padding: 16px 16px 104px;
   h2 {
     padding: 10px 0;
     font-weight: var(--font-semi-bold);

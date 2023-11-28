@@ -4,7 +4,9 @@ import Mudig from '../../img/playlist-mudig-img.svg';
 import PenIcon from '../../img/pen-icon.svg';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-export default function PlayListInfo() {
+import MusicPlayer from './MusicPlayer';
+export default function PlayListInfo(props) {
+  const { playing, setPlaying } = props;
   const location = useLocation();
   const [moreInfoView, setMoreInfoView] = useState(false);
   const handleMoreBtn = () => {
@@ -22,7 +24,12 @@ export default function PlayListInfo() {
 
   return (
     <PlayListInfoWrap>
-      <Thumbnail src={TestImg} alt='썸네일' />
+      {playing ? (
+        <MusicPlayer playing={playing} setPlaying={setPlaying} />
+      ) : (
+        <Thumbnail src={TestImg} alt='썸네일' />
+      )}
+
       <InfoBox>
         <h2>드라이브 할 때 듣기 좋은 K-POP</h2>
         <div>
@@ -70,7 +77,7 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 62px 16px 25px;
+  padding: 62px 16px 0px;
   background-color: #fff;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -103,7 +110,7 @@ const ThumbnailBlurBox = styled.div`
   position: absolute;
   top: 0;
   width: 360px;
-  height: 346px;
+  height: 100%;
   background: rgba(15, 15, 16, 0.8);
   z-index: 3;
 `;
@@ -111,7 +118,7 @@ const MoreInfoBox = styled.div`
   position: absolute;
   z-index: 3;
   display: flex;
-  bottom: 10px;
+  bottom: 0px;
   flex-direction: column;
   padding: 16px;
   background-color: var(--playlist-info-bg-color);

@@ -53,7 +53,7 @@ export default function MusicPlayBar(props) {
 }
 
 const PlayBarWrap = styled.div`
-  padding: 18px 0 25px;
+  padding: 9px 0 25px;
   display: flex;
   align-items: center;
   justify-content: center;
