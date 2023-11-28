@@ -1,13 +1,10 @@
 import { useState } from 'react';
 
 const usePasswordToggle = () => {
-  const [showPassword, setShowPassword] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
-  const toggleShowPassword = (name) => {
-    setShowPassword((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
+  const toggleShowPassword = () => {
+    setShowPassword((prevValue) => !prevValue);
   };
 
   return { toggleShowPassword, showPassword };

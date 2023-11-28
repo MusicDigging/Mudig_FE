@@ -38,7 +38,7 @@ export const SignupInput = (props) => {
         />
 
         <EyeIcon onClick={toggleShowPassword}>
-          {type === 'password' && name !== 'confirmPassword' && (
+          {type === 'password' && (
             <img
               src={showPassword ? showEye : hideEye}
               alt={showPassword ? '비밀번호 표시' : '비밀번호 숨기기'}
@@ -69,7 +69,7 @@ const EyeIcon = styled.span`
   cursor: pointer;
   position: absolute;
   top: 32%;
-  right: 19px;
+  left: 91%;
 `;
 
 const ErrorMsg = styled.span`
