@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
    --font-color:#191919; 
    --sub-font-color:#767676;
    --extra-font-color: #909090;
+   --tertiary-font-color: #575757;
    --border-color:#DBDBDB;   
    --input-background-color:#F1F1F5;
    --btn-border-color:#724FFF;
