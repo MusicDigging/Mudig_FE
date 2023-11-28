@@ -44,7 +44,7 @@ export default function MusicPlayBar(props) {
         {isModalOpen && (
           <MiniModal>
             <button>플리 삭제</button>
-            <Link to='playlist/edit'>플리 수정</Link>
+            <Link to='edit'>플리 수정</Link>
           </MiniModal>
         )}
       </MoreBtnBox>

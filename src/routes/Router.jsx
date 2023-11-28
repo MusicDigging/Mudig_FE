@@ -9,6 +9,7 @@ import Login from '../pages/Login/Login';
 import MyProfile from '../pages/Profile/MyProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
+import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
 export function Router() {
   return (
     <Routes>
@@ -18,7 +19,10 @@ export function Router() {
       <Route element={<PrivateRoute />}>
         <Route path='/main' element={<Home />} />
         <Route path='/user/profile' element={<MyProfile />} />
-        <Route path='/playlist/detail/:id' element={<PlaylistDetail />} />
+        <Route path='/playlist/detail'>
+          <Route path=':id' element={<PlaylistDetail />} />
+          <Route path=':id/edit' element={<PlaylistModify />} />
+        </Route>
         <Route path='/playlist/create' element={<NewPlaylist />} />
       </Route>
     </Routes>
