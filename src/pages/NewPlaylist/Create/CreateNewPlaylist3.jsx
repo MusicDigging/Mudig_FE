@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 
 import CharacterImg from '../../../img/character-img.svg';
 
-import * as S from './NewPlaylistQuestionStyle';
+import * as S from './CreateNewPlaylistStyle';
 
 export default function NewPlaylistQuestion3() {
   function handleBtnclick() {}
 
   return (
-    <S.NewPlaylistQuestionWrap>
+    <S.CreateNewPlaylistWrap>
+      <h1 className='a11y-hidden'>플레이리스트 생성하기</h1>
       <S.PageNum>3/3</S.PageNum>
 
       <S.NewPlaylistBox>
@@ -40,6 +41,6 @@ export default function NewPlaylistQuestion3() {
       <S.LinkBtn text='확인' to='' onClick={handleBtnclick} disabled={false}>
         확인
       </S.LinkBtn>
-    </S.NewPlaylistQuestionWrap>
+    </S.CreateNewPlaylistWrap>
   );
 }

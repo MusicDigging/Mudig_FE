@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 
 import NewPlaylistChip from '../../../components/NewPlaylist/NewPlaylistChip';
 
-import CharacterImg from '../../../img/character-img.svg';
-import * as S from './NewPlaylistQuestionStyle';
+import CharacterImg from '../../../img/character-img3.svg';
+import * as S from './CreateNewPlaylistStyle';
 
 export default function NewPlaylistQuestion2() {
   return (
-    <S.NewPlaylistQuestionWrap>
+    <S.CreateNewPlaylistWrap>
+      <h1 className='a11y-hidden'>플레이리스트 생성하기</h1>
       <S.PageNum>2/3</S.PageNum>
 
       <S.NewPlaylistBox>
@@ -32,6 +33,6 @@ export default function NewPlaylistQuestion2() {
       <S.LinkBtn to='/playlist/create3' disabled={false}>
         다음
       </S.LinkBtn>
-    </S.NewPlaylistQuestionWrap>
+    </S.CreateNewPlaylistWrap>
   );
 }
