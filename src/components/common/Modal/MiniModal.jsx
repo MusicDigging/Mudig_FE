@@ -6,13 +6,13 @@ export default function MiniModal(props) {
   return <MiniModalWrap>{children}</MiniModalWrap>;
 }
 
-const MiniModalWrap = styled.div`
+export const MiniModalWrap = styled.div`
   min-width: 98px;
   position: absolute;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  justify-content: center;
+
   padding: 11px;
   border-radius: 10px;
   background: var(--white, #fff);
@@ -21,6 +21,8 @@ const MiniModalWrap = styled.div`
   button,
   a {
     padding: 10px;
-    font-size: var(--font-sm);
+    font-size: var(--font-md);
+    text-align: left;
+    line-height: normal;
   }
 `;
