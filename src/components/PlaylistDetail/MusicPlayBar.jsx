@@ -44,7 +44,7 @@ export default function MusicPlayBar(props) {
         {isModalOpen && (
           <MiniModal>
             <button>플리 삭제</button>
-            <Link to='playlist/edit'>플리 수정</Link>
+            <Link to='edit'>플리 수정</Link>
           </MiniModal>
         )}
       </MoreBtnBox>
@@ -53,7 +53,7 @@ export default function MusicPlayBar(props) {
 }
 
 const PlayBarWrap = styled.div`
-  padding: 18px 0 25px;
+  padding: 9px 0 25px;
   display: flex;
   align-items: center;
   justify-content: center;
