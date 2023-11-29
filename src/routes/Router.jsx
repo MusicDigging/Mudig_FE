@@ -1,11 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 
 import PrivateRoute from './PrivateRoutes';
 
 import Home from '../pages/Home/Home';
 import Signup from '../pages/Signup/Signup';
+import SignupDetail from '../pages/Signup/SignupDetail';
 import Login from '../pages/Login/Login';
+import SetProfile from '../pages/SetProfile/SetProfile';
 import MyProfile from '../pages/Profile/MyProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
@@ -47,9 +50,9 @@ export function Router() {
             <Route path=':id' element={<PlaylistDetail />} />
             <Route path=':id/edit' element={<PlaylistModify />} />
           </Route>
-        <Route path='/playlist/create' element={<NewPlaylist />} />
-      </Route>
-    </Routes>
-  </AnimatePresence>
+          <Route path='/playlist/create' element={<NewPlaylist />} />
+        </Route>
+      </Routes>
+    </AnimatePresence>
   );
 }
