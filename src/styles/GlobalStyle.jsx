@@ -6,13 +6,18 @@ const GlobalStyle = createGlobalStyle`
 
  // ROOT
      :root{
+   --main-color:#724FFF;
    --font-color:#191919; 
    --sub-font-color:#767676;
    --extra-font-color: #909090;
+   --tertiary-font-color: #575757;
    --border-color:#DBDBDB;   
+   --input-background-color:#F1F1F5;
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;
    --btn-point-color: #7D4FFF;
+   --playlist-info-bg-color: #8969FF;
+   --playlist-info-sub-color: #DBDBDB;
    --error-color: #FF003E;
    --font-xl : 22px;
    --font-l: 18px;

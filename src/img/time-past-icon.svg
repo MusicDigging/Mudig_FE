@@ -1,7 +1,10 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="24" height="24" fill="white"/>
-<path d="M4.75 12C4.75 10.4177 5.21919 8.87103 6.09824 7.55544C6.97729 6.23984 8.22672 5.21446 9.68853 4.60896C11.1503 4.00346 12.7589 3.84504 14.3107 4.15372C15.8626 4.4624 17.288 5.22433 18.4069 6.34315C19.5257 7.46197 20.2876 8.88743 20.5963 10.4393C20.905 11.9911 20.7465 13.5997 20.141 15.0615C19.5355 16.5233 18.5102 17.7727 17.1946 18.6518C15.879 19.5308 14.3322 20 12.75 20" stroke="black" stroke-linecap="round"/>
-<path d="M3.25 11.4724L4.76636 12.9888L6.28271 11.4724" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.4424 12.9888V8.21802" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12.4429 12.9888L15.9951 12.9888" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Icon">
+<g id="Group 102">
+<path id="Ellipse 15" d="M4.75 12C4.75 10.4177 5.21919 8.87103 6.09824 7.55544C6.97729 6.23984 8.22672 5.21446 9.68853 4.60896C11.1503 4.00346 12.7589 3.84504 14.3107 4.15372C15.8626 4.4624 17.288 5.22433 18.4069 6.34315C19.5257 7.46197 20.2876 8.88743 20.5963 10.4393C20.905 11.9911 20.7465 13.5997 20.141 15.0615C19.5355 16.5233 18.5102 17.7727 17.1946 18.6518C15.879 19.5308 14.3322 20 12.75 20" stroke="black" stroke-linecap="round"/>
+<path id="Vector 19" d="M3.25 11.4724L4.76636 12.9888L6.28271 11.4724" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector 20" d="M12.4424 12.9888V8.21802" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector 21" d="M12.4424 12.9888L15.9946 12.9888" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
 </svg>

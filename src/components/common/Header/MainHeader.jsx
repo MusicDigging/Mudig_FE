@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from '../../../img/logo.svg';
-import SearchIcon from '../../../img/icon_search.svg';
+import SearchIcon from '../../../img/search-icon.svg';
 
 function MainHeader() {
   return (

@@ -4,8 +4,7 @@ import { Button } from '../Button/Button';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import Chip from '../Chip';
-export default function ProfileInput(props) {
-  const { btnText } = props;
+export default function ProfileInput() {
   const [nickNameCount, setNickNameCount] = useState(0);
 
   //React-Hook-Form 사용법
@@ -34,46 +33,51 @@ export default function ProfileInput(props) {
   };
 
   return (
-    <FormWrap onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor='nickName'>닉네임</Label>
-      <InputBox>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputWrap>
+        <Label htmlFor='nickName'>닉네임</Label>
+        <InputBox>
+          <InputStyle
+            {...register('nickName', {
+              required: true,
+
+              maxLength: {
+                value: 8,
+                message: '닉네임은 8글자 이내로 작성해주세요',
+              },
+            })}
+            onChange={handleNickNameLengthChange}
+            placeholder='8글자 내로 작성해주세요'
+            type='text'
+            id='nickName'
+          />
+          <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
+          <ButtonBox>
+            <Button text='다음' type='submit' disabled={!isValid}></Button>
+          </ButtonBox>
+        </InputBox>
+
+        <Label htmlFor='intro'>소개글</Label>
         <InputStyle
-          {...register('nickName', {
-            required: true,
-
-            maxLength: {
-              value: 8,
-              message: '닉네임은 8글자 이내로 작성해주세요',
-            },
-          })}
-          onChange={handleNickNameLengthChange}
-          placeholder='8글자 내로 작성해주세요'
+          {...register('intro')}
+          placeholder='소개글을 작성해주세요'
           type='text'
-          id='nickName'
+          id='intro'
         />
-        <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
-      </InputBox>
+        <Chip />
 
-      <Label htmlFor='intro'>소개글</Label>
-      <InputStyle
-        {...register('intro')}
-        placeholder='소개글을 작성해주세요'
-        type='text'
-        id='intro'
-      />
-      <Chip />
-      <ButtonBox>
-        <Button text={btnText} type='submit' disabled={!isValid}></Button>
-      </ButtonBox>
-      <DevTool control={control} />
-    </FormWrap>
+        <DevTool control={control} />
+      </InputWrap>
+    </form>
   );
 }
 
-const FormWrap = styled.form`
-  position: relative;
+const InputWrap = styled.div`
+  padding: 16px;
   font-size: var(--font-md);
   height: 100%;
+  position: absolute;
+  top: 308px;
 `;
 
 const Label = styled.label``;
@@ -94,7 +98,7 @@ const InputStyle = styled.input`
 
 const ButtonBox = styled.div`
   position: absolute;
-  bottom: 0;
+  top: 397px;
 `;
 
 const CharacterCount = styled.div`
