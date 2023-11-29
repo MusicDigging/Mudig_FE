@@ -55,6 +55,8 @@ const GlobalStyle = createGlobalStyle`
 	}
 
   main{
+     height: 100%;
+     padding-bottom: 88px;
     overflow-y: scroll;
     &::-webkit-scrollbar{
         display:none;
