@@ -13,6 +13,7 @@ export const SignupInput = (props) => {
     toggleShowPassword,
     btnWidth,
     marginBottom,
+    showTimeText,
     // onValidationSuccess,
   } = props;
   const {
@@ -36,6 +37,7 @@ export const SignupInput = (props) => {
             width: btnWidth || '328px',
           }}
         />
+        {showTimeText && <TimeText>05:00</TimeText>}
 
         <EyeIcon onClick={toggleShowPassword}>
           {type === 'password' && name !== 'confirmPassword' && (
@@ -54,15 +56,27 @@ export const SignupInput = (props) => {
 const Label = styled.label``;
 const InputBox = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const InputStyle = styled.input`
+  flex: 1;
   width: 328px;
   height: 44px;
   border-radius: 8px;
   border: 1px solid lightgray;
   padding-left: 16px;
   position: relative;
+`;
+
+const TimeText = styled.span`
+  color: red;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 12px;
 `;
 
 const EyeIcon = styled.span`

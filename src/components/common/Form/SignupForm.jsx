@@ -6,7 +6,7 @@ import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
 import { useState } from 'react';
 
-export const SignupForm = () => {
+export const SignupForm = ({ onSubmit }) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
@@ -19,22 +19,22 @@ export const SignupForm = () => {
   });
   const { formState, control, watch } = methods;
   const { isValid } = formState;
-  const onSubmit = (data) => console.log(data);
 
   const watchEmail = watch('email');
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   const [isEmailValidated, setIsEmailValidated] = useState(false);
-
+  const [showTimeText, setShowTimeText] = useState(false);
   //인증버튼 활성화 확인 여부 변수
   const disabledConfirm = emailRegex.test(watchEmail);
 
   const handleEmailValidation = () => {
     if (disabledConfirm) {
       setIsEmailValidated(true);
-
+      setShowTimeText(true);
       console.log('이메일 검사 통과 인증번호 제공');
     } else {
       setIsEmailValidated(false);
+      setShowTimeText(false);
       console.log('이메일 검사 실패');
     }
   };
@@ -56,6 +56,7 @@ export const SignupForm = () => {
               type='text'
               name='email'
               btnWidth='211px'
+              showTimeText={showTimeText}
             />
           </Box>
           <Button
@@ -70,7 +71,7 @@ export const SignupForm = () => {
           <SignupInput
             validation={{
               // pattern: {
-              //   value:
+              //   value: 백에서 받아온 인증번호
               //   message: '인증번호가 일치하지 않습니다.',
               // }, 차후 인증번호 유효성 구현
               required: '인증번호가 오지 않으셨나요?',
