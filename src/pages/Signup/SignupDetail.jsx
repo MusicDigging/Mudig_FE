@@ -13,7 +13,7 @@ export default function SignupDetail() {
   };
   return (
     <SingupDetailWrap>
-      <PageNum>1/2</PageNum>
+      <PageNum>1/3</PageNum>
       <SignupDetailBox>
         <DetailTitle>
           회원가입을 위해 <br />
@@ -46,7 +46,7 @@ const PageNum = styled.span`
   top: 24px;
   left: 317px;
   font-size: var(--font-l);
-  color: var(--sub-font-color);
+  color: var(--sub-font--color);
   font-weight: 500;
 `;
 
