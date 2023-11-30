@@ -125,7 +125,7 @@ const Box = styled.div``;
 
 const ButtonBox = styled.div`
   position: absolute;
-  top: 397px;
+  top: 345px;
 `;
 
 const PasswordContainer = styled.div`
