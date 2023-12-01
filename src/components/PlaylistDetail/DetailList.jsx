@@ -2,6 +2,7 @@ import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import TestImg from '../../img/thumbnail-img.svg';
 import ExtendIcon from '../../img/arrow-icon.svg';
+import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -36,7 +37,7 @@ export default function DetailList() {
         )}
       </PlayList>
       <ExtendBtn onClick={handleMore} more={more}>
-        <img src={ExtendIcon} alt='플레이리스트 접기' />
+        <ArrowIcon fill='black' />
       </ExtendBtn>
     </DetailListWrap>
   );
@@ -48,7 +49,7 @@ const DetailListWrap = styled.div`
   overflow-y: scroll;
 `;
 const ExtendBtn = styled.button`
-  img {
-    transform: rotate(${({ more }) => (more ? '180deg' : '0deg')});
+  svg {
+    transform: rotate(${({ more }) => (more ? '270deg' : '90deg')});
   }
 `;
