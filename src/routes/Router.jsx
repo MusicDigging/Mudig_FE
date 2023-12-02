@@ -19,6 +19,7 @@ import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
 import Follow from '../pages/Profile/Follow';
 import Splash from '../pages/Splash/Splash';
+import NotFound from '../pages/NotFound/NotFound';
 
 export function Router() {
   return (
@@ -44,6 +45,7 @@ export function Router() {
           <Route path='/user/profile/follow' element={<Follow />} />
           <Route path='/user/profile/edit/resign' element={<Resign />} />
         </Route>
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </AnimatePresence>
   );
