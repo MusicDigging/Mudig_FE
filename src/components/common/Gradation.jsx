@@ -22,12 +22,14 @@ const PinkGradation = styled.span`
   position: absolute;
   border-radius: 573px;
   background: radial-gradient(
-    50% 50% at 50% 50%,
-    #ffc9da -4%,
+    circle,
+    rgba(255, 201, 218, 0.5) 0%,
+    rgba(252, 207, 221, 0.2) 40%,
+    rgba(252, 207, 221, 0) 70%,
     rgba(252, 207, 221, 0) 100%
   );
   left: -158px;
-  top: -174px;
+  top: -300px;
   z-index: -1;
 `;
 const PurpleGradation = styled.span`
@@ -36,12 +38,15 @@ const PurpleGradation = styled.span`
   position: absolute;
   border-radius: 761px;
   background: radial-gradient(
-    50% 50% at 50% 50%,
-    #de77d9 -4%,
+    circle,
+    rgba(222, 119, 217, 0.5) 0%,
+    rgba(222, 119, 217, 0.2) 40%,
+    rgba(229, 203, 246, 0) 70%,
+    rgba(229, 203, 246, 0) 90%,
     rgba(229, 203, 246, 0) 100%
   );
-  left: -121px;
-  top: 64px;
+  left: 35px;
+  top: -110px;
   z-index: -1;
 `;
 const SkyGradation = styled.span`
