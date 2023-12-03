@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SearchIcon from '../../../img/search-icon.svg';
+import SearchIcon from '../../img/search-icon.svg';
 export default function Search(props) {
   const { children, onFocus, onBlur } = props;
   return (

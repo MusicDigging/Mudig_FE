@@ -87,13 +87,13 @@ export const SignupForm = () => {
                 value: pawwrodRegex,
                 message: 'X 8~16자 영문 대 소문자, 숫자를 사용하세요.',
               },
-              required: '비밀번호를 입력하세요.',
+              required: '비밀번호를 입력하세요',
             }}
             placeholder='비밀번호 '
             type='password'
             name='password'
-            showPassword={showPassword.password}
-            toggleShowPassword={() => toggleShowPassword('password')}
+            showPassword={showPassword}
+            toggleShowPassword={toggleShowPassword}
           />
         </PasswordContainer>
         <ButtonBox>
