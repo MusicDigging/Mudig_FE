@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import ProfileImage from '../../components/common/Image/ProfileImage';
-
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 export default function SetProfile() {
@@ -31,15 +29,18 @@ export default function SetProfile() {
   );
 }
 
-const SetProfileWrap = styled.main`
+const SetProfileWrap = styled.div`
   padding: 56px 16px 24px;
   display: flex;
+
+  width: 100%;
   flex-direction: column;
 `;
 
 const SetProfileBox = styled.div`
   margin-top: 58px;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: 53px;
@@ -49,8 +50,8 @@ const PageNum = styled.span`
   position: absolute;
   top: 24px;
   left: 317px;
-  font-size: var(--font-lg);
-  color: var(--sub-font--color);
+  font-size: var(--font-l);
+  color: var(--sub-font-color);
   font-weight: 500;
 `;
 

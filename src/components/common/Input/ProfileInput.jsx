@@ -71,6 +71,7 @@ export default function ProfileInput(props) {
 }
 
 const FormWrap = styled.form`
+  padding: 16px;
   font-size: var(--font-md);
   height: 100%;
 `;
@@ -98,7 +99,7 @@ const ButtonBox = styled.div`
 
 const CharacterCount = styled.div`
   position: absolute;
-  top: 48%;
+  top: 44%;
   right: 12px;
   color: var(--extra-font-color);
   text-align: center;
