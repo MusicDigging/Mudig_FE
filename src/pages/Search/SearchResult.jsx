@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import TestImg from '../../img/playlist-test-img.png';
+import TestImg from '../../img/playlist-test-img.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import SearchIcon from '../../img/search-icon.svg';
-import RightArrowIcon from '../../img/right-arrow-icon.svg';
+import RightArrowIcon from '../../img/arrow-icon.svg';
 import * as S from './SearchResultStyle';
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
-import Search from '../../components/common/Search/Search';
+import Search from '../../components/Search/Search';
 import { CircleImage } from '../../components/common/Image/Image';
 import RecentSearch from '../../components/Search/RecentSearch';
 import { useState } from 'react';

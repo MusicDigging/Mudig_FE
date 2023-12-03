@@ -25,7 +25,7 @@ export default function Signup() {
             alt='카카오로 로그인하기 버튼'
           />
           <Button
-            text='Google로 시작하기'
+            text='구글로 시작하기'
             btnBgColor='#FFF'
             btnBorder='1px solid #DBDBDB'
             btnColor={'var(--font-color)'}
@@ -44,6 +44,12 @@ export default function Signup() {
           <S.LinkLogin>로그인하기</S.LinkLogin>
         </S.NavLoign>
       </S.SignupMain>
+      <S.Footer>
+        <S.FooterSpan>
+          회원가입과 함께 <br />
+          Mudig의 약관에 동의하는 것으로 간주합니다.
+        </S.FooterSpan>
+      </S.Footer>
     </S.SignupWrap>
   );
 }

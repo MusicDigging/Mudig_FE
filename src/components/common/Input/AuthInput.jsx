@@ -29,10 +29,7 @@ export const AuthInput = (props) => {
       />
       {type === 'password' && (
         <EyeIcon onClick={toggleShowPassword}>
-          <img
-            src={showPassword ? showEye : hideEye}
-            alt={showPassword ? '비밀번호 표시' : '비밀번호 숨기기'}
-          />
+          <img src={showPassword ? showEye : hideEye} alt='눈 모양 아이콘' />
         </EyeIcon>
       )}
     </>
