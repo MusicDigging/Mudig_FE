@@ -14,6 +14,7 @@ import MyProfile from '../pages/Profile/MyProfile';
 import OtherProfile from '../pages/Profile/OtherProfile';
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
+import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
 import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
 import CreateNewPlaylist1 from '../pages/NewPlaylist/Create/CreateNewPlaylist1';
 import CreateNewPlaylist2 from '../pages/NewPlaylist/Create/CreateNewPlaylist2';
@@ -41,6 +42,7 @@ export function Router() {
           <Route path='/playlist/create' element={<CreateNewPlaylist1 />} />
           <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
           <Route path='/playlist/create3' element={<CreateNewPlaylist3 />} />
+          <Route path='/playlist/summary' element={<PlaylistSummary />} />
           <Route path='/user/profile/edit' element={<EditProfile />} />
           <Route path='/user/profile' element={<Outlet />}>
             <Route path='my' element={<MyProfile />} />
