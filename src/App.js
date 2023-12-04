@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
 import { Router } from './routes/Router';
 import Layout from './components/common/Layout/Layout';
-
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import NewPlaylist from './pages/NewPlaylist/NewPlaylist';
