@@ -24,14 +24,21 @@ export default function PlayListInfo(props) {
 
   return (
     <PlayListInfoWrap>
+//       {location.pathname === '/playlist/summary' && (
+//         <SummaryTitle>
+//           드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
+//         </SummaryTitle>
+//       )}
+//       <img src={TestImg} alt='썸네일' />
       {playing ? (
         <MusicPlayer playing={playing} setPlaying={setPlaying} />
       ) : (
         <Thumbnail src={TestImg} alt='썸네일' />
       )}
-
       <InfoBox>
-        <h2>드라이브 할 때 듣기 좋은 K-POP</h2>
+        {location.pathname !== '/playlist/summary' && (
+          <h2>드라이브 할 때 듣기 좋은 K-POP</h2>
+        )}
         <div>
           <p>
             아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
@@ -72,6 +79,17 @@ const PlayListInfoWrap = styled.div`
 const Thumbnail = styled.img`
   transform: translate(50%, 20%);
   margin: 40px 0 0;
+`;
+const SummaryTitle = styled.h2`
+  top: 0;
+  left: 0;
+  transform: translate(50%, 130%);
+  width: 180px;
+  text-align: center;
+  word-break: keep-all;
+  line-height: normal;
+  font-size: var(--font-lg);
+  font-weight: var(--font-semi-bold);
 `;
 const InfoBox = styled.div`
   display: flex;
