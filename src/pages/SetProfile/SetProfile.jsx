@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { ChipButton } from '../../components/common/Button/Button';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 export default function SetProfile() {
+  const onSubmit = (data) => {
+    console.log('폼 제출', data, selectedChipsString);
+  };
+
+  const [selectedChips, setSelectedChips] = useState([]);
+
+  const handleChipSelect = (newSelectedChips) => {
+    setSelectedChips(newSelectedChips);
+    console.log(newSelectedChips);
+  };
+
+  //백엔드 전달시 문자열로 전달해줘야 되기에 join 메서드 사용
+  const selectedChipsString = selectedChips.join(', ');
+
   return (
     <SetProfileWrap>
       <PageNum>2/2</PageNum>
@@ -22,9 +37,36 @@ export default function SetProfile() {
             />
           </ImgUploadBtn>
         </ProfileImage>
-
-        <ProfileInput btnText='다음' />
       </SetProfileBox>
+      <ProfileInputBox>
+        {/* 프로필 설정 input, button  */}
+        <ProfileInput onSubmit={onSubmit} btnText='다음' />
+        <>
+          <Chipwrap>
+            <Title>관심사</Title>
+            <ChipBox>
+              {[
+                'POP',
+                'K-POP',
+                'J-POP',
+                '힙합',
+                'R&B',
+                '발라드',
+                '댄스',
+                '인디',
+                'OST',
+              ].map((chipName, index) => (
+                <ChipButton
+                  key={index}
+                  name={chipName}
+                  onSelect={handleChipSelect}
+                  selectedChips={selectedChips}
+                />
+              ))}
+            </ChipBox>
+          </Chipwrap>
+        </>
+      </ProfileInputBox>
     </SetProfileWrap>
   );
 }
@@ -69,4 +111,26 @@ const ImgUploadBtn = styled.button`
   img {
     width: 36px;
   }
+`;
+
+const ProfileInputBox = styled.div`
+  margin-top: 48.39px;
+  font-size: var(--font-md);
+  height: 100%;
+`;
+
+const Chipwrap = styled.div`
+  font-weight: var(--font-regular);
+  font-size: var(--font-md);
+  /* padding-left: 16px; */
+`;
+
+const ChipBox = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+`;
+
+const Title = styled.h1`
+  margin-bottom: 10px;
 `;
