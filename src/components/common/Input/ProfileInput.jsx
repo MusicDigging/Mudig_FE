@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '../Button/Button';
+import { Button, ChipButton } from '../Button/Button';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import Chip from '../Chip';
 export default function ProfileInput(props) {
-  const { btnText } = props;
+  const { btnText, onSubmit } = props;
   const [nickNameCount, setNickNameCount] = useState(0);
 
   //React-Hook-Form 사용법
@@ -18,10 +17,6 @@ export default function ProfileInput(props) {
   } = useForm({
     mode: 'onChange',
   });
-
-  const onSubmit = (data) => {
-    console.log('폼 제출', data);
-  };
 
   const handleNickNameLengthChange = (event) => {
     let value = event.target.value;
@@ -61,7 +56,7 @@ export default function ProfileInput(props) {
         type='text'
         id='intro'
       />
-      <Chip />
+
       <ButtonBox>
         <Button text={btnText} type='submit' disabled={!isValid}></Button>
       </ButtonBox>
@@ -71,9 +66,10 @@ export default function ProfileInput(props) {
 }
 
 const FormWrap = styled.form`
-  padding: 16px;
-  font-size: var(--font-md);
-  height: 100%;
+  /* padding: 16px; */
+  /* margin-top: 48px; */
+  /* font-size: var(--font-md);
+  height: 100%; */
 `;
 
 const Label = styled.label``;
