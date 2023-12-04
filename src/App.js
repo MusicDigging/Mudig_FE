@@ -8,6 +8,7 @@ import Layout from './components/common/Layout/Layout';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import NewPlaylist from './pages/NewPlaylist/NewPlaylist';
+import { RecoilRoot } from 'recoil';
 import Home from './pages/Home/Home';
 
 function App() {
@@ -15,9 +16,11 @@ function App() {
     <Wrap>
       <GlobalStyle />
       <BrowserRouter>
-        <Layout>
-          <Router />
-        </Layout>
+        <RecoilRoot>
+          <Layout>
+            <Router />
+          </Layout>
+        </RecoilRoot>
       </BrowserRouter>
       <BrowserRouter>
         <Layout>

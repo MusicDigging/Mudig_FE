@@ -5,10 +5,14 @@ import PenIcon from '../../img/pen-icon.svg';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import MusicPlayer from './MusicPlayer';
+import { set } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { modalAtom } from '../../atoms/modalAtom';
 export default function PlayListInfo(props) {
   const { playing, setPlaying } = props;
   const location = useLocation();
   const [moreInfoView, setMoreInfoView] = useState(false);
+  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -17,28 +21,26 @@ export default function PlayListInfo(props) {
   };
   const handleModify = () => {
     // Modal Open
+    setModalOpen(true);
   };
   const isModifyPath =
     location.pathname.includes('/playlist/detail/') &&
     location.pathname.includes('/edit');
-
+  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
   return (
     <PlayListInfoWrap>
-//       {location.pathname === '/playlist/summary' && (
-//         <SummaryTitle>
-//           드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
-//         </SummaryTitle>
-//       )}
-//       <img src={TestImg} alt='썸네일' />
+      {isPlaylistSummary && (
+        <SummaryTitle>
+          드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
+        </SummaryTitle>
+      )}
       {playing ? (
         <MusicPlayer playing={playing} setPlaying={setPlaying} />
       ) : (
         <Thumbnail src={TestImg} alt='썸네일' />
       )}
       <InfoBox>
-        {location.pathname !== '/playlist/summary' && (
-          <h2>드라이브 할 때 듣기 좋은 K-POP</h2>
-        )}
+        {!isPlaylistSummary && <h2>드라이브 할 때 듣기 좋은 K-POP</h2>}
         <div>
           <p>
             아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
@@ -132,6 +134,7 @@ const ThumbnailBlurBox = styled.div`
   background: rgba(15, 15, 16, 0.8);
   z-index: 3;
 `;
+
 const MoreInfoBox = styled.div`
   position: absolute;
   z-index: 3;
