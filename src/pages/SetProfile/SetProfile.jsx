@@ -29,15 +29,18 @@ export default function SetProfile() {
   );
 }
 
-const SetProfileWrap = styled.main`
+const SetProfileWrap = styled.div`
   padding: 56px 16px 24px;
   display: flex;
+
+  width: 100%;
   flex-direction: column;
 `;
 
 const SetProfileBox = styled.div`
   margin-top: 58px;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   gap: 53px;

@@ -40,5 +40,4 @@ const HomeSection = styled.section`
   #bold {
     font-weight: bold;
   }
-  }
 `;

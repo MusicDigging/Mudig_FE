@@ -6,6 +6,6 @@ export const ProfileWrap = styled.main`
   color: var(--font-color);
   h2 {
     font-size: var(--font-lg);
-    font-weight: var(--font-bold);
+    font-weight: var(--font-semi-bold);
   }
 `;

@@ -60,27 +60,27 @@ export default function PlayListSection() {
 }
 
 const PlayListSectionWrap = styled.section`
-  border-radius: 8px 8px 0 0;
+  padding: 26px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   background-color: #fff;
   h2 {
     font-size: var(--font-md);
   }
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 16px 16px 0;
 `;
 const PlayListHeader = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 `;
 
 const SortBtnBox = styled.div`
   display: flex;
-  gap: 8px;
-  &,
+  align-items: center;
+
   button {
+    padding: 8px;
     font-size: var(--font-sm);
   }
   button:focus {
