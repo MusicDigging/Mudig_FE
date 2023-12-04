@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://github.com/MusicDigging/Mudig_BE';
+const BASE_URL = 'https://api.mudig.co.kr';
 
 const baseConfig = {
   baseURL: BASE_URL,
