@@ -48,12 +48,12 @@ export function Router() {
             <Route path='my' element={<MyProfile />} />
             <Route path=':id' element={<OtherProfile />} />
             <Route path='edit' element={<EditProfile />} />
-            <Route path='edit/password' element={<ChangePassword />} />{' '}
+            <Route path='edit/password' element={<ChangePassword />} />
             <Route path='edit/resign' element={<Resign />} />
           </Route>
           <Route path='/playlist/detail'>
             <Route path='' element={<PlaylistDetail />} />
-            <Route path=':id/edit' element={<PlaylistModify />} />
+            <Route path='edit' element={<PlaylistModify />} />
           </Route>
           <Route path='/playlist/create' element={<NewPlaylist />} />
         </Route>
