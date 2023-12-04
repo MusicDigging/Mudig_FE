@@ -22,11 +22,6 @@ function App() {
           </Layout>
         </RecoilRoot>
       </BrowserRouter>
-      <BrowserRouter>
-        <Layout>
-          <Router />
-        </Layout>
-      </BrowserRouter>
     </Wrap>
   );
 }
