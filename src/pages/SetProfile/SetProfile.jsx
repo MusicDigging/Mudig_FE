@@ -32,12 +32,14 @@ export default function SetProfile() {
 const SetProfileWrap = styled.div`
   padding: 56px 16px 24px;
   display: flex;
+  height: 100%;
 
   width: 100%;
   flex-direction: column;
 `;
 
 const SetProfileBox = styled.div`
+  height: 100%;
   margin-top: 58px;
   display: flex;
   width: 100%;
