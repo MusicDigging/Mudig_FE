@@ -14,12 +14,14 @@ export default function Layout({ children }) {
     '/randomplay',
   ];
 
-  const isNavBarHidden = pathsWithoutNavBar.includes(location.pathname);
+  const isNavBarShowed = pathsWithoutNavBar.some((path) =>
+    location.pathname.includes(path),
+  );
 
   return (
     <>
       <Header />
-      {isNavBarHidden && <NavBar />}
+      {isNavBarShowed && <NavBar />}
       {children}
     </>
   );
