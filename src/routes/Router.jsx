@@ -28,6 +28,7 @@ import Splash from '../pages/Splash/Splash';
 import NotFound from '../pages/NotFound/NotFound';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
 import Intro from '../pages/Home/Intro';
+import SearchResultByType from '../components/Search/SearchResultByType';
 
 export function Router() {
   return (
@@ -41,7 +42,9 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path='/main' element={<Home />} />
           <Route path='/intro' element={<Intro />} />
-          <Route path='/search' element={<SearchResult />} />
+          <Route path='/search' element={<SearchResult />}>
+            <Route index element={<SearchResultByType />} />
+          </Route>
           <Route path='/randomplay' element={<RandomMusic />} />
           <Route path='/playlist/create' element={<CreateNewPlaylist1 />} />
           <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
