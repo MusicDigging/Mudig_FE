@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { SignupInput } from '../Input/SignupInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const SignupForm = ({ onSubmit }) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
@@ -13,7 +14,6 @@ export const SignupForm = ({ onSubmit }) => {
     defaultValues: {
       email: '',
       password: '',
-      confirmNum: '',
     },
     mode: 'onBlur',
   });
@@ -24,19 +24,40 @@ export const SignupForm = ({ onSubmit }) => {
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   const [isEmailValidated, setIsEmailValidated] = useState(false);
   const [showTimeText, setShowTimeText] = useState(false);
+  const [otpNum, setOtpNum] = useState('');
+
   //인증버튼 활성화 확인 여부 변수
   const disabledConfirm = emailRegex.test(watchEmail);
 
-  const handleEmailValidation = () => {
-    if (disabledConfirm) {
+  useEffect(() => {
+    console.log('isEmailValidated changed:', isEmailValidated);
+  }, [isEmailValidated]);
+
+  const handleEmailValidation = async () => {
+    try {
+      if (!disabledConfirm) {
+        setIsEmailValidated(false);
+        setShowTimeText(false);
+        console.log('이메일 검사 실패');
+        return;
+      }
+
+      const response = await axios.post('https://api.mudig.co.kr/user/otp/', {
+        email: watchEmail,
+      });
       setIsEmailValidated(true);
-      setShowTimeText(true);
-      console.log('이메일 검사 통과 인증번호 제공');
-    } else {
-      setIsEmailValidated(false);
-      setShowTimeText(false);
-      console.log('이메일 검사 실패');
+      console.log('response.data:', response.data);
+      if (response.status === 200) {
+        const { message, otp } = response.data;
+        console.log(message);
+        console.log(otp);
+        setOtpNum(otp);
+      }
+    } catch (error) {
+      console.error('otp 전송 실패', error);
     }
+
+    console.log(isEmailValidated);
   };
 
   return (
@@ -70,15 +91,19 @@ export const SignupForm = ({ onSubmit }) => {
         {isEmailValidated && (
           <SignupInput
             validation={{
-              // pattern: {
-              //   value: 백에서 받아온 인증번호
-              //   message: '인증번호가 일치하지 않습니다.',
-              // }, 차후 인증번호 유효성 구현
               required: '인증번호가 오지 않으셨나요?',
+              // custom validate 사용 현재 필드 값과 otpNum 불일치시 '인증번호가 일치하지 않습니다.' 출력
+              validate: {
+                comfirmOtp: (fieldValue) => {
+                  return (
+                    fieldValue == otpNum || '인증번호가 일치하지 않습니다.'
+                  );
+                },
+              },
             }}
             placeholder='인증번호'
             type='text'
-            name='confirmNum'
+            name='otpNum'
           />
         )}
         <PasswordContainer>
@@ -90,7 +115,7 @@ export const SignupForm = ({ onSubmit }) => {
               },
               required: '비밀번호를 입력하세요',
             }}
-            placeholder='비밀번호 '
+            placeholder='비밀번호'
             type='password'
             name='password'
             showPassword={showPassword}

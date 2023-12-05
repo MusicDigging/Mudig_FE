@@ -7,10 +7,11 @@ import { useNavigate } from 'react-router-dom';
 export default function SignupDetail() {
   const setSignup = useSetRecoilState(SignUpAtom);
   const navigate = useNavigate();
-  const onSubmit = (data) => {
-    setSignup(data);
-    navigate('/login');
+  const onSubmit = ({ email, password }) => {
+    setSignup({ email, password });
+    navigate('/setprofile');
   };
+
   return (
     <SingupDetailWrap>
       <PageNum>1/3</PageNum>
