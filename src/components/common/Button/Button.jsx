@@ -70,7 +70,11 @@ export function ChipButton(props) {
   };
 
   return (
-    <ChipButtonStyle onClick={handleClick} clicked={isChipSelected}>
+    <ChipButtonStyle
+      type='button'
+      onClick={handleClick}
+      clicked={isChipSelected}
+    >
       {name}
     </ChipButtonStyle>
   );
