@@ -14,6 +14,10 @@ export const CreateNewPlaylistWrap = styled.main`
   span + div {
     height: 100%;
   }
+  form {
+    position: relative;
+    height: 100%;
+  }
 `;
 
 export const PageNum = styled.span`
@@ -35,7 +39,7 @@ export const NewPlaylistBox = styled.div`
 `;
 
 export const QuestionBox = styled.div`
-  height: 84px;
+  min-height: 84px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,7 +70,7 @@ export const Answer = styled(TextareaAutosize)`
   }
 `;
 
-export const LinkBtn = styled(Link)`
+export const NextLink = styled(Link)`
   position: absolute;
   left: 50%;
   bottom: 24px;
@@ -77,9 +81,15 @@ export const LinkBtn = styled(Link)`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background: var(--point-2, #8969ff);
+  background: var(--main-color);
   color: white;
   font-size: var(--font-md);
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
   cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
+`;
+
+export const BackLink = styled(NextLink)`
+  background: #fff;
+  color: var(--main-color);
+  bottom: 88px;
 `;

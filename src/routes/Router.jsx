@@ -46,7 +46,7 @@ export function Router() {
             <Route index element={<SearchResultByType />} />
           </Route>
           <Route path='/randomplay' element={<RandomMusic />} />
-          <Route path='/playlist/create' element={<CreateNewPlaylist1 />} />
+          <Route path='/playlist/create1' element={<CreateNewPlaylist1 />} />
           <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
           <Route path='/playlist/create3' element={<CreateNewPlaylist3 />} />
           <Route path='/playlist/summary' element={<PlaylistSummary />} />

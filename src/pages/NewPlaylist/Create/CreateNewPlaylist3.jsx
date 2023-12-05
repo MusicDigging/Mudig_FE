@@ -1,11 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-import CharacterImg from '../../../img/character-img.svg';
+import Loading from '../../../components/Loading/Loading';
 
+import CharacterImg from '../../../img/character-img.svg';
 import * as S from './CreateNewPlaylistStyle';
 
-export default function NewPlaylistQuestion3() {
+export default function CreateNewPlaylist3() {
   function handleBtnclick() {}
 
   return (
@@ -16,7 +17,7 @@ export default function NewPlaylistQuestion3() {
       <S.NewPlaylistBox>
         <motion.div
           initial={{ x: 300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1, transition: { duration: 1 } }}
+          animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
         >
           <S.QuestionBox>
             <p>과거의 클래식한 음악부터 현재의</p>
@@ -25,22 +26,30 @@ export default function NewPlaylistQuestion3() {
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
-        <motion.div
-          initial={{ x: 300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1, transition: { duration: 1 } }}
-        >
-          <S.Answer
-            cacheMeasurements
-            placeholder='내용을 입력해주세요.'
-            maxRows={4}
-            minRows={1}
-          />
-        </motion.div>
+        <form>
+          <motion.div
+            initial={{ x: 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
+          >
+            <S.Answer
+              cacheMeasurements
+              placeholder='내용을 입력해주세요.'
+              maxRows={4}
+              minRows={1}
+            />
+          </motion.div>
+          <S.BackLink to='/playlist/create2' disabled={false}>
+            이전
+          </S.BackLink>
+          <S.NextLink
+            to='/playlist/summary'
+            onClick={handleBtnclick}
+            disabled={false}
+          >
+            완료
+          </S.NextLink>
+        </form>
       </S.NewPlaylistBox>
-
-      <S.LinkBtn text='확인' to='' onClick={handleBtnclick} disabled={false}>
-        확인
-      </S.LinkBtn>
     </S.CreateNewPlaylistWrap>
   );
 }
