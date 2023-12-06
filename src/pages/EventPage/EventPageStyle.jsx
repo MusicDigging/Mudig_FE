@@ -26,6 +26,13 @@ export const QuestionBox = styled.div`
     margin-left: 16px;
     font-size: 22px;
   }
+  div {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 12px;
+    color: #9e9e9e;
+  }
 `;
 export const CloseButton = styled.button`
   position: absolute;
