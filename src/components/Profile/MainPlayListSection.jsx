@@ -1,5 +1,9 @@
 import React from 'react';
+import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { privateInstance } from '../../library/apis/axiosInstance';
 
 import MainPlayList from './MainPlayList';
 import { Image } from '../common/Image/Image';
@@ -7,9 +11,22 @@ import { Image } from '../common/Image/Image';
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
 import WhitePlayIcon from '../../img/play-icon-white.svg';
-import { Link } from 'react-router-dom';
 
-export default function MainPlayListSection() {
+export default function MainPlayListSection(props) {
+  const { id } = props;
+  const { data: repPlaylist, isLoading: repPlaylistLoading } = useQuery(
+    'get-profile',
+    () => {
+      return privateInstance.get(`/playlist/detail/${id}/`);
+    },
+    {
+      select: (response) => response.data,
+    },
+  );
+
+  if (repPlaylistLoading) return;
+
+  const { title, thumbnail, music } = repPlaylist;
   return (
     <MainPlayListSectionWrap>
       <PlayListHeader>
@@ -18,11 +35,15 @@ export default function MainPlayListSection() {
         </h2>
       </PlayListHeader>
       <MainPlayListInfoBox>
-        <MainPlayListImg>
-          <Image src='https://picsum.photos/200' alt='' />
-          <img src={VinylImg} alt='레코드 이미지' />
-        </MainPlayListImg>
-        <Link>다가오는 크리스마스를 기다리며</Link>
+        <Link to='/playlist/detail' state={{ id }}>
+          <MainPlayListImg>
+            <Image src='https://picsum.photos/200' alt='' />
+            <img src={VinylImg} alt='레코드 이미지' />
+          </MainPlayListImg>
+          {/* <h4>{title}</h4> */}
+          <h4>다가오는 크리스마스를 기다리며</h4>
+        </Link>
+        {/* <p>{music.length}곡</p> */}
         <p>17곡</p>
       </MainPlayListInfoBox>
       <MainPlayList data={music} />
@@ -31,7 +52,7 @@ export default function MainPlayListSection() {
 }
 
 const MainPlayListSectionWrap = styled.section`
-  padding: 24px 24px 14px;
+  padding: 24px 24px 16px;
   h2 {
     display: flex;
     align-items: center;
@@ -51,8 +72,10 @@ const MainPlayListInfoBox = styled.div`
   flex-direction: column;
   align-items: center;
 
-  a + a {
+  h4 {
+    text-align: center;
     margin-bottom: 6px;
+    height: 20px;
   }
 
   p {
@@ -60,7 +83,7 @@ const MainPlayListInfoBox = styled.div`
   }
 `;
 
-const MainPlayListImg = styled(Link)`
+const MainPlayListImg = styled.div`
   position: relative;
   margin-bottom: 20px;
   height: 150px;

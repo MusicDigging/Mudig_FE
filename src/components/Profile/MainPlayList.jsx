@@ -2,10 +2,22 @@ import React from 'react';
 
 import styled from 'styled-components';
 import { Image } from '../common/Image/Image';
+
 export default function MainPlayList(props) {
+  const music = props.data || [];
   return (
     <MainPlayListWrap>
       <ul className='scrollable-element'>
+        {/* {music.map((item) => (
+          <>
+            <StyledListItem>
+              <Image src='https://picsum.photos/200' alt='플리 이미지' />
+
+              <h4>All I Want for Christmas Is You</h4>
+              <p>Mariah Carey(머라이어 캐리)</p>
+            </StyledListItem>
+          </>
+        ))} */}
         <StyledListItem>
           <Image src='https://picsum.photos/200' alt='플리 이미지' />
 
