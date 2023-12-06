@@ -2,9 +2,10 @@ import SearchIcon from '../../img/search-icon.svg';
 import SearchInput from '../../components/Search/SearchInput';
 import RecentSearch from '../../components/Search/RecentSearch';
 import { useState } from 'react';
-import * as S from './SearchResultStyle';
-import { Outlet } from 'react-router-dom';
-export default function SearchResult() {
+import * as S from './SearchStyle';
+import SearchResultByType from '../../components/Search/SearchResultByType';
+// import { Outlet } from 'react-router-dom';
+export default function Search() {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   return (
     <S.SearchWrap>
@@ -20,7 +21,8 @@ export default function SearchResult() {
           </button>
         )}
       </SearchInput>
-      {isSearchFocused ? <RecentSearch /> : <Outlet />}
+      {/* {isSearchFocused ? <RecentSearch /> : <Outlet />} */}
+      {isSearchFocused ? <RecentSearch /> : <SearchResultByType />}
     </S.SearchWrap>
   );
 }
