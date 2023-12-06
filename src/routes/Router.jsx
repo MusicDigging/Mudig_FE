@@ -19,22 +19,25 @@ import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
 import CreateNewPlaylist1 from '../pages/NewPlaylist/Create/CreateNewPlaylist1';
 import CreateNewPlaylist2 from '../pages/NewPlaylist/Create/CreateNewPlaylist2';
 import CreateNewPlaylist3 from '../pages/NewPlaylist/Create/CreateNewPlaylist3';
-
+import EventPage from '../pages/EventPage/EventPage';
 import SearchResult from '../pages/Search/SearchResult';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
 import Intro from '../pages/Home/Intro';
+import NotFound from '../pages/NotFound/NotFound';
+import Splash from '../pages/Splash/Splash';
 export function Router() {
   return (
     <AnimatePresence>
       <Routes>
-        <Route path='/' element={<SetProfile />} />
+        <Route path='/' element={<Splash />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/detail' element={<SignupDetail />} />
         <Route path='/setprofile' element={<SetProfile />} />
         <Route element={<PrivateRoute />}>
+          <Route path='/event' element={<EventPage />} />
           <Route path='/main' element={<Home />} />
           <Route path='/intro' element={<Intro />} />
           <Route path='/search' element={<SearchResult />} />
