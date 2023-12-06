@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 export const CreateNewPlaylistWrap = styled.main`
   position: relative;
   background-image: url(${BgImg}); // 임시 적용
+  background-size: cover;
   height: 100%;
   padding-top: 60px;
   img {
@@ -17,6 +18,9 @@ export const CreateNewPlaylistWrap = styled.main`
   form {
     position: relative;
     height: 100%;
+    div {
+      min-height: 38px;
+    }
   }
 `;
 
@@ -87,6 +91,7 @@ export const NextLink = styled(Link)`
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
   cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
 `;
+export const CompleteBtn = styled(NextLink)``;
 
 export const BackLink = styled(NextLink)`
   background: #fff;

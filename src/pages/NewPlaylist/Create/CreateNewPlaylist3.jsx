@@ -1,5 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 import Loading from '../../../components/Loading/Loading';
 
@@ -7,7 +8,16 @@ import CharacterImg from '../../../img/character-img.svg';
 import * as S from './CreateNewPlaylistStyle';
 
 export default function CreateNewPlaylist3() {
-  function handleBtnclick() {}
+  const location = useLocation();
+  const state = location.state || {};
+  const { situations, genre } = state;
+  const [year, setYear] = useState((state && state.year) || '');
+
+  const handleCompleteBtnClick = (e) => {
+    const data = { situations, genre: genre.join(','), year };
+
+    console.log(data);
+  };
 
   return (
     <S.CreateNewPlaylistWrap>
@@ -32,22 +42,29 @@ export default function CreateNewPlaylist3() {
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
           >
             <S.Answer
+              name='year'
               cacheMeasurements
               placeholder='내용을 입력해주세요.'
               maxRows={4}
               minRows={1}
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
             />
           </motion.div>
-          <S.BackLink to='/playlist/create2' disabled={false}>
-            이전
-          </S.BackLink>
-          <S.NextLink
-            to='/playlist/summary'
-            onClick={handleBtnclick}
+          <S.BackLink
+            to='/playlist/create2'
+            state={{ situations, genre, year, backAnimation: true }}
             disabled={false}
           >
+            이전
+          </S.BackLink>
+          <S.CompleteBtn
+            type='button'
+            onClick={handleCompleteBtnClick}
+            disabled={year.trim() === ''}
+          >
             완료
-          </S.NextLink>
+          </S.CompleteBtn>
         </form>
       </S.NewPlaylistBox>
     </S.CreateNewPlaylistWrap>

@@ -1,5 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 import NewPlaylistChip from '../../../components/NewPlaylist/NewPlaylistChip';
 
@@ -7,6 +8,11 @@ import CharacterImg from '../../../img/character-img3.svg';
 import * as S from './CreateNewPlaylistStyle';
 
 export default function CreateNewPlaylist2() {
+  const location = useLocation();
+  const state = location.state || {};
+  const { situations, year, backAnimation } = state;
+  const [genre, setGenre] = useState((state && state.genre) || []);
+
   return (
     <S.CreateNewPlaylistWrap>
       <h1 className='a11y-hidden'>플레이리스트 생성하기</h1>
@@ -14,7 +20,7 @@ export default function CreateNewPlaylist2() {
 
       <S.NewPlaylistBox>
         <motion.div
-          initial={{ x: 300, opacity: 0 }}
+          initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
           animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
         >
           <S.QuestionBox>
@@ -24,19 +30,37 @@ export default function CreateNewPlaylist2() {
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
         <form>
-        <motion.div
-          initial={{ x: 300, opacity: 0 }}
+          <motion.div
+            initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
-        >
-          <NewPlaylistChip />
-        </motion.div>
+          >
+            <NewPlaylistChip
+              selectedChips={genre}
+              setSelectedChips={setGenre}
+            />
+          </motion.div>
           <S.BackLink
             to='/playlist/create1'
+            state={{
+              situations,
+              genre,
+              year,
+              backAnimation: true,
+            }}
             disabled={false}
           >
             이전
           </S.BackLink>
-          <S.NextLink to='/playlist/create3' disabled={false}>
+          <S.NextLink
+            to='/playlist/create3'
+            state={{
+              situations,
+              genre,
+              year,
+              backAnimation: false,
+            }}
+            disabled={genre.length === 0}
+          >
             다음
           </S.NextLink>
         </form>
