@@ -98,6 +98,7 @@ export default function SetProfile() {
         ...userInfo,
         name: data.nickName,
         about: data.about || '',
+        genre: selectGenre,
       });
       navigate('/login');
     } catch (error) {
