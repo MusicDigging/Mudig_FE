@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import MainPlayList from './MainPlayList';
 import { Image } from '../common/Image/Image';
-
-import PlayListTable from '../Home/PlayListTable';
 
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
@@ -26,7 +25,7 @@ export default function MainPlayListSection() {
         <Link>다가오는 크리스마스를 기다리며</Link>
         <p>17곡</p>
       </MainPlayListInfoBox>
-      <PlayListTable />
+      <MainPlayList data={music} />
     </MainPlayListSectionWrap>
   );
 }
