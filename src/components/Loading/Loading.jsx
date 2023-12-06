@@ -125,6 +125,7 @@ const LoadingWrap = styled.div`
       background-image: url(${LoadingMudig});
     }
   }
+  z-index: 100;
 `;
 
 const LoadingBox1 = styled.div``;
