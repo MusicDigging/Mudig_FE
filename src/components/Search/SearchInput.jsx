@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
-export default function Search(props) {
+export default function SearchInput(props) {
   const { children, onFocus, onBlur } = props;
   return (
     <form>
-      <SearchInput
+      <Input
         type='text'
         onFocus={onFocus}
         onBlur={onBlur}
@@ -14,7 +14,7 @@ export default function Search(props) {
     </form>
   );
 }
-const SearchInput = styled.input`
+const Input = styled.input`
   width: 274px;
   border-radius: 8px;
   background: #f6f6f6;

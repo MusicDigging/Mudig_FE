@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NextIcon from '../../img/arrow-icon.svg';
-
+import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 export default function PlaylistPrivateCheck() {
   return (
     <PlaylistPrivateCheckBox>
@@ -10,7 +9,7 @@ export default function PlaylistPrivateCheck() {
         <p>공개</p>
       </PlaylistInfoBox>
       <Button>
-        <img src={NextIcon} alt='더보기' />
+        <ArrowIcon fill='black' />
       </Button>
     </PlaylistPrivateCheckBox>
   );

@@ -1,18 +1,15 @@
 import styled from 'styled-components';
-// import Modal from '../../components/common/Modal/Modal';
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
-import PlaylistPrivateCheck from '../../components/PlaylistSummary/PlaylistPrivateCheck';
 import TestImg from '../../img/thumbnail-img.svg';
 export default function PlaylistSummary() {
   return (
     <PlaylistSummaryWrap>
       <PlayListInfo></PlayListInfo>
-      {/* <Modal title='드라이브할 때 듣기 좋은 K-POP' /> */}
-      <PlaylistPrivateCheck />
       <PlayListBox>
         <PlayList>
+          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
           <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
           <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
           <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
@@ -28,6 +25,7 @@ const PlaylistSummaryWrap = styled.div`
   position: relative;
 `;
 const PlayListBox = styled.div`
+  margin-top: 12px;
   padding: 0 16px;
 `;
 const BlurBox = styled.div`

@@ -70,6 +70,6 @@ const PlayBtn = styled.button`
   box-shadow: 0px -2px 20px 0px rgba(215, 176, 243, 0.25);
 `;
 
-const MoreBtnBox = styled.button`
+const MoreBtnBox = styled.div`
   position: relative;
 `;

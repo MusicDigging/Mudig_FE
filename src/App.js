@@ -1,24 +1,29 @@
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components';
-import GlobalStyle from './styles/GlobalStyle';
 
 import { Router } from './routes/Router';
+import GlobalStyle from './styles/GlobalStyle';
 import Layout from './components/common/Layout/Layout';
 
-import Signup from './pages/Signup/Signup';
-import Login from './pages/Login/Login';
-import NewPlaylist from './pages/NewPlaylist/NewPlaylist';
-
 function App() {
+  const queryClient = new QueryClient();
   return (
     <Wrap>
       <GlobalStyle />
-      <BrowserRouter>
-        <Layout>
-          <Router />
-        </Layout>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <RecoilRoot>
+            <Layout>
+              <Router />
+            </Layout>
+          </RecoilRoot>
+        </BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+      </QueryClientProvider>
     </Wrap>
   );
 }
