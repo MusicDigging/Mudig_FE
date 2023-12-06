@@ -81,7 +81,7 @@ export default function SetProfile() {
       formData.append('email', userInfo.email);
       formData.append('password', userInfo.password);
       formData.append('name', data.nickName);
-      formData.append('about', data.about || '');
+      formData.append('about', data.about || '소개글을 작성해주세요.');
       formData.append('genre', selectGenre);
       formData.append('image', uploadImg);
 
