@@ -23,8 +23,13 @@ import CreateNewPlaylist3 from '../pages/NewPlaylist/Create/CreateNewPlaylist3';
 import SearchResult from '../pages/Search/SearchResult';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
+import Follow from '../pages/Profile/Follow';
+import Splash from '../pages/Splash/Splash';
+import NotFound from '../pages/NotFound/NotFound';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
 import Intro from '../pages/Home/Intro';
+import SearchResultByType from '../components/Search/SearchResultByType';
+
 export function Router() {
   return (
     <AnimatePresence>
@@ -37,13 +42,17 @@ export function Router() {
         <Route element={<PrivateRoute />}>
           <Route path='/main' element={<Home />} />
           <Route path='/intro' element={<Intro />} />
-          <Route path='/search' element={<SearchResult />} />
+          <Route path='/search' element={<SearchResult />}>
+            <Route index element={<SearchResultByType />} />
+          </Route>
           <Route path='/randomplay' element={<RandomMusic />} />
           <Route path='/playlist/create' element={<CreateNewPlaylist1 />} />
           <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
           <Route path='/playlist/create3' element={<CreateNewPlaylist3 />} />
           <Route path='/playlist/summary' element={<PlaylistSummary />} />
           <Route path='/user/profile/edit' element={<EditProfile />} />
+          <Route path='/user/profile/follow' element={<Follow />} />
+          <Route path='/user/profile/edit/resign' element={<Resign />} />
           <Route path='/user/profile' element={<Outlet />}>
             <Route path='my' element={<MyProfile />} />
             <Route path=':id' element={<OtherProfile />} />
@@ -57,6 +66,7 @@ export function Router() {
           </Route>
           <Route path='/playlist/create' element={<NewPlaylist />} />
         </Route>
+        <Route path='/*' element={<NotFound />} />
       </Routes>
     </AnimatePresence>
   );
