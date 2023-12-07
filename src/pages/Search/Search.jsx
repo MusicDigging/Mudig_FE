@@ -1,31 +1,76 @@
-import SearchIcon from '../../img/search-icon.svg';
 import SearchInput from '../../components/Search/SearchInput';
 import RecentSearch from '../../components/Search/RecentSearch';
 import { useState } from 'react';
 import * as S from './SearchStyle';
 import SearchResultAll from '../../components/Search/SearchResultAll';
-import { privateInstance } from '../../library/apis/axiosInstance';
 import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultByType from '../../components/Search/SearchResultByType';
 export default function Search() {
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [result, setResult] = useState();
   const [currentNav, setCurrentNav] = useState({
     all: true,
     playlist: false,
     user: false,
   });
-  console.log('result', result);
-  console.log(currentNav);
+  const [recentKeywords, setRecentKeywords] = useState(
+    JSON.parse(localStorage.getItem('recent_keywords')) || [],
+  );
+  // 최근 검색어 추가
+  const handleAddRecentKeyword = (keyword) => {
+    const isKeywordExist = recentKeywords.some(
+      (item) => item.keyword === keyword,
+    );
+    let updatedKeywords;
+    // 이미 검색한 단어인 경우
+    if (isKeywordExist) {
+      updatedKeywords = recentKeywords.filter(
+        (item) => item.keyword !== keyword,
+      );
+    } else {
+      updatedKeywords = recentKeywords;
+    }
+
+    const newKeyword = {
+      id: Date.now(),
+      keyword,
+    };
+
+    setRecentKeywords([newKeyword, ...updatedKeywords]);
+  };
+  // 최근 검색어 선택 삭제
+  const handleRemoveRecentKeyword = (id) => {
+    console.log('clicked');
+    const nextKeywords = recentKeywords.filter((keyword) => keyword.id !== id);
+    console.log(nextKeywords);
+    setRecentKeywords(nextKeywords);
+  };
+  // 최근 검색어 전체 삭제
+  const handleRemoveAllRecentKeyword = () => {
+    setRecentKeywords([]);
+  };
   // const { data } = useQuery(['result'], getSearchData);
+
+  // 검색했을 때 로컬스토리지에 저장
+  useEffect(() => {
+    localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
+  }, [recentKeywords]);
+
   return (
     <S.SearchWrap>
-      <SearchInput setResult={setResult} />
+      <SearchInput
+        setResult={setResult}
+        onAddRecentKeyword={handleAddRecentKeyword}
+      />
       {/* 최근 검색어 */}
-      {!result && <RecentSearch />}
-
+      {!result && recentKeywords.length !== 0 && (
+        <RecentSearch
+          recentKeywords={recentKeywords.slice(0, 3)}
+          onRemoveRecentKeyword={handleRemoveRecentKeyword}
+          onRemoveAllRecentKeyword={handleRemoveAllRecentKeyword}
+        />
+      )}
       {/* 검색 결과 */}
       {result && (
         <>

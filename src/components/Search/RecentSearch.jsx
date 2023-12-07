@@ -1,46 +1,37 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '../../img/close-icon.svg';
 import TimePastIcon from '../../img/time-past-icon.svg';
-export default function RecentSearch() {
+export default function RecentSearch({
+  recentKeywords,
+  onRemoveRecentKeyword,
+  onRemoveAllRecentKeyword,
+}) {
   return (
     <RecentSearchWrap>
       <p>최근 검색어</p>
       <RecentSearchList>
-        <li>
-          <div>
-            <img src={TimePastIcon} alt='최근 검색' />
-            <p>유라</p>
-          </div>
-          <button>
-            <img src={CloseIcon} alt='삭제' />
-          </button>
-        </li>
-        <li>
-          <div>
-            <img src={TimePastIcon} alt='최근 검색' />
-            <p>dosii(도시)</p>
-          </div>
-          <button>
-            <img src={CloseIcon} alt='삭제' />
-          </button>
-        </li>
-        <li>
-          <div>
-            <img src={TimePastIcon} alt='최근 검색' />
-            <p>크리스마스 노래</p>
-          </div>
-          <button>
-            <img src={CloseIcon} alt='삭제' />
-          </button>
-        </li>
+        {recentKeywords.map(({ id, keyword }) => {
+          return (
+            <li key={id}>
+              <div>
+                <img src={TimePastIcon} alt='최근검색' />
+                <button>{keyword}</button>
+              </div>
+              <button onClick={() => onRemoveRecentKeyword(id)}>
+                <img src={CloseIcon} alt='삭제' />
+              </button>
+            </li>
+          );
+        })}
       </RecentSearchList>
-      <DeleteBtn>검색어 전체삭제</DeleteBtn>
+      <DeleteBtn onClick={onRemoveAllRecentKeyword}>검색어 전체삭제</DeleteBtn>
     </RecentSearchWrap>
   );
 }
 const RecentSearchWrap = styled.div`
   margin-top: 28.68px;
-  /* box-shadow: inset 0 0 10px red; */
   p:first-child {
     font-size: var(--font-sm);
     color: var(--sub-font-color);
@@ -53,7 +44,6 @@ const RecentSearchList = styled.ul`
   gap: 4px;
   margin-bottom: 8.5px;
   li {
-    /* box-shadow: inset 0 0 10px red; */
     display: flex;
     justify-content: space-between;
     padding: 12px 0;

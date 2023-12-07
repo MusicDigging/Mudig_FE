@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
 import { privateInstance } from '../../library/apis/axiosInstance';
 export default function SearchInput(props) {
-  const { setResult } = props;
+  const { setResult, onAddRecentKeyword } = props;
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
@@ -13,6 +13,7 @@ export default function SearchInput(props) {
   const SearchSubmit = (e) => {
     e.preventDefault();
     getSearchData(inputValue);
+    onAddRecentKeyword(inputValue);
   };
 
   const getSearchData = async (query) => {

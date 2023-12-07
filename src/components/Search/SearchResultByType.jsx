@@ -43,19 +43,23 @@ export default function SearchResultByType(props) {
       {/* 유저 결과만 */}
       {type === 'user' && (
         <UserList>
-          {result.users.map((user) => {
-            return (
-              <UserItem key={user.id}>
-                <UserImgBox>
-                  <CircleImage src={user.image} alt='유저이미지' />
-                </UserImgBox>
-                <UserInfoBox>
-                  <div>{maskedEmail(user.email)}</div>
-                  <p>{user.name}</p>
-                </UserInfoBox>
-              </UserItem>
-            );
-          })}
+          {result.users.length !== 0 ? (
+            result.users.map((user) => {
+              return (
+                <UserItem key={user.id}>
+                  <UserImgBox>
+                    <CircleImage src={user.image} alt='유저이미지' />
+                  </UserImgBox>
+                  <UserInfoBox>
+                    <div>{maskedEmail(user.email)}</div>
+                    <p>{user.name}</p>
+                  </UserInfoBox>
+                </UserItem>
+              );
+            })
+          ) : (
+            <EmptySearch />
+          )}
         </UserList>
       )}
     </>
@@ -77,6 +81,11 @@ const UserItem = styled.li`
 const UserImgBox = styled.div`
   width: 60px;
   height: 60px;
+  /* img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  } */
 `;
 const UserInfoBox = styled.div`
   font-size: var(--font-md);
