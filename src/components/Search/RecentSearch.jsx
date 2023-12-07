@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
 import CloseIcon from '../../img/close-icon.svg';
 import TimePastIcon from '../../img/time-past-icon.svg';
@@ -7,6 +5,7 @@ export default function RecentSearch({
   recentKeywords,
   onRemoveRecentKeyword,
   onRemoveAllRecentKeyword,
+  getSearchData,
 }) {
   return (
     <RecentSearchWrap>
@@ -17,7 +16,9 @@ export default function RecentSearch({
             <li key={id}>
               <div>
                 <img src={TimePastIcon} alt='최근검색' />
-                <button>{keyword}</button>
+                <button onClick={() => getSearchData(keyword)}>
+                  {keyword}
+                </button>
               </div>
               <button onClick={() => onRemoveRecentKeyword(id)}>
                 <img src={CloseIcon} alt='삭제' />

@@ -7,6 +7,7 @@ import { useQuery } from 'react-query';
 import { useEffect } from 'react';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultByType from '../../components/Search/SearchResultByType';
+import { privateInstance } from '../../library/apis/axiosInstance';
 export default function Search() {
   const [result, setResult] = useState();
   const [currentNav, setCurrentNav] = useState({
@@ -17,6 +18,22 @@ export default function Search() {
   const [recentKeywords, setRecentKeywords] = useState(
     JSON.parse(localStorage.getItem('recent_keywords')) || [],
   );
+  const [inputValue, setInputValue] = useState('');
+
+  const SearchSubmit = (e) => {
+    e.preventDefault();
+    getSearchData(inputValue);
+    handleAddRecentKeyword(inputValue);
+  };
+
+  const getSearchData = async (query) => {
+    try {
+      const res = await privateInstance.get(`/playlist/search/?query=${query}`);
+      setResult(res.data);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
   // 최근 검색어 추가
   const handleAddRecentKeyword = (keyword) => {
     const isKeywordExist = recentKeywords.some(
@@ -41,9 +58,7 @@ export default function Search() {
   };
   // 최근 검색어 선택 삭제
   const handleRemoveRecentKeyword = (id) => {
-    console.log('clicked');
     const nextKeywords = recentKeywords.filter((keyword) => keyword.id !== id);
-    console.log(nextKeywords);
     setRecentKeywords(nextKeywords);
   };
   // 최근 검색어 전체 삭제
@@ -61,6 +76,8 @@ export default function Search() {
     <S.SearchWrap>
       <SearchInput
         setResult={setResult}
+        setInputValue={setInputValue}
+        onSubmit={SearchSubmit}
         onAddRecentKeyword={handleAddRecentKeyword}
       />
       {/* 최근 검색어 */}
@@ -69,6 +86,7 @@ export default function Search() {
           recentKeywords={recentKeywords.slice(0, 3)}
           onRemoveRecentKeyword={handleRemoveRecentKeyword}
           onRemoveAllRecentKeyword={handleRemoveAllRecentKeyword}
+          getSearchData={getSearchData}
         />
       )}
       {/* 검색 결과 */}

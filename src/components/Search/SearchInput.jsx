@@ -1,32 +1,12 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
-import { privateInstance } from '../../library/apis/axiosInstance';
-export default function SearchInput(props) {
-  const { setResult, onAddRecentKeyword } = props;
-  const [inputValue, setInputValue] = useState('');
-
+export default function SearchInput({ setInputValue, onSubmit }) {
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  const SearchSubmit = (e) => {
-    e.preventDefault();
-    getSearchData(inputValue);
-    onAddRecentKeyword(inputValue);
-  };
-
-  const getSearchData = async (query) => {
-    try {
-      const res = await privateInstance.get(`/playlist/search/?query=${query}`);
-      setResult(res.data);
-    } catch (err) {
-      console.error(err.response.data);
-    }
-  };
-
   return (
-    <form onSubmit={SearchSubmit}>
+    <form onSubmit={onSubmit}>
       <Input
         onChange={handleInputChange}
         type='text'
