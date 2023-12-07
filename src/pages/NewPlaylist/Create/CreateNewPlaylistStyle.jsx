@@ -69,7 +69,7 @@ export const Answer = styled(TextareaAutosize)`
 export const LinkBtn = styled(Link)`
   position: absolute;
   left: 50%;
-  bottom: 24px;
+  bottom: 107px;
   transform: translate(-50%, 0);
   width: 328px;
   height: 44px;
