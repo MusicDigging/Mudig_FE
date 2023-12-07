@@ -4,7 +4,29 @@ import { Button } from '../../components/common/Button/Button';
 import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
+import { userInfoAtom } from '../../library/atom';
+import { loginUser } from '../../library/apis/api';
+import { useMutation } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+
 export default function Login() {
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+
+  const { mutate } = useMutation(loginUser, {
+    onSuccess: (data) => {
+      const { id, email, name, image, genre, about, rep_playlist } = data.user;
+      setUserInfo({ id, email, name, image, genre, about, rep_playlist });
+      console.log('로그인 성공', data);
+    },
+    onError: (error) => {
+      console.error('로그인 실패', error);
+    },
+  });
+
+  const handleLogin = (data) => {
+    mutate(data);
+  };
+
   return (
     <LoginWrap>
       <LoginHeader>
@@ -35,7 +57,7 @@ export default function Login() {
           />
         </LoginBtnBox>
         <Span>또는</Span>
-        <AuthForm />
+        <AuthForm onSubmit={handleLogin} />
         <NavUserInfo>
           <NavUserInfoLink> 회원가입</NavUserInfoLink>
           <NavUserInfoLink>아이디 · 비밀번호 찾기 </NavUserInfoLink>
