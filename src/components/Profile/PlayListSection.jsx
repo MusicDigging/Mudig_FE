@@ -60,7 +60,7 @@ export default function PlayListSection() {
 }
 
 const PlayListSectionWrap = styled.section`
-  padding: 26px 16px 0;
+  padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -95,6 +95,12 @@ const PlayListBox = styled.div`
 `;
 
 const PlayBtnStyle = styled.button`
+  width: 24px;
+  display: flex;
+  justify-content: center;
+  img {
+    width: 14px;
+  }
   display: flex;
   gap: 4px;
 `;
