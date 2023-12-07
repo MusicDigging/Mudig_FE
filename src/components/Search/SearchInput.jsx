@@ -1,16 +1,39 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
+import { privateInstance } from '../../library/apis/axiosInstance';
 export default function SearchInput(props) {
-  const { children, onFocus, onBlur } = props;
+  const { setResult } = props;
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const SearchSubmit = (e) => {
+    e.preventDefault();
+    getSearchData(inputValue);
+  };
+
+  const getSearchData = async (query) => {
+    try {
+      const res = await privateInstance.get(`/playlist/search/?query=${query}`);
+      setResult(res.data);
+    } catch (err) {
+      console.error(err.response.data);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={SearchSubmit}>
       <Input
+        onChange={handleInputChange}
         type='text'
-        onFocus={onFocus}
-        onBlur={onBlur}
         placeholder='검색어를 입력하세요.'
       />
-      {children}
+      <button>
+        <img src={SearchIcon} alt='검색버튼' />
+      </button>
     </form>
   );
 }
