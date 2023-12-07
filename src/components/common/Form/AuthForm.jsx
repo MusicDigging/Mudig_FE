@@ -2,8 +2,14 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
+import { userInfoAtom } from '../../../library/atom';
+import { loginUser } from '../../../library/apis/api';
+import { useMutation } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-export const AuthForm = ({ onSubmit }) => {
+export const AuthForm = () => {
+  const navigate = useNavigate();
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
@@ -15,13 +21,42 @@ export const AuthForm = ({ onSubmit }) => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+
+  const { mutate } = useMutation(loginUser, {
+    onSuccess: (data) => {
+      const { id, email, name, image, genre, about, rep_playlist } = data.user;
+      const token = data.token;
+      setUserInfo({
+        id,
+        email,
+        name,
+        image,
+        genre,
+        about,
+        rep_playlist,
+        token,
+      });
+      navigate('/main');
+      console.log('로그인 성공', data);
+    },
+    onError: (error) => {
+      console.error('로그인 실패', error);
+      methods.setError('email', { message: errorMessage }); //setError methods로 에러 설정
+      methods.setError('password', { message: errorMessage }); //setError methods로 에러 설정
+    },
+  });
+
+  const handleLogin = (data) => {
+    mutate(data);
+  };
+
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
-      <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
+      <FormContainer onSubmit={methods.handleSubmit(handleLogin)}>
         <AuthInput
           validation={{
             pattern: {
@@ -57,9 +92,12 @@ export const AuthForm = ({ onSubmit }) => {
           />
           <CheckboxLabel>로그인 상태 유지</CheckboxLabel>
         </CheckboxContainer>
-        {errors.email && errors.password && (
-          <ErrorMsg>{errors.email.message || errors.password.message}</ErrorMsg>
-        )}
+        {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
+        {errors.email || errors.password ? (
+          <ErrorMsg>
+            {errors.email?.message || errors.password?.message}
+          </ErrorMsg>
+        ) : null}
         <Button
           btnMargin={'16px 0 0 0'}
           text='로그인'

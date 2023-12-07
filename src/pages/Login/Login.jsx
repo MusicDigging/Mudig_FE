@@ -10,22 +10,7 @@ import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 
 export default function Login() {
-  const setUserInfo = useSetRecoilState(userInfoAtom);
-
-  const { mutate } = useMutation(loginUser, {
-    onSuccess: (data) => {
-      const { id, email, name, image, genre, about, rep_playlist } = data.user;
-      setUserInfo({ id, email, name, image, genre, about, rep_playlist });
-      console.log('로그인 성공', data);
-    },
-    onError: (error) => {
-      console.error('로그인 실패', error);
-    },
-  });
-
-  const handleLogin = (data) => {
-    mutate(data);
-  };
+  // const setUserInfo = useSetRecoilState(userInfoAtom);
 
   return (
     <LoginWrap>
@@ -57,7 +42,7 @@ export default function Login() {
           />
         </LoginBtnBox>
         <Span>또는</Span>
-        <AuthForm onSubmit={handleLogin} />
+        <AuthForm />
         <NavUserInfo>
           <NavUserInfoLink> 회원가입</NavUserInfoLink>
           <NavUserInfoLink>아이디 · 비밀번호 찾기 </NavUserInfoLink>
