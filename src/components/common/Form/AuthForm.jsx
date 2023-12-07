@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
+
 export const AuthForm = () => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;

@@ -1,7 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
+import { SignUpAtom } from '../../library/atom';
+import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 export default function SignupDetail() {
+  const setSignup = useSetRecoilState(SignUpAtom);
+  const navigate = useNavigate();
+  const onSubmit = ({ email, password }) => {
+    setSignup({ email, password });
+    navigate('/setprofile');
+  };
+
   return (
     <SingupDetailWrap>
       <PageNum>1/3</PageNum>
@@ -12,7 +22,7 @@ export default function SignupDetail() {
         </DetailTitle>
       </SignupDetailBox>
       <Main>
-        <SignupForm />
+        <SignupForm onSubmit={onSubmit} />
       </Main>
     </SingupDetailWrap>
   );
