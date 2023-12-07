@@ -1,47 +1,23 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Image } from '../common/Image/Image';
 
 export default function MainPlayList(props) {
-  const music = props.data || [];
+  const { id } = props;
+  const musicData = props.data || [];
   return (
     <MainPlayListWrap>
       <ul className='scrollable-element'>
-        {/* {music.map((item) => (
-          <>
+        {musicData.map((music) => (
+          <Link to='/playlist/detail' key={music.id} state={{ id }}>
             <StyledListItem>
-              <Image src='https://picsum.photos/200' alt='플리 이미지' />
-
-              <h4>All I Want for Christmas Is You</h4>
-              <p>Mariah Carey(머라이어 캐리)</p>
+              <Image src={music.thumbnail} alt='음악 이미지' />
+              <h4>{music.song}</h4>
+              <p>{music.singer}</p>
             </StyledListItem>
-          </>
-        ))} */}
-        <StyledListItem>
-          <Image src='https://picsum.photos/200' alt='플리 이미지' />
-
-          <h4>All I Want for Christmas Is You</h4>
-          <p>Mariah Carey(머라이어 캐리)</p>
-        </StyledListItem>
-        <StyledListItem>
-          <Image src='https://picsum.photos/200' alt='플리 이미지' />
-
-          <h4>All I Want for Christmas Is You</h4>
-          <p>Mariah Carey(머라이어 캐리)</p>
-        </StyledListItem>
-        <StyledListItem>
-          <Image src='https://picsum.photos/200' alt='플리 이미지' />
-
-          <h4>All I Want for Christmas Is You</h4>
-          <p>Mariah Carey(머라이어 캐리)</p>
-        </StyledListItem>
-        <StyledListItem>
-          <Image src='https://picsum.photos/200' alt='플리 이미지' />
-
-          <h4>All I Want for Christmas Is You</h4>
-          <p>Mariah Carey(머라이어 캐리)</p>
-        </StyledListItem>
+          </Link>
+        ))}
       </ul>
     </MainPlayListWrap>
   );
@@ -67,7 +43,7 @@ const MainPlayListWrap = styled.div`
     &::-webkit-scrollbar-thumb {
       background-color: transparent; /* 스크롤 바 핸들 투명하게 */
       border-radius: 10px;
-      border: 3px solid #191919; /* 스크롤 바 핸들 테두리 투명하게 */
+      background-color: #191919;
     }
   }
 `;

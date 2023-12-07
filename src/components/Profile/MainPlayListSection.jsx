@@ -1,9 +1,8 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { privateInstance } from '../../library/apis/axiosInstance';
+import { useGetPlaylistMusic } from '../../hooks/queries/usePlaylist';
 
 import MainPlayList from './MainPlayList';
 import { Image } from '../common/Image/Image';
@@ -13,20 +12,12 @@ import VinylImg from '../../img/vinyl-record-img.svg';
 import WhitePlayIcon from '../../img/play-icon-white.svg';
 
 export default function MainPlayListSection(props) {
-  const { id } = props;
-  const { data: repPlaylist, isLoading: repPlaylistLoading } = useQuery(
-    'get-profile',
-    () => {
-      return privateInstance.get(`/playlist/detail/${id}/`);
-    },
-    {
-      select: (response) => response.data,
-    },
-  );
+  const { id, title, thumbnail, music } = props.data;
+  const { data: musicData, isLoading: musicLoading } =
+    useGetPlaylistMusic(music);
 
-  if (repPlaylistLoading) return;
+  if (musicLoading) return;
 
-  const { title, thumbnail, music } = repPlaylist;
   return (
     <MainPlayListSectionWrap>
       <PlayListHeader>
@@ -37,16 +28,17 @@ export default function MainPlayListSection(props) {
       <MainPlayListInfoBox>
         <Link to='/playlist/detail' state={{ id }}>
           <MainPlayListImg>
-            <Image src='https://picsum.photos/200' alt='' />
+            <Image
+              src={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${thumbnail}`}
+              alt=''
+            />
             <img src={VinylImg} alt='레코드 이미지' />
           </MainPlayListImg>
-          {/* <h4>{title}</h4> */}
-          <h4>다가오는 크리스마스를 기다리며</h4>
+          <h4>{title}</h4>
         </Link>
-        {/* <p>{music.length}곡</p> */}
-        <p>17곡</p>
+        <p>{music.length}곡</p>
       </MainPlayListInfoBox>
-      <MainPlayList data={music} />
+      <MainPlayList id={id} data={musicData} />
     </MainPlayListSectionWrap>
   );
 }

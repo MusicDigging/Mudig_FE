@@ -13,8 +13,8 @@ import PlayListSection from '../../components/Profile/PlayListSection';
 import * as S from './ProfileStyle';
 
 export default function Profile(props) {
-  const my_id = 13;
-  const user_id = 13;
+  const my_id = 25;
+  const user_id = 25;
   const { data: profileData, isLoading: profileLoading } =
     useGetProfile(user_id);
   const { data: followingData, isLoading: followingLoading } =
@@ -25,7 +25,12 @@ export default function Profile(props) {
   if (profileLoading || followingLoading || followerLoading)
     return <>Loading...</>;
 
-  // console.log(profileData, followerData, followingData);
+  const repPlaylist = profileData.playlist.filter(
+    (item) => item.id === profileData.profile.rep_playlist,
+  )[0];
+  const playlist = profileData.playlist.sort(
+    (a, b) => new Date(b.created_at) - new Date(a.created_at),
+  );
 
   return (
     <S.ProfileWrap>
@@ -37,9 +42,8 @@ export default function Profile(props) {
           follower: followerData,
         }}
       />
-      {/* profileData?.profile.rep_playlist && */}
-      <MainPlayListSection data={profileData?.profile.rep_playlist} />
-      <PlayListSection data={profileData.playlist} />
+      <MainPlayListSection data={repPlaylist} />
+      <PlayListSection data={playlist} />
     </S.ProfileWrap>
   );
 }
