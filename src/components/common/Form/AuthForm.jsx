@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-
-export const AuthForm = () => {
+export const AuthForm = ({ onSubmit }) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
@@ -16,7 +15,7 @@ export const AuthForm = () => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-  const onSubmit = (data) => console.log(data);
+
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
   const { toggleShowPassword, showPassword } = usePasswordToggle();
