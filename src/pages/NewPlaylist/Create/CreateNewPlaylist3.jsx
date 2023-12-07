@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
+
+import { useCreatePlaylist } from '../../../hooks/queries/usePlaylist';
 
 import Loading from '../../../components/Loading/Loading';
 
@@ -8,6 +11,12 @@ import CharacterImg from '../../../img/character-img.svg';
 import * as S from './CreateNewPlaylistStyle';
 
 export default function CreateNewPlaylist3() {
+  const navigate = useNavigate();
+  const {
+    mutate: createPlaylist,
+    isLoading,
+    data: playlist,
+  } = useCreatePlaylist();
   const location = useLocation();
   const state = location.state || {};
   const { situations, genre } = state;
@@ -16,11 +25,15 @@ export default function CreateNewPlaylist3() {
   const handleCompleteBtnClick = (e) => {
     const data = { situations, genre: genre.join(','), year };
 
-    console.log(data);
+    createPlaylist(data);
+    if (!isLoading) {
+      navigate('/playlist/summary', { state: { playlist } });
+    }
   };
 
   return (
     <S.CreateNewPlaylistWrap>
+      {isLoading && <Loading isLoading={isLoading} />}
       <h1 className='a11y-hidden'>플레이리스트 생성하기</h1>
       <S.PageNum>3/3</S.PageNum>
 
