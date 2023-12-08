@@ -38,7 +38,7 @@ export default function PlayListSection(props) {
             playlists.map((playlist) => (
               <PlayListItem
                 key={playlist.id}
-                img={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${playlist.thumbnail}`}
+                img={`${playlist.thumbnail}`}
                 title={playlist.title}
                 info={`${playlist.music.length}곡`}
               >

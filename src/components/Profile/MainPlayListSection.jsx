@@ -28,10 +28,7 @@ export default function MainPlayListSection(props) {
       <MainPlayListInfoBox>
         <Link to='/playlist/detail' state={{ id }}>
           <MainPlayListImg>
-            <Image
-              src={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${thumbnail}`}
-              alt=''
-            />
+            <Image src={thumbnail} alt='' />
             <img src={VinylImg} alt='레코드 이미지' />
           </MainPlayListImg>
           <h4>{title}</h4>

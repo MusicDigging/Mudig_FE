@@ -48,9 +48,7 @@ export default function ProfileSection(props) {
       </ProfileNavBtn>
       <UserInfoBox>
         <ProfileInfo>
-          <ProfileImage
-            src={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${profile?.image}`}
-          />
+          <ProfileImage src={profile?.image} />
           <strong>{profile?.name}</strong>
         </ProfileInfo>
         <UserInfo>
