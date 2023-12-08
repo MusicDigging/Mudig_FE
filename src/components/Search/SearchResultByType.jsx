@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CircleImage } from '../common/Image/Image';
 import PlayList from '../common/PlayList/PlayList';
@@ -33,7 +32,7 @@ export default function SearchResultByType(props) {
                 img={item.playlist.thumbnail}
                 title={item.playlist.title}
                 info={item.writer.name}
-              ></PlayListItem>
+              />
             ))
           ) : (
             <EmptySearch />

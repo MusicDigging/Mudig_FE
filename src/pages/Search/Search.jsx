@@ -1,10 +1,9 @@
 import SearchInput from '../../components/Search/SearchInput';
 import RecentSearch from '../../components/Search/RecentSearch';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as S from './SearchStyle';
 import SearchResultAll from '../../components/Search/SearchResultAll';
 import { useQuery } from 'react-query';
-import { useEffect } from 'react';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultByType from '../../components/Search/SearchResultByType';
 import { privateInstance } from '../../library/apis/axiosInstance';
@@ -96,10 +95,7 @@ export default function Search() {
           {currentNav.all && (
             <SearchResultAll result={result} setCurrentNav={setCurrentNav} />
           )}
-          {currentNav.playlist && (
-            <SearchResultByType result={result} currentNav={currentNav} />
-          )}
-          {currentNav.user && (
+          {(currentNav.playlist || currentNav.user) && (
             <SearchResultByType result={result} currentNav={currentNav} />
           )}
         </>
