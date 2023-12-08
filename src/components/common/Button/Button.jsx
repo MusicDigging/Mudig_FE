@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 export function Button(props) {
   const {
     type,
@@ -53,18 +52,29 @@ const ButtonStyle = styled.button`
 `;
 
 export function ChipButton(props) {
-  const { name } = props;
-  //관심사 최대 3개까지 설정 이상 넘어갈 시 버튼 disabled 주기 & 백엔드로 관심사 보낼땐 문자열로 split해서 보낼 것
-  const [chipClick, setChipClick] = useState(false);
-  const [selectChip, setSelectChip] = useState([]);
+  const { name, onSelect, selectedChips } = props;
+  const isChipSelected = selectedChips.includes(name);
+
   const handleClick = () => {
-    setChipClick((prev) => !prev);
-    selectChip.push(name);
-    console.log(selectChip);
+    if (isChipSelected) {
+      // 이미 선택된 chip인지 확인
+      onSelect(selectedChips.filter((chipName) => chipName !== name));
+    } else {
+      // 최대 chip 3개까지 설정
+      if (selectedChips.length < 3) {
+        onSelect([...selectedChips, name]);
+      } else {
+        alert('관심사는 최대 3개까지 설정 가능합니다.');
+      }
+    }
   };
 
   return (
-    <ChipButtonStyle onClick={handleClick} clicked={chipClick}>
+    <ChipButtonStyle
+      type='button'
+      onClick={handleClick}
+      clicked={isChipSelected}
+    >
       {name}
     </ChipButtonStyle>
   );
