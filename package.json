@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "react-textarea-autosize": "^8.5.3",
     "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
     "styled-components": "^5.3.10",
     "styled-reset": "^4.5.1",
     "web-vitals": "^2.1.4"
