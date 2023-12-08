@@ -66,7 +66,6 @@ export default function PlayListSection(props) {
 }
 
 const PlayListSectionWrap = styled.section`
-  height: 100%;
   padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
