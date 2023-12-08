@@ -9,7 +9,7 @@ import Signup from '../pages/Signup/Signup';
 import SignupDetail from '../pages/Signup/SignupDetail';
 import Login from '../pages/Login/Login';
 import SetProfile from '../pages/SetProfile/SetProfile';
-import EditProfile from '../pages/Profile/EditProfile';
+import EditProfile from '../pages/EditProfile/EditProfile';
 import Profile from '../pages/Profile/Profile';
 
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
