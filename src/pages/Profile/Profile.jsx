@@ -14,7 +14,7 @@ import * as S from './ProfileStyle';
 
 export default function Profile(props) {
   const my_id = 25;
-  const user_id = 25;
+  const user_id = 12;
   const { data: profileData, isLoading: profileLoading } =
     useGetProfile(user_id);
   const { data: followingData, isLoading: followingLoading } =
@@ -31,19 +31,19 @@ export default function Profile(props) {
   const playlist = profileData.playlist.sort(
     (a, b) => new Date(b.created_at) - new Date(a.created_at),
   );
-
+  console.log(repPlaylist);
   return (
     <S.ProfileWrap>
       <ProfileSection
-        profileType={user_id === my_id ? 'my' : 'other'}
+        isMyProfile={my_id === user_id ? true : false}
         data={{
           ...profileData,
           following: followingData,
           follower: followerData,
         }}
       />
-      <MainPlayListSection data={repPlaylist} />
-      <PlayListSection data={playlist} />
+      {repPlaylist && <MainPlayListSection data={repPlaylist} />}
+      <PlayListSection data={playlist} isMyProfile={my_id === user_id} />
     </S.ProfileWrap>
   );
 }

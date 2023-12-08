@@ -9,7 +9,7 @@ import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 import MoreBtnIcon from '../../img/more-icon.svg';
 export default function ProfileSection(props) {
   const navigate = useNavigate();
-  const { profileType } = props;
+  const { isMyProfile } = props;
   const data = props.data;
   const { follower, following, profile, playlist } = data;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function ProfileSection(props) {
         <button>
           <img src={BackBtnIcon} alt='뒤로가기 버튼' />
         </button>
-        {profileType === 'my' && (
+        {isMyProfile && (
           <div>
             <button onClick={handleMoreBtnClick}>
               <img src={MoreBtnIcon} alt='' />
@@ -62,10 +62,10 @@ export default function ProfileSection(props) {
               <p>팔로워</p>
             </MoveFollowBtn>
           </FollowInfo>
-          {profileType === 'other' && (
+          {!isMyProfile && (
             <FollowBtn onClick={handleFollowBtnClick}>팔로우</FollowBtn>
           )}
-          {profileType === 'my' && (
+          {isMyProfile && (
             <MoveEditBtn to='/user/profile/edit' state={{ profile, playlist }}>
               프로필 수정
             </MoveEditBtn>
