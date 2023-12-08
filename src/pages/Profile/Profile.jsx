@@ -14,7 +14,7 @@ import * as S from './ProfileStyle';
 
 export default function Profile(props) {
   const my_id = 25;
-  const user_id = 12;
+  const user_id = 25;
   const { data: profileData, isLoading: profileLoading } =
     useGetProfile(user_id);
   const { data: followingData, isLoading: followingLoading } =
