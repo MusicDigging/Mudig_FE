@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import CharacterImg from '../../../img/character-img2.svg';
-import * as S from './CreateNewPlaylistStyle';
+import CharacterImg from '../../img/character-img2.svg';
+import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist1() {
   const location = useLocation();

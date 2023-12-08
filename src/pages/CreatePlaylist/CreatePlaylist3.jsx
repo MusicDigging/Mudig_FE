@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import { useCreatePlaylist } from '../../../hooks/queries/usePlaylist';
+import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
-import Loading from '../../../components/Loading/Loading';
+import Loading from '../../components/Loading/Loading';
 
-import CharacterImg from '../../../img/character-img.svg';
-import * as S from './CreateNewPlaylistStyle';
+import CharacterImg from '../../img/character-img.svg';
+import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist3() {
   const navigate = useNavigate();

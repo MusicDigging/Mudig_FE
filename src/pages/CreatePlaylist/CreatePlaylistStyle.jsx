@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
-import BgImg from '../../../img/background-img.svg';
+import BgImg from '../../img/background-img.svg';
 import { Link } from 'react-router-dom';
 
 export const CreateNewPlaylistWrap = styled.main`

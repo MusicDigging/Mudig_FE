@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import NewPlaylistChip from '../../../components/NewPlaylist/NewPlaylistChip';
+import NewPlaylistChip from '../../components/NewPlaylist/NewPlaylistChip';
 
-import CharacterImg from '../../../img/character-img3.svg';
-import * as S from './CreateNewPlaylistStyle';
+import CharacterImg from '../../img/character-img3.svg';
+import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist2() {
   const location = useLocation();
