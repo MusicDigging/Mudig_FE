@@ -5,6 +5,7 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 
 import PlayIcon from '../../img/play-icon.svg';
+import { Link } from 'react-router-dom';
 
 export default function PlayListSection(props) {
   const [playlists, setPlaylists] = useState(props.data);
@@ -18,7 +19,9 @@ export default function PlayListSection(props) {
 
   const handleSortPopularBtn = () => {
     const sortedPlaylists = playlists.sort(
-      (a, b) => new Date(b.like) - new Date(a.like),
+      (a, b) =>
+        new Date(b.like_count) - new Date(a.like_count) ||
+        new Date(b.created_at) - new Date(a.created_at),
     );
     setPlaylists(sortedPlaylists);
   };
@@ -30,22 +33,23 @@ export default function PlayListSection(props) {
           <h2>내가 생성한 플레이리스트</h2>
           <SortBtnBox>
             <button onClick={handleSortLatestBtn}>최신순</button>|
-            <button>인기순</button>
+            <button onClick={handleSortPopularBtn}>인기순</button>
           </SortBtnBox>
         </PlayListHeader>
         <PlayList>
           {playlists &&
             playlists.map((playlist) => (
-              <PlayListItem
-                key={playlist.id}
-                img={`${playlist.thumbnail}`}
-                title={playlist.title}
-                info={`${playlist.music.length}곡`}
-              >
-                <PlayBtnStyle type='button'>
-                  <img src={PlayIcon} alt='재생 바로가기 아이콘' />
-                </PlayBtnStyle>
-              </PlayListItem>
+              <Link to={`/playlist/detail/${playlist.id}`} key={playlist.id}>
+                <PlayListItem
+                  img={`${playlist.thumbnail}`}
+                  title={playlist.title}
+                  info={`${playlist.music.length}곡`}
+                >
+                  <PlayBtnStyle type='button'>
+                    <img src={PlayIcon} alt='재생 바로가기 아이콘' />
+                  </PlayBtnStyle>
+                </PlayListItem>
+              </Link>
             ))}
         </PlayList>
       </PlayListBox>

@@ -6,11 +6,12 @@ import { Image } from '../common/Image/Image';
 export default function MainPlayList(props) {
   const { id } = props;
   const musicData = props.data || [];
+
   return (
     <MainPlayListWrap>
       <ul className='scrollable-element'>
         {musicData.map((music) => (
-          <Link to='/playlist/detail' key={music.id} state={{ id }}>
+          <Link to={`/playlist/detail/${id}`} key={music.id} state={{ id }}>
             <StyledListItem>
               <Image src={music.thumbnail} alt='음악 이미지' />
               <h4>{music.song}</h4>

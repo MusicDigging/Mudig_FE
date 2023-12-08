@@ -26,7 +26,7 @@ export default function MainPlayListSection(props) {
         </h2>
       </PlayListHeader>
       <MainPlayListInfoBox>
-        <Link to='/playlist/detail' state={{ id }}>
+        <Link to={`/playlist/detail/${id}`} state={{ id }}>
           <MainPlayListImg>
             <Image src={thumbnail} alt='' />
             <img src={VinylImg} alt='레코드 이미지' />
