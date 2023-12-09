@@ -97,7 +97,7 @@ export default function Signup() {
             btnColor={'var(--font-color)'}
             imgSrc={KakaoIcon}
             onClick={kakaoLoginHandler}
-            alt='카카오로 로그인하기 버튼'
+            alt='카카오로 회원가입하기 버튼'
           />
           <Button
             text='구글로 시작하기'
@@ -106,18 +106,21 @@ export default function Signup() {
             btnColor={'var(--font-color)'}
             imgSrc={GoogleIcon}
             onClick={googleLoginHandler}
-            alt='구글로 로그인하기 버튼'
+            alt='구글로 회원가입하기 버튼'
           />
         </S.SignupBtnBox>
         <S.Span>또는</S.Span>
         <Button
           text='이메일로 시작하기'
           btnBorder='1px solid #DBDBDB'
-          alt='구글로 로그인하기 버튼'
+          alt='이메일로 회원가입하기 버튼'
+          onClick={() => navigate('/register/detail')}
         />
         <S.NavLoign>
           <S.NavSpan>이미 계정이 있으신가요? </S.NavSpan>
-          <S.LinkLogin>로그인하기</S.LinkLogin>
+          <S.LinkLogin onClick={() => navigate('/login')}>
+            로그인하기
+          </S.LinkLogin>
         </S.NavLoign>
       </S.SignupMain>
       <S.Footer>
