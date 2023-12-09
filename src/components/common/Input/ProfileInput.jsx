@@ -147,9 +147,9 @@ export default function ProfileInput(props) {
 }
 
 const FormWrap = styled.form`
-  padding-top: 16px;
+  padding-top: 8px;
   font-size: var(--font-md);
-
+  position: relative;
   height: 100%;
 `;
 
@@ -182,7 +182,7 @@ const InputStyle = styled.input`
 
 const ButtonBox = styled.div`
   position: absolute;
-  bottom: 24px;
+  bottom: 0px;
 `;
 
 const CharacterCount = styled.div`

@@ -127,23 +127,24 @@ export default function SetProfile() {
             />
           </ImgUploadBtn>
         </ProfileImage>
+        <ProfileInputBox>
+          {/* 프로필 설정 input, button  */}
+          <ProfileInput
+            onSubmit={onSubmit}
+            btnText='다음'
+            onChipSelect={handleChipSelect}
+          />
+        </ProfileInputBox>
       </SetProfileBox>
-      <ProfileInputBox>
-        {/* 프로필 설정 input, button  */}
-        <ProfileInput
-          onSubmit={onSubmit}
-          btnText='다음'
-          onChipSelect={handleChipSelect}
-        />
-      </ProfileInputBox>
     </SetProfileWrap>
   );
 }
 
 const SetProfileWrap = styled.div`
   padding: 56px 16px 24px;
-  display: flex;
   width: 100%;
+  height: 100%;
+  display: flex;
   flex-direction: column;
 `;
 
@@ -151,9 +152,10 @@ const SetProfileBox = styled.div`
   margin-top: 58px;
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
-  gap: 53px;
+  gap: 40px;
 `;
 
 const PageNum = styled.span`
@@ -182,5 +184,5 @@ const ImgUploadBtn = styled.button`
 `;
 
 const ProfileInputBox = styled.div`
-  margin-top: 32px;
+  height: 100%;
 `;
