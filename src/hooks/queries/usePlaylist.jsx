@@ -1,5 +1,18 @@
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
+
+export const useCreatePlaylist = () => {
+  const queryClient = useQueryClient();
+
+  const createPlaylist = (data) => {
+    const response = privateInstance.post('/playlist/create/', data);
+    return response;
+  };
+
+  const mutation = useMutation(createPlaylist);
+
+  return mutation;
+};
 
 export const useGetPlaylistDetail = (id) => {
   const { data, isLoading } = useQuery(

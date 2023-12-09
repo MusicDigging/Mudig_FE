@@ -12,13 +12,12 @@ import SetProfile from '../pages/SetProfile/SetProfile';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import Profile from '../pages/Profile/Profile';
 
-import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
 import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
 import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
-import CreateNewPlaylist1 from '../pages/NewPlaylist/Create/CreateNewPlaylist1';
-import CreateNewPlaylist2 from '../pages/NewPlaylist/Create/CreateNewPlaylist2';
-import CreateNewPlaylist3 from '../pages/NewPlaylist/Create/CreateNewPlaylist3';
+import CreatePlaylist1 from '../pages/CreatePlaylist/CreatePlaylist1';
+import CreatePlaylist2 from '../pages/CreatePlaylist/CreatePlaylist2';
+import CreatePlaylist3 from '../pages/CreatePlaylist/CreatePlaylist3';
 
 import Search from '../pages/Search/Search';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
@@ -33,7 +32,7 @@ export function Router() {
   return (
     <AnimatePresence>
       <Routes>
-        <Route path='/' element={<SetProfile />} />
+        <Route path='/' element={<Splash />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/detail' element={<SignupDetail />} />
@@ -43,9 +42,9 @@ export function Router() {
           <Route path='/intro' element={<Intro />} />
           <Route path='/search' element={<Search />} />
           <Route path='/randomplay' element={<RandomMusic />} />
-          <Route path='/playlist/create' element={<CreateNewPlaylist1 />} />
-          <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
-          <Route path='/playlist/create3' element={<CreateNewPlaylist3 />} />
+          <Route path='/playlist/create1' element={<CreatePlaylist1 />} />
+          <Route path='/playlist/create2' element={<CreatePlaylist2 />} />
+          <Route path='/playlist/create3' element={<CreatePlaylist3 />} />
           <Route path='/playlist/summary' element={<PlaylistSummary />} />
           <Route path='/user' element={<Outlet />}>
             <Route path='profile/my' element={<Profile />} />
