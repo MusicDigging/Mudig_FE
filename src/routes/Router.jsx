@@ -12,7 +12,6 @@ import SetProfile from '../pages/SetProfile/SetProfile';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import Profile from '../pages/Profile/Profile';
 
-import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
 import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
 import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
