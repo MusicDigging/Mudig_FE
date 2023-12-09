@@ -9,9 +9,9 @@ import Signup from '../pages/Signup/Signup';
 import SignupDetail from '../pages/Signup/SignupDetail';
 import Login from '../pages/Login/Login';
 import SetProfile from '../pages/SetProfile/SetProfile';
-import EditProfile from '../pages/Profile/EditProfile';
-import MyProfile from '../pages/Profile/MyProfile';
-import OtherProfile from '../pages/Profile/OtherProfile';
+import EditProfile from '../pages/EditProfile/EditProfile';
+import Profile from '../pages/Profile/Profile';
+
 import NewPlaylist from '../pages/NewPlaylist/NewPlaylist';
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
 import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
@@ -47,21 +47,18 @@ export function Router() {
           <Route path='/playlist/create2' element={<CreateNewPlaylist2 />} />
           <Route path='/playlist/create3' element={<CreateNewPlaylist3 />} />
           <Route path='/playlist/summary' element={<PlaylistSummary />} />
-          <Route path='/user/profile/edit' element={<EditProfile />} />
-          <Route path='/user/profile/follow' element={<Follow />} />
-          <Route path='/user/profile/edit/resign' element={<Resign />} />
-          <Route path='/user/profile' element={<Outlet />}>
-            <Route path='my' element={<MyProfile />} />
-            <Route path=':id' element={<OtherProfile />} />
-            <Route path='edit' element={<EditProfile />} />
-            <Route path='edit/password' element={<ChangePassword />} />
-            <Route path='edit/resign' element={<Resign />} />
+          <Route path='/user' element={<Outlet />}>
+            <Route path='profile/my' element={<Profile />} />
+            <Route path='profile/:id' element={<Profile />} />
+            <Route path='profile/follow' element={<Follow />} />
+            <Route path='profile/edit' element={<EditProfile />} />
+            <Route path='password' element={<ChangePassword />} />
+            <Route path='resign' element={<Resign />} />
           </Route>
           <Route path='/playlist/detail'>
             <Route path='' element={<PlaylistDetail />} />
             <Route path='edit' element={<PlaylistModify />} />
           </Route>
-          <Route path='/playlist/create' element={<NewPlaylist />} />
         </Route>
         <Route path='/*' element={<NotFound />} />
       </Routes>

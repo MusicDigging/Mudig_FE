@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import OrderChangeIcon from '../../../img/hamburger-icon.svg';
-import { ImageStyle } from '../Image/Image';
+import { Image } from '../Image/Image';
 
 export default function PlayListItem(props) {
   const { modify, children, img, title, info } = props;
@@ -48,8 +48,6 @@ const ImageBox = styled.div`
   height: 60px;
   border-radius: 8px;
 `;
-
-const Image = styled(ImageStyle)``;
 
 const InfoBox = styled.div`
   width: ${(props) => (props.modify ? '180px' : '210px')};
