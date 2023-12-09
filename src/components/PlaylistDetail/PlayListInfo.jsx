@@ -7,12 +7,27 @@ import { useLocation } from 'react-router-dom';
 import MusicPlayer from './MusicPlayer';
 import { set } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
+
+import PenIcon from '../../img/pen-icon.svg';
+import TestImg from '../../img/thumbnail-img.svg';
+import Mudig from '../../img/playlist-mudig-img.svg';
+import ArrowIcon from '../../img/left-arrow-Icon.svg';
+
 export default function PlayListInfo(props) {
-  const { playing, setPlaying } = props;
+  const navigate = useNavigate();
   const location = useLocation();
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+
+  const handleMoveBackBtnClick = () => {
+    navigate(-1);
+  };
+
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -29,6 +44,9 @@ export default function PlayListInfo(props) {
   const isPlaylistSummary = location.pathname.includes('/playlist/summary');
   return (
     <PlayListInfoWrap>
+      <MoveBackBtn onClick={handleMoveBackBtnClick}>
+        <img src={ArrowIcon} alt='뒤로가기' />
+      </MoveBackBtn>
       {isPlaylistSummary && (
         <SummaryTitle>
           드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
@@ -52,7 +70,7 @@ export default function PlayListInfo(props) {
               <img src={PenIcon} alt='수정' />
             </ModifyBtn>
           ) : (
-            <button onClick={handleMoreBtn}>더보기</button>
+            <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
         <PrivateCheck>비공개</PrivateCheck>
@@ -73,14 +91,23 @@ export default function PlayListInfo(props) {
     </PlayListInfoWrap>
   );
 }
-const PlayListInfoWrap = styled.div`
+const PlayListInfoWrap = styled.section`
+  padding-top: 216px;
   position: relative;
   background-color: #c7c6c6;
   line-height: normal;
 `;
+
+export const MoveBackBtn = styled.button`
+  position: absolute;
+  top: 22px;
+  left: 16px;
+`;
+
 const Thumbnail = styled.img`
-  transform: translate(50%, 20%);
-  margin: 40px 0 0;
+  position: absolute;
+  top: 76px;
+  transform: translate(50%, 0);
 `;
 const SummaryTitle = styled.h2`
   top: 0;
@@ -115,13 +142,15 @@ const InfoBox = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    button {
+  }
+`;
+
+const MoreBtn = styled.button`
       white-space: nowrap;
       color: #575757;
       font-size: var(--font-sm);
-    }
-  }
 `;
+
 const PrivateCheck = styled.p`
   font-size: var(--font-sm);
   color: var(--sub-font-color);

@@ -20,6 +20,7 @@ export const MiniModalWrap = styled.div`
 
   button,
   a {
+    color: black;
     padding: 10px;
     font-size: var(--font-md);
     text-align: left;

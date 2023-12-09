@@ -63,12 +63,13 @@ export default function MusicPlayer(props) {
 }
 
 const MusicPlayerWrap = styled.div`
-  position: relative;
+  position: absolute;
   border-radius: 10px;
   width: 328px;
   height: 180px;
+  top: 76px;
   left: 50%;
-  transform: translate(-50%, 20%);
+  transform: translate(-50%, 0);
   /* margin: 80px 0 25px; */
   z-index: 2;
   .player {
