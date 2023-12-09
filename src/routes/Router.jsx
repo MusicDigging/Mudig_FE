@@ -34,7 +34,7 @@ export function Router() {
   return (
     <AnimatePresence>
       <Routes>
-        <Route path='/' element={<SetProfile />} />
+        <Route path='/' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Signup />} />
         <Route path='/register/detail' element={<SignupDetail />} />
