@@ -32,10 +32,10 @@ export default function CreateNewPlaylist3() {
       },
       onError: () => {
         setIsLoading(false);
+        alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
       },
     });
   };
-  console.log(isLoading);
 
   return (
     <S.CreateNewPlaylistWrap>
