@@ -6,23 +6,12 @@ export const useCreatePlaylist = () => {
 
   const createPlaylist = (data) => {
     const response = privateInstance.post('/playlist/create/', data);
-
     return response;
   };
 
-  const mutation = useMutation(createPlaylist, {
-    onSuccess: (response) => {
-      console.log(response);
-      queryClient.invalidateQueries(['create-playlist']);
-      return response.data;
-    },
-    onError: (error) => {
-      throw error;
-    },
-  });
-  const isLoading = mutation.isLoading;
+  const mutation = useMutation(createPlaylist);
 
-  return { ...mutation, isLoading, data: mutation.data?.data.playlist };
+  return mutation;
 };
 
 export const useGetPlaylistDetail = (id) => {

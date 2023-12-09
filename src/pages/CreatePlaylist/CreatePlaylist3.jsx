@@ -12,24 +12,30 @@ import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist3() {
   const navigate = useNavigate();
-  const {
-    mutate: createPlaylist,
-    isLoading,
-    data: playlist,
-  } = useCreatePlaylist();
   const location = useLocation();
   const state = location.state || {};
   const { situations, genre } = state;
   const [year, setYear] = useState((state && state.year) || '');
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: createPlaylist } = useCreatePlaylist();
 
   const handleCompleteBtnClick = (e) => {
     const data = { situations, genre: genre.join(','), year };
 
-    createPlaylist(data);
-    if (!isLoading) {
-      navigate('/playlist/summary', { state: { playlist } });
-    }
+    setIsLoading(true);
+    createPlaylist(data, {
+      onSuccess: (data) => {
+        setIsLoading(false);
+        navigate('/playlist/summary', {
+          state: { playlist: data.data.playlist },
+        });
+      },
+      onError: () => {
+        setIsLoading(false);
+      },
+    });
   };
+  console.log(isLoading);
 
   return (
     <S.CreateNewPlaylistWrap>
