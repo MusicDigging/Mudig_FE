@@ -72,11 +72,7 @@ export default function PlayListInfo(props) {
         <>
           <ThumbnailBlurBox />
           <MoreInfoBox>
-            <p>
-              아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
-              음악들입니다. 즐겁고 발랄한 느낌이 들며 상대방과 귀여운 분위기를
-              공유할 수 있을 것입니다. 좋은 데이트를 즐기세요!
-            </p>
+            <p>{playlist.content}</p>
             <button onClick={handleCloseBtn}>닫기</button>
           </MoreInfoBox>
         </>
