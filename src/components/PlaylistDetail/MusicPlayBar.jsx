@@ -8,11 +8,22 @@ import PauseIcon from '../../img/pause-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import ShareIcon from '../../img/share-icon.svg';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { PlayListAtom } from '../../library/atom';
+import { useEffect } from 'react';
 
 export default function MusicPlayBar(props) {
-  const { playing, setPlaying, pause, setPause, setCurrMusic } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
+  const {
+    playing,
+    setPlaying,
+    pause,
+    setPause,
+    setCurrMusic,
+    playlist,
+    music,
+  } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const toggleModal = () => {
     if (isModalOpen === false) setIsModalOpen(true);
     else setIsModalOpen(false);
@@ -27,6 +38,9 @@ export default function MusicPlayBar(props) {
       setPause(!pause);
     }
   };
+  useEffect(() => {
+    setPlaylistInfo({ playlist, music });
+  }, []);
   return (
     <PlayBarWrap>
       <button>

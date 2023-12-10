@@ -11,3 +11,8 @@ export const SignUpAtom = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const PlayListAtom = atom({
+  key: 'PlayListAtom',
+  default: {},
+});

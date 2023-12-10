@@ -19,9 +19,7 @@ export default function PlaylistDetail() {
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
   if (isLoading) return;
-
   const { playlist, comments, music, user } = data;
-
   const musicList = music.map((obj) => obj.information);
 
   return (
@@ -51,6 +49,8 @@ export default function PlaylistDetail() {
           playing={playing}
           setPlaying={setPlaying}
           setCurrMusic={setCurrMusic}
+          playlist={playlist}
+          music={music}
         />
         <PlayListDetailBox>
           <DetailList

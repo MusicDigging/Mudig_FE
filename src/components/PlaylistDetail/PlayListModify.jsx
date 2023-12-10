@@ -10,24 +10,24 @@ import {
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
+import { useRecoilState } from 'recoil';
+import { PlayListAtom } from '../../library/atom';
 
-export default function PlayListModify() {
-  const [playListItems, setPlayListItems] = useState([
-    { img: TestImg, title: 'ETA1', info: 'NewJeans · 2:32' },
-    { img: TestImg, title: 'ETA2', info: 'NewJeans · 2:32' },
-    { img: TestImg, title: 'ETA3', info: 'NewJeans · 2:32' },
-    { img: TestImg, title: 'ETA4', info: 'NewJeans · 2:32' },
-    { img: TestImg, title: 'ETA5', info: 'NewJeans · 2:32' },
-  ]);
+export default function PlayListModify(props) {
+  // const { music } = props;
+  const [playlistInfo, setPlayListInfo] = useRecoilState(PlayListAtom);
+  // const [playlist, setPlaylist] = useState(playlistInfo.playlist);
+  const [music, setMusic] = useState(playlistInfo.music || []);
+  console.log('Modify PlaylistInfo: ', playlistInfo);
   // Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }) => {
     console.log('>>> source', source);
     console.log('>>> destination', destination);
     if (!destination) return;
-    const _items = JSON.parse(JSON.stringify(playListItems));
+    const _items = JSON.parse(JSON.stringify(music));
     const [targetItem] = _items.splice(source.index, 1);
     _items.splice(destination.index, 0, targetItem);
-    setPlayListItems(_items);
+    setMusic(_items);
   };
 
   // requestAnimationFrame 초기화
@@ -55,7 +55,7 @@ export default function PlayListModify() {
               innerRef={provided.innerRef}
               droppableProps={provided.droppableProps}
             >
-              {playListItems.map((item, index) => (
+              {music.map((item, index) => (
                 <Draggable
                   draggableId={`item-${index}`}
                   index={index}
@@ -68,9 +68,9 @@ export default function PlayListModify() {
                       dragHandleProps={provided.dragHandleProps}
                       draggableProps={provided.draggableProps}
                       modify={true}
-                      img={item.img}
-                      title={item.title}
-                      info={item.info}
+                      img={item.thumbnail}
+                      title={item.song}
+                      info={item.singer}
                     >
                       <button>
                         <img src={CloseIcon} alt='삭제' />

@@ -12,6 +12,7 @@ import PenIcon from '../../img/pen-icon.svg';
 import TestImg from '../../img/thumbnail-img.svg';
 import Mudig from '../../img/playlist-mudig-img.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
+import { PlayListAtom } from '../../library/atom';
 
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
@@ -19,11 +20,10 @@ export default function PlayListInfo(props) {
   const { playlist } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const handleMoveBackBtnClick = () => {
     navigate(-1);
   };
-
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -39,25 +39,36 @@ export default function PlayListInfo(props) {
     location.pathname.includes('/edit');
   const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
+  // console.log('PlayListInfo location.state: ', location.state);
+  // console.log('PlayListInfo playlist:', playlist);
+  // console.log('PlayListInfo playlistInModify: ', playlistInModify);
+  // console.log('PlayListInfo playlistInfo: ', playlistInfo);
   return (
     <PlayListInfoWrap>
       <MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='뒤로가기' />
       </MoveBackBtn>
-      {isPlaylistSummary && (
-        <SummaryTitle>
+      {isPlaylistSummary && ( // 플리 요약 페이지에서만 사용
+        <SummaryTitle className='ellipse'>
           드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
         </SummaryTitle>
       )}
       <div>
         <Thumbnail>
-          <Image src={playlist.thumbnail} alt='썸네일' />
+          {
+            <Image
+              src={playlist?.thumbnail ?? playlistInfo.playlist?.thumbnail}
+              alt='썸네일'
+            />
+          }
         </Thumbnail>
       </div>
       <InfoBox>
-        {!isPlaylistSummary && <h2>{playlist.title}</h2>}
+        {!isPlaylistSummary && (
+          <h2>{playlist?.title ?? playlistInfo.playlist?.title}</h2>
+        )}
         <div>
-          <p>{playlist.content}</p>
+          <p>{playlist?.content ?? playlistInfo.playlist?.content}</p>
           {isModifyPath ? (
             <ModifyBtn onClick={handleModify}>
               <img src={PenIcon} alt='수정' />
@@ -66,7 +77,11 @@ export default function PlayListInfo(props) {
             <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
-        <PrivateCheck>{playlist.is_public ? '공개' : '비공개'}</PrivateCheck>
+        <PrivateCheck>
+          {playlist?.is_public ?? playlistInfo.playlist?.is_public
+            ? '공개'
+            : '비공개'}
+        </PrivateCheck>
       </InfoBox>
       {moreInfoView && (
         <>
@@ -120,8 +135,12 @@ const InfoBox = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   h2 {
+    width: 310px;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   div {
     display: flex;

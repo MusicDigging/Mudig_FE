@@ -4,7 +4,9 @@ import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
+import { PlayListAtom } from '../../../library/atom';
 export default function Modal() {
+  const [playlistData, setPlaylistData] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPrivate, setIsPrivate] = useState(true);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
@@ -23,6 +25,7 @@ export default function Modal() {
     }
     setIsPrivateView(false);
   };
+  console.log('modal: ', playlistData);
   return (
     <ModalWrap>
       <ModalBox>
@@ -32,7 +35,7 @@ export default function Modal() {
               type='text'
               name='playlistTitle'
               id='playlistTitle'
-              // value='드라이브할때'
+              defaultValue={playlistData.playlist.title}
               placeholder='플레이리스트의 제목을 입력해주세요.'
             />
           </label>
@@ -41,6 +44,7 @@ export default function Modal() {
               type='text'
               name='playlistDescription'
               id='playlistDescription'
+              defaultValue={playlistData.playlist.content}
               placeholder='플레이리스트에 대한 설명을 입력해주세요.'
             />
           </label>
