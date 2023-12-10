@@ -56,7 +56,7 @@ export function Router() {
           </Route>
           <Route path='/playlist/detail'>
             <Route path=':id' element={<PlaylistDetail />} />
-            <Route path='edit' element={<PlaylistModify />} />
+            <Route path=':id/edit' element={<PlaylistModify />} />
           </Route>
         </Route>
         <Route path='/*' element={<NotFound />} />
