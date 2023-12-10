@@ -3,11 +3,9 @@ import PlayListItem from '../common/PlayList/PlayListItem';
 import TestImg from '../../img/thumbnail-img.svg';
 import ExtendIcon from '../../img/arrow-icon.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
-import styled from 'styled-components';
-import { useState } from 'react';
 
-export default function DetailList() {
-  // const [playlist, setPlaylist] = useState([]);
+export default function DetailList(props) {
+  const { music } = props;
   const [more, setMore] = useState(false);
   /**
    * 맨 처음에는 2개의 플리만 보여주고
@@ -21,20 +19,19 @@ export default function DetailList() {
   return (
     <DetailListWrap>
       <PlayList>
-        <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-        <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-        {more && (
-          <>
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-            <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-          </>
-        )}
+        {music.map((item, index) => (
+          <PlayListBtn
+            key={item.id}
+            value={item.information}
+          >
+            <PlayListItem
+              img={item.thumbnail}
+              title={item.song}
+              info={item.singer}
+            >
+            </PlayListItem>
+          </PlayListBtn>
+        ))}
       </PlayList>
       <ExtendBtn onClick={handleMore} more={more}>
         <ArrowIcon fill='black' />
@@ -45,6 +42,10 @@ export default function DetailList() {
 const DetailListWrap = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const PlayListBtn = styled.button`
+  width: 100%;
   padding: 0 16px;
 `;
 const ExtendBtn = styled.button`
