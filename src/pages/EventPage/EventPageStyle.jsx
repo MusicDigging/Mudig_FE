@@ -48,6 +48,11 @@ export const SubmitButton = styled.button`
   height: 44px;
   margin: auto;
   border-radius: 5px;
-  background: #7d4fff;
+  background: ${({ disabled }) => (disabled ? '#ccc' : '#7d4fff')};
   color: #fff;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+
+  &:disabled {
+    background: #ccc;
+  }
 `;
