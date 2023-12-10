@@ -11,7 +11,7 @@ export const EventPageWrap = styled.div`
 `;
 export const QuestionBox = styled.div`
   position: absolute;
-  bottom: 100px;
+  bottom: 30px;
   left: 0;
   width: 360px;
   input {
