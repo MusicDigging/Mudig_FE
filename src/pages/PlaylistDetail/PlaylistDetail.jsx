@@ -15,7 +15,9 @@ export default function PlaylistDetail() {
   const state = location.state;
   const id = state?.id || 20; // location.state
   const { data, isLoading } = useGetPlaylistDetail(id);
+  const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
+  const [currMusic, setCurrMusic] = useState(null);
   if (isLoading) return;
 
   const { playlist, comments, music, user } = data;
@@ -25,16 +27,43 @@ export default function PlaylistDetail() {
   return (
     <>
       <PlaylistDetailWrap>
-        <PlayListInfo musicList={musicList} />
-
-        <MusicPlayer musicList={musicList} />
-
-        <MusicPlayBar playing={playing} setPlaying={setPlaying} />
+        <PlayListInfo
+          pause={pause}
+          setPause={setPause}
+          playing={playing}
+          playlist={playlist}
+          musicList={musicList}
+          currMusic={currMusic}
+          setCurrMusic={setCurrMusic}
+        />
+        {playing && (
+          <MusicPlayer
+            pause={pause}
+            setPause={setPause}
+            musicList={musicList}
+            currMusic={currMusic}
+            setCurrMusic={setCurrMusic}
+          />
+        )}
+        <MusicPlayBar
+          pause={pause}
+          setPause={setPause}
+          playing={playing}
+          setPlaying={setPlaying}
+          setCurrMusic={setCurrMusic}
+        />
         <PlayListDetailBox>
-          <DetailList music={music} />
-      <CommentSection />
+          <DetailList
+            setPause={setPause}
+            playing={playing}
+            setPlaying={setPlaying}
+            music={music}
+            currMusic={currMusic}
+            setCurrMusic={setCurrMusic}
+          />
+          <CommentSection />
         </PlayListDetailBox>
-      <CommentForm />
+        <CommentForm />
       </PlaylistDetailWrap>
     </>
   );

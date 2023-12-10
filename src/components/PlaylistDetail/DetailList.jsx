@@ -1,11 +1,16 @@
+import { useState } from 'react';
+import styled from 'styled-components';
+
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
+
+import PlayingIcon from '../../img/playing-icon.svg';
 import TestImg from '../../img/thumbnail-img.svg';
-import ExtendIcon from '../../img/arrow-icon.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
 export default function DetailList(props) {
-  const { music } = props;
+  const { setPause, playing, setPlaying, music, currMusic, setCurrMusic } =
+    props;
   const [more, setMore] = useState(false);
   const [visibleCount, setVisibleCount] = useState(2);
 
@@ -25,8 +30,14 @@ export default function DetailList(props) {
       }
     } else {
       setVisibleCount(2);
-    setMore(!more);
+      setMore(!more);
     }
+  };
+
+  const handlePlayListBtnClick = (index) => {
+    if (!playing) setPlaying(!playing);
+    setCurrMusic(index);
+    setPause(false);
   };
 
   return (
@@ -36,12 +47,20 @@ export default function DetailList(props) {
           <PlayListBtn
             key={item.id}
             value={item.information}
+            onClick={() => handlePlayListBtnClick(index)}
+            bgColor={index === currMusic ? 'rgba(137, 105, 255, 0.08)' : ''}
+            display={index + 1 > visibleCount ? 'none' : 'block'}
           >
             <PlayListItem
               img={item.thumbnail}
               title={item.song}
               info={item.singer}
             >
+              {index === currMusic && (
+                <button>
+                  <img src={PlayingIcon} alt='재생중' />
+                </button>
+              )}
             </PlayListItem>
           </PlayListBtn>
         ))}
@@ -60,6 +79,8 @@ const DetailListWrap = styled.div`
 const PlayListBtn = styled.button`
   width: 100%;
   padding: 0 16px;
+  background-color: ${(props) => props.bgColor};
+  display: ${(props) => props.display};
 `;
 const ExtendBtn = styled.button`
   svg {
