@@ -11,3 +11,11 @@ export const SignUpAtom = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userInfoAtom = atom({
+  key: 'userInfoAtom',
+  default: {
+    isLogin: false,
+  },
+  effects_UNSTABLE: [persistAtom],
+});

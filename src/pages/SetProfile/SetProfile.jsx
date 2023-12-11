@@ -1,17 +1,19 @@
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import { SignUpAtom } from '../../library/atom';
+import { userInfoAtom } from '../../library/atom';
 import { useRecoilState } from 'recoil';
 import { ImgCompression } from '../../library/ImgCompression';
 import { useNavigate } from 'react-router-dom';
+import { postUserProfile } from '../../library/apis/api';
 
 export default function SetProfile() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useRecoilState(SignUpAtom);
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+
   const [genre, setGenre] = useState([]);
   const [previewImg, setPreviewImg] = useState(
     'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
@@ -85,24 +87,26 @@ export default function SetProfile() {
       formData.append('genre', selectGenre);
       formData.append('image', uploadImg);
 
-      const response = await axios.post(
-        'https://api.mudig.co.kr/user/join/',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        },
-      );
+      const response = await postUserProfile(formData, userInfo.type);
 
-      console.log('회원가입 성공:', response.data);
-      setUserInfo({
-        ...userInfo,
-        name: data.nickName,
-        about: data.about || '',
-        genre: selectGenre,
-      });
-      navigate('/login');
+      if (response.message === '회원가입 성공') {
+        const { id, email, name, image, genre, about, rep_playlist } =
+          response.user;
+        const token = response.token;
+        setUserInfo({
+          id,
+          email,
+          name,
+          image,
+          genre,
+          about,
+          rep_playlist,
+          token,
+        });
+        navigate('/main');
+      }
     } catch (error) {
-      console.error('실패:', error.response.data.message);
+      console.error('실패:', error.response.message);
     }
     console.log(typeof data.about);
   };
