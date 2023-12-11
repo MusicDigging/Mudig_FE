@@ -53,6 +53,13 @@ export const AuthForm = () => {
     mutate(data);
   };
 
+  const handleCheckboxChange = () => {
+    const checkbox = document.getElementById('checkbox');
+    if (checkbox) {
+      checkbox.click();
+    }
+  };
+
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
@@ -84,14 +91,17 @@ export const AuthForm = () => {
           showPassword={showPassword}
           toggleShowPassword={toggleShowPassword}
         />
-        <CheckboxContainer>
+
+        <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
           <CheckboxInput
             type='checkbox'
             // checked={autoLogin}
             // onChange={handleCheckboxChange}
+            id='checkbox'
           />
-          <CheckboxLabel>로그인 상태 유지</CheckboxLabel>
-        </CheckboxContainer>
+          <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
+        </Label>
+
         {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
         {errors.email || errors.password ? (
           <ErrorMsg>
@@ -127,6 +137,15 @@ const ErrorMsg = styled.span`
   white-space: pre-wrap;
 `;
 const CheckboxContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+`;
+
+const Label = styled.label`
   display: flex;
   width: 100%;
   margin-top: 16px;
