@@ -84,10 +84,20 @@ export default function PlayListModify(props) {
           )}
         </Droppable>
       </DragDropContext>
+      <SaveBtn>저장</SaveBtn>
     </PlayListModifyWrap>
   );
 }
 
 const PlayListModifyWrap = styled.div`
   padding: 25px 16px;
+`;
+
+const SaveBtn = styled.button`
+  position: absolute;
+  top: 13px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  font-size: var(--font-md);
 `;
