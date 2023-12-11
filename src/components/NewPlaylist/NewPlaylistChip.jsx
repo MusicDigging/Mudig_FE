@@ -1,20 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ChipButton } from '../common/Button/Button';
-export default function NewPlaylistChip() {
+import { ChipButton } from '../../components/common/Button/Button';
+export default function NewPlaylistChip(props) {
+  const { selectedChips, setSelectedChips } = props;
+  const handleChipSelect = (newSelectedChips) => {
+    setSelectedChips(newSelectedChips);
+  };
   return (
     <>
       <Chipwrap>
         <ChipBox>
-          <ChipButton name='POP' />
-          <ChipButton name='K-POP' />
-          <ChipButton name='J-POP' />
-          <ChipButton name='힙합' />
-          <ChipButton name='R&B' />
-          <ChipButton name='발라드' />
-          <ChipButton name='댄스' />
-          <ChipButton name='인디' />
-          <ChipButton name='OST' />
+          {[
+            'POP',
+            'K-POP',
+            'J-POP',
+            '힙합',
+            'R&B',
+            '발라드',
+            '댄스',
+            '인디',
+            'OST',
+          ].map((chipName, index) => (
+            <ChipButton
+              key={index}
+              name={chipName}
+              onSelect={handleChipSelect}
+              selectedChips={selectedChips}
+            />
+          ))}
         </ChipBox>
       </Chipwrap>
     </>
