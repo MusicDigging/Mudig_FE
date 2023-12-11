@@ -1,106 +1,185 @@
 import styled from 'styled-components';
 import { Button } from '../Button/Button';
-import CloseIcon from '../../../img/close-icon.svg';
-import ArrowIcon from '../../../img/arrow-icon.svg';
+import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { useState } from 'react';
-export default function Modal(props) {
-  const { title } = props;
-  const [modalOpen, setModalOpen] = useState(false);
+import { useRecoilState } from 'recoil';
+import { modalAtom } from '../../../atoms/modalAtom';
+export default function Modal() {
   const [isPrivateView, setIsPrivateView] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(true);
+  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const handleClose = () => {
     setModalOpen(false);
   };
-  const handlePrivateSetting = () => {
-    setIsPrivateView(true);
+  const handlePrivateView = () => {
+    setIsPrivateView(!isPrivateView);
+  };
+  const handlePrivateCheck = (e) => {
+    const ButtonType = e.target.innerText;
+    if (ButtonType === '공개') {
+      setIsPrivate(false);
+    } else {
+      setIsPrivate(true);
+    }
+    setIsPrivateView(false);
   };
   return (
     <ModalWrap>
       <ModalBox>
-        <h2>{title}</h2>
-        {!isPrivateView ? (
-          <ContentBox>
-            <p>공개</p>
-            <button onClick={handlePrivateSetting}>
-              <img src={ArrowIcon} alt='더보기' />
-            </button>
-          </ContentBox>
-        ) : (
-          <PickBtnBox>
-            <button>공개</button>
-            <button>비공개</button>
-          </PickBtnBox>
-        )}
-
-        <Button text='확인' btnWidth='295px' />
-        <CloseBtn onClick={handleClose}>
-          <img src={CloseIcon} alt='닫기' />
-        </CloseBtn>
+        <ModalForm>
+          <label>
+            <TitleInput
+              type='text'
+              name='playlistTitle'
+              id='playlistTitle'
+              // value='드라이브할때'
+              placeholder='플레이리스트의 제목을 입력해주세요.'
+            />
+          </label>
+          <label>
+            <ContentInput
+              type='text'
+              name='playlistDescription'
+              id='playlistDescription'
+              placeholder='플레이리스트에 대한 설명을 입력해주세요.'
+            />
+          </label>
+          <PrivateCheckBtn
+            type='button'
+            onClick={handlePrivateView}
+            className={isPrivateView ? 'active' : ''}
+          >
+            {isPrivate ? '비공개' : '공개'}
+            <ArrowIcon fill='black' />
+          </PrivateCheckBtn>
+          {isPrivateView ? (
+            <PrivateCheckBtnBox>
+              <ul>
+                <li>
+                  <button
+                    type='button'
+                    onClick={handlePrivateCheck}
+                    className={isPrivate ? '' : 'active'}
+                  >
+                    공개
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type='button'
+                    onClick={handlePrivateCheck}
+                    className={isPrivate ? 'active' : ''}
+                  >
+                    비공개
+                  </button>
+                </li>
+              </ul>
+            </PrivateCheckBtnBox>
+          ) : (
+            <BtnBox>
+              <Button
+                text='취소'
+                btnWidth='143px'
+                btnBgColor='var(--input-background-color)'
+                btnColor='var(--font-color)'
+                btnBorder='1px solid var(--input-background-color)'
+                onClick={handleClose}
+              />
+              <Button text='수정' btnWidth='143px' />
+            </BtnBox>
+          )}
+        </ModalForm>
       </ModalBox>
     </ModalWrap>
   );
 }
 const ModalWrap = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 100;
   top: 0;
-  width: 360px;
-  height: 800px;
+  width: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
 `;
 const ModalBox = styled.div`
-  /* position: fixed; */
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  height: 393px;
+  position: absolute;
+  top: 25%;
+  left: 5%;
   width: 327px;
   padding: 16px;
   border-radius: 10px;
   background-color: #fff;
-  top: 0;
-  transform: translate(5%, 100%);
   h2 {
     margin: 40px 0 0;
   }
 `;
-const ContentBox = styled.div`
+const ModalForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  input,
+  textarea {
+    width: 100%;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.6);
+  }
+`;
+const TitleInput = styled.input`
+  font-size: var(--font-md);
+  font-weight: var(--font-semi-bold);
+  line-height: 150%;
+`;
+const ContentInput = styled.textarea`
+  resize: none;
+  height: 181px;
+  font-weight: var(--font-regular);
+  line-height: normal;
+`;
+const PrivateCheckBtn = styled.button`
+  position: relative;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  svg {
+    transform: rotate(90deg);
+  }
+  &:active,
+  &.active {
+    border: 1px solid var(--btn-point-color);
+    color: var(--btn-point-color);
+    svg {
+      transform: rotate(270deg);
+      fill: var(--btn-point-color);
+    }
+  }
+`;
+const PrivateCheckBtnBox = styled.div`
+  position: relative;
+  width: 295px;
   border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: #fff;
   font-size: var(--font-md);
-  padding: 12px 16px;
-  background-color: var(--input-background-color);
   line-height: normal;
   button {
-    height: 24px;
-  }
-`;
-const PickBtnBox = styled.div`
-  width: 295px;
-  button {
-    display: block;
     width: 100%;
-    height: 44px;
     text-align: left;
-    padding: 12px 16px;
-    border: 1px solid var(--input-background-color);
-    font-size: var(--font-md);
-    color: var(--font-color);
-    &:first-child {
-      border-radius: 10px 10px 0px 0px;
-      border-bottom: none;
-    }
-    &:last-child {
-      border-radius: 0px 0px 10px 10px;
-    }
-    &:active {
-      background-color: var(--input-background-color);
+    padding: 10px 16px;
+    border-radius: 9px;
+    &:active,
+    &.active {
+      color: #fff;
+      background-color: var(--playlist-info-bg-color);
     }
   }
 `;
-const CloseBtn = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 16px;
+const BtnBox = styled.div`
+  display: flex;
+  gap: 8px;
 `;

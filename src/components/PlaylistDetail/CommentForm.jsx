@@ -28,6 +28,7 @@ export default function CommentForm() {
 }
 
 const CommentFormWrap = styled.form`
+  background-color: white;
   padding: 16px 16px 24px;
   display: flex;
   width: 100%;

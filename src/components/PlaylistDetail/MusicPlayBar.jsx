@@ -10,7 +10,7 @@ import ShareIcon from '../../img/share-icon.svg';
 import { Link } from 'react-router-dom';
 
 export default function MusicPlayBar(props) {
-  const { playing, setPlaying } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
+  const { playing, setPlaying, pause, setPause, setCurrMusic } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -19,13 +19,14 @@ export default function MusicPlayBar(props) {
   };
 
   const handlePlayBtn = () => {
-    if (playing === false) {
+    if (!playing && pause) {
       setPlaying(true);
+      setPause(false);
+      setCurrMusic(0);
     } else {
-      setPlaying(false);
+      setPause(!pause);
     }
   };
-
   return (
     <PlayBarWrap>
       <button>
@@ -33,7 +34,7 @@ export default function MusicPlayBar(props) {
       </button>
       <PlayBtn onClick={handlePlayBtn}>
         <img
-          src={playing === true ? PauseIcon : PlayIcon}
+          src={playing && !pause ? PauseIcon : PlayIcon}
           alt='재생/멈춤 버튼'
         />
       </PlayBtn>
@@ -53,6 +54,7 @@ export default function MusicPlayBar(props) {
 }
 
 const PlayBarWrap = styled.div`
+  background-color: #fff;
   padding: 9px 0 25px;
   display: flex;
   align-items: center;
@@ -70,6 +72,6 @@ const PlayBtn = styled.button`
   box-shadow: 0px -2px 20px 0px rgba(215, 176, 243, 0.25);
 `;
 
-const MoreBtnBox = styled.button`
+const MoreBtnBox = styled.div`
   position: relative;
 `;

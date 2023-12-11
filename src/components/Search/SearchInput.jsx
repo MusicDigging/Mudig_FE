@@ -1,20 +1,24 @@
 import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
-export default function Search(props) {
-  const { children, onFocus, onBlur } = props;
+export default function SearchInput({ setInputValue, onSubmit }) {
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
   return (
-    <form>
-      <SearchInput
+    <form onSubmit={onSubmit}>
+      <Input
+        onChange={handleInputChange}
         type='text'
-        onFocus={onFocus}
-        onBlur={onBlur}
         placeholder='검색어를 입력하세요.'
       />
-      {children}
+      <button>
+        <img src={SearchIcon} alt='검색버튼' />
+      </button>
     </form>
   );
 }
-const SearchInput = styled.input`
+const Input = styled.input`
   width: 274px;
   border-radius: 8px;
   background: #f6f6f6;
