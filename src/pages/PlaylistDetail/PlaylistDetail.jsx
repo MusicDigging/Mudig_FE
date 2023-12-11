@@ -62,7 +62,7 @@ export default function PlaylistDetail() {
             setCurrMusic={setCurrMusic}
           />
 
-          <CommentSection />
+          <CommentSection comments={comments} />
         </PlayListDetailBox>
       </PlaylistDetailWrap>
     </>

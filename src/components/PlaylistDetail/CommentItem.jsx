@@ -3,54 +3,59 @@ import styled from 'styled-components';
 
 import { CircleImage } from '../common/Image/Image';
 
-export default function CommentItem() {
+import MoreIcon from '../../img/more-icon.svg';
+
+export default function CommentItem(props) {
+  const { comment, isVisivle, children: replies } = props;
   const [isReplyOpen, setIsReplyOpen] = useState(false);
 
-  function handleBtnClick() {
-    return isReplyOpen === true ? setIsReplyOpen(false) : setIsReplyOpen(true);
+  function convertDatetime(dateTime) {
+    const date = new Date(dateTime);
+    const convertedDatetime = date.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    });
+    return convertedDatetime;
+  }
+
+  function checkDatetimeEqual(time1, time2) {
+    // 두 시간의 초 단위(이후 소수점 무시)까지 비교, 같으면 true
+    return time1.slice(0, 19) === time2.slice(0, 19);
   }
 
   return (
-    <CommentItemWrap>
+    <CommentItemWrap display={isVisivle === false ? 'none' : 'flex'}>
       <ProfileImgBox>
-        <CircleImage src='https://picsum.photos/200/300' alt='프로필 이미지' />
+        <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
       </ProfileImgBox>
       <DescBox>
         <UserInfoBox>
-          <p>{`Sarah`}</p>
-          <p>{`2023.11.22 오후 11:12:32 `}</p>
+          <div>
+            <p>{comment.writer_profile.name}</p>
+            <p>
+              {convertDatetime(comment.created_at)}
+              {checkDatetimeEqual(comment.created_at, comment.updated_at) || (
+                <span> (수정됨)</span>
+              )}
+            </p>
+          </div>
+          <MoreBtn>
+            <img src={MoreIcon} alt='더보기' />
+          </MoreBtn>
         </UserInfoBox>
-        <CommentBox>
-          <p>Very nice~</p>
-          <button onClick={handleBtnClick}>답글 {`1`}</button>
-          {/* 이후 childrean처리? */}
-          {isReplyOpen && (
-            <CommentItemWrap>
-              <ProfileImgBox>
-                <CircleImage
-                  src='https://picsum.photos/200/300'
-                  alt='프로필 이미지'
-                />
-              </ProfileImgBox>
-              <DescBox>
-                <UserInfoBox>
-                  <p>{`Sarah`}</p>
-                  <p>{`2023.11.22 오후 11:12:32 `}</p>
-                </UserInfoBox>
-                <CommentBox>
-                  <p>Very nice~</p>
-                </CommentBox>
-              </DescBox>
-            </CommentItemWrap>
-          )}
-        </CommentBox>
+        <Comment>{comment.content}</Comment>
+        <CommentBox>{replies}</CommentBox>
       </DescBox>
     </CommentItemWrap>
   );
 }
 
-const CommentItemWrap = styled.li`
-  display: flex;
+const CommentItemWrap = styled.div`
+  display: ${(props) => props.display || 'flex'};
   gap: 10px;
   margin-top: 6px;
 `;
@@ -60,9 +65,13 @@ const ProfileImgBox = styled.div`
   height: 24px;
 `;
 
-const DescBox = styled.div``;
+const DescBox = styled.div`
+  flex-grow: 1;
+`;
 
 const UserInfoBox = styled.div`
+  display: flex;
+
   padding-top: 4px;
   margin-bottom: 6px;
   font-size: var(--font-sm);
@@ -71,13 +80,28 @@ const UserInfoBox = styled.div`
     color: var(--sub-font-color);
   }
 `;
+
+const Comment = styled.p`
+  font-size: var(--font-md);
+  margin-bottom: 6px;
+`;
+
 const CommentBox = styled.div`
-  p {
-    font-size: var(--font-md);
-    margin-bottom: 6px;
+  span {
+    font-size: var(--font-sm);
+    color: var(--sub-font-color);
   }
   button {
     font-size: var(--font-sm);
     color: var(--sub-font-color);
+  }
+`;
+
+const MoreBtn = styled.button`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
   }
 `;
