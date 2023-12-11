@@ -13,7 +13,7 @@ import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 export default function PlaylistDetail() {
   const location = useLocation();
   const state = location.state;
-  const id = state?.id || 20; // location.state
+  const id = state?.id || 52; // location.state
   const { data, isLoading } = useGetPlaylistDetail(id);
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -61,9 +61,9 @@ export default function PlaylistDetail() {
             currMusic={currMusic}
             setCurrMusic={setCurrMusic}
           />
+
           <CommentSection />
         </PlayListDetailBox>
-        <CommentForm />
       </PlaylistDetailWrap>
     </>
   );

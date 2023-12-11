@@ -20,7 +20,7 @@ export default function CommentForm() {
         {...register('intro')}
         type='text'
         id='comment'
-        placeholder='내용을 입력해 주세요.'
+        placeholder='댓글을 입력해 주세요.'
       ></InputStyle>
       <Button text='확인' type='submit' />
     </CommentFormWrap>
@@ -29,11 +29,11 @@ export default function CommentForm() {
 
 const CommentFormWrap = styled.form`
   background-color: white;
-  padding: 16px 16px 24px;
+  margin-bottom: 8px;
   display: flex;
   width: 100%;
   gap: 8px;
-  position: absolute;
+
   bottom: 0px;
 
   button {
