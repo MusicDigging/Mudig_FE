@@ -12,7 +12,7 @@ export default function EventPage() {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate('/');
+    navigate('/main');
   };
 
   const handleInputChange = (e) => {
