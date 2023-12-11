@@ -55,7 +55,7 @@ export function Router() {
             <Route path='resign' element={<Resign />} />
           </Route>
           <Route path='/playlist/detail'>
-            <Route path='' element={<PlaylistDetail />} />
+            <Route path=':id' element={<PlaylistDetail />} />
             <Route path='edit' element={<PlaylistModify />} />
           </Route>
         </Route>

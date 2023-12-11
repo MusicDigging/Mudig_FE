@@ -1,18 +1,29 @@
-import styled from 'styled-components';
-import TestImg from '../../img/thumbnail-img.svg';
-import Mudig from '../../img/playlist-mudig-img.svg';
-import PenIcon from '../../img/pen-icon.svg';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import MusicPlayer from './MusicPlayer';
 import { set } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { Image } from '../common/Image/Image';
+import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
+
+import PenIcon from '../../img/pen-icon.svg';
+import TestImg from '../../img/thumbnail-img.svg';
+import Mudig from '../../img/playlist-mudig-img.svg';
+import ArrowIcon from '../../img/left-arrow-Icon.svg';
+
 export default function PlayListInfo(props) {
-  const { playing, setPlaying } = props;
+  const navigate = useNavigate();
   const location = useLocation();
+  const { playlist } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+
+  const handleMoveBackBtnClick = () => {
+    navigate(-1);
+  };
+
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -27,35 +38,35 @@ export default function PlayListInfo(props) {
     location.pathname.includes('/playlist/detail/') &&
     location.pathname.includes('/edit');
   const isPlaylistSummary = location.pathname.includes('/playlist/summary');
+
   return (
     <PlayListInfoWrap>
+      <MoveBackBtn onClick={handleMoveBackBtnClick}>
+        <img src={ArrowIcon} alt='뒤로가기' />
+      </MoveBackBtn>
       {isPlaylistSummary && (
         <SummaryTitle>
           드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
         </SummaryTitle>
       )}
-      {playing ? (
-        <MusicPlayer playing={playing} setPlaying={setPlaying} />
-      ) : (
-        <Thumbnail src={TestImg} alt='썸네일' />
-      )}
+      <div>
+        <Thumbnail>
+          <Image src={playlist.thumbnail} alt='썸네일' />
+        </Thumbnail>
+      </div>
       <InfoBox>
-        {!isPlaylistSummary && <h2>드라이브 할 때 듣기 좋은 K-POP</h2>}
+        {!isPlaylistSummary && <h2>{playlist.title}</h2>}
         <div>
-          <p>
-            아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
-            음악들입니다. 즐겁고 발랄한 느낌이 들며 상대방과 귀여운 분위기를
-            공유할 수 있을 것입니다. 좋은 데이트를 즐기세요!
-          </p>
+          <p>{playlist.content}</p>
           {isModifyPath ? (
             <ModifyBtn onClick={handleModify}>
               <img src={PenIcon} alt='수정' />
             </ModifyBtn>
           ) : (
-            <button onClick={handleMoreBtn}>더보기</button>
+            <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
-        <PrivateCheck>비공개</PrivateCheck>
+        <PrivateCheck>{playlist.is_public ? '공개' : '비공개'}</PrivateCheck>
       </InfoBox>
       {moreInfoView && (
         <>
@@ -73,14 +84,25 @@ export default function PlayListInfo(props) {
     </PlayListInfoWrap>
   );
 }
-const PlayListInfoWrap = styled.div`
+const PlayListInfoWrap = styled.section`
+  padding-top: 216px;
   position: relative;
   background-color: #c7c6c6;
   line-height: normal;
 `;
-const Thumbnail = styled.img`
-  transform: translate(50%, 20%);
-  margin: 40px 0 0;
+
+export const MoveBackBtn = styled.button`
+  position: absolute;
+  top: 22px;
+  left: 16px;
+`;
+
+const Thumbnail = styled.div`
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: 76px;
+  transform: translate(50%, 0);
 `;
 const SummaryTitle = styled.h2`
   top: 0;
@@ -115,13 +137,15 @@ const InfoBox = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    button {
-      white-space: nowrap;
-      color: #575757;
-      font-size: var(--font-sm);
-    }
   }
 `;
+
+const MoreBtn = styled.button`
+  white-space: nowrap;
+  color: #575757;
+  font-size: var(--font-sm);
+`;
+
 const PrivateCheck = styled.p`
   font-size: var(--font-sm);
   color: var(--sub-font-color);
