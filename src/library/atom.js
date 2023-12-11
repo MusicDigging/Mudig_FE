@@ -16,3 +16,11 @@ export const PlayListAtom = atom({
   key: 'PlayListAtom',
   default: {},
 });
+
+export const userInfoAtom = atom({
+  key: 'userInfoAtom',
+  default: {
+    isLogin: false,
+  },
+  effects_UNSTABLE: [persistAtom],
+});

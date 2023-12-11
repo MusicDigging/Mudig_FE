@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
-import { SignUpAtom } from '../../library/atom';
+import { SignUpAtom, userInfoAtom } from '../../library/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 export default function SignupDetail() {
-  const setSignup = useSetRecoilState(SignUpAtom);
+  const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
-  const onSubmit = ({ email, password }) => {
-    setSignup({ email, password });
+  const type = 'mudig';
+  const onSubmit = ({ email }) => {
+    setUserInfo({ email, type });
     navigate('/setprofile');
   };
 
