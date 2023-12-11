@@ -116,7 +116,9 @@ export default function Login() {
         <Span>또는</Span>
         <AuthForm />
         <NavUserInfo>
-          <NavUserInfoLink> 회원가입</NavUserInfoLink>
+          <NavUserInfoLink onClick={() => navigate('/register')}>
+            회원가입
+          </NavUserInfoLink>
           <NavUserInfoLink>아이디 · 비밀번호 찾기 </NavUserInfoLink>
         </NavUserInfo>
       </LoginMain>
