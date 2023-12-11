@@ -3,7 +3,6 @@ import { Outlet, Route, Routes } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 
 import PrivateRoute from './PrivateRoutes';
-
 import Home from '../pages/Home/Home';
 import Signup from '../pages/Signup/Signup';
 import SignupDetail from '../pages/Signup/SignupDetail';
@@ -11,14 +10,13 @@ import Login from '../pages/Login/Login';
 import SetProfile from '../pages/SetProfile/SetProfile';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import Profile from '../pages/Profile/Profile';
-
 import PlaylistDetail from '../pages/PlaylistDetail/PlaylistDetail';
 import PlaylistSummary from '../pages/PlaylistSummary/PlaylistSummary';
 import PlaylistModify from '../pages/PlaylistModify/PlaylistModify';
+import EventPage from '../pages/EventPage/EventPage';
 import CreatePlaylist1 from '../pages/CreatePlaylist/CreatePlaylist1';
 import CreatePlaylist2 from '../pages/CreatePlaylist/CreatePlaylist2';
 import CreatePlaylist3 from '../pages/CreatePlaylist/CreatePlaylist3';
-
 import Search from '../pages/Search/Search';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
@@ -38,6 +36,7 @@ export function Router() {
         <Route path='/register/detail' element={<SignupDetail />} />
         <Route path='/setprofile' element={<SetProfile />} />
         <Route element={<PrivateRoute />}>
+          <Route path='/event' element={<EventPage />} />
           <Route path='/main' element={<Home />} />
           <Route path='/intro' element={<Intro />} />
           <Route path='/search' element={<Search />} />
