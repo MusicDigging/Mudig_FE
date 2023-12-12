@@ -65,6 +65,8 @@ const PlaylistDetailWrap = styled.div`
   flex-direction: column;
 `;
 const PlayListDetailBox = styled.main`
+  display: flex;
+  flex-direction: column;
   height: 100%;
   padding-bottom: 0;
 `;

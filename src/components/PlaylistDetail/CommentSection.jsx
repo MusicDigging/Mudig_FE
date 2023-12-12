@@ -68,55 +68,64 @@ export default function CommentSection(props) {
         editId={editId}
         setEditId={setEditId}
       />
-      {comments.map(
-        (comment, index) =>
-          (comment.is_active || repliesGroup[comment.id]) && (
-            <li key={comment.id}>
-              <CommentItem
-                comment={comment}
-                isVisible={index + 1 <= visibleCount}
-                setParentId={setParentId}
-                setContent={setContent}
-                editId={editId}
-                setEditId={setEditId}
-                modalId={modalId}
-                setModalId={setModalId}
-              >
-                {repliesGroup[comment.id] && (
-                  <>
-                    <ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
-                      답글 {repliesGroup[comment.id].length}
-                    </ReplyBtn>
-                    {opendReply[comment.id] &&
-                      repliesGroup[comment.id].map((comment) => (
-                        <CommentItem
-                          key={comment.id}
-                          comment={comment}
-                          parentId={comment.id}
-                          setParentId={setParentId}
-                          setContent={setContent}
-                          editId={editId}
-                          setEditId={setEditId}
-                          modalId={modalId}
-                          setModalId={setModalId}
-                          isActive={comment.is_active}
-                        />
-                      ))}
-                  </>
-                )}
-              </CommentItem>
-            </li>
-          ),
+      {comments.length === 0 && (
+        <EmptyComment>
+          <p>아직 댓글이 없습니다.</p>
+          <span>대화를 시작해보세요!</span>
+        </EmptyComment>
       )}
-
-      <ExtendBtn onClick={handleMore} more={more}>
-        <ArrowIcon fill='black' />
-      </ExtendBtn>
+      {comments.length !== 0 &&
+        comments.map(
+          (comment, index) =>
+            (comment.is_active || repliesGroup[comment.id]) && (
+              <li key={comment.id}>
+                <CommentItem
+                  comment={comment}
+                  isVisible={index + 1 <= visibleCount}
+                  setParentId={setParentId}
+                  setContent={setContent}
+                  editId={editId}
+                  setEditId={setEditId}
+                  modalId={modalId}
+                  setModalId={setModalId}
+                >
+                  {repliesGroup[comment.id] && (
+                    <>
+                      <ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
+                        답글 {repliesGroup[comment.id].length}
+                      </ReplyBtn>
+                      {opendReply[comment.id] &&
+                        repliesGroup[comment.id].map((comment) => (
+                          <CommentItem
+                            key={comment.id}
+                            comment={comment}
+                            parentId={comment.id}
+                            setParentId={setParentId}
+                            setContent={setContent}
+                            editId={editId}
+                            setEditId={setEditId}
+                            modalId={modalId}
+                            setModalId={setModalId}
+                            isActive={comment.is_active}
+                          />
+                        ))}
+                    </>
+                  )}
+                </CommentItem>
+              </li>
+            ),
+        )}
+      {comments.length !== 0 && (
+        <ExtendBtn onClick={handleMore} more={more}>
+          <ArrowIcon fill='black' />
+        </ExtendBtn>
+      )}
     </CommentSectionWrap>
   );
 }
 
 const CommentSectionWrap = styled.section`
+  height: 100%;
   display: flex;
   flex-direction: column;
   border-top: 6px solid var(--input-background-color);
@@ -130,6 +139,22 @@ const CommentSectionWrap = styled.section`
     }
   }
 `;
+const EmptyComment = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  p {
+    font-size: var(--font-md);
+    font-weight: var(--font-semi-bold);
+  }
+  span {
+    font-size: var(--font-sm);
+  }
+`;
+
 const ExtendBtn = styled.button`
   svg {
     transform: rotate(${({ more }) => (more ? '270deg' : '90deg')});
