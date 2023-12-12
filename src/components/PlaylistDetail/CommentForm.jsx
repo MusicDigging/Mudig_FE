@@ -27,22 +27,25 @@ export default function CommentForm(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     let data;
-    if (!editId && parentId) {
-      // 답글
-      data = { content, playlist_id: playlistId, parent_id: parentId };
-      if (editId) writeReply(data);
-      else writeReply(data);
-      setParentId(null);
-    } else if (editId) {
+
+    if (editId) {
       // 댓글, 답글 수정
       data = { content, comment_id: editId };
       editComment(data);
       setEditId(null);
     } else {
-      // 댓글
-      data = { content, playlist_id: playlistId };
-      writeComment(data);
+      if (parentId) {
+        // 답글
+        data = { content, playlist_id: playlistId, parent_id: parentId };
+        writeReply(data);
+        setParentId(null);
+      } else {
+        // 댓글
+        data = { content, playlist_id: playlistId };
+        writeComment(data);
+      }
     }
+    setContent('');
   };
 
   const handleInputChange = (e) => {
@@ -53,6 +56,7 @@ export default function CommentForm(props) {
     setEditId(null);
     setParentId(null);
   };
+
   return (
     <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
@@ -66,7 +70,7 @@ export default function CommentForm(props) {
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
       {(parentId || editId) && (
-        <button onClick={() => handleCloseBtnClick}>
+        <button onClick={handleCloseBtnClick}>
           <img src={CloseIcon} alt='답글 닫기' />
         </button>
       )}

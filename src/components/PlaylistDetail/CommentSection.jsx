@@ -14,24 +14,31 @@ export default function CommentSection(props) {
   const [visibleCount, setVisibleCount] = useState(2);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
 
-  const comments = props.comments
-    .filter((comment) => comment.parent === null)
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const filterAndSortComments = (comments) => {
+    return comments
+      .filter((comment) => comment.parent === null && comment.is_active)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  };
+  const groupReplies = (comments) => {
+    const repliesGroup = {};
+    comments.forEach((data) => {
+      const parent = data.parent;
+      if (repliesGroup[parent]) {
+        repliesGroup[parent].push(data);
+      } else {
+        repliesGroup[parent] = [data];
+      }
+    });
+    return repliesGroup;
+  };
 
+  const comments = filterAndSortComments(props.comments);
   const replies = props.comments.filter((comment) => comment.parent !== null);
-  const repliesGroup = {};
-  replies.forEach((data) => {
-    const parent = data.parent;
-    if (repliesGroup[parent]) {
-      repliesGroup[parent].push(data);
-    } else {
-      repliesGroup[parent] = [data];
-    }
-  });
+  const repliesGroup = groupReplies(replies);
 
-  function handleReplyBtnClick() {
+  const handleReplyBtnClick = () => {
     return isReplyOpen === true ? setIsReplyOpen(false) : setIsReplyOpen(true);
-  }
+  };
 
   const handleMore = () => {
     if (!more) {
@@ -60,42 +67,45 @@ export default function CommentSection(props) {
         editId={editId}
         setEditId={setEditId}
       />
-      {comments.map((comment, index) => (
-        <li key={comment.id}>
-          <CommentItem
-            comment={comment}
-            isVisible={index + 1 <= visibleCount}
-            setParentId={setParentId}
-            setContent={setContent}
-            editId={editId}
-            setEditId={setEditId}
-            modalId={modalId}
-            setModalId={setModalId}
-          >
-            {repliesGroup[comment.id] && (
-              <>
-                <ReplyBtn onClick={handleReplyBtnClick}>
-                  답글 {repliesGroup[comment.id].length}
-                </ReplyBtn>
-                {isReplyOpen &&
-                  repliesGroup[comment.id].map((comment) => (
-                    <CommentItem
-                      key={comment.id}
-                      comment={comment}
-                      parentId={comment.id}
-                      setParentId={setParentId}
-                      setContent={setContent}
-                      editId={editId}
-                      setEditId={setEditId}
-                      modalId={modalId}
-                      setModalId={setModalId}
-                    />
-                  ))}
-              </>
-            )}
-          </CommentItem>
-        </li>
-      ))}
+      {comments.map(
+        (comment, index) =>
+          comment.is_active && (
+            <li key={comment.id}>
+              <CommentItem
+                comment={comment}
+                isVisible={index + 1 <= visibleCount}
+                setParentId={setParentId}
+                setContent={setContent}
+                editId={editId}
+                setEditId={setEditId}
+                modalId={modalId}
+                setModalId={setModalId}
+              >
+                {repliesGroup[comment.id] && (
+                  <>
+                    <ReplyBtn onClick={handleReplyBtnClick}>
+                      답글 {repliesGroup[comment.id].length}
+                    </ReplyBtn>
+                    {isReplyOpen &&
+                      repliesGroup[comment.id].map((comment) => (
+                        <CommentItem
+                          key={comment.id}
+                          comment={comment}
+                          parentId={comment.id}
+                          setParentId={setParentId}
+                          setContent={setContent}
+                          editId={editId}
+                          setEditId={setEditId}
+                          modalId={modalId}
+                          setModalId={setModalId}
+                        />
+                      ))}
+                  </>
+                )}
+              </CommentItem>
+            </li>
+          ),
+      )}
 
       <ExtendBtn onClick={handleMore} more={more}>
         <ArrowIcon fill='black' />
