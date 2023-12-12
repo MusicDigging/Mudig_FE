@@ -45,10 +45,14 @@ export default function CommentForm(props) {
     }
   };
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     setContent(e.target.value);
   };
 
+  const handleCloseBtnClick = () => {
+    setEditId(null);
+    setParentId(null);
+  };
   return (
     <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
@@ -56,13 +60,13 @@ export default function CommentForm(props) {
       </label>
       <InputStyle
         value={content}
-        onChange={handleChange}
+        onChange={handleInputChange}
         type='text'
         id='comment'
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      {parentId && (
-        <button onClick={() => setParentId(false)}>
+      {(parentId || editId) && (
+        <button onClick={() => handleCloseBtnClick}>
           <img src={CloseIcon} alt='답글 닫기' />
         </button>
       )}
