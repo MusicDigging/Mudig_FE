@@ -62,7 +62,7 @@ export default function CommentItem(props) {
   const handleDeleteBtnClick = () => {
     deleteComment(comment.id);
   };
-  console.log(writer);
+
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
       <ProfileImgBox>
