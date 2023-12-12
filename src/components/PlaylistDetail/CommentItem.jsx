@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 import { CircleImage } from '../common/Image/Image';
 
 import MoreIcon from '../../img/more-icon.svg';
 
 export default function CommentItem(props) {
-  const { comment, isVisivle, children: replies } = props;
-  const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const { comment, isVisible, setParentId, children: replies } = props;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   function convertDatetime(dateTime) {
     const date = new Date(dateTime);
     const convertedDatetime = date.toLocaleString('ko-KR', {
@@ -27,8 +28,17 @@ export default function CommentItem(props) {
     return time1.slice(0, 19) === time2.slice(0, 19);
   }
 
+  function handleMoreBtnClick() {
+    setIsModalOpen(!isModalOpen);
+  }
+
+  function handleReplyBtnClick() {
+    setParentId(comment.id);
+    setIsModalOpen(false);
+  }
+
   return (
-    <CommentItemWrap display={isVisivle === false ? 'none' : 'flex'}>
+    <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
       <ProfileImgBox>
         <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
       </ProfileImgBox>
@@ -43,9 +53,18 @@ export default function CommentItem(props) {
               )}
             </p>
           </div>
-          <MoreBtn>
+          <MoreBtn onClick={handleMoreBtnClick}>
             <img src={MoreIcon} alt='더보기' />
           </MoreBtn>
+          {isModalOpen && (
+            <MiniModalStyle>
+              {comment.parent === null && (
+                <button onClick={handleReplyBtnClick}>답글 달기</button>
+              )}
+              <button>댓글 수정</button>
+              <button>댓글 삭제</button>
+            </MiniModalStyle>
+          )}
         </UserInfoBox>
         <Comment>{comment.content}</Comment>
         <CommentBox>{replies}</CommentBox>
@@ -70,8 +89,8 @@ const DescBox = styled.div`
 `;
 
 const UserInfoBox = styled.div`
+  position: relative;
   display: flex;
-
   padding-top: 4px;
   margin-bottom: 6px;
   font-size: var(--font-sm);
@@ -91,10 +110,6 @@ const CommentBox = styled.div`
     font-size: var(--font-sm);
     color: var(--sub-font-color);
   }
-  button {
-    font-size: var(--font-sm);
-    color: var(--sub-font-color);
-  }
 `;
 
 const MoreBtn = styled.button`
@@ -104,4 +119,9 @@ const MoreBtn = styled.button`
   img {
     width: 20px;
   }
+`;
+
+const MiniModalStyle = styled(MiniModalWrap)`
+  right: 0;
+  top: 32px;
 `;

@@ -5,11 +5,16 @@ import CommentItem from './CommentItem';
 
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 export default function CommentSection(props) {
+  const { playlistId } = props;
   const [more, setMore] = useState(false);
+  const [parentId, setParentId] = useState(null);
   const [visibleCount, setVisibleCount] = useState(2);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
+  console.log(props.comments);
+  const comments = props.comments
+    .filter((comment) => comment.parent === null)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  const comments = props.comments.filter((comment) => comment.parent === null);
   const replies = props.comments.filter((comment) => comment.parent !== null);
   const repliesGroup = {};
   replies.forEach((data) => {
@@ -21,10 +26,10 @@ export default function CommentSection(props) {
     }
   });
 
-  function handleToggleBtnClick() {
+  function handleReplyBtnClick() {
     return isReplyOpen === true ? setIsReplyOpen(false) : setIsReplyOpen(true);
   }
-  console.log(more);
+
   const handleMore = () => {
     if (!more) {
       if (visibleCount < comments.length) setVisibleCount(visibleCount + 5);
@@ -41,20 +46,33 @@ export default function CommentSection(props) {
   return (
     <CommentSectionWrap>
       <h2>
-        댓글 <span>13</span>
+        댓글 <span>{comments.length}</span>
       </h2>
-      <CommentForm />
+      <CommentForm
+        playlistId={playlistId}
+        parentId={parentId}
+        setParentId={setParentId}
+      />
       {comments.map((comment, index) => (
         <li key={comment.id}>
-          <CommentItem comment={comment} isVisivle={index + 1 <= visibleCount}>
+          <CommentItem
+            comment={comment}
+            isVisible={index + 1 <= visibleCount}
+            setParentId={setParentId}
+          >
             {repliesGroup[comment.id] && (
               <>
-                <button onClick={handleToggleBtnClick}>
+                <ReplyBtn onClick={handleReplyBtnClick}>
                   답글 {repliesGroup[comment.id].length}
-                </button>
+                </ReplyBtn>
                 {isReplyOpen &&
                   repliesGroup[comment.id].map((comment) => (
-                    <CommentItem key={comment.id} comment={comment} />
+                    <CommentItem
+                      key={comment.id}
+                      parentId={comment.id}
+                      comment={comment}
+                      setParentId={parentId}
+                    />
                   ))}
               </>
             )}
@@ -87,4 +105,8 @@ const ExtendBtn = styled.button`
   svg {
     transform: rotate(${({ more }) => (more ? '270deg' : '90deg')});
   }
+`;
+const ReplyBtn = styled.button`
+  font-size: var(--font-sm);
+  color: var(--sub-font-color);
 `;

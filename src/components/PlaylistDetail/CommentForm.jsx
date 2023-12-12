@@ -1,28 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 
+import { useWriteComment, useWriteReply } from '../../hooks/queries/useComment';
 import { Button } from '../../components/common/Button/Button';
 
-export default function CommentForm() {
-  const { register, handleSubmit } = useForm();
+import CloseIcon from '../../img/close-icon.svg';
 
-  const onSubmit = (data) => {
-    console.log('댓글 제출', data);
+export default function CommentForm(props) {
+  const { mutate: writeComment } = useWriteComment();
+  const { mutate: writeReply } = useWriteReply();
+  const { playlistId, parentId, setParentId } = props;
+  const [content, setContent] = useState('');
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let data;
+    if (parentId) {
+      // 답글
+      data = { content, playlist_id: playlistId, parent_id: parentId };
+      writeReply(data);
+    } else {
+      // 댓글
+      data = { content, playlist_id: playlistId };
+
+      writeComment(data);
+    }
+  };
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
   };
 
   return (
-    <CommentFormWrap onSubmit={handleSubmit(onSubmit)}>
+    <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
         댓글 입력하기
       </label>
       <InputStyle
-        {...register('intro')}
+        value={content}
+        onChange={handleChange}
         type='text'
         id='comment'
-        placeholder='댓글을 입력해 주세요.'
+        placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      <Button text='확인' type='submit' />
+      {parentId && (
+        <button onClick={() => setParentId(false)}>
+          <img src={CloseIcon} alt='답글 닫기' />
+        </button>
+      )}
+      <Button text='확인' type='submit' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
 }
