@@ -12,32 +12,33 @@ export default function CommentSection(props) {
   const [parentId, setParentId] = useState(null);
   const [modalId, setModalId] = useState(null);
   const [visibleCount, setVisibleCount] = useState(2);
-  const [isReplyOpen, setIsReplyOpen] = useState(false);
+  const [opendReply, setOpendReply] = useState({});
 
-  const filterAndSortComments = (comments) => {
-    return comments
-      .filter((comment) => comment.parent === null && comment.is_active)
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  };
-  const groupReplies = (comments) => {
-    const repliesGroup = {};
-    comments.forEach((data) => {
-      const parent = data.parent;
-      if (repliesGroup[parent]) {
-        repliesGroup[parent].push(data);
-      } else {
-        repliesGroup[parent] = [data];
-      }
-    });
-    return repliesGroup;
-  };
+  const filterAndSortComments = (comments) =>
+    comments
+      .filter(
+        ({ parent, is_active, id }) =>
+          !parent && (is_active || repliesGroup[id]),
+      )
+      .sort(
+        ({ created_at: a }, { created_at: b }) => new Date(b) - new Date(a),
+      );
 
-  const comments = filterAndSortComments(props.comments);
-  const replies = props.comments.filter((comment) => comment.parent !== null);
+  const groupReplies = (comments) =>
+    comments.reduce((repliesGroup, data) => {
+      const { parent } = data;
+      repliesGroup[parent] = [...(repliesGroup[parent] || []), data];
+      return repliesGroup;
+    }, {});
+
+  const replies = props.comments.filter(
+    ({ parent, is_active }) => parent !== null && is_active,
+  );
   const repliesGroup = groupReplies(replies);
+  const comments = filterAndSortComments(props.comments);
 
-  const handleReplyBtnClick = () => {
-    return isReplyOpen === true ? setIsReplyOpen(false) : setIsReplyOpen(true);
+  const handleReplyBtnClick = (id) => {
+    setOpendReply((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const handleMore = () => {
@@ -69,7 +70,7 @@ export default function CommentSection(props) {
       />
       {comments.map(
         (comment, index) =>
-          comment.is_active && (
+          (comment.is_active || repliesGroup[comment.id]) && (
             <li key={comment.id}>
               <CommentItem
                 comment={comment}
@@ -83,10 +84,10 @@ export default function CommentSection(props) {
               >
                 {repliesGroup[comment.id] && (
                   <>
-                    <ReplyBtn onClick={handleReplyBtnClick}>
+                    <ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
                       답글 {repliesGroup[comment.id].length}
                     </ReplyBtn>
-                    {isReplyOpen &&
+                    {opendReply[comment.id] &&
                       repliesGroup[comment.id].map((comment) => (
                         <CommentItem
                           key={comment.id}
@@ -98,6 +99,7 @@ export default function CommentSection(props) {
                           setEditId={setEditId}
                           modalId={modalId}
                           setModalId={setModalId}
+                          isActive={comment.is_active}
                         />
                       ))}
                   </>
