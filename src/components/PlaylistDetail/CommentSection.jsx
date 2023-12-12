@@ -80,6 +80,7 @@ export default function CommentSection(props) {
             (comment.is_active || repliesGroup[comment.id]) && (
               <li key={comment.id}>
                 <CommentItem
+                  writer={comment.writer}
                   comment={comment}
                   isVisible={index + 1 <= visibleCount}
                   setParentId={setParentId}
@@ -98,6 +99,7 @@ export default function CommentSection(props) {
                         repliesGroup[comment.id].map((comment) => (
                           <CommentItem
                             key={comment.id}
+                            writer={comment.writer}
                             comment={comment}
                             parentId={comment.id}
                             setParentId={setParentId}
@@ -115,7 +117,7 @@ export default function CommentSection(props) {
               </li>
             ),
         )}
-      {comments.length !== 0 && (
+      {comments.length > 2 && (
         <ExtendBtn onClick={handleMore} more={more}>
           <ArrowIcon fill='black' />
         </ExtendBtn>

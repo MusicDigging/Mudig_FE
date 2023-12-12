@@ -9,9 +9,11 @@ import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 import MoreIcon from '../../img/more-icon.svg';
 
 export default function CommentItem(props) {
+  const myId = 67; // 유저 아이디값 (이후 리코일로 가져옴)
   const { mutate: deleteComment } = useDeleteComment();
 
   const {
+    writer,
     comment,
     isVisible,
     setParentId,
@@ -60,7 +62,7 @@ export default function CommentItem(props) {
   const handleDeleteBtnClick = () => {
     deleteComment(comment.id);
   };
-
+  console.log(writer);
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
       <ProfileImgBox>
@@ -77,16 +79,26 @@ export default function CommentItem(props) {
               )}
             </p>
           </div>
-          <MoreBtn onClick={handleMoreBtnClick}>
-            <img src={MoreIcon} alt='더보기' />
-          </MoreBtn>
+          {/* 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리*/}
+          {(comment.parent !== null && writer !== myId) || (
+            <MoreBtn onClick={handleMoreBtnClick}>
+              <img src={MoreIcon} alt='더보기' />
+            </MoreBtn>
+          )}
+          {/* modal이 오픈된 댓글 id 비교  */}
           {modalId === comment.id && (
             <MiniModalStyle>
+              {/* 댓글일 때만 답글 달기 기능 추가  */}
               {comment.parent === null && (
                 <button onClick={handleReplyBtnClick}>답글 달기</button>
               )}
-              <button onClick={handleEditBtnClick}>댓글 수정</button>
-              <button onClick={handleDeleteBtnClick}>댓글 삭제</button>
+              {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
+              {writer === myId && (
+                <>
+                  <button onClick={handleEditBtnClick}>댓글 수정</button>
+                  <button onClick={handleDeleteBtnClick}>댓글 삭제</button>
+                </>
+              )}
             </MiniModalStyle>
           )}
         </UserInfoBox>
