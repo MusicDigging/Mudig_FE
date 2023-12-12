@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
+import { useDeleteComment } from '../../hooks/queries/useComment';
+
 import { CircleImage } from '../common/Image/Image';
+import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 
 import MoreIcon from '../../img/more-icon.svg';
 
 export default function CommentItem(props) {
+  const { mutate: deleteComment } = useDeleteComment();
+
   const {
     comment,
     isVisible,
@@ -53,6 +57,9 @@ export default function CommentItem(props) {
     setContent(comment.content);
     setModalId(null);
   };
+  const handleDeleteBtnClick = () => {
+    deleteComment(comment.id);
+  };
 
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
@@ -79,16 +86,17 @@ export default function CommentItem(props) {
                 <button onClick={handleReplyBtnClick}>답글 달기</button>
               )}
               <button onClick={handleEditBtnClick}>댓글 수정</button>
-              <button>댓글 삭제</button>
+              <button onClick={handleDeleteBtnClick}>댓글 삭제</button>
             </MiniModalStyle>
           )}
         </UserInfoBox>
         <Comment
+          $color={comment.is_active ? '' : 'var(--sub-font-color)'}
           $bgColor={
             editId === comment.id ? 'rgba(137, 105, 255, 0.05)' : 'none'
           }
         >
-          {comment.content}
+          {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
         </Comment>
         <CommentBox>{replies}</CommentBox>
       </DescBox>
@@ -125,6 +133,7 @@ const UserInfoBox = styled.div`
 const Comment = styled.p`
   padding: 6px 0;
   font-size: var(--font-md);
+  color: ${(props) => props.$color};
   background-color: ${(props) => props.$bgColor};
 `;
 

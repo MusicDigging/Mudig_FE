@@ -34,12 +34,27 @@ export const useWriteReply = () => {
 export const useEditComment = () => {
   const queryClient = useQueryClient();
 
-  const editReply = (data) => {
+  const editComment = (data) => {
     const response = privateInstance.put('/playlist/comment/edit/', data);
     return response;
   };
 
-  return useMutation(editReply, {
+  return useMutation(editComment, {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries('get-playlist-detail');
+    },
+  });
+};
+
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+
+  const deleteComment = (id) => {
+    const response = privateInstance.delete(`/playlist/comment/delete/${id}`);
+    return response;
+  };
+
+  return useMutation(deleteComment, {
     onSuccess: (res) => {
       queryClient.invalidateQueries('get-playlist-detail');
     },
