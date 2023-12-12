@@ -1,28 +1,46 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { useWriteComment, useWriteReply } from '../../hooks/queries/useComment';
+import {
+  useWriteComment,
+  useWriteReply,
+  useEditComment,
+} from '../../hooks/queries/useComment';
 import { Button } from '../../components/common/Button/Button';
 
 import CloseIcon from '../../img/close-icon.svg';
 
 export default function CommentForm(props) {
-  const { mutate: writeComment } = useWriteComment();
   const { mutate: writeReply } = useWriteReply();
-  const { playlistId, parentId, setParentId } = props;
-  const [content, setContent] = useState('');
+  const { mutate: editComment } = useEditComment();
+  const { mutate: writeComment } = useWriteComment();
+  const {
+    content,
+    setContent,
+    playlistId,
+    parentId,
+    setParentId,
+    editId,
+    setEditId,
+  } = props;
 
   const onSubmit = (e) => {
     e.preventDefault();
     let data;
-    if (parentId) {
+    if (!editId && parentId) {
       // 답글
       data = { content, playlist_id: playlistId, parent_id: parentId };
-      writeReply(data);
+      if (editId) writeReply(data);
+      else writeReply(data);
+      setParentId(null);
+    } else if (editId) {
+      // 댓글, 답글 수정
+      data = { content, comment_id: editId };
+      editComment(data);
+      setEditId(null);
     } else {
       // 댓글
       data = { content, playlist_id: playlistId };
-
       writeComment(data);
     }
   };

@@ -7,10 +7,13 @@ import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 export default function CommentSection(props) {
   const { playlistId } = props;
   const [more, setMore] = useState(false);
+  const [content, setContent] = useState('');
+  const [editId, setEditId] = useState(null);
   const [parentId, setParentId] = useState(null);
+  const [modalId, setModalId] = useState(null);
   const [visibleCount, setVisibleCount] = useState(2);
   const [isReplyOpen, setIsReplyOpen] = useState(false);
-  console.log(props.comments);
+
   const comments = props.comments
     .filter((comment) => comment.parent === null)
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -49,9 +52,13 @@ export default function CommentSection(props) {
         댓글 <span>{comments.length}</span>
       </h2>
       <CommentForm
+        content={content}
+        setContent={setContent}
         playlistId={playlistId}
         parentId={parentId}
         setParentId={setParentId}
+        editId={editId}
+        setEditId={setEditId}
       />
       {comments.map((comment, index) => (
         <li key={comment.id}>
@@ -59,6 +66,11 @@ export default function CommentSection(props) {
             comment={comment}
             isVisible={index + 1 <= visibleCount}
             setParentId={setParentId}
+            setContent={setContent}
+            editId={editId}
+            setEditId={setEditId}
+            modalId={modalId}
+            setModalId={setModalId}
           >
             {repliesGroup[comment.id] && (
               <>
@@ -69,9 +81,14 @@ export default function CommentSection(props) {
                   repliesGroup[comment.id].map((comment) => (
                     <CommentItem
                       key={comment.id}
-                      parentId={comment.id}
                       comment={comment}
-                      setParentId={parentId}
+                      parentId={comment.id}
+                      setParentId={setParentId}
+                      setContent={setContent}
+                      editId={editId}
+                      setEditId={setEditId}
+                      modalId={modalId}
+                      setModalId={setModalId}
                     />
                   ))}
               </>

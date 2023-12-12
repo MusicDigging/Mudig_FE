@@ -11,7 +11,6 @@ export const useWriteComment = () => {
 
   return useMutation(writeComment, {
     onSuccess: (res) => {
-      console.log(res);
       queryClient.invalidateQueries('get-playlist-detail');
     },
   });
@@ -27,7 +26,21 @@ export const useWriteReply = () => {
 
   return useMutation(writeReply, {
     onSuccess: (res) => {
-      console.log(res);
+      queryClient.invalidateQueries('get-playlist-detail');
+    },
+  });
+};
+
+export const useEditComment = () => {
+  const queryClient = useQueryClient();
+
+  const editReply = (data) => {
+    const response = privateInstance.put('/playlist/comment/edit/', data);
+    return response;
+  };
+
+  return useMutation(editReply, {
+    onSuccess: (res) => {
       queryClient.invalidateQueries('get-playlist-detail');
     },
   });

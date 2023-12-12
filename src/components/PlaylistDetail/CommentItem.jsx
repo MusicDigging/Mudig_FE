@@ -7,10 +7,19 @@ import { CircleImage } from '../common/Image/Image';
 import MoreIcon from '../../img/more-icon.svg';
 
 export default function CommentItem(props) {
-  const { comment, isVisible, setParentId, children: replies } = props;
+  const {
+    comment,
+    isVisible,
+    setParentId,
+    setContent,
+    editId,
+    setEditId,
+    modalId,
+    setModalId,
+    children: replies,
+  } = props;
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  function convertDatetime(dateTime) {
+  const convertDatetime = (dateTime) => {
     const date = new Date(dateTime);
     const convertedDatetime = date.toLocaleString('ko-KR', {
       year: 'numeric',
@@ -21,21 +30,29 @@ export default function CommentItem(props) {
       second: 'numeric',
     });
     return convertedDatetime;
-  }
+  };
 
-  function checkDatetimeEqual(time1, time2) {
+  const checkDatetimeEqual = (time1, time2) => {
     // 두 시간의 초 단위(이후 소수점 무시)까지 비교, 같으면 true
     return time1.slice(0, 19) === time2.slice(0, 19);
-  }
+  };
 
-  function handleMoreBtnClick() {
-    setIsModalOpen(!isModalOpen);
-  }
+  const handleMoreBtnClick = () => {
+    if (modalId) setModalId(null);
+    else setModalId(comment.id);
+  };
 
-  function handleReplyBtnClick() {
+  const handleReplyBtnClick = () => {
     setParentId(comment.id);
-    setIsModalOpen(false);
-  }
+    setModalId(null);
+  };
+
+  const handleEditBtnClick = () => {
+    if (comment.parent) setParentId(comment.parent);
+    setEditId(comment.id);
+    setContent(comment.content);
+    setModalId(null);
+  };
 
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
@@ -56,17 +73,23 @@ export default function CommentItem(props) {
           <MoreBtn onClick={handleMoreBtnClick}>
             <img src={MoreIcon} alt='더보기' />
           </MoreBtn>
-          {isModalOpen && (
+          {modalId === comment.id && (
             <MiniModalStyle>
               {comment.parent === null && (
                 <button onClick={handleReplyBtnClick}>답글 달기</button>
               )}
-              <button>댓글 수정</button>
+              <button onClick={handleEditBtnClick}>댓글 수정</button>
               <button>댓글 삭제</button>
             </MiniModalStyle>
           )}
         </UserInfoBox>
-        <Comment>{comment.content}</Comment>
+        <Comment
+          $bgColor={
+            editId === comment.id ? 'rgba(137, 105, 255, 0.05)' : 'none'
+          }
+        >
+          {comment.content}
+        </Comment>
         <CommentBox>{replies}</CommentBox>
       </DescBox>
     </CommentItemWrap>
@@ -92,7 +115,6 @@ const UserInfoBox = styled.div`
   position: relative;
   display: flex;
   padding-top: 4px;
-  margin-bottom: 6px;
   font-size: var(--font-sm);
   p:last-child {
     margin-top: 4px;
@@ -101,8 +123,9 @@ const UserInfoBox = styled.div`
 `;
 
 const Comment = styled.p`
+  padding: 6px 0;
   font-size: var(--font-md);
-  margin-bottom: 6px;
+  background-color: ${(props) => props.$bgColor};
 `;
 
 const CommentBox = styled.div`
