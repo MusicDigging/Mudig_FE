@@ -9,6 +9,9 @@ import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 
+import LikeIcon from '../../img/like-icon.svg';
+import LikeActiveIcon from '../../img/like-active-icon.svg';
+
 export default function PlaylistDetail() {
   const location = useLocation();
   const state = location.state;
@@ -17,11 +20,17 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
+  const { mutate: likePlaylist } = useLikePlaylist();
   if (isLoading) return;
 
   const { playlist, comments, music, user } = data;
 
   const musicList = music.map((obj) => obj.information);
+
+  const handleLikeBtnClick = () => {
+    const data = { playlist_id: playlist.id };
+    likePlaylist(data);
+  };
 
   return (
     <>
@@ -55,6 +64,13 @@ export default function PlaylistDetail() {
 
           <CommentSection playlistId={playlistId} comments={comments} />
         </PlayListDetailBox>
+        {/* <LikeBtn onClick={handleLikeBtnClick}>
+          <img
+            src={playlist.like_playlist ? LikeActiveIcon : LikeIcon}
+            alt='좋아요'
+          />
+          <p>{playlist.like_count}</p>
+        </LikeBtn> */}
       </PlaylistDetailWrap>
     </>
   );
@@ -69,4 +85,15 @@ const PlayListDetailBox = styled.main`
   flex-direction: column;
   height: 100%;
   padding-bottom: 0;
+`;
+const LikeBtn = styled.button`
+  height: 24px;
+  display: flex;
+  font-size: var(--font-md);
+
+  img {
+    width: 24px;
+    height: 100%;
+    vertical-align: middle;
+  }
 `;

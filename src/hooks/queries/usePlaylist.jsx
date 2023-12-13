@@ -44,3 +44,19 @@ export const useGetPlaylistMusic = (ids) => {
   );
   return { data, isLoading };
 };
+
+export const useLikePlaylist = () => {
+  const queryClient = useQueryClient();
+
+  const likePlaylist = (data) => {
+    const response = privateInstance.post('/playlist/like/', data);
+    return response;
+  };
+
+  return useMutation((data) => likePlaylist(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('get-playlist-detail');
+    },
+  });
+};
+
