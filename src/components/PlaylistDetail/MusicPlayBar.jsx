@@ -66,7 +66,10 @@ export default function MusicPlayBar(props) {
         {isModalOpen && (
           <MiniModal>
             <button onClick={handleDeleteBtnClick}>플리 삭제</button>
-            <Link to='edit' state={{ id: playlistId }}>
+            <Link
+              to={`/playlist/detail/${playlistId}/edit`}
+              state={{ id: playlistId }}
+            >
               플리 수정
             </Link>
           </MiniModal>
