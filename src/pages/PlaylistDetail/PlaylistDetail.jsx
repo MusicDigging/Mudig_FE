@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
+import {
+  useGetPlaylistDetail,
+  useLikePlaylist,
+} from '../../hooks/queries/usePlaylist';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
@@ -15,7 +18,7 @@ import LikeActiveIcon from '../../img/like-active-icon.svg';
 export default function PlaylistDetail() {
   const location = useLocation();
   const state = location.state;
-  const playlistId = state?.id || 52; // location.state
+  const playlistId = state?.id || 56; // location.state
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -46,6 +49,7 @@ export default function PlaylistDetail() {
           />
         )}
         <MusicPlayBar
+          playlistId={playlistId}
           pause={pause}
           setPause={setPause}
           playing={playing}
@@ -61,7 +65,6 @@ export default function PlaylistDetail() {
             currMusic={currMusic}
             setCurrMusic={setCurrMusic}
           />
-
           <CommentSection playlistId={playlistId} comments={comments} />
         </PlayListDetailBox>
         {/* <LikeBtn onClick={handleLikeBtnClick}>
