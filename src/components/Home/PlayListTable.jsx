@@ -2,26 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
+import { Link } from 'react-router-dom';
 
 function PlayListTable({ liSize, playlistData }) {
-  console.log(playlistData);
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
         {playlistData &&
           playlistData.map((item) => (
-            <StyledListItem key={item.id} liSize={liSize}>
-              <ImageBox liSize={liSize}>
-                {/* Use thumbnail URL from the data */}
-                <Image src={`${item.thumbnail}`} alt={item.title} />
-              </ImageBox>
-              <PlayIconImg
-                src={PlayIcon}
-                alt='재생 바로가기 아이콘'
-                liSize={liSize}
-              />
-              <p>{item.title}</p> {/* Display the title */}
-            </StyledListItem>
+            <Link
+              to={`/playlist/detail/${item.id}`}
+              key={item.id}
+              state={{ id: item.id }}
+            >
+              <StyledListItem key={item.id} liSize={liSize}>
+                <ImageBox liSize={liSize}>
+                  {/* Use thumbnail URL from the data */}
+                  <Image src={`${item.thumbnail}`} alt={item.title} />
+                </ImageBox>
+                <PlayIconImg
+                  src={PlayIcon}
+                  alt='재생 바로가기 아이콘'
+                  liSize={liSize}
+                />
+                <p>{item.title}</p> {/* Display the title */}
+              </StyledListItem>
+            </Link>
           ))}
       </ul>
     </PlayListTableWrap>
@@ -73,6 +79,7 @@ const StyledListItem = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 9px;
+    height: 22px;
   }
   position: relative;
 `;
