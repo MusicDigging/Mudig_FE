@@ -74,49 +74,57 @@ export default function CommentSection(props) {
           <span>대화를 시작해보세요!</span>
         </EmptyComment>
       )}
-      {comments.length !== 0 &&
-        comments.map(
-          (comment, index) =>
-            (comment.is_active || repliesGroup[comment.id]) && (
-              <li key={comment.id}>
-                <CommentItem
-                  writer={comment.writer}
-                  comment={comment}
-                  isVisible={index + 1 <= visibleCount}
-                  setParentId={setParentId}
-                  setContent={setContent}
-                  editId={editId}
-                  setEditId={setEditId}
-                  modalId={modalId}
-                  setModalId={setModalId}
-                >
-                  {repliesGroup[comment.id] && (
-                    <>
-                      <ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
-                        답글 {repliesGroup[comment.id].length}
-                      </ReplyBtn>
-                      {opendReply[comment.id] &&
-                        repliesGroup[comment.id].map((comment) => (
-                          <CommentItem
-                            key={comment.id}
-                            writer={comment.writer}
-                            comment={comment}
-                            parentId={comment.id}
-                            setParentId={setParentId}
-                            setContent={setContent}
-                            editId={editId}
-                            setEditId={setEditId}
-                            modalId={modalId}
-                            setModalId={setModalId}
-                            isActive={comment.is_active}
-                          />
-                        ))}
-                    </>
-                  )}
-                </CommentItem>
-              </li>
-            ),
-        )}
+      {comments.length !== 0 && (
+        <ul>
+          {comments.map((comment, index) => {
+            if (comment.is_active || repliesGroup[comment.id]) {
+              return (
+                <li key={comment.id}>
+                  <CommentItem
+                    writer={comment.writer}
+                    comment={comment}
+                    isVisible={index + 1 <= visibleCount}
+                    setParentId={setParentId}
+                    setContent={setContent}
+                    editId={editId}
+                    setEditId={setEditId}
+                    modalId={modalId}
+                    setModalId={setModalId}
+                  >
+                    {repliesGroup[comment.id] && (
+                      <>
+                        <ReplyBtn
+                          onClick={() => handleReplyBtnClick(comment.id)}
+                        >
+                          답글 {repliesGroup[comment.id].length}
+                        </ReplyBtn>
+                        {opendReply[comment.id] &&
+                          repliesGroup[comment.id].map((replyComment) => (
+                            <CommentItem
+                              key={replyComment.id}
+                              writer={replyComment.writer}
+                              comment={replyComment}
+                              parentId={comment.id}
+                              setParentId={setParentId}
+                              setContent={setContent}
+                              editId={editId}
+                              setEditId={setEditId}
+                              modalId={modalId}
+                              setModalId={setModalId}
+                              isActive={replyComment.is_active}
+                            />
+                          ))}
+                      </>
+                    )}
+                  </CommentItem>
+                </li>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </ul>
+      )}
       {comments.length > 2 && (
         <ExtendBtn onClick={handleMore} more={more}>
           <ArrowIcon fill='black' />
@@ -143,6 +151,7 @@ const CommentSectionWrap = styled.section`
 `;
 const EmptyComment = styled.div`
   height: 100%;
+  min-height: 120px;
   display: flex;
   flex-direction: column;
   align-items: center;
