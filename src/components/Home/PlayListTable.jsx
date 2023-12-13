@@ -3,54 +3,26 @@ import styled from 'styled-components';
 import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
 
-function PlayListTable({ liSize }) {
+function PlayListTable({ liSize, playlistData }) {
+  console.log(playlistData);
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
+        {playlistData &&
+          playlistData.map((item) => (
+            <StyledListItem key={item.id} liSize={liSize}>
+              <ImageBox liSize={liSize}>
+                {/* Use thumbnail URL from the data */}
+                <Image src={`${item.thumbnail}`} alt={item.title} />
+              </ImageBox>
+              <PlayIconImg
+                src={PlayIcon}
+                alt='재생 바로가기 아이콘'
+                liSize={liSize}
+              />
+              <p>{item.title}</p> {/* Display the title */}
+            </StyledListItem>
+          ))}
       </ul>
     </PlayListTableWrap>
   );

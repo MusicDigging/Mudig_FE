@@ -44,7 +44,7 @@ function NavBar() {
 }
 export default NavBar;
 
-const NavBarWrap = styled.footer`
+const NavBarWrap = styled.nav`
   border-top: 1px solid var(--border-color);
   background-color: #fff;
   position: fixed;

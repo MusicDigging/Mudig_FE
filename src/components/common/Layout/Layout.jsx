@@ -9,7 +9,8 @@ export default function Layout({ children }) {
   const pathsWithNavBar = [
     '/main',
     '/search',
-    '/playlist',
+    '/playlist/create',
+    '/playlist/summary',
     '/user/profile',
     '/randomplay',
     '/playlist/create',

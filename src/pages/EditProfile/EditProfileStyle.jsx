@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const EditProfileWrap = styled.main`
-  padding: 72px 16px 104px;
+  padding: 72px 16px 112px;
   height: 100%;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
