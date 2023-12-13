@@ -22,6 +22,9 @@ import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
 import Intro from '../pages/Home/Intro';
+import Splash from '../pages/Splash/Splash';
+import Follow from '../pages/Profile/Follow';
+import NotFound from '../pages/NotFound/NotFound';
 
 export function Router() {
   return (

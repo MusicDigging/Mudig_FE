@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import GlobalStyle from '../../styles/GlobalStyles';
 import closeIcon from '../../img/close-icon.svg';
 import eventPageBg from '../../img/eventPageBg.svg';
 
@@ -25,7 +24,7 @@ export const QuestionBox = styled.div`
   p {
     margin-left: 16px;
     font-size: 22px;
-    font-weight:var(--font-semi-bold)
+    font-weight: --font-semi-bold;
   }
   div {
     position: absolute;
