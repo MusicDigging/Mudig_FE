@@ -13,9 +13,17 @@ import ShareIcon from '../../img/share-icon.svg';
 
 export default function MusicPlayBar(props) {
   const navigate = useNavigate();
+  const myId = 67; // 리코일에서 가져올 것
   const { mutate: deletePlaylist } = useDeletePlaylist();
-  const { playlistId, playing, setPlaying, pause, setPause, setCurrMusic } =
-    props;
+  const {
+    userId,
+    playlistId,
+    playing,
+    setPlaying,
+    pause,
+    setPause,
+    setCurrMusic,
+  } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -63,7 +71,7 @@ export default function MusicPlayBar(props) {
         <button onClick={toggleModal}>
           <img src={MoreIcon} alt='더보기 버튼' />
         </button>
-        {isModalOpen && (
+        {userId === myId && isModalOpen && (
           <MiniModal>
             <button onClick={handleDeleteBtnClick}>플리 삭제</button>
             <Link

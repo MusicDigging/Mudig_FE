@@ -6,6 +6,8 @@ import {
   useGetPlaylistDetail,
   useLikePlaylist,
 } from '../../hooks/queries/usePlaylist';
+
+import NotFound from '../NotFound/NotFound';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
@@ -52,6 +54,7 @@ export default function PlaylistDetail() {
           />
         )}
         <MusicPlayBar
+          userId={user.id}
           playlistId={playlistId}
           pause={pause}
           setPause={setPause}
