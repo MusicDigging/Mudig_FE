@@ -95,8 +95,12 @@ export default function CommentItem(props) {
               {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
               {writer === myId && (
                 <>
-                  <button onClick={handleEditBtnClick}>댓글 수정</button>
-                  <button onClick={handleDeleteBtnClick}>댓글 삭제</button>
+                  <button onClick={handleEditBtnClick}>
+                    {comment.parent === null ? '댓글' : '답글'} 수정
+                  </button>
+                  <button onClick={handleDeleteBtnClick}>
+                    {comment.parent === null ? '댓글' : '답글'} 삭제
+                  </button>
                 </>
               )}
             </MiniModalStyle>
