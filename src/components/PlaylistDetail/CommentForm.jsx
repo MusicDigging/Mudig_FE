@@ -1,39 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 
+import {
+  useWriteComment,
+  useWriteReply,
+  useEditComment,
+} from '../../hooks/queries/useComment';
 import { Button } from '../../components/common/Button/Button';
 
-export default function CommentForm() {
-  const { register, handleSubmit } = useForm();
+import CloseIcon from '../../img/close-icon.svg';
 
-  const onSubmit = (data) => {
-    console.log('댓글 제출', data);
+export default function CommentForm(props) {
+  const { mutate: writeReply } = useWriteReply();
+  const { mutate: editComment } = useEditComment();
+  const { mutate: writeComment } = useWriteComment();
+  const {
+    content,
+    setContent,
+    playlistId,
+    parentId,
+    setParentId,
+    editId,
+    setEditId,
+  } = props;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    let data;
+
+    if (editId) {
+      // 댓글, 답글 수정
+      data = { content, comment_id: editId };
+      editComment(data);
+      setEditId(null);
+    } else {
+      if (parentId) {
+        // 답글
+        data = { content, playlist_id: playlistId, parent_id: parentId };
+        writeReply(data);
+        setParentId(null);
+      } else {
+        // 댓글
+        data = { content, playlist_id: playlistId };
+        writeComment(data);
+      }
+    }
+    setContent('');
+  };
+
+  const handleInputChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleCloseBtnClick = () => {
+    setEditId(null);
+    setParentId(null);
   };
 
   return (
-    <CommentFormWrap onSubmit={handleSubmit(onSubmit)}>
+    <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
         댓글 입력하기
       </label>
       <InputStyle
-        {...register('intro')}
+        value={content}
+        onChange={handleInputChange}
         type='text'
         id='comment'
-        placeholder='내용을 입력해 주세요.'
+        placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      <Button text='확인' type='submit' />
+      {(parentId || editId) && (
+        <button onClick={handleCloseBtnClick}>
+          <img src={CloseIcon} alt='답글 닫기' />
+        </button>
+      )}
+      <Button text='확인' type='submit' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
 }
 
 const CommentFormWrap = styled.form`
   background-color: white;
-  padding: 16px 16px 24px;
+  margin-bottom: 8px;
   display: flex;
   width: 100%;
   gap: 8px;
-  position: absolute;
+
   bottom: 0px;
 
   button {

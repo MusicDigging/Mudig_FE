@@ -22,8 +22,8 @@ export default function Layout({ children }) {
   return (
     <>
       <Header />
-      {isNavBarShowed && <NavBar />}
       {children}
+      {isNavBarShowed && <NavBar />}
     </>
   );
 }
