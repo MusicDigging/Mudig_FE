@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
-import { userInfoAtom } from '../../../library/atom';
+import { userInfoAtom, isLoginAtom } from '../../../library/atom';
 import { loginUser } from '../../../library/apis/api';
 import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
@@ -24,7 +24,7 @@ export const AuthForm = () => {
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
   const setUserInfo = useSetRecoilState(userInfoAtom);
-
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
     onSuccess: (data) => {
       const { user, token } = data;
@@ -41,6 +41,7 @@ export const AuthForm = () => {
         rep_playlist,
         token,
       });
+      setIsLogin(true);
       localStorage.setItem('token', access);
       localStorage.setItem('refreshToken', refresh);
       navigate('/main');
