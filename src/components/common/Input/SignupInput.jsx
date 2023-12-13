@@ -40,7 +40,7 @@ export const SignupInput = (props) => {
         {showTimeText && <TimeText>05:00</TimeText>}
 
         <EyeIcon onClick={toggleShowPassword}>
-          {type === 'password' && (
+          {type === 'password' && name !== 'confirmPassword' && (
             <img
               src={showPassword ? showEye : hideEye}
               alt={showPassword ? '비밀번호 표시' : '비밀번호 숨기기'}
