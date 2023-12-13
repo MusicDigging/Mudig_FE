@@ -11,16 +11,19 @@ export const MiniModalWrap = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 4px;
-
+  z-index: 2;
   padding: 11px;
   border-radius: 10px;
   background: var(--white, #fff);
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);
-
+  font-size: var(--font-md);
+  color: black;
   button,
   a {
-    padding: 10px;
+    color: black;
+    padding: 6px;
     font-size: var(--font-md);
     text-align: left;
     line-height: normal;

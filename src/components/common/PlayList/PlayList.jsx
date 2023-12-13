@@ -8,4 +8,6 @@ export default function PlayList(props) {
   return <PlayListWrap>{children}</PlayListWrap>;
 }
 
-const PlayListWrap = styled.ul``;
+const PlayListWrap = styled.ul`
+  width: 100%;
+`;
