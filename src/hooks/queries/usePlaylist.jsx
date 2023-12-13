@@ -13,7 +13,7 @@ export const useCreatePlaylist = () => {
 };
 
 export const useGetPlaylistDetail = (id) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     'get-playlist-detail',
     () => {
       return privateInstance.get(`/playlist/detail/${id}/`);
@@ -22,7 +22,7 @@ export const useGetPlaylistDetail = (id) => {
       select: (response) => response.data,
     },
   );
-  return { data, isLoading };
+  return { data, isLoading, isError };
 };
 
 export const useGetPlaylistMusic = (ids) => {

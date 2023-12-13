@@ -18,14 +18,17 @@ import LikeActiveIcon from '../../img/like-active-icon.svg';
 export default function PlaylistDetail() {
   const location = useLocation();
   const state = location.state;
-  const playlistId = state?.id || 56; // location.state
-  const { data, isLoading } = useGetPlaylistDetail(playlistId);
+  const playlistId = state?.id || location.pathname.split('/').pop(); // state로 받아오기 or url pathname에서 가져오기
+  const { data, isLoading, isError } = useGetPlaylistDetail(playlistId);
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
   const { mutate: likePlaylist } = useLikePlaylist();
-  if (isLoading) return;
 
+  if (isLoading) return null;
+  if (isError) {
+    return <NotFound />;
+  }
   const { playlist, comments, music, user } = data;
 
   const musicList = music.map((obj) => obj.information);
