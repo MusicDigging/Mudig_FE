@@ -49,9 +49,11 @@ export default NavBar;
 
 const NavBarWrap = styled.nav`
   border-top: 1px solid var(--border-color);
-  background-color: #fff;
   position: fixed;
   bottom: 0;
+  border-radius: 12px 12px 0px 0px;
+  background: var(--white, #fff);
+  box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.05);
 
   ul {
     width: 360px;
