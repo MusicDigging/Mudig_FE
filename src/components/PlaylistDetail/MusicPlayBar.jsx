@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { useDeletePlaylist } from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
 
@@ -10,7 +13,8 @@ import ShareIcon from '../../img/share-icon.svg';
 import { Link } from 'react-router-dom';
 
 export default function MusicPlayBar(props) {
-  const { playing, setPlaying, pause, setPause, setCurrMusic } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
+  const navigate = useNavigate();
+  const { mutate: deletePlaylist } = useDeletePlaylist();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -27,6 +31,17 @@ export default function MusicPlayBar(props) {
       setPause(!pause);
     }
   };
+
+  const handleDeleteBtnClick = () => {
+    const id = data.playlist.id;
+    deletePlaylist(id, {
+      onSuccess: () => {
+        alert('플레이리스트가 정상적으로 삭제되었습니다.');
+        navigate(-1);
+      },
+    });
+  };
+
   return (
     <PlayBarWrap>
       <button>
@@ -44,8 +59,7 @@ export default function MusicPlayBar(props) {
         </button>
         {isModalOpen && (
           <MiniModal>
-            <button>플리 삭제</button>
-            <Link to='edit'>플리 수정</Link>
+            <button onClick={handleDeleteBtnClick}>플리 삭제</button>
           </MiniModal>
         )}
       </MoreBtnBox>

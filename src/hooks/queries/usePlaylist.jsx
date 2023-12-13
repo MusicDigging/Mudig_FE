@@ -2,8 +2,6 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
 
 export const useCreatePlaylist = () => {
-  const queryClient = useQueryClient();
-
   const createPlaylist = (data) => {
     const response = privateInstance.post('/playlist/create/', data);
     return response;
@@ -60,3 +58,11 @@ export const useLikePlaylist = () => {
   });
 };
 
+export const useDeletePlaylist = () => {
+  const deletePlaylist = async (id) => {
+    const response = await privateInstance.delete(`/playlist/delete/${id}`);
+    return response;
+  };
+
+  return useMutation(deletePlaylist);
+};
