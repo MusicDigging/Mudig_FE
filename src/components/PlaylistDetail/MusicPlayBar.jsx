@@ -43,9 +43,14 @@ export default function MusicPlayBar(props) {
     });
   };
 
+  const handleShareBtnClick = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert('URL이 복사되었습니다.');
+  };
+
   return (
     <PlayBarWrap>
-      <button>
+      <button onClick={handleShareBtnClick}>
         <img src={ShareIcon} alt='공유하기 버튼' />
       </button>
       <PlayBtn onClick={handlePlayBtn}>
