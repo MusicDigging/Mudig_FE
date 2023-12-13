@@ -20,7 +20,10 @@ function NavBar() {
             <p>메인</p>
           </li>
         </StyledLink>
-        <StyledLink to='/playlist/create' active={isActive('/playlist/create')}>
+        <StyledLink
+          to='/playlist/create1'
+          active={isActive('/playlist/create1')}
+        >
           <li>
             <img src={PlaylistIcon} alt='플리 생성 버튼'></img>
             <p>플리 생성</p>
@@ -32,7 +35,7 @@ function NavBar() {
             <p>뮤비</p>
           </li>
         </StyledLink>
-        <StyledLink to='/user/profile' active={isActive('/user/profile')}>
+        <StyledLink to='/user/profile/my' active={isActive('/user/profile/my')}>
           <li>
             <img src={ProfileIcon} alt='프로필 버튼'></img>
             <p>마이페이지</p>
