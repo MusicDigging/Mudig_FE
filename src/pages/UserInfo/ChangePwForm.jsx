@@ -8,8 +8,10 @@ import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
 import Swal from 'sweetalert2';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function ChangePwForm() {
+  const navigate = useNavigate();
   const userEmail = useRecoilValue(userInfoAtom).email;
   const { mutate: changePassword } = useChangePassword();
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
@@ -32,6 +34,7 @@ export default function ChangePwForm() {
           text: '비밀번호가 성공적으로 변경되었습니다!',
           icon: 'success',
         });
+        navigate('/user/profile/my');
         console.log(data);
       },
       onError: (error) => {
