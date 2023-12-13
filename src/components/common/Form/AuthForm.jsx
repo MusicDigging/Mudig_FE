@@ -27,8 +27,10 @@ export const AuthForm = () => {
 
   const { mutate } = useMutation(loginUser, {
     onSuccess: (data) => {
-      const { id, email, name, image, genre, about, rep_playlist } = data.user;
-      const token = data.token;
+      const { user, token } = data;
+      const { id, email, name, image, genre, about, rep_playlist } = user;
+      const { access, refresh } = token;
+
       setUserInfo({
         id,
         email,
@@ -39,6 +41,8 @@ export const AuthForm = () => {
         rep_playlist,
         token,
       });
+      localStorage.setItem('token', access);
+      localStorage.setItem('refreshToken', refresh);
       navigate('/main');
       console.log('로그인 성공', data);
     },
@@ -88,8 +92,8 @@ export const AuthForm = () => {
           placeholder='비밀번호를 입력하세요 '
           type='password'
           name='password'
-          showPassword={showPassword}
-          toggleShowPassword={toggleShowPassword}
+          showPassword={showPassword.password}
+          toggleShowPassword={() => toggleShowPassword('password')}
         />
 
         <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
