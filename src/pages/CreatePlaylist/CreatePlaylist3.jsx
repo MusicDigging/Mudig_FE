@@ -27,7 +27,7 @@ export default function CreateNewPlaylist3() {
       onSuccess: (data) => {
         setIsLoading(false);
         navigate('/playlist/summary', {
-          state: { playlist: data.data.playlist },
+          state: { playlist: data.data.playlist.id },
         });
       },
       onError: () => {

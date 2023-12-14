@@ -40,20 +40,14 @@ export default function PlayListInfo(props) {
   const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
   return (
-    <PlayListInfoWrap>
+    <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
       <MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='뒤로가기' />
       </MoveBackBtn>
-      {isPlaylistSummary && (
-        <SummaryTitle>
-          드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
-        </SummaryTitle>
-      )}
-      <div>
-        <Thumbnail>
-          <Image src={playlist.thumbnail} alt='썸네일' />
-        </Thumbnail>
-      </div>
+      {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
+      <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+        <Image src={playlist.thumbnail} alt='썸네일' />
+      </ThumbnailBox>
       <InfoBox>
         {!isPlaylistSummary && <h2>{playlist.title}</h2>}
         <div>
@@ -81,7 +75,7 @@ export default function PlayListInfo(props) {
   );
 }
 const PlayListInfoWrap = styled.section`
-  padding-top: 216px;
+  padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
   position: relative;
   background-color: #c7c6c6;
   line-height: normal;
@@ -93,14 +87,16 @@ export const MoveBackBtn = styled.button`
   left: 16px;
 `;
 
-const Thumbnail = styled.div`
+const ThumbnailBox = styled.div`
   position: absolute;
   width: 180px;
   height: 180px;
   top: 76px;
-  transform: translate(50%, 0);
+  transform: ${(props) =>
+    props.isPlaylistSummary ? 'translate(50%, 43px)' : 'translate(50%, 0)'};
 `;
 const SummaryTitle = styled.h2`
+  position: absolute;
   top: 0;
   left: 0;
   transform: translate(50%, 130%);

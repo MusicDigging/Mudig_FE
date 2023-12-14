@@ -1,23 +1,41 @@
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
+import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import TestImg from '../../img/thumbnail-img.svg';
 export default function PlaylistSummary() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state;
+  const playlistId = state?.playlist;
+  const { data, isLoading } = useGetPlaylistDetail(playlistId);
+  if (isLoading) return;
+
+  const { playlist, music } = data;
+  const handleNextBtn = () => {
+    navigate(`/playlist/detail/${playlistId}`, {
+      state: { playlistId: playlistId },
+    });
+  };
   return (
     <PlaylistSummaryWrap>
-      <PlayListInfo></PlayListInfo>
+      <PlayListInfo playlist={playlist} />
       <PlayListBox>
         <PlayList>
-          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
-          <PlayListItem img={TestImg} title='ETA' info='NewJeans · 2:32' />
+          {music.map((item, index) => (
+            <PlayListItem
+              key={item.id}
+              img={item.thumbnail}
+              title={item.song}
+              info={item.singer}
+            />
+          ))}
         </PlayList>
       </PlayListBox>
       <BlurBox />
-      <NextBtn>다음</NextBtn>
+      <NextBtn onClick={handleNextBtn}>확인</NextBtn>
     </PlaylistSummaryWrap>
   );
 }
