@@ -8,7 +8,7 @@ import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
 import Swal from 'sweetalert2';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function ChangePwForm() {
   const navigate = useNavigate();
@@ -23,9 +23,10 @@ export default function ChangePwForm() {
     mode: 'onBlur',
   });
 
-  const { formState, setError, watch } = methods;
+  const { formState, setError, watch, getValues } = methods;
   const { isValid } = formState;
-
+  const confirmPassword = getValues('confirmPassword');
+  const newPassword = getValues('newPassword');
   const handlePasswordSubmit = (data) => {
     changePassword(data, {
       onSuccess: (data) => {
@@ -55,7 +56,7 @@ export default function ChangePwForm() {
           <SignupInput
             validation={{
               pattern: {
-                value: pawwrodRegex, //기능개발할땐 기존 유저 비밀번호를 검사해야 됨
+                value: pawwrodRegex,
                 message: 'X 8~16자 영문 대 소문자, 숫자를 사용하세요.',
               },
 
@@ -77,9 +78,14 @@ export default function ChangePwForm() {
               },
               validate: {
                 comfirmPw: (fieldValue) => {
-                  return fieldValue === watch('password')
-                    ? '현재 비밀번호와 새 비밀번호는 동일할 수 없습니다.'
-                    : null;
+                  const oldPassword = watch('password');
+                  // const confirmPassword = getValues('confirmPassword');
+                  if (fieldValue === oldPassword) {
+                    return '현재 비밀번호와 새 비밀번호는 동일할 수 없습니다.';
+                  } else if (newPassword !== confirmPassword) {
+                    return '비밀번호 확인이 일치하지 않습니다.';
+                  }
+                  return null;
                 },
               },
               required: 'X 8~16자 영문 대 소문자, 숫자를 사용하세요.',
@@ -147,5 +153,5 @@ const InputBox = styled.div`
 
 const ButtonBox = styled.div`
   position: absolute;
-  top: 755px;
+  bottom: 24px;
 `;
