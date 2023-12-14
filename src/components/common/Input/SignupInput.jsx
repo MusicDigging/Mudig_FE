@@ -71,7 +71,7 @@ const InputStyle = styled.input`
 `;
 
 const TimeText = styled.span`
-  color: red;
+  color: var(--error-color);
   position: absolute;
   top: 50%;
   right: 10px;
@@ -87,7 +87,7 @@ const EyeIcon = styled.span`
 `;
 
 const ErrorMsg = styled.span`
-  color: red;
+  color: var(--error-color);
   font-size: 12px;
   text-align: left;
   display: block;
