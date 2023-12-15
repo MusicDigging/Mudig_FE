@@ -5,7 +5,7 @@ import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { userInfoAtom } from '../../library/atom';
+import { isLoginAtom, userInfoAtom } from '../../library/atom';
 import {
   getKakaoInfo,
   getGoogleInfo,
@@ -18,6 +18,7 @@ export default function Login() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const location = useLocation();
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   //카카오, 구글 로그인 링크 get 요청
   const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
   const { data: googleData } = useQuery('google', getGoogleInfo);
@@ -28,6 +29,7 @@ export default function Login() {
   useEffect(() => {
     // 쿼리 파라미터 값 가져오기
     const result = query.get('code') || false;
+
     const hasScope = socialQuery.get('scope');
     //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
     if ((result, hasScope)) {
@@ -48,9 +50,12 @@ export default function Login() {
       }
       //가입 이력이 있을 경우
       if (response.message === '로그인 성공') {
-        const { id, email, name, image, genre, about, rep_playlist } =
-          response.user;
-        const token = response.token;
+        const { user, token } = response;
+        const { id, email, name, image, genre, about, rep_playlist } = user;
+        const { access, refresh } = token;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refreshToken', refresh);
+        setIsLogin(true);
         setUserInfo({
           id,
           email,
@@ -61,6 +66,7 @@ export default function Login() {
           rep_playlist,
           token,
         });
+
         navigate('/main');
         //가입 이력이 없고 뮤딕 프로필 설정이 필요한 경우
       } else {

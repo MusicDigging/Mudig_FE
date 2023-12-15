@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
-import { userInfoAtom } from '../../../library/atom';
+import { userInfoAtom, isLoginAtom } from '../../../library/atom';
 import { loginUser } from '../../../library/apis/api';
 import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
@@ -24,11 +24,13 @@ export const AuthForm = () => {
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
   const setUserInfo = useSetRecoilState(userInfoAtom);
-
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
     onSuccess: (data) => {
-      const { id, email, name, image, genre, about, rep_playlist } = data.user;
-      const token = data.token;
+      const { user, token } = data;
+      const { id, email, name, image, genre, about, rep_playlist } = user;
+      const { access, refresh } = token;
+
       setUserInfo({
         id,
         email,
@@ -39,6 +41,9 @@ export const AuthForm = () => {
         rep_playlist,
         token,
       });
+      setIsLogin(true);
+      localStorage.setItem('token', access);
+      localStorage.setItem('refreshToken', refresh);
       navigate('/main');
       console.log('로그인 성공', data);
     },
@@ -88,8 +93,8 @@ export const AuthForm = () => {
           placeholder='비밀번호를 입력하세요 '
           type='password'
           name='password'
-          showPassword={showPassword}
-          toggleShowPassword={toggleShowPassword}
+          showPassword={showPassword.password}
+          toggleShowPassword={() => toggleShowPassword('password')}
         />
 
         <Label htmlFor='checkbox' onClick={handleCheckboxChange}>

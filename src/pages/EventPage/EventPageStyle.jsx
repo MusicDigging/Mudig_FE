@@ -25,7 +25,7 @@ export const QuestionBox = styled.div`
   p {
     margin-left: 16px;
     font-size: 22px;
-    font-weight:var(--font-semi-bold)
+    font-weight: var(--font-semi-bold);
   }
   div {
     position: absolute;
