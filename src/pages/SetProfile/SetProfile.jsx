@@ -111,7 +111,6 @@ export default function SetProfile() {
     } catch (error) {
       console.error('실패:', error.response.message);
     }
-    console.log(typeof data.about);
   };
 
   return (
