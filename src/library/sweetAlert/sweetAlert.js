@@ -5,14 +5,13 @@ const showCustomModal = (config) => {
   return Swal.fire(config);
 };
 
-// Modal configurations
 export const confirmModal = {
   title: '정말로 회원탈퇴를 하시겠습니까?',
   text: '다시 되돌릴 수 없습니다.',
   icon: 'warning',
   showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
-  confirmButtonColor: '#FF003E', // confrim 버튼 색깔 지정 #3085d6
-  cancelButtonColor: '#5D9EFF', // cancel 버튼 색깔 지정#d33
+  confirmButtonColor: '#FF003E', // confrim 버튼 색깔 지정
+  cancelButtonColor: '#5D9EFF', // cancel 버튼 색깔 지정
   confirmButtonText: '확인', // confirm 버튼 텍스트 지정
   cancelButtonText: '아니오', // cancel 버튼 텍스트 지정
   reverseButtons: true, // 버튼 순서 거꾸로
