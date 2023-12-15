@@ -7,7 +7,10 @@ import usePasswordToggle from '../../hooks/ussPasswordToggle';
 import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
-import Swal from 'sweetalert2';
+import {
+  showCustomModal,
+  changePassworrdModal,
+} from '../../library/sweetAlert/sweetAlert';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChangePwForm() {
@@ -30,12 +33,8 @@ export default function ChangePwForm() {
   const handlePasswordSubmit = (data) => {
     changePassword(data, {
       onSuccess: (data) => {
-        Swal.fire({
-          title: '비밀번호 변경 완료',
-          text: '비밀번호가 성공적으로 변경되었습니다!',
-          icon: 'success',
-        });
-        navigate('/user/profile/my');
+        showCustomModal(changePassworrdModal);
+        navigate('/login');
         console.log(data);
       },
       onError: (error) => {

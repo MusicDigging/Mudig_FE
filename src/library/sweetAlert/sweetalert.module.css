@@ -1,0 +1,19 @@
+.customTitle {
+  font-size: 18px; /* Set the desired font size */
+  /* Add any other styles you want to customize the title */
+  padding-top: 10px;
+}
+.customPopup {
+  width: 360px;
+}
+
+.customText {
+  font-size: 12px; /* Set the desired font size */
+  color: red;
+}
+
+.customIcon {
+  margin: 20px auto;
+  border: 2px solid lightblue;
+  /* border-radius: 50%; */
+}
