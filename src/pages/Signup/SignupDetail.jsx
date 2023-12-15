@@ -8,8 +8,8 @@ export default function SignupDetail() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const type = 'mudig';
-  const onSubmit = ({ email }) => {
-    setUserInfo({ email, type });
+  const onSubmit = ({ email, password }) => {
+    setUserInfo({ email, password, type });
     navigate('/setprofile');
   };
 
