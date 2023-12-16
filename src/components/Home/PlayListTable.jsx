@@ -80,6 +80,7 @@ const StyledListItem = styled.li`
     text-overflow: ellipsis;
     margin-top: 9px;
     height: 22px;
+    font-size: 12px;
   }
   position: relative;
 `;
