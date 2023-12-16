@@ -8,8 +8,7 @@ const baseConfig = {
 };
 
 const onRequest = (config) => {
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyNDQ2NDQwLCJpYXQiOjE3MDI0MzkyNDAsImp0aSI6IjEzNTAwZWI3M2U3YTQ5ZDRhZDNjOWM5MDJhMTg0YTkyIiwidXNlcl9pZCI6Njd9.qpvid9G3sYrJUFvG6GCkndb50QuarydswUc_NtiQtw4';
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers = config.headers || {};
     config.headers.Authorization = `Bearer ${token}`;
