@@ -69,7 +69,7 @@ const NavBarWrap = styled.nav`
     img {
       width: 24px;
       height: 24px;
-      margin: 29px auto 0 auto;
+      margin: 24px auto 0 auto;
       display: block;
       object-fit: cover;
       object-position: 0;
