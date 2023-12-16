@@ -11,6 +11,6 @@ export const HomeSection = styled.section`
     font-size: var(--font-lg);
   }
   #bold {
-    font-weight: bold;
+    font-weight: 500;
   }
 `;
