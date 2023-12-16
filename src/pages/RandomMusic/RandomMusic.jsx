@@ -5,45 +5,36 @@ import VideoInfo from '../../components/RandomMv/VideoInfo';
 import MainHeader from '../../components/common/Header/MainHeader';
 import axios from 'axios';
 
-import { useMutation } from 'react-query';
-import { userInfoAtom } from '../../library/atom';
-import { useRecoilValue } from 'recoil';
+import { useRandomMv } from '../../hooks/queries/useRandomMv';
+
 export default function RandomMusic() {
-  const token = useRecoilValue(userInfoAtom).token.access;
-  const [videoData, setVideoData] = useState(null);
-
+  const { data: videoDate, mutate: getRandomMv } = useRandomMv();
+  const [id, setId] = useState([]);
+  const selectId = id.join(',');
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          'https://api.mudig.co.kr/playlist/random-mv/',
-          {
-            already_musiclist: [null],
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-        );
+    const fetchRandomMv = async () => {
+      getRandomMv(selectId, {
+        onSuccess: (data) => {
+          console.log(data);
+          const alreadyMusic = data.map((video) => video.id);
+          setId((prevId) => [...prevId, ...alreadyMusic]);
+        },
 
-        if (response.status === 200) {
-          setVideoData(response.data);
-        }
-      } catch (error) {
-        console.error('데이터 받아오기 실패 :', error);
-      }
-
-      console.log(videoData);
+        onError: (error) => {
+          console.error('랜덤뮤비 불러오기 실패', error);
+        },
+      });
+      console.log(selectId);
     };
 
-    fetchData();
+    fetchRandomMv();
   }, []);
+
   return (
     <>
       <MainHeader />
       <PlayerWrap>
-        {videoData?.map((video, index) => (
+        {videoDate?.map((video, index) => (
           <PlayerBox id={video.id} key={index}>
             <VideoPlayer url={video.information} />
             <VideoInfo title={video.song} views={`${video.singer}`} />
@@ -55,10 +46,16 @@ export default function RandomMusic() {
 }
 
 const PlayerWrap = styled.div`
-  overflow-y: auto;
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
   margin-top: 6px;
 `;
 const PlayerBox = styled.div`
   padding: 8px 16px;
+
   font-size: var(--font-md);
 `;
