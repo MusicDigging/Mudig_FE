@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import SetRepPlaylist from '../../components/EditProfile/SetRepPlaylist';
+import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
