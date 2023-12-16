@@ -1,5 +1,8 @@
-import { useQuery } from 'react-query';
-import { privateInstance } from '../../library/apis/axiosInstance';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  privateInstance,
+  imgPrivateInstance,
+} from '../../library/apis/axiosInstance';
 
 export const useGetProfile = (user_id) => {
   const { data, isLoading } = useQuery(
@@ -37,4 +40,18 @@ export const useGetFollower = (user_id) => {
     },
   );
   return { data, isLoading };
+};
+
+export const useEditProfile = () => {
+  const queryClient = useQueryClient();
+  const editProfile = (data) => {
+    const response = imgPrivateInstance.put('/user/profile/edit/', data);
+    return response.data;
+  };
+
+  return useMutation(editProfile, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('get-profile');
+    },
+  });
 };

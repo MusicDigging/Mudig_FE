@@ -1,4 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router';
+
+import { useEditProfile } from '../../hooks/queries/useProfile';
+
 import ProfileInput from '../../components/common/Input/ProfileInput';
 import SetRepPlaylist from '../../components/EditProfile/SetRepPlaylist';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
@@ -8,24 +12,37 @@ import * as S from './EditProfileStyle';
 import { useLocation } from 'react-router';
 
 export default function EditProfile() {
-  const fileInput = useRef(null);
+  const navigate = useNavigate();
   const location = useLocation();
+  const fileInput = useRef(null);
   const data = location.state;
   const { playlist, profile } = data;
   const [genre, setGenre] = useState(profile?.genre.split(',') || []);
-  const [uploadImg, setUploadImg] = useState('');
+  const [uploadImg, setUploadImg] = useState(null);
   const [repPlaylist, setRepPlaylist] = useState(profile.rep_playlist);
   const [previewImg, setPreviewImg] = useState(
+    profile.image ||
     'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   );
+  const { mutate: editProfile } = useEditProfile();
 
-  const onSubmit = (data) => {
+
+  const onSubmit = async (data) => {
     const formData = new FormData();
+    const genreArr = genre.join(',');
+
     formData.append('name', data.nickName);
     formData.append('about', data.about);
-    formData.append('genre', genre.join(','));
-    formData.append('image', uploadImg);
+    formData.append('genre', genreArr);
     formData.append('rep_playlist', repPlaylist);
+    formData.append('image', uploadImg);
+
+    editProfile(formData, {
+      onSuccess: () => {
+        alert('프로필 수정이 완료되었습니다.');
+        navigate(-1);
+      },
+    });
   };
 
   const handleChipSelect = (newSelectedChips) => {
