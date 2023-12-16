@@ -12,7 +12,7 @@ import PlayListSection from '../../components/Profile/PlayListSection';
 
 import * as S from './ProfileStyle';
 
-export default function Profile(props) {
+export default function Profile() {
   const my_id = 25;
   const user_id = 25;
   const { data: profileData, isLoading: profileLoading } =
@@ -31,7 +31,7 @@ export default function Profile(props) {
   const playlist = profileData.playlist.sort(
     (a, b) => new Date(b.created_at) - new Date(a.created_at),
   );
-  console.log(repPlaylist);
+
   return (
     <S.ProfileWrap>
       <ProfileSection
