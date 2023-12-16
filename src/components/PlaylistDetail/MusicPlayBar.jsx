@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { userInfoAtom } from '../../library/atom';
 import { useDeletePlaylist } from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
@@ -13,7 +15,7 @@ import ShareIcon from '../../img/share-icon.svg';
 
 export default function MusicPlayBar(props) {
   const navigate = useNavigate();
-  const myId = 67; // 리코일에서 가져올 것
+  const myId = useRecoilValue(userInfoAtom).id;
   const { mutate: deletePlaylist } = useDeletePlaylist();
   const {
     userId,
