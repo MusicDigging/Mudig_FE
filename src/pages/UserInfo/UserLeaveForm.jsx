@@ -58,6 +58,6 @@ const InputBox = styled.div`
 
 const ButtonBox = styled.div`
   position: absolute;
-  top: 680px;
+  top: 755px;
   padding: 0 16px;
 `;

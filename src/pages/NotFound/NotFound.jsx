@@ -1,16 +1,21 @@
 import React from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ErrorImg from '../../img/icon_error.svg';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function NotFound() {
+  const navigate = useNavigate();
+
   return (
     <NotFoundWrap>
-      <BackButton></BackButton>
+      <BackButton onClick={() => navigate(-1)}></BackButton>
       <NotFoundSection>
         <img src={ErrorImg} alt='우는 뮤딕 캐릭터 이미지'></img>
         <p>죄송합니다. 페이지를 찾을 수 없습니다.</p>
-        <button>돌아가기</button>
+        <Link to={'/main'}>
+          <button>돌아가기</button>
+        </Link>
       </NotFoundSection>
     </NotFoundWrap>
   );
