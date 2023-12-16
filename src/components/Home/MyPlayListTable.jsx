@@ -20,7 +20,7 @@ export default function MyPlayListTable({ playlistData }) {
                 key={item.id} // Assuming each item has a unique 'id'
                 img={item.thumbnail}
                 title={item.title}
-                info={item.music.length}
+                info={`${item.music.length}곡`}
               >
                 <PlayBtnStyle type='button'>
                   <img src={PlayIcon} alt='재생 바로가기 아이콘' />
