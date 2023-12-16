@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { debounce } from 'lodash';
 import { Button, ChipButton } from '../Button/Button';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
@@ -35,6 +36,7 @@ export default function ProfileInput(props) {
           };
         } else {
           //닉네임 중복검사 post 요청
+
           const response = await axios.post(
             'https://api.mudig.co.kr/user/checkname/',
             { name: data.nickName },
@@ -63,8 +65,6 @@ export default function ProfileInput(props) {
     }
   };
 
-  // const selectedChipsString = selectedChips.join(', ');
-
   const handleNickNameLengthChange = async (event) => {
     let value = event.target.value;
     value = value.slice(0, 8);
@@ -72,6 +72,8 @@ export default function ProfileInput(props) {
 
     setValue('nickName', value, { shouldValidate: true });
   };
+  //loadsh 사용하여 닉네임 Onchange debounce 적용
+  const handleNickNameChecked = debounce(handleNickNameLengthChange, 1000);
 
   return (
     <FormWrap onSubmit={handleSubmit(onSubmit)}>
@@ -88,7 +90,7 @@ export default function ProfileInput(props) {
             placeholder='8글자 내로 작성해주세요'
             type='text'
             id='nickName'
-            onChange={handleNickNameLengthChange}
+            onChange={handleNickNameChecked}
           />
           <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
         </InputBox>

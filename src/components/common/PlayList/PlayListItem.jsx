@@ -13,7 +13,7 @@ export default function PlayListItem(props) {
           <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경 아이콘' />
         </button>
       )}
-      <PlayListItemBtn>
+      <PlayListItemBox>
         <ImageBox>
           <Image src={img} alt='플레이 리스트 커버 이미지' />
           {/* 'img' props로 이미지 src 삽입 */}
@@ -22,7 +22,7 @@ export default function PlayListItem(props) {
           <div>{title}</div> {/* 제목 */}
           <p>{info}</p> {/* 제목 및 설명, 곡 / 아티스트명 * 정보 / 만든이 */}
         </InfoBox>
-      </PlayListItemBtn>
+      </PlayListItemBox>
       {children} {/* 버튼 삽입 */}
     </PlayListItemWrap>
   );
@@ -36,7 +36,7 @@ const PlayListItemWrap = styled.li`
   padding: 8px 0;
 `;
 
-const PlayListItemBtn = styled.button`
+const PlayListItemBox = styled.div`
   display: flex;
   text-align: left;
   align-items: center;

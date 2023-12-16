@@ -73,6 +73,7 @@ export default function DetailList(props) {
 }
 const DetailListWrap = styled.div`
   display: flex;
+  padding-bottom: 8px;
   flex-direction: column;
 `;
 
