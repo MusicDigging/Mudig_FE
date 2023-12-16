@@ -81,7 +81,7 @@ export default function CommentSection(props) {
               return (
                 <li key={comment.id}>
                   <CommentItem
-                    writer={comment.writer}
+                    writer={comment.writer_profile.id}
                     comment={comment}
                     isVisible={index + 1 <= visibleCount}
                     setParentId={setParentId}

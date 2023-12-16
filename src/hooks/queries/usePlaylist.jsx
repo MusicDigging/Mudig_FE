@@ -2,8 +2,6 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
 
 export const useCreatePlaylist = () => {
-  const queryClient = useQueryClient();
-
   const createPlaylist = (data) => {
     const response = privateInstance.post('/playlist/create/', data);
     return response;
@@ -15,7 +13,7 @@ export const useCreatePlaylist = () => {
 };
 
 export const useGetPlaylistDetail = (id) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     'get-playlist-detail',
     () => {
       return privateInstance.get(`/playlist/detail/${id}/`);
@@ -24,7 +22,7 @@ export const useGetPlaylistDetail = (id) => {
       select: (response) => response.data,
     },
   );
-  return { data, isLoading };
+  return { data, isLoading, isError };
 };
 
 export const useGetPlaylistMusic = (ids) => {
@@ -43,4 +41,28 @@ export const useGetPlaylistMusic = (ids) => {
     },
   );
   return { data, isLoading };
+};
+
+export const useLikePlaylist = () => {
+  const queryClient = useQueryClient();
+
+  const likePlaylist = (data) => {
+    const response = privateInstance.post('/playlist/like/', data);
+    return response;
+  };
+
+  return useMutation((data) => likePlaylist(data), {
+    onSuccess: () => {
+      queryClient.invalidateQueries('get-playlist-detail');
+    },
+  });
+};
+
+export const useDeletePlaylist = () => {
+  const deletePlaylist = async (id) => {
+    const response = await privateInstance.delete(`/playlist/delete/${id}`);
+    return response;
+  };
+
+  return useMutation(deletePlaylist);
 };
