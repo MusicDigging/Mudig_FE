@@ -86,10 +86,10 @@ const SetRepPlaylistBox = styled.div`
   width: 100%;
   overflow: hidden;
   margin-top: 8px;
-  max-height: 160px;
+  max-height: 230px;
   display: flex;
   flex-direction: column;
-  z-index: 100;
+
   box-sizing: content-box;
   border-radius: 10px;
   border: 1px solid #fff;

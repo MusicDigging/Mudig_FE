@@ -81,67 +81,69 @@ export default function ProfileInput(props) {
 
   return (
     <FormWrap onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor='nickName'>닉네임</Label>
-      <InputWrap>
-        <InputBox>
-          <InputStyle
-            {...register('nickName', {
-              required: '닉네임을 입력해주세요.',
-              maxLength: {
-                value: 8,
-              },
-            })}
-            placeholder='8글자 내로 작성해주세요'
-            type='text'
-            id='nickName'
-            onChange={handleNickNameChecked}
-          />
-          <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
-        </InputBox>
-        {/* 닉네임 중복이면 중복 에러 메시지 보여주고 아니라면 '사용 가능한 닉네임입니다' 보여주는 삼항연산자 */}
-        {errors.nickName ? (
-          <ErrorMsg>{errors.nickName.message}</ErrorMsg>
-        ) : (
-          <ErrorMsg>{nickNameValid}</ErrorMsg>
-        )}
-      </InputWrap>
+      <div>
+        <Label htmlFor='nickName'>닉네임</Label>
+        <InputWrap>
+          <InputBox>
+            <InputStyle
+              {...register('nickName', {
+                required: '닉네임을 입력해주세요.',
+                maxLength: {
+                  value: 8,
+                },
+              })}
+              placeholder='8글자 내로 작성해주세요'
+              type='text'
+              id='nickName'
+              onChange={handleNickNameChecked}
+            />
+            <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
+          </InputBox>
+          {/* 닉네임 중복이면 중복 에러 메시지 보여주고 아니라면 '사용 가능한 닉네임입니다' 보여주는 삼항연산자 */}
+          {errors.nickName ? (
+            <ErrorMsg>{errors.nickName.message}</ErrorMsg>
+          ) : (
+            <ErrorMsg>{nickNameValid}</ErrorMsg>
+          )}
+        </InputWrap>
 
-      <Label htmlFor='about'>소개글</Label>
-      <InputWrap>
-        <InputStyle
-          {...register('about', { required: false })}
-          defaultValue={profile?.about}
-          placeholder='소개글을 작성해주세요'
-          type='text'
-          id='about'
-        />
-      </InputWrap>
-      <>
-        <Chipwrap>
-          <Title>관심사</Title>
-          <ChipBox>
-            {[
-              'POP',
-              'K-POP',
-              'J-POP',
-              '힙합',
-              'R&B',
-              '발라드',
-              '댄스',
-              '인디',
-              'OST',
-            ].map((chipName, index) => (
-              <ChipButton
-                key={index}
-                name={chipName}
-                onSelect={handleChipSelect}
-                selectedChips={selectedChips}
-              />
-            ))}
-          </ChipBox>
-        </Chipwrap>
-      </>
-      {children}
+        <Label htmlFor='about'>소개글</Label>
+        <InputWrap>
+          <InputStyle
+            {...register('about', { required: false })}
+            defaultValue={profile?.about}
+            placeholder='소개글을 작성해주세요'
+            type='text'
+            id='about'
+          />
+        </InputWrap>
+        <>
+          <Chipwrap>
+            <Title>관심사</Title>
+            <ChipBox>
+              {[
+                'POP',
+                'K-POP',
+                'J-POP',
+                '힙합',
+                'R&B',
+                '발라드',
+                '댄스',
+                '인디',
+                'OST',
+              ].map((chipName, index) => (
+                <ChipButton
+                  key={index}
+                  name={chipName}
+                  onSelect={handleChipSelect}
+                  selectedChips={selectedChips}
+                />
+              ))}
+            </ChipBox>
+          </Chipwrap>
+        </>
+        {children}
+      </div>
       <ButtonBox>
         <Button
           text={btnText}
@@ -155,11 +157,15 @@ export default function ProfileInput(props) {
 }
 
 const FormWrap = styled.form`
+  background-color: orange;
   padding-top: 8px;
   font-size: var(--font-md);
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const Label = styled.label``;
@@ -191,13 +197,12 @@ const InputStyle = styled.input`
 `;
 
 const ButtonBox = styled.div`
-  position: absolute;
   bottom: 0px;
 `;
 
 const CharacterCount = styled.div`
   position: absolute;
-  top: 44%;
+  top: 50%;
   right: 12px;
   color: var(--extra-font-color);
   text-align: center;
