@@ -11,11 +11,11 @@ export default function Loading(props) {
     let timeout;
     if (isLoading) {
       if (active === '' || active === 'LoadingBox3')
-        timeout = setTimeout(() => setActive('LoadingBox1'), 700);
+        timeout = setTimeout(() => setActive('LoadingBox1'), 500);
       else if (active === 'LoadingBox1')
-        timeout = setTimeout(() => setActive('LoadingBox2'), 700);
+        timeout = setTimeout(() => setActive('LoadingBox2'), 500);
       else if (active === 'LoadingBox2')
-        timeout = setTimeout(() => setActive('LoadingBox3'), 700);
+        timeout = setTimeout(() => setActive('LoadingBox3'), 500);
     } else {
       clearTimeout(timeout);
     }
