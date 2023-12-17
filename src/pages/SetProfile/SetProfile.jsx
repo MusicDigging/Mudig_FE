@@ -1,9 +1,118 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
+import { userInfoAtom, isLoginAtom } from '../../library/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { ImgCompression } from '../../library/ImgCompression';
+import { useNavigate } from 'react-router-dom';
+import { postUserProfile } from '../../library/apis/api';
+
 export default function SetProfile() {
+  const navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const setIsLogin = useSetRecoilState(isLoginAtom);
+  const [genre, setGenre] = useState([]);
+  const [previewImg, setPreviewImg] = useState(
+    'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
+  );
+  const [uploadImg, setUploadImg] = useState('');
+  const fileInput = useRef(null);
+
+  const handleImageUpload = () => {
+    fileInput.current.click();
+  };
+
+  const imgValidation = (file) => {
+    if (!file) {
+      return false;
+    }
+
+    if (file.size > 1024 * 1024 * 10) {
+      alert('이미지 파일의 크기를 초과하였습니다. (최대 10MB)');
+      return false;
+    }
+
+    //이미지 지원 형식 확인
+    if (
+      !file.name.includes('png') &&
+      !file.name.includes('jpg') &&
+      !file.name.includes('jpeg') &&
+      !file.name.includes('bmp') &&
+      !file.name.includes('tif') &&
+      !file.name.includes('heic')
+    ) {
+      alert(
+        `이미지 형식을 확인해 주세요!\n(지원형식 : .jpg, .png, .jpeg,.bmp, .tif, *.heic)`,
+      );
+      return false;
+    }
+    return true; //모두 만족 한다면 true
+  };
+
+  // 장르 선택 함수 props
+  const handleChipSelect = (newSelectedChips) => {
+    setGenre(newSelectedChips);
+    console.log('장르선택:', newSelectedChips);
+  };
+
+  const selectGenre = genre.join(',');
+
+  const handleImageChange = async (event) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+    const isValid = imgValidation(file);
+    if (!isValid) return;
+    try {
+      console.log('압축 전:', file);
+      const { compressedFile, preview } = await ImgCompression(file);
+
+      console.log('압축 후:', compressedFile);
+      setUploadImg(compressedFile);
+      setPreviewImg(preview);
+    } catch (error) {
+      console.log('이미지 압축 실패', error);
+    }
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append('email', userInfo.email);
+      formData.append('password', userInfo.password);
+      formData.append('name', data.nickName);
+      formData.append('about', data.about || '소개글을 작성해주세요.');
+      formData.append('genre', selectGenre);
+      formData.append('image', uploadImg);
+
+      const response = await postUserProfile(formData, userInfo.type);
+
+      if (response.message === '회원가입 성공') {
+        const { user, token } = response;
+        const { id, email, name, image, genre, about, rep_playlist } = user;
+        const { access, refresh } = token;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refreshToken', refresh);
+        setIsLogin(true);
+        setUserInfo({
+          id,
+          email,
+          name,
+          image,
+          genre,
+          about,
+          rep_playlist,
+          token,
+        });
+        navigate('/main');
+      }
+    } catch (error) {
+      console.error('실패:', error.response.message);
+    }
+  };
+
   return (
     <SetProfileWrap>
       <PageNum>2/2</PageNum>
@@ -12,18 +121,26 @@ export default function SetProfile() {
         프로필을 설정해주세요
       </SetProfileTitle>
       <SetProfileBox>
-        <ProfileImage src='https://picsum.photos/200/300'>
-          <ImgUploadBtn type='button'>
+        <ProfileImage src={previewImg}>
+          <ImgUploadBtn type='button' onClick={handleImageUpload}>
             <img src={UploadImgBtn} alt='이미지 업로드 버튼' />
             <input
               type='file'
               accept='image/jpg,impge/png,image/jpeg'
+              ref={fileInput}
+              onChange={handleImageChange}
               style={{ display: 'none' }}
             />
           </ImgUploadBtn>
         </ProfileImage>
-
-        <ProfileInput btnText='다음' />
+        <ProfileInputBox>
+          {/* 프로필 설정 input, button  */}
+          <ProfileInput
+            onSubmit={onSubmit}
+            btnText='다음'
+            onChipSelect={handleChipSelect}
+          />
+        </ProfileInputBox>
       </SetProfileBox>
     </SetProfileWrap>
   );
@@ -31,9 +148,9 @@ export default function SetProfile() {
 
 const SetProfileWrap = styled.div`
   padding: 56px 16px 24px;
-  display: flex;
-
   width: 100%;
+  height: 100%;
+  display: flex;
   flex-direction: column;
 `;
 
@@ -41,9 +158,10 @@ const SetProfileBox = styled.div`
   margin-top: 58px;
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   align-items: center;
-  gap: 53px;
+  gap: 40px;
 `;
 
 const PageNum = styled.span`
@@ -69,4 +187,8 @@ const ImgUploadBtn = styled.button`
   img {
     width: 36px;
   }
+`;
+
+const ProfileInputBox = styled.div`
+  height: 100%;
 `;

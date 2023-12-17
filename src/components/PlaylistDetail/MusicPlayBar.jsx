@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { userInfoAtom } from '../../library/atom';
+import { useDeletePlaylist } from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
 
@@ -7,33 +12,63 @@ import PlayIcon from '../../img/play-icon.svg';
 import PauseIcon from '../../img/pause-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import ShareIcon from '../../img/share-icon.svg';
-import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { PlayListAtom } from '../../library/atom';
+import { useEffect } from 'react';
 
 export default function MusicPlayBar(props) {
-  const { playing, setPlaying } = props; // 상위 컴포넌트에 playing,setPlaying true로 정의
+  const navigate = useNavigate();
+  const myId = useRecoilValue(userInfoAtom).id;
+  const { mutate: deletePlaylist } = useDeletePlaylist();
+  const {
+    userId,
+    playlistId,
+    playing,
+    setPlaying,
+    pause,
+    setPause,
+    setCurrMusic,
+  } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const toggleModal = () => {
     if (isModalOpen === false) setIsModalOpen(true);
     else setIsModalOpen(false);
   };
 
   const handlePlayBtn = () => {
-    if (playing === false) {
+    if (!playing && pause) {
       setPlaying(true);
+      setPause(false);
+      setCurrMusic(0);
     } else {
-      setPlaying(false);
+      setPause(!pause);
     }
+  };
+
+  const handleDeleteBtnClick = () => {
+    const id = playlistId;
+    deletePlaylist(id, {
+      onSuccess: () => {
+        alert('플레이리스트가 정상적으로 삭제되었습니다.');
+        navigate(-1);
+      },
+    });
+  };
+
+  const handleShareBtnClick = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert('URL이 복사되었습니다.');
   };
 
   return (
     <PlayBarWrap>
-      <button>
+      <button onClick={handleShareBtnClick}>
         <img src={ShareIcon} alt='공유하기 버튼' />
       </button>
       <PlayBtn onClick={handlePlayBtn}>
         <img
-          src={playing === true ? PauseIcon : PlayIcon}
+          src={playing && !pause ? PauseIcon : PlayIcon}
           alt='재생/멈춤 버튼'
         />
       </PlayBtn>
@@ -41,10 +76,15 @@ export default function MusicPlayBar(props) {
         <button onClick={toggleModal}>
           <img src={MoreIcon} alt='더보기 버튼' />
         </button>
-        {isModalOpen && (
+        {userId === myId && isModalOpen && (
           <MiniModal>
-            <button>플리 삭제</button>
-            <Link to='edit'>플리 수정</Link>
+            <button onClick={handleDeleteBtnClick}>플리 삭제</button>
+            <Link
+              to={`/playlist/detail/${playlistId}/edit`}
+              state={{ id: playlistId }}
+            >
+              플리 수정
+            </Link>
           </MiniModal>
         )}
       </MoreBtnBox>
@@ -53,7 +93,8 @@ export default function MusicPlayBar(props) {
 }
 
 const PlayBarWrap = styled.div`
-  padding: 9px 0 25px;
+  background-color: #fff;
+  padding: 8px 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;

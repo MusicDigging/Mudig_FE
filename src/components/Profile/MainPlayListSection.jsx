@@ -1,16 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Image } from '../common/Image/Image';
+import { useGetPlaylistMusic } from '../../hooks/queries/usePlaylist';
 
-import PlayListTable from '../Home/PlayListTable';
+import MainPlayList from './MainPlayList';
+import { Image } from '../common/Image/Image';
 
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
 import WhitePlayIcon from '../../img/play-icon-white.svg';
-import { Link } from 'react-router-dom';
 
-export default function MainPlayListSection() {
+export default function MainPlayListSection(props) {
+  const { id, title, thumbnail, music } = props.data;
+  const { data: musicData, isLoading: musicLoading } =
+    useGetPlaylistMusic(music);
+
+  if (musicLoading) return;
+
   return (
     <MainPlayListSectionWrap>
       <PlayListHeader>
@@ -19,20 +26,22 @@ export default function MainPlayListSection() {
         </h2>
       </PlayListHeader>
       <MainPlayListInfoBox>
-        <MainPlayListImg>
-          <Image src='https://picsum.photos/200' alt='' />
-          <img src={VinylImg} alt='레코드 이미지' />
-        </MainPlayListImg>
-        <Link>다가오는 크리스마스를 기다리며</Link>
-        <p>17곡</p>
+        <Link to={`/playlist/detail/${id}`} state={{ id }}>
+          <MainPlayListImg>
+            <Image src={thumbnail} alt='' />
+            <img src={VinylImg} alt='레코드 이미지' />
+          </MainPlayListImg>
+          <h4>{title}</h4>
+        </Link>
+        <p>{music.length}곡</p>
       </MainPlayListInfoBox>
-      <PlayListTable />
+      <MainPlayList id={id} data={musicData} />
     </MainPlayListSectionWrap>
   );
 }
 
 const MainPlayListSectionWrap = styled.section`
-  padding: 24px 24px 14px;
+  padding: 24px 24px 16px;
   h2 {
     display: flex;
     align-items: center;
@@ -52,8 +61,10 @@ const MainPlayListInfoBox = styled.div`
   flex-direction: column;
   align-items: center;
 
-  a + a {
+  h4 {
+    text-align: center;
     margin-bottom: 6px;
+    height: 20px;
   }
 
   p {
@@ -61,7 +72,7 @@ const MainPlayListInfoBox = styled.div`
   }
 `;
 
-const MainPlayListImg = styled(Link)`
+const MainPlayListImg = styled.div`
   position: relative;
   margin-bottom: 20px;
   height: 150px;

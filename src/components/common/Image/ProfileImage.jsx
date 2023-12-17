@@ -7,6 +7,7 @@ import ProfileDecoImg from '../../../img/profile-deco-img.svg';
 
 export default function ProfileImage(props) {
   const { src, alt, children } = props;
+
   return (
     <ProfileImgBox>
       <CircleImage src={src} alt={alt || '프로필 이미지'} />

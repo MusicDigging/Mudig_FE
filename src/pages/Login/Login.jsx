@@ -1,10 +1,93 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from '../../components/common/Button/Button';
 import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { isLoginAtom, userInfoAtom } from '../../library/atom';
+import {
+  getKakaoInfo,
+  getGoogleInfo,
+  postUserCode,
+} from '../../library/apis/api';
+import { useMutation, useQuery } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+
 export default function Login() {
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const setIsLogin = useSetRecoilState(isLoginAtom);
+  //카카오, 구글 로그인 링크 get 요청
+  const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
+  const { data: googleData } = useQuery('google', getGoogleInfo);
+
+  const query = new URLSearchParams(location.search);
+  const socialQuery = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    // 쿼리 파라미터 값 가져오기
+    const result = query.get('code') || false;
+
+    const hasScope = socialQuery.get('scope');
+    //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
+    if ((result, hasScope)) {
+      sendCode(result, 'google');
+      //url에서 scope값이 없다면 send code post 요청시 social = 'kakako'로 설정
+    } else if (result) {
+      sendCode(result, 'kakao');
+    }
+  }, []);
+
+  const sendCode = async (code, social) => {
+    try {
+      let response;
+      if (social === 'kakao') {
+        response = await postUserCode(code, 'kakao');
+      } else if (social === 'google') {
+        response = await postUserCode(code, 'google');
+      }
+      //가입 이력이 있을 경우
+      if (response.message === '로그인 성공') {
+        const { user, token } = response;
+        const { id, email, name, image, genre, about, rep_playlist } = user;
+        const { access, refresh } = token;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refreshToken', refresh);
+        setIsLogin(true);
+        setUserInfo({
+          id,
+          email,
+          name,
+          image,
+          genre,
+          about,
+          rep_playlist,
+          token,
+        });
+
+        navigate('/main');
+        //가입 이력이 없고 뮤딕 프로필 설정이 필요한 경우
+      } else {
+        const email = response.email;
+        setUserInfo({ email, type: 'social' });
+        navigate('/setprofile');
+      }
+      console.log(response);
+    } catch (error) {
+      console.error('Error', error);
+    }
+  };
+
+  const kakaoLoginHandler = () => {
+    window.location.href = kakaoData.url;
+  };
+
+  const googleLoginHandler = () => {
+    window.location.href = googleData.url;
+  };
+
   return (
     <LoginWrap>
       <LoginHeader>
@@ -23,6 +106,7 @@ export default function Login() {
             btnBorder='1px solid #FBE101'
             btnColor={'var(--font-color)'}
             imgSrc={KakaoIcon}
+            onClick={kakaoLoginHandler}
             alt='카카오로 로그인하기 버튼'
           />
           <Button
@@ -31,13 +115,16 @@ export default function Login() {
             btnBorder='1px solid #DBDBDB'
             btnColor={'var(--font-color)'}
             imgSrc={GoogleIcon}
+            onClick={googleLoginHandler}
             alt='구글로 로그인하기 버튼'
           />
         </LoginBtnBox>
         <Span>또는</Span>
         <AuthForm />
         <NavUserInfo>
-          <NavUserInfoLink> 회원가입</NavUserInfoLink>
+          <NavUserInfoLink onClick={() => navigate('/register')}>
+            회원가입
+          </NavUserInfoLink>
           <NavUserInfoLink>아이디 · 비밀번호 찾기 </NavUserInfoLink>
         </NavUserInfo>
       </LoginMain>
@@ -70,12 +157,10 @@ const LoginText = styled.span`
   line-height: 33px;
 `;
 const LoginMain = styled.main`
-  margin: 0 auto;
-  width: 328px;
+  padding: 0 16px;
   position: relative;
   text-align: center;
-  top: 149px;
-  //top:132px
+  top: 169px;
 `;
 
 const LoginBtnBox = styled.div`
@@ -92,9 +177,7 @@ const Span = styled.span`
   font-weight: 300;
 `;
 
-//footer
 const NavUserInfo = styled.nav`
-  width: 328px;
   margin-top: 16px;
   display: flex;
   justify-content: space-between;

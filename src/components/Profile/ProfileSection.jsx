@@ -8,9 +8,11 @@ import ProfileImage from '../common/Image/ProfileImage';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 import MoreBtnIcon from '../../img/more-icon.svg';
 export default function ProfileSection(props) {
-  const { btnType } = props;
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { isMyProfile } = props;
+  const data = props.data;
+  const { follower, following, profile, playlist } = data;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMoreBtnClick = () => {
     return isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
@@ -29,46 +31,48 @@ export default function ProfileSection(props) {
         <button>
           <img src={BackBtnIcon} alt='뒤로가기 버튼' />
         </button>
-        <div>
-          <button onClick={handleMoreBtnClick}>
-            <img src={MoreBtnIcon} alt='' />
-          </button>
-          {isModalOpen && (
-            <MiniModalStyle>
-              <button onClick={handleLogoutBtnClick}>로그아웃</button>
-              <Link to='user/profile/edit/password'>비밀번호 변경</Link>
-              <Link to='user/profile/edit/password'>회원 탈퇴</Link>
-            </MiniModalStyle>
-          )}
-        </div>
+        {isMyProfile && (
+          <div>
+            <button onClick={handleMoreBtnClick}>
+              <img src={MoreBtnIcon} alt='' />
+            </button>
+            {isModalOpen && (
+              <MiniModalStyle>
+                <button onClick={handleLogoutBtnClick}>로그아웃</button>
+                <Link to='user/password'>비밀번호 변경</Link>
+                <Link to='user/resign'>회원 탈퇴</Link>
+              </MiniModalStyle>
+            )}
+          </div>
+        )}
       </ProfileNavBtn>
       <UserInfoBox>
         <ProfileInfo>
-          <ProfileImage src='https://picsum.photos/200' />
-          <strong>하리보</strong>
+          <ProfileImage src={profile?.image} />
+          <strong>{profile?.name}</strong>
         </ProfileInfo>
         <UserInfo>
           <FollowInfo>
-            <MoveFollowBtn to='/user/followings'>
-              <strong>112</strong>
+            <MoveFollowBtn to='/user/profile/follow'>
+              <strong>{following?.length}</strong>
               <p>팔로잉</p>
             </MoveFollowBtn>
-            <MoveFollowBtn value='/user/follower'>
-              <strong>97</strong>
-              <p>팔로잉</p>
+            <MoveFollowBtn to='/user/profile/follow'>
+              <strong>{follower?.length}</strong>
+              <p>팔로워</p>
             </MoveFollowBtn>
           </FollowInfo>
-          {btnType === 'follow' && (
+          {!isMyProfile && (
             <FollowBtn onClick={handleFollowBtnClick}>팔로우</FollowBtn>
           )}
-          {btnType === 'edit' && (
-            <MoveEditBtn to='/user/profile/edit'>프로필 수정</MoveEditBtn>
+          {isMyProfile && (
+            <MoveEditBtn to='/user/profile/edit' state={{ profile, playlist }}>
+              프로필 수정
+            </MoveEditBtn>
           )}
         </UserInfo>
       </UserInfoBox>
-      <UserDesc>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam
-      </UserDesc>
+      <UserDesc>{profile?.about}</UserDesc>
     </ProfileSectionWrap>
   );
 }
@@ -78,7 +82,7 @@ const ProfileSectionWrap = styled.section`
   font-size: var(--font-md);
   background-color: #fff;
   border-radius: 0 0 8px 8px;
-
+  filter: drop-shadow(0px 2px 24px rgba(125, 79, 255, 0.1));
   strong {
     font-weight: var(--font-semi-bold);
   }

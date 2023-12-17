@@ -1,9 +1,83 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../../components/common/Button/Button';
 import * as S from './SignupStyle';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
+import { userInfoAtom } from '../../library/atom';
+import { useSetRecoilState } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import {
+  getKakaoInfo,
+  getGoogleInfo,
+  postUserCode,
+} from '../../library/apis/api';
 export default function Signup() {
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
+  const { data: googleData } = useQuery('google', getGoogleInfo);
+
+  const query = new URLSearchParams(location.search);
+  const socialQuery = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    // 쿼리 파라미터 값 code(소셜 로그인 인가코드) 가져오기
+    const result = query.get('code') || false;
+    const hasScope = socialQuery.get('scope');
+    //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
+    if ((result, hasScope)) {
+      sendCode(result, 'google');
+      //url에서 scope값이 없다면 send code post 요청시 social = 'kakako'로 설정
+    } else if (result) {
+      sendCode(result, 'kakao');
+    }
+  }, []);
+
+  const sendCode = async (code, social) => {
+    try {
+      let response;
+      if (social === 'kakao') {
+        response = await postUserCode(code, 'kakao');
+      } else if (social === 'google') {
+        response = await postUserCode(code, 'google');
+      }
+
+      if (response.message === '로그인 성공') {
+        const { id, email, name, image, genre, about, rep_playlist } =
+          response.user;
+        const token = response.token;
+        setUserInfo({
+          id,
+          email,
+          name,
+          image,
+          genre,
+          about,
+          rep_playlist,
+          token,
+        });
+        navigate('/main');
+      } else {
+        const email = response.email;
+        setUserInfo({ email, type: 'social' });
+        navigate('/setprofile');
+      }
+      console.log(response);
+    } catch (error) {
+      console.error('Error', error);
+    }
+  };
+
+  const kakaoLoginHandler = () => {
+    window.location.href = kakaoData.url;
+  };
+
+  const googleLoginHandler = () => {
+    window.location.href = googleData.url;
+  };
+
   return (
     <S.SignupWrap>
       <S.SignupHeader>
@@ -22,7 +96,8 @@ export default function Signup() {
             btnBorder='1px solid #FBE101'
             btnColor={'var(--font-color)'}
             imgSrc={KakaoIcon}
-            alt='카카오로 로그인하기 버튼'
+            onClick={kakaoLoginHandler}
+            alt='카카오로 회원가입하기 버튼'
           />
           <Button
             text='구글로 시작하기'
@@ -30,26 +105,25 @@ export default function Signup() {
             btnBorder='1px solid #DBDBDB'
             btnColor={'var(--font-color)'}
             imgSrc={GoogleIcon}
-            alt='구글로 로그인하기 버튼'
+            onClick={googleLoginHandler}
+            alt='구글로 회원가입하기 버튼'
           />
         </S.SignupBtnBox>
         <S.Span>또는</S.Span>
         <Button
           text='이메일로 시작하기'
           btnBorder='1px solid #DBDBDB'
-          alt='구글로 로그인하기 버튼'
+          alt='이메일로 회원가입하기 버튼'
+          onClick={() => navigate('/register/detail')}
         />
         <S.NavLoign>
           <S.NavSpan>이미 계정이 있으신가요? </S.NavSpan>
-          <S.LinkLogin>로그인하기</S.LinkLogin>
+          <S.LinkLogin onClick={() => navigate('/login')}>
+            로그인하기
+          </S.LinkLogin>
         </S.NavLoign>
       </S.SignupMain>
-      <S.Footer>
-        <S.FooterSpan>
-          회원가입과 함께 <br />
-          Mudig의 약관에 동의하는 것으로 간주합니다.
-        </S.FooterSpan>
-      </S.Footer>
+      <S.Footer></S.Footer>
     </S.SignupWrap>
   );
 }

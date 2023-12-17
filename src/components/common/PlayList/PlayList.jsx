@@ -4,8 +4,14 @@ import styled from 'styled-components';
 import PlayListItem from './PlayListItem';
 
 export default function PlayList(props) {
-  const { children } = props;
-  return <PlayListWrap>{children}</PlayListWrap>;
+  const { children, innerRef, droppableProps } = props;
+  return (
+    <PlayListWrap ref={innerRef} {...droppableProps}>
+      {children}
+    </PlayListWrap>
+  );
 }
 
-const PlayListWrap = styled.ul``;
+const PlayListWrap = styled.ul`
+  width: 100%;
+`;

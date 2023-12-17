@@ -2,8 +2,14 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { AuthInput } from '../Input/AuthInput';
 import { Button } from '../Button/Button';
+import { userInfoAtom, isLoginAtom } from '../../../library/atom';
+import { loginUser } from '../../../library/apis/api';
+import { useMutation } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
 export const AuthForm = () => {
+  const navigate = useNavigate();
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
@@ -15,63 +21,111 @@ export const AuthForm = () => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-  const onSubmit = (data) => console.log(data);
   const errorMessage =
     '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
+  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setIsLogin = useSetRecoilState(isLoginAtom);
+  const { mutate } = useMutation(loginUser, {
+    onSuccess: (data) => {
+      const { user, token } = data;
+      const { id, email, name, image, genre, about, rep_playlist } = user;
+      const { access, refresh } = token;
+
+      setUserInfo({
+        id,
+        email,
+        name,
+        image,
+        genre,
+        about,
+        rep_playlist,
+        token,
+      });
+      setIsLogin(true);
+      localStorage.setItem('token', access);
+      localStorage.setItem('refreshToken', refresh);
+      navigate('/main');
+      console.log('로그인 성공', data);
+    },
+    onError: (error) => {
+      console.error('로그인 실패', error);
+      methods.setError('email', { message: errorMessage }); //setError methods로 에러 설정
+      methods.setError('password', { message: errorMessage }); //setError methods로 에러 설정
+    },
+  });
+
+  const handleLogin = (data) => {
+    mutate(data);
+  };
+
+  const handleCheckboxChange = () => {
+    const checkbox = document.getElementById('checkbox');
+    if (checkbox) {
+      checkbox.click();
+    }
+  };
+
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
-      <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
-        <AuthInput
-          validation={{
-            pattern: {
-              value: emailRegex,
-              message: errorMessage,
-            },
-            required: true, //true
-          }}
-          placeholder='이메일을 입력하세요'
-          type='text'
-          name='email'
-          marginBottom
-        />
-        <AuthInput
-          validation={{
-            pattern: {
-              value: pawwrodRegex,
-              message: errorMessage,
-            },
-            required: true, //true
-          }}
-          placeholder='비밀번호를 입력하세요 '
-          type='password'
-          name='password'
-          showPassword={showPassword}
-          toggleShowPassword={toggleShowPassword}
-        />
-        <CheckboxContainer>
-          <CheckboxInput
-            type='checkbox'
-            // checked={autoLogin}
-            // onChange={handleCheckboxChange}
+      <Form onSubmit={methods.handleSubmit(handleLogin)}>
+        <FormContainer>
+          <AuthInput
+            validation={{
+              pattern: {
+                value: emailRegex,
+                message: errorMessage,
+              },
+              required: true, //true
+            }}
+            placeholder='이메일을 입력하세요'
+            type='text'
+            name='email'
+            marginBottom
           />
-          <CheckboxLabel>로그인 상태 유지</CheckboxLabel>
-        </CheckboxContainer>
-        {errors.email && errors.password && (
-          <ErrorMsg>{errors.email.message || errors.password.message}</ErrorMsg>
-        )}
-        <Button
-          btnMargin={'16px 0 0 0'}
-          text='로그인'
-          type='submit'
-          disabled={!isValid}
-        ></Button>
-      </FormContainer>
+          <AuthInput
+            validation={{
+              pattern: {
+                value: pawwrodRegex,
+                message: errorMessage,
+              },
+              required: true, //true
+            }}
+            placeholder='비밀번호를 입력하세요 '
+            type='password'
+            name='password'
+            showPassword={showPassword.password}
+            toggleShowPassword={() => toggleShowPassword('password')}
+          />
+
+          <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
+            <CheckboxInput
+              type='checkbox'
+              // checked={autoLogin}
+              // onChange={handleCheckboxChange}
+              id='checkbox'
+            />
+            <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
+          </Label>
+
+          {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
+          {errors.email || errors.password ? (
+            <ErrorMsg>
+              {errors.email?.message || errors.password?.message}
+            </ErrorMsg>
+          ) : null}
+        </FormContainer>
+        <ButtonBox>
+          <Button text='로그인' type='submit' disabled={!isValid}></Button>
+        </ButtonBox>
+      </Form>
     </FormProvider>
   );
 };
 
-const FormContainer = styled.form`
+const Form = styled.form``;
+
+const FormContainer = styled.div`
   display: flex;
   margin-top: 24px;
   align-items: center;
@@ -95,6 +149,19 @@ const CheckboxContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+`;
+
+const Label = styled.label`
+  display: flex;
+  width: 100%;
+  margin-top: 16px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+`;
+
+const ButtonBox = styled.div`
+  margin-top: 16px;
 `;
 
 const CheckboxInput = styled.input`

@@ -1,18 +1,31 @@
-import styled from 'styled-components';
-import TestImg from '../../img/thumbnail-img.svg';
-import Mudig from '../../img/playlist-mudig-img.svg';
-import PenIcon from '../../img/pen-icon.svg';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import MusicPlayer from './MusicPlayer';
 import { set } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { Image } from '../common/Image/Image';
+import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
+
+import PenIcon from '../../img/pen-icon.svg';
+import Mudig from '../../img/playlist-mudig-img.svg';
+import ArrowIcon from '../../img/left-arrow-Icon.svg';
+
 export default function PlayListInfo(props) {
-  const { playing, setPlaying } = props;
+  const navigate = useNavigate();
   const location = useLocation();
+  const { playlist, playlistDesc } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const isModifyPath =
+    location.pathname.includes('/playlist/detail/') &&
+    location.pathname.includes('/edit');
+  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
+
+  const handleMoveBackBtnClick = () => {
+    navigate(-1);
+  };
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -20,52 +33,46 @@ export default function PlayListInfo(props) {
     setMoreInfoView(false);
   };
   const handleModify = () => {
-    // Modal Open
     setModalOpen(true);
   };
-  const isModifyPath =
-    location.pathname.includes('/playlist/detail/') &&
-    location.pathname.includes('/edit');
-  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
+
   return (
-    <PlayListInfoWrap>
-      {isPlaylistSummary && (
-        <SummaryTitle>
-          드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
-        </SummaryTitle>
+    <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
+      {!isPlaylistSummary && (
+        <MoveBackBtn onClick={handleMoveBackBtnClick}>
+          <img src={ArrowIcon} alt='뒤로가기' />
+        </MoveBackBtn>
       )}
-      {playing ? (
-        <MusicPlayer playing={playing} setPlaying={setPlaying} />
-      ) : (
-        <Thumbnail src={TestImg} alt='썸네일' />
-      )}
+
+      {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
+      <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+        <Image src={playlist.thumbnail} alt='썸네일' />
+      </ThumbnailBox>
       <InfoBox>
-        {!isPlaylistSummary && <h2>드라이브 할 때 듣기 좋은 K-POP</h2>}
+        {!isPlaylistSummary && (
+          <h2>{playlistDesc?.title || playlist?.title}</h2>
+        )}
         <div>
-          <p>
-            아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
-            음악들입니다. 즐겁고 발랄한 느낌이 들며 상대방과 귀여운 분위기를
-            공유할 수 있을 것입니다. 좋은 데이트를 즐기세요!
-          </p>
+          <p>{playlistDesc?.content || playlist?.content}</p>
           {isModifyPath ? (
             <ModifyBtn onClick={handleModify}>
               <img src={PenIcon} alt='수정' />
             </ModifyBtn>
           ) : (
-            <button onClick={handleMoreBtn}>더보기</button>
+            <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
-        <PrivateCheck>비공개</PrivateCheck>
+        <PrivateCheck>
+          {(isModifyPath ? playlistDesc?.is_public : playlist.is_public)
+            ? '공개'
+            : '비공개'}
+        </PrivateCheck>
       </InfoBox>
       {moreInfoView && (
         <>
           <ThumbnailBlurBox />
           <MoreInfoBox>
-            <p>
-              아래의 목록은 2010년대 K-POP 장르에 속하는 드라이브 할 때 적합한
-              음악들입니다. 즐겁고 발랄한 느낌이 들며 상대방과 귀여운 분위기를
-              공유할 수 있을 것입니다. 좋은 데이트를 즐기세요!
-            </p>
+            <p>{playlistDesc?.content || playlist?.content}</p>
             <button onClick={handleCloseBtn}>닫기</button>
           </MoreInfoBox>
         </>
@@ -73,16 +80,29 @@ export default function PlayListInfo(props) {
     </PlayListInfoWrap>
   );
 }
-const PlayListInfoWrap = styled.div`
+const PlayListInfoWrap = styled.section`
+  padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
   position: relative;
   background-color: #c7c6c6;
   line-height: normal;
 `;
-const Thumbnail = styled.img`
-  transform: translate(50%, 20%);
-  margin: 40px 0 0;
+
+export const MoveBackBtn = styled.button`
+  position: absolute;
+  top: 22px;
+  left: 16px;
+`;
+
+const ThumbnailBox = styled.div`
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  top: 76px;
+  transform: ${(props) =>
+    props.isPlaylistSummary ? 'translate(50%, 43px)' : 'translate(50%, 0)'};
 `;
 const SummaryTitle = styled.h2`
+  position: absolute;
   top: 0;
   left: 0;
   transform: translate(50%, 130%);
@@ -102,12 +122,17 @@ const InfoBox = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   h2 {
+    width: 310px;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     p {
       color: var(--sub-font-color);
       font-size: var(--font-sm);
@@ -115,13 +140,15 @@ const InfoBox = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-    button {
-      white-space: nowrap;
-      color: #575757;
-      font-size: var(--font-sm);
-    }
   }
 `;
+
+const MoreBtn = styled.button`
+  white-space: nowrap;
+  color: #575757;
+  font-size: var(--font-sm);
+`;
+
 const PrivateCheck = styled.p`
   font-size: var(--font-sm);
   color: var(--sub-font-color);
@@ -137,6 +164,7 @@ const ThumbnailBlurBox = styled.div`
 
 const MoreInfoBox = styled.div`
   position: absolute;
+  width: 100%;
   z-index: 3;
   display: flex;
   bottom: 0px;

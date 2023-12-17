@@ -13,6 +13,7 @@ export const SignupInput = (props) => {
     toggleShowPassword,
     btnWidth,
     marginBottom,
+    showTimeText,
     // onValidationSuccess,
   } = props;
   const {
@@ -36,9 +37,10 @@ export const SignupInput = (props) => {
             width: btnWidth || '328px',
           }}
         />
+        {showTimeText && <TimeText>05:00</TimeText>}
 
         <EyeIcon onClick={toggleShowPassword}>
-          {type === 'password' && (
+          {type === 'password' && name !== 'confirmPassword' && (
             <img
               src={showPassword ? showEye : hideEye}
               alt={showPassword ? '비밀번호 표시' : '비밀번호 숨기기'}
@@ -54,15 +56,27 @@ export const SignupInput = (props) => {
 const Label = styled.label``;
 const InputBox = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
 `;
 
 const InputStyle = styled.input`
+  flex: 1;
   width: 328px;
   height: 44px;
   border-radius: 8px;
   border: 1px solid lightgray;
   padding-left: 16px;
   position: relative;
+`;
+
+const TimeText = styled.span`
+  color: var(--error-color);
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  font-size: 12px;
 `;
 
 const EyeIcon = styled.span`
@@ -73,7 +87,7 @@ const EyeIcon = styled.span`
 `;
 
 const ErrorMsg = styled.span`
-  color: red;
+  color: var(--error-color);
   font-size: 12px;
   text-align: left;
   display: block;
