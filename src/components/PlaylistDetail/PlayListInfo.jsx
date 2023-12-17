@@ -41,9 +41,12 @@ export default function PlayListInfo(props) {
 
   return (
     <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
-      <MoveBackBtn onClick={handleMoveBackBtnClick}>
-        <img src={ArrowIcon} alt='뒤로가기' />
-      </MoveBackBtn>
+      {!isPlaylistSummary && (
+        <MoveBackBtn onClick={handleMoveBackBtnClick}>
+          <img src={ArrowIcon} alt='뒤로가기' />
+        </MoveBackBtn>
+      )}
+
       {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
       <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
         <Image src={playlist.thumbnail} alt='썸네일' />
