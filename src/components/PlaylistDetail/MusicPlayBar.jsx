@@ -45,9 +45,6 @@ export default function MusicPlayBar(props) {
       setPause(!pause);
     }
   };
-  // useEffect(() => {
-  //   setPlaylistInfo({ playlist, music });
-  // }, []);
 
   const handleDeleteBtnClick = () => {
     const id = playlistId;
