@@ -1,5 +1,8 @@
-import { useQuery } from 'react-query';
-import { privateInstance } from '../../library/apis/axiosInstance';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  privateInstance,
+  imgPrivateInstance,
+} from '../../library/apis/axiosInstance';
 
 export const useGetProfile = (user_id) => {
   const { data, isLoading } = useQuery(
@@ -37,4 +40,14 @@ export const useGetFollower = (user_id) => {
     },
   );
   return { data, isLoading };
+};
+
+export const useLogout = () => {
+  const postLogout = async () => {
+    const response = await privateInstance.post('/user/logout/');
+    console.log(response);
+    return response;
+  };
+
+  return useMutation(postLogout);
 };
