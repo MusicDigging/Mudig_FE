@@ -157,12 +157,10 @@ const LoginText = styled.span`
   line-height: 33px;
 `;
 const LoginMain = styled.main`
-  margin: 0 auto;
-  width: 328px;
+  padding: 0 16px;
   position: relative;
   text-align: center;
-  top: 149px;
-  //top:132px
+  top: 169px;
 `;
 
 const LoginBtnBox = styled.div`
@@ -179,9 +177,7 @@ const Span = styled.span`
   font-weight: 300;
 `;
 
-//footer
 const NavUserInfo = styled.nav`
-  width: 328px;
   margin-top: 16px;
   display: flex;
   justify-content: space-between;
