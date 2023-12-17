@@ -13,6 +13,13 @@ export default function CreateNewPlaylist1() {
     (state && state.situations) || '',
   );
 
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 100) {
+      setSituations(value);
+    }
+  };
+
   return (
     <>
       <S.CreateNewPlaylistWrap>
@@ -51,8 +58,9 @@ export default function CreateNewPlaylist1() {
                 maxRows={4}
                 minRows={1}
                 value={situations}
-                onChange={(e) => setSituations(e.target.value)}
+                onChange={handleInputChange}
               />
+              <span>{situations.length}/100</span>
             </motion.div>
             <S.NextLink
               to='/playlist/create2'

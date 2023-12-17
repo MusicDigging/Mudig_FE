@@ -55,6 +55,14 @@ export const AnswerForm = styled.form`
   div {
     min-height: 38px;
   }
+  span {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    margin-right: 4px;
+    font-size: var(--font-md);
+    color: var(--sub-font-color);
+  }
 `;
 
 export const Answer = styled(TextareaAutosize)`
