@@ -20,11 +20,11 @@ import CreatePlaylist3 from '../pages/CreatePlaylist/CreatePlaylist3';
 import Search from '../pages/Search/Search';
 import ChangePassword from '../pages/UserInfo/ChangePassword';
 import Resign from '../pages/UserInfo/UserLeave';
-import Follow from '../pages/Profile/Follow';
-import Splash from '../pages/Splash/Splash';
-import NotFound from '../pages/NotFound/NotFound';
 import RandomMusic from '../pages/RandomMusic/RandomMusic';
 import Intro from '../pages/Home/Intro';
+import Splash from '../pages/Splash/Splash';
+import Follow from '../pages/Profile/Follow';
+import NotFound from '../pages/NotFound/NotFound';
 
 export function Router() {
   return (
@@ -55,7 +55,7 @@ export function Router() {
           </Route>
           <Route path='/playlist/detail'>
             <Route path=':id' element={<PlaylistDetail />} />
-            <Route path='edit' element={<PlaylistModify />} />
+            <Route path=':id/edit' element={<PlaylistModify />} />
           </Route>
         </Route>
         <Route path='/*' element={<NotFound />} />

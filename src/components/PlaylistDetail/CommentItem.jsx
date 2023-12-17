@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
+import { userInfoAtom } from '../../library/atom';
 import { useDeleteComment } from '../../hooks/queries/useComment';
 
 import { CircleImage } from '../common/Image/Image';
@@ -9,7 +11,8 @@ import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 import MoreIcon from '../../img/more-icon.svg';
 
 export default function CommentItem(props) {
-  const myId = 67; // 유저 아이디값 (이후 리코일로 가져옴)
+  const myId = useRecoilValue(userInfoAtom).id;
+
   const { mutate: deleteComment } = useDeleteComment();
 
   const {

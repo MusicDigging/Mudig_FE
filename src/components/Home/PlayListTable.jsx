@@ -2,55 +2,33 @@ import React from 'react';
 import styled from 'styled-components';
 import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
+import { Link } from 'react-router-dom';
 
-function PlayListTable({ liSize }) {
+function PlayListTable({ liSize, playlistData }) {
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
-        <StyledListItem liSize={liSize}>
-          <ImageBox liSize={liSize}>
-            <Image src='https://picsum.photos/200' alt='플리 이미지' />
-          </ImageBox>
-          <PlayIconImg
-            src={PlayIcon}
-            alt='재생 바로가기 아이콘'
-            liSize={liSize}
-          />
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
-        </StyledListItem>
+        {playlistData &&
+          playlistData.map((item) => (
+            <Link
+              to={`/playlist/detail/${item.id}`}
+              key={item.id}
+              state={{ id: item.id }}
+            >
+              <StyledListItem key={item.id} liSize={liSize}>
+                <ImageBox liSize={liSize}>
+                  {/* Use thumbnail URL from the data */}
+                  <Image src={`${item.thumbnail}`} alt={item.title} />
+                </ImageBox>
+                <PlayIconImg
+                  src={PlayIcon}
+                  alt='재생 바로가기 아이콘'
+                  liSize={liSize}
+                />
+                <p>{item.title}</p> {/* Display the title */}
+              </StyledListItem>
+            </Link>
+          ))}
       </ul>
     </PlayListTableWrap>
   );
@@ -101,6 +79,8 @@ const StyledListItem = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 9px;
+    height: 22px;
+    font-size: 12px;
   }
   position: relative;
 `;
