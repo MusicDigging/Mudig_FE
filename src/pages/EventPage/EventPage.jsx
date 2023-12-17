@@ -33,7 +33,9 @@ export default function EventPage() {
 
       if (response.status === 200) {
         setResponseData(response.data); // 데이터 저장
-        // navigate('/playlist/summary', { state: { playlist: response.data } }); // PlaylistSummary 페이지로 이동
+        navigate('/playlist/summary', {
+          state: { playlist: response.data.playlist.id },
+        }); // PlaylistSummary 페이지로 이동
       }
     } catch (error) {
       console.error('전송 실패', error);
