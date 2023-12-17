@@ -19,8 +19,11 @@ export const PlayListAtom = atom({
 
 export const userInfoAtom = atom({
   key: 'userInfoAtom',
-  default: {
-    isLogin: false,
-  },
+  default: {},
   effects_UNSTABLE: [persistAtom],
+});
+
+export const isLoginAtom = atom({
+  key: 'isLoginAtom',
+  default: localStorage.getItem('token') ? true : false,
 });
