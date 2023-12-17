@@ -8,7 +8,7 @@ import axios from 'axios';
 export default function ProfileInput(props) {
   const { profile, btnText, onSubmit, onChipSelect, children } = props;
 
-  const [nickNameCount, setNickNameCount] = useState(0);
+  const [nickNameCount, setNickNameCount] = useState(profile?.name.length || 0);
   const [nickNameValid, setNickNameValid] = useState('');
 
   const {
