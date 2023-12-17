@@ -184,7 +184,8 @@ const InputStyle = styled.input`
   height: 44px;
   /* margin: 8px 0 16px 0; */
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #fff;
+  background: rgba(255, 255, 255, 0.6);
   padding-left: 16px;
   position: relative;
 `;

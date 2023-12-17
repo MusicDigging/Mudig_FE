@@ -81,12 +81,13 @@ export function ChipButton(props) {
 }
 
 const ChipButtonStyle = styled.button`
+  height: 36px;
   font-size: 14px;
-  border: 1px solid lightgray;
+  border: 1px solid ${(props) => (props.clicked ? 'transparent' : '#fff')};
   border-radius: 20px;
   color: ${(props) => (props.clicked ? 'white' : 'black')};
   background-color: ${(props) =>
-    props.clicked ? 'var(--btn-point-color)' : 'white'};
+    props.clicked ? 'var(--btn-point-color)' : 'rgba(255, 255, 255, 0.6)'};
   padding: 8px 16px;
   transition:
     background-color 0.3s,
