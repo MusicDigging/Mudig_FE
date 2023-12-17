@@ -157,7 +157,6 @@ export default function ProfileInput(props) {
 }
 
 const FormWrap = styled.form`
-  background-color: orange;
   padding-top: 8px;
   font-size: var(--font-md);
   position: relative;
@@ -166,6 +165,7 @@ const FormWrap = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 40px;
 `;
 
 const Label = styled.label``;

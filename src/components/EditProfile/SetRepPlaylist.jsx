@@ -72,7 +72,6 @@ export default function SetRepPlaylist(props) {
 }
 
 const SetRepPlaylistWrap = styled.div`
-  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
