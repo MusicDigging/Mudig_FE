@@ -55,7 +55,7 @@ export default function CreateNewPlaylist3() {
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
-        <form>
+        <S.AnswerForm>
           <motion.div
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
@@ -70,6 +70,7 @@ export default function CreateNewPlaylist3() {
               onChange={(e) => setYear(e.target.value)}
             />
           </motion.div>
+          <S.LinkBox>
           <S.BackLink
             to='/playlist/create2'
             state={{ situations, genre, year, backAnimation: true }}
@@ -84,7 +85,8 @@ export default function CreateNewPlaylist3() {
           >
             완료
           </S.CompleteBtn>
-        </form>
+          </S.LinkBox>
+        </S.AnswerForm>
       </S.NewPlaylistBox>
     </S.CreateNewPlaylistWrap>
   );
