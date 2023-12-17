@@ -68,63 +68,64 @@ export const AuthForm = () => {
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <FormProvider {...methods}>
-      <FormContainer onSubmit={methods.handleSubmit(handleLogin)}>
-        <AuthInput
-          validation={{
-            pattern: {
-              value: emailRegex,
-              message: errorMessage,
-            },
-            required: true, //true
-          }}
-          placeholder='이메일을 입력하세요'
-          type='text'
-          name='email'
-          marginBottom
-        />
-        <AuthInput
-          validation={{
-            pattern: {
-              value: pawwrodRegex,
-              message: errorMessage,
-            },
-            required: true, //true
-          }}
-          placeholder='비밀번호를 입력하세요 '
-          type='password'
-          name='password'
-          showPassword={showPassword.password}
-          toggleShowPassword={() => toggleShowPassword('password')}
-        />
-
-        <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
-          <CheckboxInput
-            type='checkbox'
-            // checked={autoLogin}
-            // onChange={handleCheckboxChange}
-            id='checkbox'
+      <Form onSubmit={methods.handleSubmit(handleLogin)}>
+        <FormContainer>
+          <AuthInput
+            validation={{
+              pattern: {
+                value: emailRegex,
+                message: errorMessage,
+              },
+              required: true, //true
+            }}
+            placeholder='이메일을 입력하세요'
+            type='text'
+            name='email'
+            marginBottom
           />
-          <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
-        </Label>
+          <AuthInput
+            validation={{
+              pattern: {
+                value: pawwrodRegex,
+                message: errorMessage,
+              },
+              required: true, //true
+            }}
+            placeholder='비밀번호를 입력하세요 '
+            type='password'
+            name='password'
+            showPassword={showPassword.password}
+            toggleShowPassword={() => toggleShowPassword('password')}
+          />
 
-        {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
-        {errors.email || errors.password ? (
-          <ErrorMsg>
-            {errors.email?.message || errors.password?.message}
-          </ErrorMsg>
-        ) : null}
-        <Button
-          btnMargin={'16px 0 0 0'}
-          text='로그인'
-          type='submit'
-          disabled={!isValid}
-        ></Button>
-      </FormContainer>
+          <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
+            <CheckboxInput
+              type='checkbox'
+              // checked={autoLogin}
+              // onChange={handleCheckboxChange}
+              id='checkbox'
+            />
+            <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
+          </Label>
+
+          {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
+          {errors.email || errors.password ? (
+            <ErrorMsg>
+              {errors.email?.message || errors.password?.message}
+            </ErrorMsg>
+          ) : null}
+        </FormContainer>
+        <ButtonBox>
+          <Button text='로그인' type='submit' disabled={!isValid}></Button>
+        </ButtonBox>
+      </Form>
     </FormProvider>
   );
 };
 
-const FormContainer = styled.form`
+const Form = styled.form``;
+
+const FormContainer = styled.div`
   display: flex;
   margin-top: 24px;
   align-items: center;
@@ -157,6 +158,10 @@ const Label = styled.label`
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
+`;
+
+const ButtonBox = styled.div`
+  margin-top: 16px;
 `;
 
 const CheckboxInput = styled.input`
