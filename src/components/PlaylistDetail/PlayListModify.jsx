@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import PlayListItem from '../common/PlayList/PlayListItem';
-import TestImg from '../../img/thumbnail-img.svg';
 import PlayList from '../common/PlayList/PlayList';
 import CloseIcon from '../../img/close-icon.svg';
 import { useState, useEffect } from 'react';
@@ -12,13 +11,53 @@ import {
 } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import { PlayListAtom } from '../../library/atom';
+import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
+import { useNavigate } from 'react-router-dom';
 
-export default function PlayListModify(props) {
+export default function PlayListModify({ playlistDesc }) {
+  const navigate = useNavigate();
   // const { music } = props;
   const [playlistInfo, setPlayListInfo] = useRecoilState(PlayListAtom);
-  // const [playlist, setPlaylist] = useState(playlistInfo.playlist);
   const [music, setMusic] = useState(playlistInfo.music || []);
-  console.log('Modify PlaylistInfo: ', playlistInfo);
+  const { mutate: modifyPlaylist } = useModifyPlaylist(
+    playlistInfo.playlist.id,
+  );
+  const [delMusic, setDelMusic] = useState([]);
+  const [changedOrder, setChangedOrder] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 음악 삭제 handler
+  const handleDelBtn = (itemId) => {
+    const newMusic = music.filter((item) => item.id !== itemId);
+    setMusic(newMusic);
+    const newOrder = changedOrder.filter((item) => item !== itemId);
+    setChangedOrder(newOrder);
+    setDelMusic([...delMusic, itemId]);
+  };
+  // 수정하기
+  const handleModifyClick = (e) => {
+    const reqData = {
+      del_music_list: delMusic.join(','),
+      move_music: changedOrder.join(','),
+      title: playlistDesc.title,
+      content: playlistDesc.content,
+      is_public: playlistDesc.is_public,
+    };
+    setIsLoading(true);
+    modifyPlaylist(reqData, {
+      onSuccess: () => {
+        setIsLoading(false);
+        navigate(-1);
+      },
+      onError: (error) => {
+        setIsLoading(false);
+        alert('수정에 실패하였습니다. 다시 시도해주세요.');
+        console.log('수정 실패 에러: ', error);
+      },
+    });
+  };
+
   // Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }) => {
     console.log('>>> source', source);
@@ -28,6 +67,9 @@ export default function PlayListModify(props) {
     const [targetItem] = _items.splice(source.index, 1);
     _items.splice(destination.index, 0, targetItem);
     setMusic(_items);
+    // 변경된 순서를 문자열로 변환하여 저장
+    const newOrder = _items.map((item) => item.id);
+    setChangedOrder(newOrder);
   };
 
   // requestAnimationFrame 초기화
@@ -57,9 +99,9 @@ export default function PlayListModify(props) {
             >
               {music.map((item, index) => (
                 <Draggable
-                  draggableId={`item-${index}`}
+                  draggableId={`${item.id}`}
                   index={index}
-                  key={index}
+                  key={item.id}
                   disableInteractiveElementBlocking
                 >
                   {(provided) => (
@@ -72,7 +114,11 @@ export default function PlayListModify(props) {
                       title={item.song}
                       info={item.singer}
                     >
-                      <button>
+                      <button
+                        type='button'
+                        name='삭제'
+                        onClick={() => handleDelBtn(item.id)}
+                      >
                         <img src={CloseIcon} alt='삭제' />
                       </button>
                     </PlayListItem>
@@ -84,7 +130,7 @@ export default function PlayListModify(props) {
           )}
         </Droppable>
       </DragDropContext>
-      <SaveBtn>저장</SaveBtn>
+      <SaveBtn onClick={handleModifyClick}>저장</SaveBtn>
     </PlayListModifyWrap>
   );
 }

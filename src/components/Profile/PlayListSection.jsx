@@ -47,7 +47,11 @@ export default function PlayListSection(props) {
         )}
         <PlayList>
           {playlists.map((playlist) => (
-            <Link to={`/playlist/detail/${playlist.id}`} key={playlist.id}>
+            <Link
+              to={`/playlist/detail/${playlist.id}`}
+              key={playlist.id}
+              state={{ id: playlist.id }}
+            >
               <PlayListItem
                 img={`${playlist.thumbnail}`}
                 title={playlist.title}

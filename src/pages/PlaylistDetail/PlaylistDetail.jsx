@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import styled from 'styled-components';
 
@@ -16,6 +16,8 @@ import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 
 import LikeIcon from '../../img/like-icon.svg';
 import LikeActiveIcon from '../../img/like-active-icon.svg';
+import { useRecoilState } from 'recoil';
+import { PlayListAtom } from '../../library/atom';
 
 export default function PlaylistDetail() {
   const location = useLocation();
@@ -26,6 +28,14 @@ export default function PlaylistDetail() {
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
   const { mutate: likePlaylist } = useLikePlaylist();
+
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+
+  useEffect(() => {
+    if (isLoading) return;
+    const { playlist, music } = data;
+    setPlaylistInfo({ playlist, music });
+  }, [data, isLoading, setPlaylistInfo]);
 
   if (isLoading) return null;
   if (isError) {
