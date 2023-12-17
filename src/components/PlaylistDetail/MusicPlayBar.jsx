@@ -12,6 +12,9 @@ import PlayIcon from '../../img/play-icon.svg';
 import PauseIcon from '../../img/pause-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import ShareIcon from '../../img/share-icon.svg';
+import { useRecoilState } from 'recoil';
+import { PlayListAtom } from '../../library/atom';
+import { useEffect } from 'react';
 
 export default function MusicPlayBar(props) {
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ export default function MusicPlayBar(props) {
     setCurrMusic,
   } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const toggleModal = () => {
     if (isModalOpen === false) setIsModalOpen(true);
     else setIsModalOpen(false);

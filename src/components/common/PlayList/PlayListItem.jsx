@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import OrderChangeIcon from '../../../img/hamburger-icon.svg';
 import { Image } from '../Image/Image';
 
 export default function PlayListItem(props) {
-  const { modify, children, img, title, info } = props;
-
+  const {
+    innerRef,
+    dragHandleProps,
+    draggableProps,
+    modify,
+    children,
+    img,
+    title,
+    info,
+  } = props;
   return (
-    <PlayListItemWrap>
+    <PlayListItemWrap ref={innerRef} {...draggableProps}>
       {modify && (
-        <button onClick={modify}>
+        <button type='button' {...dragHandleProps}>
           <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경 아이콘' />
         </button>
       )}
@@ -53,7 +61,7 @@ const InfoBox = styled.div`
   width: ${(props) => (props.modify ? '180px' : '210px')};
   font-size: var(--font-md);
   div {
-    margin-bottom: 3px;
+    margin-bottom: 7px;
     white-space: nowrap;
     overflow: hidden;
     -webkit-box-orient: vertical;

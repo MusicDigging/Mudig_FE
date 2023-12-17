@@ -9,21 +9,23 @@ import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import PenIcon from '../../img/pen-icon.svg';
-import TestImg from '../../img/thumbnail-img.svg';
 import Mudig from '../../img/playlist-mudig-img.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { playlist } = props;
+  const { playlist, playlistDesc } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const isModifyPath =
+    location.pathname.includes('/playlist/detail/') &&
+    location.pathname.includes('/edit');
+  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
   const handleMoveBackBtnClick = () => {
     navigate(-1);
   };
-
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -31,13 +33,8 @@ export default function PlayListInfo(props) {
     setMoreInfoView(false);
   };
   const handleModify = () => {
-    // Modal Open
     setModalOpen(true);
   };
-  const isModifyPath =
-    location.pathname.includes('/playlist/detail/') &&
-    location.pathname.includes('/edit');
-  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
   return (
     <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
@@ -52,9 +49,11 @@ export default function PlayListInfo(props) {
         <Image src={playlist.thumbnail} alt='썸네일' />
       </ThumbnailBox>
       <InfoBox>
-        {!isPlaylistSummary && <h2>{playlist.title}</h2>}
+        {!isPlaylistSummary && (
+          <h2>{playlistDesc?.title || playlist?.title}</h2>
+        )}
         <div>
-          <p>{playlist.content}</p>
+          <p>{playlistDesc?.content || playlist?.content}</p>
           {isModifyPath ? (
             <ModifyBtn onClick={handleModify}>
               <img src={PenIcon} alt='수정' />
@@ -63,13 +62,17 @@ export default function PlayListInfo(props) {
             <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
-        <PrivateCheck>{playlist.is_public ? '공개' : '비공개'}</PrivateCheck>
+        <PrivateCheck>
+          {(isModifyPath ? playlistDesc?.is_public : playlist.is_public)
+            ? '공개'
+            : '비공개'}
+        </PrivateCheck>
       </InfoBox>
       {moreInfoView && (
         <>
           <ThumbnailBlurBox />
           <MoreInfoBox>
-            <p>{playlist.content}</p>
+            <p>{playlistDesc?.content || playlist?.content}</p>
             <button onClick={handleCloseBtn}>닫기</button>
           </MoreInfoBox>
         </>
@@ -119,12 +122,17 @@ const InfoBox = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   h2 {
+    width: 310px;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     p {
       color: var(--sub-font-color);
       font-size: var(--font-sm);
@@ -156,6 +164,7 @@ const ThumbnailBlurBox = styled.div`
 
 const MoreInfoBox = styled.div`
   position: absolute;
+  width: 100%;
   z-index: 3;
   display: flex;
   bottom: 0px;
