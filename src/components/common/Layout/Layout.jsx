@@ -6,16 +6,17 @@ import NavBar from '../NavBar/NavBar';
 export default function Layout({ children }) {
   const location = useLocation();
 
-  const pathsWithoutNavBar = [
+  const pathsWithNavBar = [
     '/main',
     '/search',
     '/playlist/create',
     '/playlist/summary',
     '/user/profile',
     '/randomplay',
+    '/playlist/create',
   ];
 
-  const isNavBarShowed = pathsWithoutNavBar.some((path) =>
+  const isNavBarShowed = pathsWithNavBar.some((path) =>
     location.pathname.includes(path),
   );
 

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import { userInfoAtom } from '../../library/atom';
-import { useRecoilState } from 'recoil';
+import { userInfoAtom, isLoginAtom } from '../../library/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ImgCompression } from '../../library/ImgCompression';
 import { useNavigate } from 'react-router-dom';
 import { postUserProfile } from '../../library/apis/api';
@@ -13,7 +13,7 @@ export default function SetProfile() {
   const navigate = useNavigate();
 
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-
+  const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState([]);
   const [previewImg, setPreviewImg] = useState(
     'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
@@ -90,9 +90,12 @@ export default function SetProfile() {
       const response = await postUserProfile(formData, userInfo.type);
 
       if (response.message === '회원가입 성공') {
-        const { id, email, name, image, genre, about, rep_playlist } =
-          response.user;
-        const token = response.token;
+        const { user, token } = response;
+        const { id, email, name, image, genre, about, rep_playlist } = user;
+        const { access, refresh } = token;
+        localStorage.setItem('token', access);
+        localStorage.setItem('refreshToken', refresh);
+        setIsLogin(true);
         setUserInfo({
           id,
           email,

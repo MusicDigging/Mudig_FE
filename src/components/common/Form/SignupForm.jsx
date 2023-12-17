@@ -118,8 +118,8 @@ export const SignupForm = ({ onSubmit }) => {
             placeholder='비밀번호'
             type='password'
             name='password'
-            showPassword={showPassword}
-            toggleShowPassword={toggleShowPassword}
+            showPassword={showPassword.password}
+            toggleShowPassword={() => toggleShowPassword('password')}
           />
         </PasswordContainer>
         <ButtonBox>
