@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 
 import { useEditProfile } from '../../hooks/queries/useProfile';
@@ -9,7 +9,6 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
-import { useLocation } from 'react-router';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -22,10 +21,9 @@ export default function EditProfile() {
   const [repPlaylist, setRepPlaylist] = useState(profile.rep_playlist);
   const [previewImg, setPreviewImg] = useState(
     profile.image ||
-    'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   );
   const { mutate: editProfile } = useEditProfile();
-
 
   const onSubmit = async (data) => {
     const formData = new FormData();
