@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Button } from '../../components/common/Button/Button';
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
@@ -21,7 +22,9 @@ export default function PlaylistSummary() {
   };
   return (
     <PlaylistSummaryWrap>
-      <PlayListInfo playlist={playlist} />
+      <PlaylistInfoBox>
+        <PlayListInfo playlist={playlist} />
+      </PlaylistInfoBox>
       <PlayListBox>
         <PlayList>
           {music.map((item, index) => (
@@ -35,36 +38,39 @@ export default function PlaylistSummary() {
         </PlayList>
       </PlayListBox>
       <BlurBox />
-      <NextBtn onClick={handleNextBtn}>확인</NextBtn>
+      <BtnBox>
+        <Button onClick={handleNextBtn} text='확인' />
+      </BtnBox>
     </PlaylistSummaryWrap>
   );
 }
-const PlaylistSummaryWrap = styled.div`
-  position: relative;
+const PlaylistSummaryWrap = styled.div``;
+const PlaylistInfoBox = styled.div`
+  position: fixed;
+  top: 0;
+  width: 360px;
 `;
 const PlayListBox = styled.div`
-  margin-top: 12px;
-  padding: 0 16px;
+  margin-top: 376px;
+  padding: 0 16px 165px;
+  height: calc(100vh - 364px);
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const BlurBox = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 89px;
   width: 360px;
   height: 170px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
   z-index: 5;
 `;
-const NextBtn = styled.button`
+const BtnBox = styled.div`
   position: absolute;
   z-index: 10;
-  bottom: 0;
+  bottom: 113px;
   left: 15.5px;
-  transform: translate(0%, 50%);
-  width: 328px;
-  padding: 12px 0;
-  background-color: var(--playlist-info-bg-color);
-  color: #fff;
-  border-radius: 10px;
-  font-size: var(--font-md);
-  line-height: normal;
 `;
