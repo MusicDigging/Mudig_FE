@@ -83,7 +83,6 @@ export default function PlayListInfo(props) {
 const PlayListInfoWrap = styled.section`
   padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
   position: relative;
-  background-color: #c7c6c6;
   line-height: normal;
 `;
 

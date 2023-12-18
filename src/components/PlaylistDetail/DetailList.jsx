@@ -70,6 +70,7 @@ const DetailListWrap = styled.div`
   display: flex;
   padding-bottom: 8px;
   flex-direction: column;
+  background-color: #fff;
 `;
 
 const PlayListBtn = styled.button`
