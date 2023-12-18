@@ -66,6 +66,7 @@ const InfoBox = styled.div`
     overflow: hidden;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
+    line-height: normal;
   }
   p:last-child {
     color: var(--sub-font-color);
