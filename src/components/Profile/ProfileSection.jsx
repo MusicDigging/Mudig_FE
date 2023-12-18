@@ -44,7 +44,7 @@ export default function ProfileSection(props) {
   return (
     <ProfileSectionWrap>
       <ProfileNavBtn>
-        <button>
+        <button onClick={() => navigate(-1)}>
           <img src={BackBtnIcon} alt='뒤로가기 버튼' />
         </button>
         {isMyProfile && (

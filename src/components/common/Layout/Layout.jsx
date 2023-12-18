@@ -1,7 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+
 import Header from '../Header/Header';
 import NavBar from '../NavBar/NavBar';
+import BackgroundImg from '../../../img/background-img.svg';
 
 export default function Layout({ children }) {
   const location = useLocation();
@@ -13,7 +16,6 @@ export default function Layout({ children }) {
     '/playlist/summary',
     '/user/profile',
     '/randomplay',
-    '/playlist/create',
   ];
 
   const isNavBarShowed = pathsWithNavBar.some((path) =>
@@ -21,10 +23,16 @@ export default function Layout({ children }) {
   );
 
   return (
-    <>
+    <LayoutWrap>
       <Header />
       {children}
       {isNavBarShowed && <NavBar />}
-    </>
+    </LayoutWrap>
   );
 }
+
+const LayoutWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  background: url(${BackgroundImg}) top left / cover no-repeat;
+`;

@@ -41,7 +41,7 @@ export default function MainPlayListSection(props) {
 }
 
 const MainPlayListSectionWrap = styled.section`
-  padding: 24px 24px 16px;
+  padding: 24px 0px 16px 24px;
   h2 {
     display: flex;
     align-items: center;
@@ -56,7 +56,7 @@ const PlayListHeader = styled.div`
 `;
 
 const MainPlayListInfoBox = styled.div`
-  margin: 24px 0 16px;
+  padding: 24px 24px 16px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
