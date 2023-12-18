@@ -58,9 +58,11 @@ export default function DetailList(props) {
           </PlayListBtn>
         ))}
       </PlayList>
-      <ExtendBtn onClick={handleMore} more={more}>
-        <ArrowIcon fill='black' />
-      </ExtendBtn>
+      {music.length > 2 && (
+        <ExtendBtn onClick={handleMore} more={more}>
+          <ArrowIcon fill='black' />
+        </ExtendBtn>
+      )}
     </DetailListWrap>
   );
 }
