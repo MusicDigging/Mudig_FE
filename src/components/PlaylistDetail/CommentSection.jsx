@@ -136,10 +136,11 @@ export default function CommentSection(props) {
 
 const CommentSectionWrap = styled.section`
   height: 100%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   border-top: 6px solid var(--input-background-color);
-  padding: 16px;
+  background-color: #fff;
   h2 {
     padding: 10px 0 16px;
     font-weight: var(--font-semi-bold);
