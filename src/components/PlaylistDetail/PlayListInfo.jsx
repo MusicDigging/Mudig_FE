@@ -104,8 +104,8 @@ const SummaryTitle = styled.h2`
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(50%, 130%);
-  width: 180px;
+  transform: translate(35%, 130%);
+  width: 60%;
   text-align: center;
   word-break: keep-all;
   line-height: normal;
@@ -116,7 +116,7 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 62px 16px 0px;
+  padding: 62px 16px 16px;
   background-color: #fff;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;

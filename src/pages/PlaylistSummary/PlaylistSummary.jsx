@@ -16,12 +16,10 @@ export default function PlaylistSummary() {
 
   const { playlist, music } = data;
   const handleNextBtn = () => {
-    navigate(`/playlist/detail/${playlistId}`, {
-      state: { playlistId: playlistId },
-    });
+    navigate('/user/profile/my');
   };
   return (
-    <PlaylistSummaryWrap>
+    <>
       <PlaylistInfoBox>
         <PlayListInfo playlist={playlist} />
       </PlaylistInfoBox>
@@ -41,16 +39,16 @@ export default function PlaylistSummary() {
       <BtnBox>
         <Button onClick={handleNextBtn} text='확인' />
       </BtnBox>
-    </PlaylistSummaryWrap>
+    </>
   );
 }
-const PlaylistSummaryWrap = styled.div``;
 const PlaylistInfoBox = styled.div`
   position: fixed;
   top: 0;
   width: 360px;
 `;
 const PlayListBox = styled.div`
+  background: #fff;
   margin-top: 376px;
   padding: 0 16px 165px;
   height: calc(100vh - 364px);
