@@ -32,8 +32,10 @@ export default function PlayListSection(props) {
           <h2>{isMyProfile && '내가'} 생성한 플레이리스트</h2>
           {
             <SortBtnBox>
-              <button onClick={handleSortLatestBtn}>최신순</button>|
-              <button onClick={handleSortPopularBtn}>인기순</button>
+              <button onClick={handleSortLatestBtn} autoFocus>
+                최신순
+              </button>
+              |<button onClick={handleSortPopularBtn}>인기순</button>
             </SortBtnBox>
           }
         </PlayListHeader>
@@ -93,6 +95,7 @@ const SortBtnBox = styled.div`
   }
   button:focus {
     color: var(--btn-border-color);
+    outline: none;
   }
 `;
 
