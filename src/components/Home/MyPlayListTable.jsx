@@ -23,7 +23,7 @@ export default function MyPlayListTable({ playlistData }) {
                 info={`${item.music.length}곡`}
               >
                 <PlayBtnStyle type='button'>
-                  <img src={PlayIcon} alt='재생 바로가기 아이콘' />
+                  <img id='playImg' src={PlayIcon} alt='재생 바로가기 아이콘' />
                 </PlayBtnStyle>
               </PlayListItem>
             </Link>
@@ -36,7 +36,7 @@ export default function MyPlayListTable({ playlistData }) {
 
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
-  background-color: #fff;
+  background-color: transperate;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -52,4 +52,9 @@ const PlayListBox = styled.div`
 const PlayBtnStyle = styled.button`
   display: flex;
   gap: 4px;
+
+  #playImg {
+    width: 24px; // 너비를 24px로 설정
+    height: 24px; // 높이를 24px로 설정
+  }
 `;
