@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
+import { userInfoAtom } from '../../library/atom';
+import { useLogout } from '../../hooks/queries/useProfile';
+
 import ProfileImage from '../common/Image/ProfileImage';
+import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 import MoreBtnIcon from '../../img/more-icon.svg';
 export default function ProfileSection(props) {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const { isMyProfile } = props;
   const data = props.data;
   const { follower, following, profile, playlist } = data;
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { mutate: logout } = useLogout();
 
   const handleMoreBtnClick = () => {
     return isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
@@ -23,12 +29,22 @@ export default function ProfileSection(props) {
     navigate(value);
   };
 
-  const handleLogoutBtnClick = (e) => {};
+  const handleLogoutBtnClick = (e) => {
+    logout(undefined, {
+      onSuccess: (res) => {
+        alert('로그아웃 되었습니다.');
+        setUserInfo({});
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        navigate('/');
+      },
+    });
+  };
 
   return (
     <ProfileSectionWrap>
       <ProfileNavBtn>
-        <button>
+        <button onClick={() => navigate(-1)}>
           <img src={BackBtnIcon} alt='뒤로가기 버튼' />
         </button>
         {isMyProfile && (
@@ -39,8 +55,8 @@ export default function ProfileSection(props) {
             {isModalOpen && (
               <MiniModalStyle>
                 <button onClick={handleLogoutBtnClick}>로그아웃</button>
-                <Link to='user/password'>비밀번호 변경</Link>
-                <Link to='user/resign'>회원 탈퇴</Link>
+                <Link to='/user/password'>비밀번호 변경</Link>
+                <Link to='/user/resign'>회원 탈퇴</Link>
               </MiniModalStyle>
             )}
           </div>
@@ -53,11 +69,17 @@ export default function ProfileSection(props) {
         </ProfileInfo>
         <UserInfo>
           <FollowInfo>
-            <MoveFollowBtn to='/user/profile/follow'>
+            <MoveFollowBtn
+              to='/user/profile/follow'
+              state={{ type: 'followings', following, follower }}
+            >
               <strong>{following?.length}</strong>
               <p>팔로잉</p>
             </MoveFollowBtn>
-            <MoveFollowBtn to='/user/profile/follow'>
+            <MoveFollowBtn
+              to='/user/profile/follow'
+              state={{ type: 'followers', following, follower }}
+            >
               <strong>{follower?.length}</strong>
               <p>팔로워</p>
             </MoveFollowBtn>

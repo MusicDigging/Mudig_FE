@@ -20,6 +20,9 @@ export default function CreateNewPlaylist3() {
   const { mutate: createPlaylist } = useCreatePlaylist();
 
   const handleCompleteBtnClick = (e) => {
+    if (year.trim() === '') {
+      return;
+    }
     const data = { situations, genre: genre.join(','), year };
 
     setIsLoading(true);
@@ -35,6 +38,13 @@ export default function CreateNewPlaylist3() {
         alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
       },
     });
+  };
+
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 100) {
+      setYear(value);
+    }
   };
 
   return (
@@ -55,7 +65,7 @@ export default function CreateNewPlaylist3() {
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
-        <form>
+        <S.AnswerForm>
           <motion.div
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
@@ -67,24 +77,27 @@ export default function CreateNewPlaylist3() {
               maxRows={4}
               minRows={1}
               value={year}
-              onChange={(e) => setYear(e.target.value)}
+              onChange={handleInputChange}
             />
+            <span>{year.length}/100</span>
           </motion.div>
-          <S.BackLink
-            to='/playlist/create2'
-            state={{ situations, genre, year, backAnimation: true }}
-            disabled={false}
-          >
-            이전
-          </S.BackLink>
-          <S.CompleteBtn
-            type='button'
-            onClick={handleCompleteBtnClick}
-            disabled={year.trim() === ''}
-          >
-            완료
-          </S.CompleteBtn>
-        </form>
+          <S.LinkBox>
+            <S.BackLink
+              to='/playlist/create2'
+              state={{ situations, genre, year, backAnimation: true }}
+              disabled={false}
+            >
+              이전
+            </S.BackLink>
+            <S.CompleteBtn
+              type='button'
+              onClick={handleCompleteBtnClick}
+              disabled={year.trim() === ''}
+            >
+              완료
+            </S.CompleteBtn>
+          </S.LinkBox>
+        </S.AnswerForm>
       </S.NewPlaylistBox>
     </S.CreateNewPlaylistWrap>
   );

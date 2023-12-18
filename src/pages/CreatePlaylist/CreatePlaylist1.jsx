@@ -13,6 +13,13 @@ export default function CreateNewPlaylist1() {
     (state && state.situations) || '',
   );
 
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    if (value.length <= 100) {
+      setSituations(value);
+    }
+  };
+
   return (
     <>
       <S.CreateNewPlaylistWrap>
@@ -39,7 +46,7 @@ export default function CreateNewPlaylist1() {
 
           <img src={CharacterImg} alt='캐릭터 이미지' />
 
-          <form>
+          <S.AnswerForm>
             <motion.div
               initial={{ x: backAnimation ? -300 : 0, opacity: 0 }}
               animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
@@ -51,18 +58,19 @@ export default function CreateNewPlaylist1() {
                 maxRows={4}
                 minRows={1}
                 value={situations}
-                onChange={(e) => setSituations(e.target.value)}
+                onChange={handleInputChange}
               />
+              <span>{situations.length}/100</span>
             </motion.div>
-
             <S.NextLink
               to='/playlist/create2'
               state={{ situations, genre, year, backAnimation: false }}
               disabled={situations.trim() === ''}
+              onClick={(e) => situations.trim() === '' && e.preventDefault()}
             >
               다음
             </S.NextLink>
-          </form>
+          </S.AnswerForm>
         </S.NewPlaylistBox>
       </S.CreateNewPlaylistWrap>
     </>

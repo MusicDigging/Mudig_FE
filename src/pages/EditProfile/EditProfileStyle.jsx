@@ -15,12 +15,3 @@ export const MoveBackBtn = styled(Link)`
   top: 22px;
   left: 16px;
 `;
-
-export const ImgUploadBtn = styled.button`
-  position: absolute;
-  right: -15px;
-  bottom: -9px;
-  img {
-    width: 36px;
-  }
-`;

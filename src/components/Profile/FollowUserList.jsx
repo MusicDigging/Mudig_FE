@@ -1,10 +1,26 @@
 import React from 'react';
 import styled from 'styled-components';
 import User from '../common/User';
+import { usePostFollow, useDelFollow } from '../../hooks/queries/useFollow';
 
-const FollowUserList = ({ users, listType }) => {
+const FollowUserList = ({ users }) => {
+  const { mutate: postFollow } = usePostFollow();
+  const { mutate: delFollow } = useDelFollow();
+
+  const handleFollowClick = async (user) => {
+    const mutationFn = user.isFollowing ? delFollow : postFollow;
+    mutationFn(user.id, {
+      onSuccess: () => {
+        // 성공 시의 로직: 예를 들어, 사용자 목록을 다시 가져오거나 상태 업데이트
+      },
+      onError: (error) => {
+        // 에러 처리 로직
+        console.error('Follow action failed:', error);
+      },
+    });
+  };
+
   if (!users || users.length === 0) {
-    // 데이터가 없거나 로딩 중일 때 표시될 내용
     return <div>사용자가 없습니다.</div>;
   }
 
@@ -14,9 +30,10 @@ const FollowUserList = ({ users, listType }) => {
         <User
           key={userData.id}
           user={userData.user}
-          name={userData.name} // Make sure this matches the property name in the data object
+          name={userData.name}
           profilePicture={userData.profilePicture}
           isFollowing={userData.isFollowing}
+          onFollowClick={() => handleFollowClick(userData)}
         />
       ))}
     </FollowUserListWrap>
@@ -25,6 +42,7 @@ const FollowUserList = ({ users, listType }) => {
 
 export default FollowUserList;
 
+// 스타일드 컴포넌트
 const FollowUserListWrap = styled.div`
   padding: 20px;
 `;

@@ -29,7 +29,7 @@ export default function CreateNewPlaylist2() {
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
-        <form>
+        <S.AnswerForm>
           <motion.div
             initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
@@ -39,31 +39,34 @@ export default function CreateNewPlaylist2() {
               setSelectedChips={setGenre}
             />
           </motion.div>
-          <S.BackLink
-            to='/playlist/create1'
-            state={{
-              situations,
-              genre,
-              year,
-              backAnimation: true,
-            }}
-            disabled={false}
-          >
-            이전
-          </S.BackLink>
-          <S.NextLink
-            to='/playlist/create3'
-            state={{
-              situations,
-              genre,
-              year,
-              backAnimation: false,
-            }}
-            disabled={genre.length === 0}
-          >
-            다음
-          </S.NextLink>
-        </form>
+          <S.LinkBox>
+            <S.BackLink
+              to='/playlist/create1'
+              state={{
+                situations,
+                genre,
+                year,
+                backAnimation: true,
+              }}
+              disabled={false}
+            >
+              이전
+            </S.BackLink>
+            <S.NextLink
+              to='/playlist/create3'
+              state={{
+                situations,
+                genre,
+                year,
+                backAnimation: false,
+              }}
+              disabled={genre.length === 0}
+              onClick={(e) => genre.length === 0 && e.preventDefault()}
+            >
+              다음
+            </S.NextLink>
+          </S.LinkBox>
+        </S.AnswerForm>
       </S.NewPlaylistBox>
     </S.CreateNewPlaylistWrap>
   );
