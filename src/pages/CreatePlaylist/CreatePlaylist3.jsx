@@ -20,6 +20,9 @@ export default function CreateNewPlaylist3() {
   const { mutate: createPlaylist } = useCreatePlaylist();
 
   const handleCompleteBtnClick = (e) => {
+    if (year.trim() === '') {
+      return;
+    }
     const data = { situations, genre: genre.join(','), year };
 
     setIsLoading(true);

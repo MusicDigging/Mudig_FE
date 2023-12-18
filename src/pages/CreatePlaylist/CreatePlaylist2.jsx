@@ -61,6 +61,7 @@ export default function CreateNewPlaylist2() {
                 backAnimation: false,
               }}
               disabled={genre.length === 0}
+              onClick={(e) => genre.length === 0 && e.preventDefault()}
             >
               다음
             </S.NextLink>
