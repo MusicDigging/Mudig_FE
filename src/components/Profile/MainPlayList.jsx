@@ -26,7 +26,7 @@ export default function MainPlayList(props) {
 
 const MainPlayListWrap = styled.div`
   ul {
-    width: 360px;
+    width: 100%;
     display: flex;
     overflow-x: scroll;
 
