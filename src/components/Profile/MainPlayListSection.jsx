@@ -87,4 +87,8 @@ const MainPlayListImg = styled.div`
     left: 27%;
     background: url(${WhitePlayIcon}) no-repeat center/contain;
   }
+  img:first-child {
+    width: 150px;
+    height: 150px;
+  }
 `;
