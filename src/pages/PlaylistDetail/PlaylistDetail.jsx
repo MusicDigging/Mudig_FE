@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import styled from 'styled-components';
 
-import {
-  useGetPlaylistDetail,
-  useLikePlaylist,
-} from '../../hooks/queries/usePlaylist';
+import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import NotFound from '../NotFound/NotFound';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
@@ -14,8 +11,6 @@ import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 
-import LikeIcon from '../../img/like-icon.svg';
-import LikeActiveIcon from '../../img/like-active-icon.svg';
 import { useRecoilState } from 'recoil';
 import { PlayListAtom } from '../../library/atom';
 
@@ -27,7 +22,6 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
-  const { mutate: likePlaylist } = useLikePlaylist();
 
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
 
@@ -45,11 +39,6 @@ export default function PlaylistDetail() {
   const musicList = music.map((obj) => obj.information);
   const musicLength = music.length;
 
-  const handleLikeBtnClick = () => {
-    const data = { playlist_id: playlist.id };
-    likePlaylist(data);
-  };
-
   return (
     <>
       <PlaylistDetailWrap>
@@ -64,6 +53,7 @@ export default function PlaylistDetail() {
           />
         )}
         <MusicPlayBar
+          playlist={playlist}
           userId={user.id}
           playlistId={playlistId}
           pause={pause}
@@ -71,8 +61,6 @@ export default function PlaylistDetail() {
           playing={playing}
           setPlaying={setPlaying}
           setCurrMusic={setCurrMusic}
-          playlist={playlist}
-          music={music}
         />
         <PlayListDetailBox>
           {musicLength === 0 ? (
@@ -92,13 +80,6 @@ export default function PlaylistDetail() {
           )}
           <CommentSection playlistId={playlistId} comments={comments} />
         </PlayListDetailBox>
-        {/* <LikeBtn onClick={handleLikeBtnClick}>
-          <img
-            src={playlist.like_playlist ? LikeActiveIcon : LikeIcon}
-            alt='좋아요'
-          />
-          <p>{playlist.like_count}</p>
-        </LikeBtn> */}
       </PlaylistDetailWrap>
     </>
   );
@@ -126,16 +107,5 @@ const MusicNothingSection = styled.section`
   }
   span {
     font-size: var(--font-sm);
-  }
-`;
-const LikeBtn = styled.button`
-  height: 24px;
-  display: flex;
-  font-size: var(--font-md);
-
-  img {
-    width: 24px;
-    height: 100%;
-    vertical-align: middle;
   }
 `;

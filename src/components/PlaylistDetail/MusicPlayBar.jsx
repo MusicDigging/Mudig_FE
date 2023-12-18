@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { userInfoAtom } from '../../library/atom';
-import { useDeletePlaylist } from '../../hooks/queries/usePlaylist';
+import { userInfoAtom, PlayListAtom } from '../../library/atom';
+import {
+  useDeletePlaylist,
+  useLikePlaylist,
+} from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
 
@@ -12,15 +15,15 @@ import PlayIcon from '../../img/play-icon.svg';
 import PauseIcon from '../../img/pause-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import ShareIcon from '../../img/share-icon.svg';
-import { useRecoilState } from 'recoil';
-import { PlayListAtom } from '../../library/atom';
-import { useEffect } from 'react';
+import LikeIcon from '../../img/like-icon.svg';
+import LikeActiveIcon from '../../img/like-active-icon.svg';
 
 export default function MusicPlayBar(props) {
   const navigate = useNavigate();
   const myId = useRecoilValue(userInfoAtom).id;
   const { mutate: deletePlaylist } = useDeletePlaylist();
   const {
+    playlist,
     userId,
     playlistId,
     playing,
@@ -30,11 +33,11 @@ export default function MusicPlayBar(props) {
     setCurrMusic,
   } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const toggleModal = () => {
     if (isModalOpen === false) setIsModalOpen(true);
     else setIsModalOpen(false);
   };
+  const { mutate: likePlaylist } = useLikePlaylist();
 
   const handlePlayBtn = () => {
     if (!playing && pause) {
@@ -61,6 +64,11 @@ export default function MusicPlayBar(props) {
     alert('URL이 복사되었습니다.');
   };
 
+  const handleLikeBtnClick = () => {
+    const data = { playlist_id: playlistId };
+    likePlaylist(data);
+  };
+
   return (
     <PlayBarWrap>
       <button onClick={handleShareBtnClick}>
@@ -73,9 +81,19 @@ export default function MusicPlayBar(props) {
         />
       </PlayBtn>
       <MoreBtnBox>
-        <button onClick={toggleModal}>
-          <img src={MoreIcon} alt='더보기 버튼' />
-        </button>
+        {userId === myId ? (
+          <button onClick={toggleModal}>
+            <img src={MoreIcon} alt='더보기 버튼' />
+          </button>
+        ) : (
+          <LikeBtn onClick={handleLikeBtnClick}>
+            <img
+              src={playlist.like_playlist ? LikeActiveIcon : LikeIcon}
+              alt='좋아요'
+            />
+            <p>{playlist.like_count}</p>
+          </LikeBtn>
+        )}
         {userId === myId && isModalOpen && (
           <MiniModal>
             <button onClick={handleDeleteBtnClick}>플리 삭제</button>
@@ -113,4 +131,22 @@ const PlayBtn = styled.button`
 
 const MoreBtnBox = styled.div`
   position: relative;
+`;
+
+const LikeBtn = styled.button`
+  display: flex;
+  gap: 3px;
+  font-size: var(--font-md);
+
+  p {
+    margin-top: 1px;
+    height: 24px;
+  }
+
+  img {
+    margin-bottom: -6px;
+    width: 24px;
+    height: 100%;
+    vertical-align: middle;
+  }
 `;
