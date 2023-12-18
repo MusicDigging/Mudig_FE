@@ -81,12 +81,6 @@ const Footer = styled.footer`
   text-align: center;
 `;
 
-const FooterSpan = styled.span`
-  font-size: var(--font-sm);
-  color: #575757;
-  line-height: 17px;
-`;
-
 export {
   SignupWrap,
   SignupHeader,
@@ -99,5 +93,4 @@ export {
   NavSpan,
   LinkLogin,
   Footer,
-  FooterSpan,
 };

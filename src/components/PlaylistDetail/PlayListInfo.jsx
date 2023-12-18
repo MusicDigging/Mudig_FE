@@ -9,21 +9,23 @@ import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import PenIcon from '../../img/pen-icon.svg';
-import TestImg from '../../img/thumbnail-img.svg';
 import Mudig from '../../img/playlist-mudig-img.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { playlist } = props;
+  const { playlist, playlistDesc } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const isModifyPath =
+    location.pathname.includes('/playlist/detail/') &&
+    location.pathname.includes('/edit');
+  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
   const handleMoveBackBtnClick = () => {
     navigate(-1);
   };
-
   const handleMoreBtn = () => {
     setMoreInfoView(true);
   };
@@ -31,33 +33,27 @@ export default function PlayListInfo(props) {
     setMoreInfoView(false);
   };
   const handleModify = () => {
-    // Modal Open
     setModalOpen(true);
   };
-  const isModifyPath =
-    location.pathname.includes('/playlist/detail/') &&
-    location.pathname.includes('/edit');
-  const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
   return (
-    <PlayListInfoWrap>
-      <MoveBackBtn onClick={handleMoveBackBtnClick}>
-        <img src={ArrowIcon} alt='뒤로가기' />
-      </MoveBackBtn>
-      {isPlaylistSummary && (
-        <SummaryTitle>
-          드라이브 할 때 듣기 좋은 추천 플레이리스트 입니다!
-        </SummaryTitle>
+    <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
+      {!isPlaylistSummary && (
+        <MoveBackBtn onClick={handleMoveBackBtnClick}>
+          <img src={ArrowIcon} alt='뒤로가기' />
+        </MoveBackBtn>
       )}
-      <div>
-        <Thumbnail>
-          <Image src={playlist.thumbnail} alt='썸네일' />
-        </Thumbnail>
-      </div>
+
+      {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
+      <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+        <Image src={playlist.thumbnail} alt='썸네일' />
+      </ThumbnailBox>
       <InfoBox>
-        {!isPlaylistSummary && <h2>{playlist.title}</h2>}
+        {!isPlaylistSummary && (
+          <h2>{playlistDesc?.title || playlist?.title}</h2>
+        )}
         <div>
-          <p>{playlist.content}</p>
+          <p>{playlistDesc?.content || playlist?.content}</p>
           {isModifyPath ? (
             <ModifyBtn onClick={handleModify}>
               <img src={PenIcon} alt='수정' />
@@ -66,13 +62,17 @@ export default function PlayListInfo(props) {
             <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
           )}
         </div>
-        <PrivateCheck>{playlist.is_public ? '공개' : '비공개'}</PrivateCheck>
+        <PrivateCheck>
+          {(isModifyPath ? playlistDesc?.is_public : playlist.is_public)
+            ? '공개'
+            : '비공개'}
+        </PrivateCheck>
       </InfoBox>
       {moreInfoView && (
         <>
           <ThumbnailBlurBox />
           <MoreInfoBox>
-            <p>{playlist.content}</p>
+            <p>{playlistDesc?.content || playlist?.content}</p>
             <button onClick={handleCloseBtn}>닫기</button>
           </MoreInfoBox>
         </>
@@ -81,7 +81,7 @@ export default function PlayListInfo(props) {
   );
 }
 const PlayListInfoWrap = styled.section`
-  padding-top: 216px;
+  padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
   position: relative;
   background-color: #c7c6c6;
   line-height: normal;
@@ -93,14 +93,16 @@ export const MoveBackBtn = styled.button`
   left: 16px;
 `;
 
-const Thumbnail = styled.div`
+const ThumbnailBox = styled.div`
   position: absolute;
   width: 180px;
   height: 180px;
   top: 76px;
-  transform: translate(50%, 0);
+  transform: ${(props) =>
+    props.isPlaylistSummary ? 'translate(50%, 43px)' : 'translate(50%, 0)'};
 `;
 const SummaryTitle = styled.h2`
+  position: absolute;
   top: 0;
   left: 0;
   transform: translate(50%, 130%);
@@ -120,12 +122,17 @@ const InfoBox = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   h2 {
+    width: 310px;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     p {
       color: var(--sub-font-color);
       font-size: var(--font-sm);
@@ -157,6 +164,7 @@ const ThumbnailBlurBox = styled.div`
 
 const MoreInfoBox = styled.div`
   position: absolute;
+  width: 100%;
   z-index: 3;
   display: flex;
   bottom: 0px;
