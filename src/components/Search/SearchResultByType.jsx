@@ -9,18 +9,21 @@ import EmptySearch from './EmptySearch';
 export default function SearchResultByType(props) {
   const { result, currentNav } = props;
   const [type, setType] = useState('');
-  const SearchResultType = () => {
-    if (result) {
-      if (currentNav.playlist) setType('playlist');
-      else if (currentNav.user) setType('user');
-    }
-  };
+
   const maskedEmail = (email) => {
     return email.replace(/@.*/, '');
   };
+
   useEffect(() => {
+    const SearchResultType = () => {
+      if (result) {
+        if (currentNav.playlist) setType('playlist');
+        else if (currentNav.user) setType('user');
+      }
+    };
     SearchResultType();
-  }, []);
+  }, [currentNav]);
+
   return (
     <>
       {/* 플리 결과만 */}
