@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const User = ({ user, name, profilePicture, isFollowing }) => {
+const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
   console.log(user, name);
 
   return (
@@ -11,7 +11,10 @@ const User = ({ user, name, profilePicture, isFollowing }) => {
         <UserName>{user}</UserName>
         <UserNickName>{name}</UserNickName>
       </UserNameBox>
-      <FollowButton isFollowing={isFollowing}>
+      <FollowButton
+        isFollowing={isFollowing}
+        onClick={onFollowClick} // 팔로우/언팔로우 클릭 이벤트 핸들러 추가
+      >
         {isFollowing ? '팔로잉' : '팔로우'}
       </FollowButton>
     </UserWrap>
