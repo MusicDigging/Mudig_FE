@@ -20,14 +20,18 @@ export default function Profile() {
   const state = location.state;
   const my_id = useRecoilValue(userInfoAtom).id;
   const user_id = state?.id || my_id;
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    isFetching: profileFetching,
+  } = useGetProfile(user_id);
   const { data: followingData, isLoading: followingLoading } =
     useGetFollowing(user_id);
   const { data: followerData, isLoading: followerLoading } =
     useGetFollower(user_id);
 
-  if (profileLoading || followingLoading || followerLoading)
+  if (profileLoading || profileFetching || followingLoading || followerLoading)
     return <>Loading...</>;
-
   const repPlaylist = profileData.playlist.filter(
     (item) => item.id === profileData.profile.rep_playlist,
   )[0];
