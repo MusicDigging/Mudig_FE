@@ -1,10 +1,13 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { useLocation } from 'react-router-dom';
 
 import {
   useGetProfile,
   useGetFollowing,
   useGetFollower,
 } from '../../hooks/queries/useProfile';
+import { userInfoAtom } from '../../library/atom';
 
 import ProfileSection from '../../components/Profile/ProfileSection';
 import MainPlayListSection from '../../components/Profile/MainPlayListSection';
@@ -13,8 +16,10 @@ import PlayListSection from '../../components/Profile/PlayListSection';
 import * as S from './ProfileStyle';
 
 export default function Profile() {
-  const my_id = 25;
-  const user_id = 25;
+  const location = useLocation();
+  const state = location.state;
+  const my_id = useRecoilValue(userInfoAtom).id;
+  const user_id = state?.id || my_id;
   const { data: profileData, isLoading: profileLoading } =
     useGetProfile(user_id);
   const { data: followingData, isLoading: followingLoading } =
@@ -35,7 +40,7 @@ export default function Profile() {
   return (
     <S.ProfileWrap>
       <ProfileSection
-        isMyProfile={my_id === user_id ? true : false}
+        isMyProfile={my_id === user_id}
         data={{
           ...profileData,
           following: followingData,

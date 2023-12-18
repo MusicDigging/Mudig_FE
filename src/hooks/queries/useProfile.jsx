@@ -55,3 +55,13 @@ export const useEditProfile = () => {
     },
   });
 };
+
+export const useLogout = () => {
+  const postLogout = async () => {
+    const response = await privateInstance.post('/user/logout/');
+    console.log(response);
+    return response;
+  };
+
+  return useMutation(postLogout);
+};
