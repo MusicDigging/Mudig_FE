@@ -8,8 +8,8 @@ export default function SignupDetail() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const type = 'mudig';
-  const onSubmit = ({ email }) => {
-    setUserInfo({ email, type });
+  const onSubmit = ({ email, password }) => {
+    setUserInfo({ email, password, type });
     navigate('/setprofile');
   };
 
@@ -32,7 +32,6 @@ export default function SignupDetail() {
 const SingupDetailWrap = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
 `;
 
 const SignupDetailBox = styled.div`
@@ -48,7 +47,7 @@ const PageNum = styled.span`
   top: 24px;
   left: 317px;
   font-size: var(--font-l);
-  color: var(--sub-font--color);
+  color: var(--sub-font-color);
   font-weight: 500;
 `;
 
@@ -58,8 +57,5 @@ const DetailTitle = styled.h1`
 `;
 
 const Main = styled.div`
-  /* width: 360px; */
-  /* box-shadow: 0 0 10px red inset; */
-  display: flex;
-  justify-content: center;
+  padding: 0 16px;
 `;

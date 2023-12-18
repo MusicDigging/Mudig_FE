@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export function Image({ src, alt }) {
   // 이미지 주소 필터링
   const filterdSrc =
-    src.startsWith('karlo') || src.startsWith('profile')
+    src?.startsWith('karlo') || src?.startsWith('profile')
       ? `https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${src}`
       : src;
   return <ImageStyle src={filterdSrc} alt={alt} />;
@@ -12,7 +12,7 @@ export function Image({ src, alt }) {
 
 export function CircleImage({ src, alt }) {
   const filterdSrc =
-    src.startsWith('karlo') || src.startsWith('profile')
+    src?.startsWith('karlo') || src?.startsWith('profile')
       ? `https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${src}`
       : src;
   return <CircleImageStyle src={filterdSrc} alt={alt} />;

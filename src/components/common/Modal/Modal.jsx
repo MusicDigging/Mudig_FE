@@ -4,25 +4,50 @@ import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
-export default function Modal() {
+import { PlayListAtom } from '../../../library/atom';
+import { useModifyPlaylist } from '../../../hooks/queries/usePlaylist';
+export default function Modal({ playlistDesc, setPlaylistDesc }) {
+  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
-  const [isPrivate, setIsPrivate] = useState(true);
+  const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+
+  // 모달 Close
   const handleClose = () => {
+    setPlaylistDesc(playlistInfo.playlist);
     setModalOpen(false);
   };
+
+  // 공개 여부 토글 view 여부
   const handlePrivateView = () => {
     setIsPrivateView(!isPrivateView);
   };
+
   const handlePrivateCheck = (e) => {
     const ButtonType = e.target.innerText;
     if (ButtonType === '공개') {
-      setIsPrivate(false);
-    } else {
-      setIsPrivate(true);
+      setIsPublic(true);
+      setPlaylistDesc({ ...playlistDesc, is_public: true });
+    } else if (ButtonType === '비공개') {
+      setIsPublic(false);
+      setPlaylistDesc({ ...playlistDesc, is_public: false });
     }
     setIsPrivateView(false);
   };
+
+  const changeModifyDesc = (e) => {
+    const value = e.target.value;
+    if (e.target.name === 'playlistTitle') {
+      setPlaylistDesc({ ...playlistDesc, title: `${value}` });
+    } else if (e.target.name === 'playlistDescription') {
+      setPlaylistDesc({ ...playlistDesc, content: `${value}` });
+    }
+  };
+
+  const handleModifyClick = (e) => {
+    setModalOpen(false);
+  };
+
   return (
     <ModalWrap>
       <ModalBox>
@@ -32,8 +57,11 @@ export default function Modal() {
               type='text'
               name='playlistTitle'
               id='playlistTitle'
-              // value='드라이브할때'
+              defaultValue={playlistDesc.title || playlistInfo.playlist.title}
               placeholder='플레이리스트의 제목을 입력해주세요.'
+              autoComplete='off'
+              required
+              onChange={changeModifyDesc}
             />
           </label>
           <label>
@@ -41,7 +69,13 @@ export default function Modal() {
               type='text'
               name='playlistDescription'
               id='playlistDescription'
+              defaultValue={
+                playlistDesc.content || playlistInfo.playlist.content
+              }
               placeholder='플레이리스트에 대한 설명을 입력해주세요.'
+              autoComplete='off'
+              required
+              onChange={changeModifyDesc}
             />
           </label>
           <PrivateCheckBtn
@@ -49,7 +83,7 @@ export default function Modal() {
             onClick={handlePrivateView}
             className={isPrivateView ? 'active' : ''}
           >
-            {isPrivate ? '비공개' : '공개'}
+            {isPublic ? '공개' : '비공개'}
             <ArrowIcon fill='black' />
           </PrivateCheckBtn>
           {isPrivateView ? (
@@ -59,7 +93,7 @@ export default function Modal() {
                   <button
                     type='button'
                     onClick={handlePrivateCheck}
-                    className={isPrivate ? '' : 'active'}
+                    className={isPublic ? 'active' : ''}
                   >
                     공개
                   </button>
@@ -68,7 +102,7 @@ export default function Modal() {
                   <button
                     type='button'
                     onClick={handlePrivateCheck}
-                    className={isPrivate ? 'active' : ''}
+                    className={isPublic ? '' : 'active'}
                   >
                     비공개
                   </button>
@@ -85,7 +119,11 @@ export default function Modal() {
                 btnBorder='1px solid var(--input-background-color)'
                 onClick={handleClose}
               />
-              <Button text='수정' btnWidth='143px' />
+              <Button
+                text='수정'
+                btnWidth='143px'
+                onClick={handleModifyClick}
+              />
             </BtnBox>
           )}
         </ModalForm>
