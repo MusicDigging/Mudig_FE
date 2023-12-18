@@ -42,6 +42,20 @@ export const useGetFollower = (user_id) => {
   return { data, isLoading };
 };
 
+export const useEditProfile = () => {
+  const queryClient = useQueryClient();
+  const editProfile = (data) => {
+    const response = imgPrivateInstance.put('/user/profile/edit/', data);
+    return response.data;
+  };
+
+  return useMutation(editProfile, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('get-profile');
+    },
+  });
+};
+
 export const useLogout = () => {
   const postLogout = async () => {
     const response = await privateInstance.post('/user/logout/');
