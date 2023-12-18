@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import GlobalStyle from '../../styles/GlobalStyles';
 import closeIcon from '../../img/close-icon.svg';
 import eventPageBg from '../../img/eventPageBg.svg';
 

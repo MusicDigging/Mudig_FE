@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
 export default function ProfileInput(props) {
-  const { btnText, onSubmit, onChipSelect } = props;
+  const { profile, btnText, onSubmit, onChipSelect, children } = props;
 
-  const [nickNameCount, setNickNameCount] = useState(0);
+  const [nickNameCount, setNickNameCount] = useState(profile?.name.length || 0);
   const [nickNameValid, setNickNameValid] = useState('');
 
   const {
@@ -19,7 +19,8 @@ export default function ProfileInput(props) {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      about: '',
+      nickName: profile?.name || '',
+      about: profile?.about || '',
     },
     mode: 'onBlur',
     // react-hook-form의 reslover란? 저도 처음 사용해 보는 것이라 찾아보니 아래와 같다고 합니다
@@ -34,8 +35,9 @@ export default function ProfileInput(props) {
             type: 'custom',
             message: '닉네임을 입력해주세요.',
           };
-        } else {
+        } else if (!profile || (profile && data.nickName !== profile?.name)) {
           //닉네임 중복검사 post 요청
+          // (현재 프로필 닉네임과 같지 않은 경우만)
 
           const response = await axios.post(
             'https://api.mudig.co.kr/user/checkname/',
@@ -54,7 +56,9 @@ export default function ProfileInput(props) {
     },
   });
 
-  const [selectedChips, setSelectedChips] = useState([]);
+  const [selectedChips, setSelectedChips] = useState(
+    profile ? profile.genre.split(',') : [],
+  );
 
   const handleChipSelect = (newSelectedChips) => {
     setSelectedChips(newSelectedChips);
@@ -77,65 +81,69 @@ export default function ProfileInput(props) {
 
   return (
     <FormWrap onSubmit={handleSubmit(onSubmit)}>
-      <Label htmlFor='nickName'>닉네임</Label>
-      <InputWrap>
-        <InputBox>
-          <InputStyle
-            {...register('nickName', {
-              required: '닉네임을 입력해주세요.',
-              maxLength: {
-                value: 8,
-              },
-            })}
-            placeholder='8글자 내로 작성해주세요'
-            type='text'
-            id='nickName'
-            onChange={handleNickNameChecked}
-          />
-          <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
-        </InputBox>
-        {/* 닉네임 중복이면 중복 에러 메시지 보여주고 아니라면 '사용 가능한 닉네임입니다' 보여주는 삼항연산자 */}
-        {errors.nickName ? (
-          <ErrorMsg>{errors.nickName.message}</ErrorMsg>
-        ) : (
-          <ErrorMsg>{nickNameValid}</ErrorMsg>
-        )}
-      </InputWrap>
+      <div>
+        <Label htmlFor='nickName'>닉네임</Label>
+        <InputWrap>
+          <InputBox>
+            <InputStyle
+              {...register('nickName', {
+                required: '닉네임을 입력해주세요.',
+                maxLength: {
+                  value: 8,
+                },
+              })}
+              placeholder='8글자 내로 작성해주세요'
+              type='text'
+              id='nickName'
+              onChange={handleNickNameChecked}
+            />
+            <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
+          </InputBox>
+          {/* 닉네임 중복이면 중복 에러 메시지 보여주고 아니라면 '사용 가능한 닉네임입니다' 보여주는 삼항연산자 */}
+          {errors.nickName ? (
+            <ErrorMsg>{errors.nickName.message}</ErrorMsg>
+          ) : (
+            <ErrorMsg>{nickNameValid}</ErrorMsg>
+          )}
+        </InputWrap>
 
-      <Label htmlFor='about'>소개글</Label>
-      <InputWrap>
-        <InputStyle
-          {...register('about', { required: false })}
-          placeholder='소개글을 작성해주세요'
-          type='text'
-          id='about'
-        />
-      </InputWrap>
-      <>
-        <Chipwrap>
-          <Title>관심사</Title>
-          <ChipBox>
-            {[
-              'POP',
-              'K-POP',
-              'J-POP',
-              '힙합',
-              'R&B',
-              '발라드',
-              '댄스',
-              '인디',
-              'OST',
-            ].map((chipName, index) => (
-              <ChipButton
-                key={index}
-                name={chipName}
-                onSelect={handleChipSelect}
-                selectedChips={selectedChips}
-              />
-            ))}
-          </ChipBox>
-        </Chipwrap>
-      </>
+        <Label htmlFor='about'>소개글</Label>
+        <InputWrap>
+          <InputStyle
+            {...register('about', { required: false })}
+            defaultValue={profile?.about}
+            placeholder='소개글을 작성해주세요'
+            type='text'
+            id='about'
+          />
+        </InputWrap>
+        <>
+          <Chipwrap>
+            <Title>관심사</Title>
+            <ChipBox>
+              {[
+                'POP',
+                'K-POP',
+                'J-POP',
+                '힙합',
+                'R&B',
+                '발라드',
+                '댄스',
+                '인디',
+                'OST',
+              ].map((chipName, index) => (
+                <ChipButton
+                  key={index}
+                  name={chipName}
+                  onSelect={handleChipSelect}
+                  selectedChips={selectedChips}
+                />
+              ))}
+            </ChipBox>
+          </Chipwrap>
+        </>
+        {children}
+      </div>
       <ButtonBox>
         <Button
           text={btnText}
@@ -152,7 +160,12 @@ const FormWrap = styled.form`
   padding-top: 8px;
   font-size: var(--font-md);
   position: relative;
+  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
 `;
 
 const Label = styled.label``;
@@ -177,19 +190,19 @@ const InputStyle = styled.input`
   height: 44px;
   /* margin: 8px 0 16px 0; */
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #fff;
+  background: rgba(255, 255, 255, 0.6);
   padding-left: 16px;
   position: relative;
 `;
 
 const ButtonBox = styled.div`
-  position: absolute;
   bottom: 0px;
 `;
 
 const CharacterCount = styled.div`
   position: absolute;
-  top: 44%;
+  top: 50%;
   right: 12px;
   color: var(--extra-font-color);
   text-align: center;
@@ -197,6 +210,7 @@ const CharacterCount = styled.div`
 `;
 
 const Chipwrap = styled.div`
+  margin-bottom: 16px;
   font-weight: var(--font-regular);
   font-size: var(--font-md);
 `;

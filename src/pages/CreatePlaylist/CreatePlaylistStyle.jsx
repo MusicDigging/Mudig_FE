@@ -4,23 +4,16 @@ import BgImg from '../../img/background-img.svg';
 import { Link } from 'react-router-dom';
 
 export const CreateNewPlaylistWrap = styled.main`
-  position: relative;
   background-image: url(${BgImg}); // 임시 적용
   background-size: cover;
   height: 100%;
   padding-top: 60px;
+
   img {
     height: 234px;
   }
   span + div {
     height: 100%;
-  }
-  form {
-    position: relative;
-    height: 100%;
-    div {
-      min-height: 38px;
-    }
   }
 `;
 
@@ -36,7 +29,7 @@ export const PageNum = styled.span`
 `;
 
 export const NewPlaylistBox = styled.div`
-  padding: 0 16px;
+  padding: 0 16px 24px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -53,6 +46,25 @@ export const QuestionBox = styled.div`
   font-weight: var(--font-semi-bold);
 `;
 
+export const AnswerForm = styled.form`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  div {
+    min-height: 38px;
+  }
+  span {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+    margin-right: 4px;
+    font-size: var(--font-md);
+    color: var(--sub-font-color);
+  }
+`;
+
 export const Answer = styled(TextareaAutosize)`
   width: 100%;
   height: 60px;
@@ -64,21 +76,17 @@ export const Answer = styled(TextareaAutosize)`
     color: var(--sub-font-color);
   }
   &::-webkit-scrollbar {
-    width: 6px;
-    /* width: 15px; */ //여백 있을 때
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--btn-border-color);
-    /* border: 4px solid #fff; */ //여백 있을 때
-    border-radius: 10px;
+    display: none;
   }
 `;
 
+export const LinkBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
 export const NextLink = styled(Link)`
-  position: absolute;
-  left: 50%;
-  bottom: 24px;
-  transform: translate(-50%, 0);
   width: 328px;
   height: 44px;
   display: flex;

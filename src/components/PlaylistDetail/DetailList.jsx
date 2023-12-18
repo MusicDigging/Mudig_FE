@@ -14,13 +14,6 @@ export default function DetailList(props) {
   const [more, setMore] = useState(false);
   const [visibleCount, setVisibleCount] = useState(2);
 
-  /**
-   * 맨 처음에는 2개의 플리만 보여주고
-   * 더보기 버튼을 누르면 10개씩 추가로 보여준다.
-   * 마지막 플리까지 보여줬다면 화살표의 방향을 바꿔준다.
-   * 해당 버튼을 누르면 다시 처음의 2개의 플리만 보여준다.
-   */
-
   const handleMore = () => {
     if (!more) {
       if (visibleCount < music.length) setVisibleCount(visibleCount + 10);

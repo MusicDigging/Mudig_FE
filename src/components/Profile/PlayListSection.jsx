@@ -12,18 +12,16 @@ export default function PlayListSection(props) {
   const [playlists, setPlaylists] = useState(props.data);
 
   const handleSortLatestBtn = () => {
-    const sortedPlaylists = playlists.sort(
-      (a, b) => new Date(b.created_at) - new Date(a.created_at),
-    );
+    const sortedPlaylists = playlists
+      .slice()
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     setPlaylists(sortedPlaylists);
   };
 
   const handleSortPopularBtn = () => {
-    const sortedPlaylists = playlists.sort(
-      (a, b) =>
-        new Date(b.like_count) - new Date(a.like_count) ||
-        new Date(b.created_at) - new Date(a.created_at),
-    );
+    const sortedPlaylists = playlists
+      .slice()
+      .sort((a, b) => b.like_count - a.like_count);
     setPlaylists(sortedPlaylists);
   };
 
@@ -47,7 +45,11 @@ export default function PlayListSection(props) {
         )}
         <PlayList>
           {playlists.map((playlist) => (
-            <Link to={`/playlist/detail/${playlist.id}`} key={playlist.id}>
+            <Link
+              key={playlist.id}
+              to={`/playlist/detail/${playlist.id}`}
+              state={{ id: playlist.id }}
+            >
               <PlayListItem
                 img={`${playlist.thumbnail}`}
                 title={playlist.title}
