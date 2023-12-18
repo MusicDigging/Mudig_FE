@@ -43,6 +43,7 @@ export default function PlaylistDetail() {
   }
   const { playlist, comments, music, user } = data;
   const musicList = music.map((obj) => obj.information);
+  const musicLength = music.length;
 
   const handleLikeBtnClick = () => {
     const data = { playlist_id: playlist.id };
@@ -74,14 +75,21 @@ export default function PlaylistDetail() {
           music={music}
         />
         <PlayListDetailBox>
-          <DetailList
-            setPause={setPause}
-            playing={playing}
-            setPlaying={setPlaying}
-            music={music}
-            currMusic={currMusic}
-            setCurrMusic={setCurrMusic}
-          />
+          {musicLength === 0 ? (
+            <MusicNothingSection>
+              <p>들을 수 있는 노래가 없어요 🥲</p>
+              <span>노래를 추가해보세요! 🎵</span>
+            </MusicNothingSection>
+          ) : (
+            <DetailList
+              setPause={setPause}
+              playing={playing}
+              setPlaying={setPlaying}
+              music={music}
+              currMusic={currMusic}
+              setCurrMusic={setCurrMusic}
+            />
+          )}
           <CommentSection playlistId={playlistId} comments={comments} />
         </PlayListDetailBox>
         {/* <LikeBtn onClick={handleLikeBtnClick}>
@@ -105,6 +113,20 @@ const PlayListDetailBox = styled.main`
   flex-direction: column;
   height: 100%;
   padding-bottom: 0;
+`;
+const MusicNothingSection = styled.section`
+  width: 328px;
+  text-align: center;
+  font-size: var(--font-md);
+  color: var(--font-color);
+  line-height: normal;
+  margin: 50px 16px 66px;
+  p {
+    font-weight: var(--font-semi-bold);
+  }
+  span {
+    font-size: var(--font-sm);
+  }
 `;
 const LikeBtn = styled.button`
   height: 24px;
