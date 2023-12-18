@@ -69,11 +69,17 @@ export default function ProfileSection(props) {
         </ProfileInfo>
         <UserInfo>
           <FollowInfo>
-            <MoveFollowBtn to='/user/profile/follow'>
+            <MoveFollowBtn
+              to='/user/profile/follow'
+              state={{ type: 'followings', following, follower }}
+            >
               <strong>{following?.length}</strong>
               <p>팔로잉</p>
             </MoveFollowBtn>
-            <MoveFollowBtn to='/user/profile/follow'>
+            <MoveFollowBtn
+              to='/user/profile/follow'
+              state={{ type: 'followers', following, follower }}
+            >
               <strong>{follower?.length}</strong>
               <p>팔로워</p>
             </MoveFollowBtn>
