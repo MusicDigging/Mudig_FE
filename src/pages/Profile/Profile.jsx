@@ -19,7 +19,12 @@ export default function Profile() {
   const location = useLocation();
   const state = location.state;
   const my_id = useRecoilValue(userInfoAtom).id;
-  const user_id = state?.id || my_id;
+  const user_id =
+    state?.id ||
+    (!isNaN(location.pathname.split('/').pop()) &&
+      location.pathname.split('/').pop()) ||
+    my_id;
+
   const {
     data: profileData,
     isLoading: profileLoading,
