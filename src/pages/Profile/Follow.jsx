@@ -54,13 +54,13 @@ export default function Follow() {
           active={activeList === 'followers'}
           onClick={() => setActiveList('followers')}
         >
-          팔로워 목록
+          {location.state.follower?.length ?? 0} 팔로워
         </ListToggleButton>
         <ListToggleButton
           active={activeList === 'followings'}
           onClick={() => setActiveList('followings')}
         >
-          팔로잉 목록
+          {location.state.following?.length ?? 0} 팔로잉
         </ListToggleButton>
       </ListToggleButtonWrap>
       {activeList === 'followers' &&
