@@ -114,13 +114,13 @@ export default function PlayListModify({ playlistDesc }) {
                       title={item.song}
                       info={item.singer}
                     >
-                      <button
+                      <DelBtn
                         type='button'
                         name='삭제'
                         onClick={() => handleDelBtn(item.id)}
                       >
                         <img src={CloseIcon} alt='삭제' />
-                      </button>
+                      </DelBtn>
                     </PlayListItem>
                   )}
                 </Draggable>
@@ -146,4 +146,8 @@ const SaveBtn = styled.button`
   width: 44px;
   height: 44px;
   font-size: var(--font-md);
+`;
+
+const DelBtn = styled.button`
+  margin-left: -7px;
 `;
