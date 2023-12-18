@@ -66,3 +66,12 @@ export const useDeletePlaylist = () => {
 
   return useMutation(deletePlaylist);
 };
+export const useModifyPlaylist = (id) => {
+  const modifyPlaylist = (data) => {
+    const response = privateInstance.put(`/playlist/detail/${id}/edit/`, data);
+    return response;
+  };
+  const mutation = useMutation(modifyPlaylist);
+
+  return mutation;
+};

@@ -123,12 +123,7 @@ export default function Signup() {
           </S.LinkLogin>
         </S.NavLoign>
       </S.SignupMain>
-      <S.Footer>
-        <S.FooterSpan>
-          회원가입과 함께 <br />
-          Mudig의 약관에 동의하는 것으로 간주합니다.
-        </S.FooterSpan>
-      </S.Footer>
+      <S.Footer></S.Footer>
     </S.SignupWrap>
   );
 }
