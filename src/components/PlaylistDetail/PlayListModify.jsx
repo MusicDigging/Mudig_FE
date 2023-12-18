@@ -137,6 +137,8 @@ export default function PlayListModify({ playlistDesc }) {
 
 const PlayListModifyWrap = styled.div`
   padding: 25px 16px;
+  height: 100%;
+  background-color: #fff;
 `;
 
 const SaveBtn = styled.button`
