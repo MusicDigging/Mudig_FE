@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircleImage } from '../common/Image/Image';
 import PlayList from '../common/PlayList/PlayList';
@@ -27,12 +28,18 @@ export default function SearchResultByType(props) {
         <PlayList>
           {result.playlists.length !== 0 ? (
             result.playlists.map((item) => (
-              <PlayListItem
+              <Link
+                to={`/playlist/detail/${item.playlist.id}`}
                 key={item.playlist.id}
-                img={item.playlist.thumbnail}
-                title={item.playlist.title}
-                info={item.writer.name}
-              />
+                state={{ id: item.playlist.id }}
+              >
+                <PlayListItem
+                  key={item.playlist.id}
+                  img={item.playlist.thumbnail}
+                  title={item.playlist.title}
+                  info={item.writer.name}
+                />
+              </Link>
             ))
           ) : (
             <EmptySearch />

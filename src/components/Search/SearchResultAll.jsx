@@ -7,6 +7,7 @@ import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import { CircleImage } from '../common/Image/Image';
 import EmptySearch from './EmptySearch';
+import { Link } from 'react-router-dom';
 export default function SearchResultAll(props) {
   const { result, setCurrentNav } = props;
   const maskedEmail = (email) => {
@@ -32,12 +33,18 @@ export default function SearchResultAll(props) {
             {result.recent_playlists.length !== 0 ? (
               result.recent_playlists.map((item) => {
                 return (
-                  <PlayListItem
+                  <Link
+                    to={`/playlist/detail/${item.playlist.id}`}
                     key={item.playlist.id}
-                    img={item.playlist.thumbnail}
-                    title={item.playlist.title}
-                    info={item.writer.name}
-                  ></PlayListItem>
+                    state={{ id: item.playlist.id }}
+                  >
+                    <PlayListItem
+                      key={item.playlist.id}
+                      img={item.playlist.thumbnail}
+                      title={item.playlist.title}
+                      info={item.writer.name}
+                    />
+                  </Link>
                 );
               })
             ) : (
@@ -56,15 +63,21 @@ export default function SearchResultAll(props) {
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {
                 return (
-                  <UserItem key={user.id}>
-                    <UserImgBox>
-                      <CircleImage src={user.image} alt='유저이미지' />
-                    </UserImgBox>
-                    <UserInfoBox>
-                      <div>{maskedEmail(user.email)}</div>
-                      <p>{user.name}</p>
-                    </UserInfoBox>
-                  </UserItem>
+                  <Link
+                    to={`/user/profile/${user.id}`}
+                    key={user.id}
+                    state={{ id: user.id }}
+                  >
+                    <UserItem key={user.id}>
+                      <UserImgBox>
+                        <CircleImage src={user.image} alt='유저이미지' />
+                      </UserImgBox>
+                      <UserInfoBox>
+                        <div>{maskedEmail(user.email)}</div>
+                        <p>{user.name}</p>
+                      </UserInfoBox>
+                    </UserItem>
+                  </Link>
                 );
               })
             ) : (
