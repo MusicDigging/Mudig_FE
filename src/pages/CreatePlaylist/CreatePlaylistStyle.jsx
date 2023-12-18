@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
-import BgImg from '../../img/background-img.svg';
+
 import { Link } from 'react-router-dom';
 
 export const CreateNewPlaylistWrap = styled.main`
-  background-image: url(${BgImg}); // 임시 적용
   background-size: cover;
   height: 100%;
   padding-top: 60px;
