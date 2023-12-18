@@ -66,6 +66,7 @@ export default function CreateNewPlaylist1() {
               to='/playlist/create2'
               state={{ situations, genre, year, backAnimation: false }}
               disabled={situations.trim() === ''}
+              onClick={(e) => situations.trim() === '' && e.preventDefault()}
             >
               다음
             </S.NextLink>

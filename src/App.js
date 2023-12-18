@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components';
-
+import BackgroundImg from '../src/img/background-img.svg';
 import { Router } from './routes/Router';
 import GlobalStyle from './styles/GlobalStyle';
 import Layout from './components/common/Layout/Layout';
@@ -37,5 +37,5 @@ const Wrap = styled.div`
   margin: 0 auto;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   overflow: hidden;
-  background-color: #fff;
+  background: url(${BackgroundImg}) top left / cover no-repeat;
 `;

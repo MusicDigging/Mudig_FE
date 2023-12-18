@@ -58,9 +58,11 @@ export default function DetailList(props) {
           </PlayListBtn>
         ))}
       </PlayList>
-      <ExtendBtn onClick={handleMore} more={more}>
-        <ArrowIcon fill='black' />
-      </ExtendBtn>
+      {music.length > 2 && (
+        <ExtendBtn onClick={handleMore} more={more}>
+          <ArrowIcon fill='black' />
+        </ExtendBtn>
+      )}
     </DetailListWrap>
   );
 }
@@ -68,6 +70,7 @@ const DetailListWrap = styled.div`
   display: flex;
   padding-bottom: 8px;
   flex-direction: column;
+  background-color: #fff;
 `;
 
 const PlayListBtn = styled.button`
