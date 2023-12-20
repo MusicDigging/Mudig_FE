@@ -23,7 +23,6 @@ export default function SearchResultByType(props) {
     };
     SearchResultType();
   }, [currentNav]);
-
   return (
     <>
       {/* 플리 결과만 */}
@@ -100,11 +99,6 @@ const UserItem = styled.li`
 const UserImgBox = styled.div`
   width: 60px;
   height: 60px;
-  /* img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  } */
 `;
 const UserInfoBox = styled.div`
   font-size: var(--font-md);
