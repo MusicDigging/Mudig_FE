@@ -10,7 +10,8 @@ export default function MusicPlayer(props) {
   const [duration, setDuration] = useState(0);
 
   const onEnded = () => {
-    setCurrMusic((prev) => prev + 1);
+    if (currMusic === musicList.length - 1) setReady(false);
+    else setCurrMusic((prev) => prev + 1);
   };
 
   function formatTime(seconds) {
