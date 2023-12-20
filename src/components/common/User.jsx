@@ -1,21 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
-  console.log(user, name);
-
+  const handleClick = () => {
+    onFollowClick();
+    // 여기서 데이터 새로고침 함수 호출
+  };
   return (
     <UserWrap>
-      <ProfilePicture src={profilePicture} alt={`${user}'s profile`} />
-      <UserNameBox>
-        <UserName>{user}</UserName>
-        <UserNickName>{name}</UserNickName>
-      </UserNameBox>
+      <Link to={`/profile/${user}`}>
+        <ProfilePicture src={profilePicture} alt={`${name}'s profile`} />
+        <UserNameBox>
+          <UserName>{name}</UserName>
+          <UserNickName>{name}</UserNickName>
+        </UserNameBox>
+      </Link>
       <FollowButton
         isFollowing={isFollowing}
-        onClick={onFollowClick} // 팔로우/언팔로우 클릭 이벤트 핸들러 추가
+        onClick={handleClick} // 이벤트 핸들러 변경
       >
-        {isFollowing ? '팔로잉' : '팔로우'}
+        {isFollowing ? 'unfollow' : 'follow'}
       </FollowButton>
     </UserWrap>
   );

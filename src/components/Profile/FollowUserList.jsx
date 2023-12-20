@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import User from '../common/User';
 import { usePostFollow, useDelFollow } from '../../hooks/queries/useFollow';
 
-const FollowUserList = ({ users }) => {
+const FollowUserList = ({ users: initialUsers, onRefresh }) => {
+  const [users, setUsers] = useState(initialUsers);
   const { mutate: postFollow } = usePostFollow();
   const { mutate: delFollow } = useDelFollow();
 
   const handleFollowClick = async (user) => {
-    const mutationFn = user.isFollowing ? delFollow : postFollow;
+    const isUnfollowing = user.isFollowing;
+    const mutationFn = isUnfollowing ? delFollow : postFollow;
+
     mutationFn(user.id, {
       onSuccess: () => {
-        // 성공 시의 로직: 예를 들어, 사용자 목록을 다시 가져오거나 상태 업데이트
+        setUsers((currentUsers) =>
+          currentUsers.map((u) =>
+            u.id === user.id ? { ...u, isFollowing: !isUnfollowing } : u,
+          ),
+        );
       },
       onError: (error) => {
-        // 에러 처리 로직
         console.error('Follow action failed:', error);
       },
     });
@@ -29,7 +35,7 @@ const FollowUserList = ({ users }) => {
       {users.map((userData) => (
         <User
           key={userData.id}
-          user={userData.user}
+          user={userData.id}
           name={userData.name}
           profilePicture={userData.profilePicture}
           isFollowing={userData.isFollowing}
