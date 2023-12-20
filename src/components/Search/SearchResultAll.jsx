@@ -102,6 +102,9 @@ const SearchListSection = styled.section`
   h2 {
     font-size: 20px;
   }
+  ul {
+    height: 228px;
+  }
 `;
 const SearchListTitleBox = styled.div`
   display: flex;
