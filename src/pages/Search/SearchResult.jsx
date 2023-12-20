@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -24,12 +25,22 @@ export default function SearchResult() {
   return (
     <>
       <SearchNav currentNav={currentNav} setCurrentNav={setCurrentNav} />
-      {currentNav.all && (
-        <SearchResultAll result={result} setCurrentNav={setCurrentNav} />
-      )}
-      {(currentNav.playlist || currentNav.user) && (
-        <SearchResultByType result={result} currentNav={currentNav} />
-      )}
+      <SearchResultBox>
+        {currentNav.all && (
+          <SearchResultAll result={result} setCurrentNav={setCurrentNav} />
+        )}
+        {(currentNav.playlist || currentNav.user) && (
+          <SearchResultByType result={result} currentNav={currentNav} />
+        )}
+      </SearchResultBox>
     </>
   );
 }
+const SearchResultBox = styled.div`
+  height: calc(100% - 89px);
+  overflow-y: scroll;
+  padding-bottom: 116px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
