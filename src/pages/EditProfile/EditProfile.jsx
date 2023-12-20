@@ -33,8 +33,7 @@ export default function EditProfile() {
     formData.append('about', data.about);
     formData.append('genre', genreArr);
     formData.append('rep_playlist', repPlaylist);
-    formData.append('image', uploadImg);
-
+    if (uploadImg !== null) formData.append('image', uploadImg);
     editProfile(formData, {
       onSuccess: () => {
         alert('프로필 수정이 완료되었습니다.');
