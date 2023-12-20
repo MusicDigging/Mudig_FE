@@ -162,9 +162,16 @@ const UserInfoBox = styled.div`
   display: flex;
   padding-top: 4px;
   font-size: var(--font-sm);
-  p:last-child {
+  p {
     margin-top: 4px;
     color: var(--sub-font-color);
+  }
+  a {
+    p {
+      margin-top: 1px;
+      color: #000;
+      font-weight: var(--font-semi-bold);
+    }
   }
 `;
 
