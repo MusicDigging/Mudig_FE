@@ -36,7 +36,7 @@ export default function Profile() {
     useGetFollower(user_id);
 
   if (profileLoading || profileFetching || followingLoading || followerLoading)
-    return <>Loading...</>;
+    return;
   const repPlaylist = profileData.playlist.filter(
     (item) => item.id === profileData.profile.rep_playlist,
   )[0];

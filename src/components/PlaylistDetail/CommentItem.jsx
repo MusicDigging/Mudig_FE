@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { userInfoAtom } from '../../library/atom';
@@ -65,16 +66,34 @@ export default function CommentItem(props) {
   const handleDeleteBtnClick = () => {
     deleteComment(comment.id);
   };
-
+  console.log(comment);
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
       <ProfileImgBox>
-        <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
+        <Link
+          to={
+            myId === comment.writer_profile.id
+              ? '/user/profile/my'
+              : `user/profile/${comment.writer_profile.id}`
+          }
+          state={{ id: comment.writer_profile.id }}
+        >
+          <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
+        </Link>
       </ProfileImgBox>
       <DescBox>
         <UserInfoBox>
           <div>
-            <p>{comment.writer_profile.name}</p>
+            <Link
+              to={
+                myId === comment.writer_profile.id
+                  ? '/user/profile/my'
+                  : `user/profile/${comment.writer_profile.id}`
+              }
+              state={{ id: comment.writer_profile.id }}
+            >
+              <p>{comment.writer_profile.name}</p>
+            </Link>
             <p>
               {convertDatetime(comment.created_at)}
               {checkDatetimeEqual(comment.created_at, comment.updated_at) || (
@@ -143,9 +162,16 @@ const UserInfoBox = styled.div`
   display: flex;
   padding-top: 4px;
   font-size: var(--font-sm);
-  p:last-child {
+  p {
     margin-top: 4px;
     color: var(--sub-font-color);
+  }
+  a {
+    p {
+      margin-top: 1px;
+      color: #000;
+      font-weight: var(--font-semi-bold);
+    }
   }
 `;
 

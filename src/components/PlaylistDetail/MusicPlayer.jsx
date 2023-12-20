@@ -10,7 +10,8 @@ export default function MusicPlayer(props) {
   const [duration, setDuration] = useState(0);
 
   const onEnded = () => {
-    setCurrMusic((prev) => prev + 1);
+    if (currMusic === musicList.length - 1) setReady(false);
+    else setCurrMusic((prev) => prev + 1);
   };
 
   function formatTime(seconds) {
@@ -111,6 +112,7 @@ const ProgressBar = styled.div`
       height: 10px; /* 재생 포인트의 높이를 설정 */
       background: #fff; /* 재생 포인트의 배경색을 설정 */
       border-radius: 50%; /* 재생 포인트를 원형으로 만듬 */
+      cursor: pointer;
     }
   }
 `;
