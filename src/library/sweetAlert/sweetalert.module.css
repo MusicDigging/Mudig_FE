@@ -1,3 +1,4 @@
+/* modal  */
 .customTitle {
   font-size: 18px;
   padding-top: 10px;
@@ -14,4 +15,51 @@
 .customIcon {
   margin: 20px auto;
   border: 2px solid lightblue;
+}
+
+/* toast  */
+.success,
+.info,
+.error {
+  font-size: 14px;
+  color: white;
+}
+.success {
+  background-color: #a5dc86 !important;
+}
+
+.info {
+  background-color: #3fc3ee !important;
+}
+
+.error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-error {
+  background-color: #f27474 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+  background-color: #f8bb86 !important;
+}
+
+.colored-toast.swal2-icon-info {
+  background-color: #3fc3ee !important;
+}
+
+.colored-toast.swal2-icon-question {
+  background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+  color: white;
+}
+
+.colored-toast .swal2-close {
+  color: white;
+}
+
+.colored-toast .swal2-html-container {
+  color: white;
 }
