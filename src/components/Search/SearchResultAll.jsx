@@ -42,7 +42,11 @@ export default function SearchResultAll(props) {
                       key={item.playlist.id}
                       img={item.playlist.thumbnail}
                       title={item.playlist.title}
-                      info={item.writer.name}
+                      info={
+                        item.writer.name || item.writer === '유저 정보 없음'
+                          ? '알 수 없는 사용자'
+                          : null
+                      }
                     />
                   </Link>
                 );
