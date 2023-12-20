@@ -55,15 +55,21 @@ export default function SearchResultByType(props) {
           {result.users.length !== 0 ? (
             result.users.map((user) => {
               return (
-                <UserItem key={user.id}>
-                  <UserImgBox>
-                    <CircleImage src={user.image} alt='유저이미지' />
-                  </UserImgBox>
-                  <UserInfoBox>
-                    <div>{maskedEmail(user.email)}</div>
-                    <p>{user.name}</p>
-                  </UserInfoBox>
-                </UserItem>
+                <Link
+                  to={`/user/profile/${user.id}`}
+                  key={user.id}
+                  state={{ id: user.id }}
+                >
+                  <UserItem key={user.id}>
+                    <UserImgBox>
+                      <CircleImage src={user.image} alt='유저이미지' />
+                    </UserImgBox>
+                    <UserInfoBox>
+                      <div>{maskedEmail(user.email)}</div>
+                      <p>{user.name}</p>
+                    </UserInfoBox>
+                  </UserItem>
+                </Link>
               );
             })
           ) : (

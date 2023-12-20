@@ -25,6 +25,8 @@ import Intro from '../pages/Home/Intro';
 import Splash from '../pages/Splash/Splash';
 import Follow from '../pages/Profile/Follow';
 import NotFound from '../pages/NotFound/NotFound';
+import SearchResult from '../pages/Search/SearchResult';
+import RecentSearch from '../components/Search/RecentSearch';
 
 export function Router() {
   return (
@@ -39,7 +41,10 @@ export function Router() {
           <Route path='/event' element={<EventPage />} />
           <Route path='/main' element={<Home />} />
           <Route path='/intro' element={<Intro />} />
-          <Route path='/search' element={<Search />} />
+          <Route path='/search' element={<Search />}>
+            <Route index element={<RecentSearch />} />
+            <Route path=':keyword' element={<SearchResult />} />
+          </Route>
           <Route path='/randomplay' element={<RandomMusic />} />
           <Route path='/playlist/create1' element={<CreatePlaylist1 />} />
           <Route path='/playlist/create2' element={<CreatePlaylist2 />} />
