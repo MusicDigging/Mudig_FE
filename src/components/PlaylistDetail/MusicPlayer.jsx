@@ -112,6 +112,7 @@ const ProgressBar = styled.div`
       height: 10px; /* 재생 포인트의 높이를 설정 */
       background: #fff; /* 재생 포인트의 배경색을 설정 */
       border-radius: 50%; /* 재생 포인트를 원형으로 만듬 */
+      cursor: pointer;
     }
   }
 `;
