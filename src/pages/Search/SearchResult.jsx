@@ -19,6 +19,7 @@ export default function SearchResult() {
 
   useEffect(() => {
     refetch();
+    setCurrentNav({ all: true, playlist: false, user: false });
   }, [keyword]);
 
   if (isLoading) return;
