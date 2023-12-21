@@ -4,9 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { Link } from 'react-router-dom';
 
 export const CreateNewPlaylistWrap = styled.main`
-  background-size: cover;
   height: 100%;
-  padding-top: 60px;
 
   img {
     height: 234px;
@@ -28,10 +26,15 @@ export const PageNum = styled.span`
 `;
 
 export const NewPlaylistBox = styled.div`
-  padding: 0 16px 24px;
+  height: 100%;
+  padding: 60px 16px 24px;
   display: flex;
   flex-direction: column;
   gap: 40px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const QuestionBox = styled.div`
@@ -50,7 +53,7 @@ export const AnswerForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 40px;
+  gap: 24px;
   div {
     min-height: 38px;
   }
@@ -82,7 +85,7 @@ export const Answer = styled(TextareaAutosize)`
 export const LinkBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 `;
 
 export const NextLink = styled(Link)`
