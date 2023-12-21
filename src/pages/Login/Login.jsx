@@ -165,14 +165,14 @@ const LoginMain = styled.main`
   padding: 0 16px;
   position: relative;
   text-align: center;
-  top: 169px;
+  top: 149px;
 `;
 
 const LoginBtnBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const Span = styled.span`
