@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { SignupInput } from '../Input/SignupInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
+import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -41,16 +42,17 @@ export const SignupForm = ({ onSubmit }) => {
         console.log('이메일 검사 실패');
         return;
       }
+      setIsEmailValidated(true);
 
       const response = await axios.post('https://api.mudig.co.kr/user/otp/', {
         email: watchEmail,
       });
-      setIsEmailValidated(true);
-      console.log('response.data:', response.data);
+
       if (response.status === 200) {
+        InfoToast.fire({
+          title: '해당 메일로 인증번호가 전송되었습니다!',
+        });
         const { message, otp } = response.data;
-        console.log(message);
-        console.log(otp);
         setOtpNum(otp);
       }
     } catch (error) {
