@@ -13,4 +13,11 @@ export const HomeSection = styled.section`
   #bold {
     font-weight: 500;
   }
+  #MyPlayListNoneInfo {
+    font-size: 14px;
+    margin: 34px auto;
+    display: block;
+    width: 300px;
+    font-weight: 100;
+  }
 `;
