@@ -12,13 +12,13 @@ import {
   postUserCode,
 } from '../../library/apis/api';
 import { useMutation, useQuery } from 'react-query';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function Login() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const location = useLocation();
-  const setIsLogin = useSetRecoilState(isLoginAtom);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   //카카오, 구글 로그인 링크 get 요청
   const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
   const { data: googleData } = useQuery('google', getGoogleInfo);
@@ -27,6 +27,11 @@ export default function Login() {
   const socialQuery = new URLSearchParams(location.search);
 
   useEffect(() => {
+    if (isLogin) {
+      navigate('/main');
+      return;
+    }
+
     // 쿼리 파라미터 값 가져오기
     const result = query.get('code') || false;
 
@@ -160,14 +165,14 @@ const LoginMain = styled.main`
   padding: 0 16px;
   position: relative;
   text-align: center;
-  top: 169px;
+  top: 149px;
 `;
 
 const LoginBtnBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 `;
 
 const Span = styled.span`

@@ -3,8 +3,8 @@ import { Button } from '../../components/common/Button/Button';
 import * as S from './SignupStyle';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
-import { userInfoAtom } from '../../library/atom';
-import { useSetRecoilState } from 'recoil';
+import { isLoginAtom, userInfoAtom } from '../../library/atom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import {
@@ -14,6 +14,7 @@ import {
 } from '../../library/apis/api';
 export default function Signup() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
+  const isLogin = useRecoilValue(isLoginAtom);
   const location = useLocation();
   const navigate = useNavigate();
   const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
@@ -23,6 +24,11 @@ export default function Signup() {
   const socialQuery = new URLSearchParams(location.search);
 
   useEffect(() => {
+    if (isLogin) {
+      navigate('/main');
+      return;
+    }
+
     // 쿼리 파라미터 값 code(소셜 로그인 인가코드) 가져오기
     const result = query.get('code') || false;
     const hasScope = socialQuery.get('scope');

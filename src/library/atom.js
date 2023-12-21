@@ -9,7 +9,6 @@ export const SignUpAtom = atom({
   default: {
     isLogin: false,
   },
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const PlayListAtom = atom({
@@ -20,7 +19,6 @@ export const PlayListAtom = atom({
 export const userInfoAtom = atom({
   key: 'userInfoAtom',
   default: {},
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const isLoginAtom = atom({

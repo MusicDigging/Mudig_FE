@@ -102,7 +102,7 @@ export const AuthForm = () => {
             <CheckboxInput
               type='checkbox'
               // checked={autoLogin}
-              // onChange={handleCheckboxChange}
+              onClick={handleCheckboxChange}
               id='checkbox'
             />
             <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
