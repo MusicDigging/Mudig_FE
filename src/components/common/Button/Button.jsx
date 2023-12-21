@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
 export function Button(props) {
   const {
     type,
@@ -64,7 +65,10 @@ export function ChipButton(props) {
       if (selectedChips.length < 3) {
         onSelect([...selectedChips, name]);
       } else {
-        alert('관심사는 최대 3개까지 설정 가능합니다.');
+        InfoToast.fire({
+          icon: 'info',
+          title: '관심사는 최대 3개까지 선택 가능합니다.',
+        });
       }
     }
   };
