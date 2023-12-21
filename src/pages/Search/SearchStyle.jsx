@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const SearchWrap = styled.div`
+  background-color: #fff;
+  height: 100%;
   padding: 13.32px 16px;
   form {
     margin-bottom: 8px;

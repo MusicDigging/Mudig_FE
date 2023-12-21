@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircleImage } from '../common/Image/Image';
 import PlayList from '../common/PlayList/PlayList';
@@ -9,18 +9,20 @@ import EmptySearch from './EmptySearch';
 export default function SearchResultByType(props) {
   const { result, currentNav } = props;
   const [type, setType] = useState('');
-  const SearchResultType = () => {
-    if (result) {
-      if (currentNav.playlist) setType('playlist');
-      else if (currentNav.user) setType('user');
-    }
-  };
+
   const maskedEmail = (email) => {
     return email.replace(/@.*/, '');
   };
+
   useEffect(() => {
+    const SearchResultType = () => {
+      if (result) {
+        if (currentNav.playlist) setType('playlist');
+        else if (currentNav.user) setType('user');
+      }
+    };
     SearchResultType();
-  }, []);
+  }, [currentNav]);
   return (
     <>
       {/* 플리 결과만 */}
@@ -28,12 +30,22 @@ export default function SearchResultByType(props) {
         <PlayList>
           {result.playlists.length !== 0 ? (
             result.playlists.map((item) => (
-              <PlayListItem
+              <Link
+                to={`/playlist/detail/${item.playlist.id}`}
                 key={item.playlist.id}
-                img={item.playlist.thumbnail}
-                title={item.playlist.title}
-                info={item.writer.name}
-              ></PlayListItem>
+                state={{ id: item.playlist.id }}
+              >
+                <PlayListItem
+                  key={item.playlist.id}
+                  img={item.playlist.thumbnail}
+                  title={item.playlist.title}
+                  info={
+                    item.writer.name || item.writer === '유저 정보 없음'
+                      ? '알 수 없는 사용자'
+                      : null
+                  }
+                />
+              </Link>
             ))
           ) : (
             <EmptySearch />
@@ -46,15 +58,21 @@ export default function SearchResultByType(props) {
           {result.users.length !== 0 ? (
             result.users.map((user) => {
               return (
-                <UserItem key={user.id}>
-                  <UserImgBox>
-                    <CircleImage src={user.image} alt='유저이미지' />
-                  </UserImgBox>
-                  <UserInfoBox>
-                    <div>{maskedEmail(user.email)}</div>
-                    <p>{user.name}</p>
-                  </UserInfoBox>
-                </UserItem>
+                <Link
+                  to={`/user/profile/${user.id}`}
+                  key={user.id}
+                  state={{ id: user.id }}
+                >
+                  <UserItem key={user.id}>
+                    <UserImgBox>
+                      <CircleImage src={user.image} alt='유저이미지' />
+                    </UserImgBox>
+                    <UserInfoBox>
+                      <div>{maskedEmail(user.email)}</div>
+                      <p>{user.name}</p>
+                    </UserInfoBox>
+                  </UserItem>
+                </Link>
               );
             })
           ) : (
@@ -81,11 +99,6 @@ const UserItem = styled.li`
 const UserImgBox = styled.div`
   width: 60px;
   height: 60px;
-  /* img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  } */
 `;
 const UserInfoBox = styled.div`
   font-size: var(--font-md);
