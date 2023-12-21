@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Gradation from '../../components/common/Gradation';
 import Logo from '../../img/icon_splash_logo.svg';
 import Mudig from '../../img/icon_splash_mudig.svg';
+import MudigHand from '../../img/icon_splash_mudig_hand.svg';
 
 export default function Splash() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function Splash() {
       </GradationBox>
       <LogoImg src={Logo} alt='로고 이미지' />
       <MudigImg src={Mudig} alt='캐릭터 이미지' />
+      <img id='mudigHand' src={MudigHand} alt='캐릭터 손 이미지' />
     </SplashWrap>
   );
 }
@@ -41,6 +43,24 @@ export default function Splash() {
 const SplashWrap = styled.div`
   position: relative;
   width: 360px;
+  @keyframes waveHand {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  #mudigHand {
+    position: absolute;
+    top: 173px;
+    right: -29px;
+    animation: waveHand 1s ease-in-out infinite;
+  }
 `;
 const GradationBox = styled.div`
   width: 100%;
@@ -57,7 +77,8 @@ const LogoImg = styled.img`
   z-index: 1; // z-index 설정
 `;
 const MudigImg = styled.img`
-  margin-top: 40px;
-  position: relative; // position 추가
-  z-index: 1; // z-index 설정
+  position: absolute;
+  z-index: 1;
+  margin-left: -140px;
+  bottom: -600%;
 `;
