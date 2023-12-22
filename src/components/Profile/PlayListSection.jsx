@@ -8,7 +8,7 @@ import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
-  const { isMyProfile } = props.data;
+  const { type, isMyProfile } = props;
   const [playlists, setPlaylists] = useState(props.data);
   const [sortType, setSortType] = useState('latest');
 
@@ -32,23 +32,31 @@ export default function PlayListSection(props) {
     <PlayListSectionWrap>
       <PlayListBox>
         <PlayListHeader>
-          <h2>{isMyProfile && '내가'} 생성한 플레이리스트</h2>
+          <h2>
+            {type === 'myPlaylist' &&
+              `${isMyProfile ? '내가 ' : ''}생성한 플레이리스트`}
+            {type === 'likedPlaylist' && `좋아요 표시한 플레이리스트`}
+          </h2>
           <SortBtnBox>
-            <button
-              value='latest'
-              onClick={handleSortLatestBtn}
-              className={sortType === 'latest' ? 'active' : ''}
-            >
-              최신순
-            </button>
-            |
-            <button
-              value='popular'
-              onClick={handleSortPopularBtn}
-              className={sortType === 'popular' ? 'active' : ''}
-            >
-              인기순
-            </button>
+            {type === 'myPlaylist' && (
+              <>
+                <button
+                  value='latest'
+                  onClick={handleSortLatestBtn}
+                  className={sortType === 'latest' ? 'active' : ''}
+                >
+                  최신순
+                </button>
+                |
+                <button
+                  value='popular'
+                  onClick={handleSortPopularBtn}
+                  className={sortType === 'popular' ? 'active' : ''}
+                >
+                  인기순
+                </button>
+              </>
+            )}
           </SortBtnBox>
         </PlayListHeader>
         {playlists.length === 0 && (
@@ -87,8 +95,16 @@ const PlayListSectionWrap = styled.section`
   flex-direction: column;
   gap: 16px;
   background-color: #fff;
+  border-top: 6px solid #f1f1f5;
   h2 {
     font-size: var(--font-md);
+  }
+  ul {
+    max-height: 230px;
+    overflow-y: scroll;
+  }
+  ul::-webkit-scrollbar {
+    display: none;
   }
 `;
 const PlayListHeader = styled.div`

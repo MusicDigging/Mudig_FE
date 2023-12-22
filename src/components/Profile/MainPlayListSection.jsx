@@ -51,7 +51,6 @@ const MainPlayListSectionWrap = styled.section`
     display: flex;
     align-items: center;
   }
-  border-bottom: 6px solid #f1f1f5;
 `;
 
 const PlayListHeader = styled.div`
