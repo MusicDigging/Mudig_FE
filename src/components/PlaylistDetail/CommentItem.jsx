@@ -55,6 +55,7 @@ export default function CommentItem(props) {
   const handleReplyBtnClick = () => {
     setParentId(comment.id);
     setModalId(null);
+    setContent('');
   };
 
   const handleEditBtnClick = () => {
