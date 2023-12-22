@@ -20,6 +20,7 @@ export default function CommentItem(props) {
     writer,
     comment,
     isVisible,
+    parentId,
     setParentId,
     setContent,
     editId,
@@ -48,104 +49,112 @@ export default function CommentItem(props) {
   };
 
   const handleMoreBtnClick = () => {
-    if (modalId) setModalId(null);
+    if (modalId === comment.id) setModalId(null);
     else setModalId(comment.id);
   };
 
   const handleReplyBtnClick = () => {
     setParentId(comment.id);
+    setEditId(null);
     setModalId(null);
     setContent('');
   };
 
   const handleEditBtnClick = () => {
-    if (comment.parent) setParentId(comment.parent);
     setEditId(comment.id);
+    setParentId(null);
     setContent(comment.content);
     setModalId(null);
   };
   const handleDeleteBtnClick = () => {
     deleteComment(comment.id);
   };
-  console.log(comment);
+
   return (
     <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
-      <ProfileImgBox>
-        <Link
-          to={
-            myId === comment.writer_profile.id
-              ? '/user/profile/my'
-              : `/user/profile/${comment.writer_profile.id}`
-          }
-          state={{ id: comment.writer_profile.id }}
-        >
-          <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
-        </Link>
-      </ProfileImgBox>
-      <DescBox>
-        <UserInfoBox>
-          <div>
-            <Link
-              to={
-                myId === comment.writer_profile.id
-                  ? '/user/profile/my'
-                  : `/user/profile/${comment.writer_profile.id}`
-              }
-              state={{ id: comment.writer_profile.id }}
-            >
-              <p>{comment.writer_profile.name}</p>
-            </Link>
-            <p>
-              {convertDatetime(comment.created_at)}
-              {checkDatetimeEqual(comment.created_at, comment.updated_at) || (
-                <span> (수정됨)</span>
-              )}
-            </p>
-          </div>
-          {/* 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리*/}
-          {(comment.parent !== null && writer !== myId) || (
-            <MoreBtn onClick={handleMoreBtnClick}>
-              <img src={MoreIcon} alt='더보기' />
-            </MoreBtn>
-          )}
-          {/* modal이 오픈된 댓글 id 비교  */}
-          {modalId === comment.id && (
-            <MiniModalStyle>
-              {/* 댓글일 때만 답글 달기 기능 추가  */}
-              {comment.parent === null && (
-                <button onClick={handleReplyBtnClick}>답글 달기</button>
-              )}
-              {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
-              {writer === myId && (
-                <>
-                  <button onClick={handleEditBtnClick}>
-                    {comment.parent === null ? '댓글' : '답글'} 수정
-                  </button>
-                  <button onClick={handleDeleteBtnClick}>
-                    {comment.parent === null ? '댓글' : '답글'} 삭제
-                  </button>
-                </>
-              )}
-            </MiniModalStyle>
-          )}
-        </UserInfoBox>
-        <Comment
-          $color={comment.is_active ? '' : 'var(--sub-font-color)'}
-          $bgColor={
-            editId === comment.id ? 'rgba(137, 105, 255, 0.05)' : 'none'
-          }
-        >
-          {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
-        </Comment>
-        <CommentBox>{replies}</CommentBox>
-      </DescBox>
+      <CommentBox
+        $bgColor={
+          editId === comment.id || parentId === comment.id
+            ? 'rgba(137, 105, 255, 0.08)'
+            : 'none'
+        }
+      >
+        <ProfileImgBox>
+          <Link
+            to={
+              myId === comment.writer_profile.id
+                ? '/user/profile/my'
+                : `/user/profile/${comment.writer_profile.id}`
+            }
+            state={{ id: comment.writer_profile.id }}
+          >
+            <CircleImage
+              src={comment.writer_profile.image}
+              alt='프로필 이미지'
+            />
+          </Link>
+        </ProfileImgBox>
+        <DescBox>
+          <UserInfoBox>
+            <div>
+              <Link
+                to={
+                  myId === comment.writer_profile.id
+                    ? '/user/profile/my'
+                    : `/user/profile/${comment.writer_profile.id}`
+                }
+                state={{ id: comment.writer_profile.id }}
+              >
+                <p>{comment.writer_profile.name}</p>
+              </Link>
+              <p>
+                {convertDatetime(comment.created_at)}
+                {checkDatetimeEqual(comment.created_at, comment.updated_at) || (
+                  <span> (수정됨)</span>
+                )}
+              </p>
+            </div>
+            {/* 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리*/}
+            {(comment.parent !== null && writer !== myId) || (
+              <MoreBtn onClick={handleMoreBtnClick}>
+                <img src={MoreIcon} alt='더보기' />
+              </MoreBtn>
+            )}
+            {/* modal이 오픈된 댓글 id 비교  */}
+            {modalId === comment.id && (
+              <MiniModalStyle>
+                {/* 댓글일 때만 답글 달기 기능 추가  */}
+                {comment.parent === null && (
+                  <button onClick={handleReplyBtnClick}>답글 달기</button>
+                )}
+                {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
+                {writer === myId && (
+                  <>
+                    <button onClick={handleEditBtnClick}>
+                      {comment.parent === null ? '댓글' : '답글'} 수정
+                    </button>
+                    <button onClick={handleDeleteBtnClick}>
+                      {comment.parent === null ? '댓글' : '답글'} 삭제
+                    </button>
+                  </>
+                )}
+              </MiniModalStyle>
+            )}
+          </UserInfoBox>
+          <Comment $color={comment.is_active ? '' : 'var(--sub-font-color)'}>
+            {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
+          </Comment>
+        </DescBox>
+      </CommentBox>
+      <CommentReplies>{replies}</CommentReplies>
     </CommentItemWrap>
   );
 }
 
 const CommentItemWrap = styled.div`
   display: ${(props) => props.display || 'flex'};
-  gap: 10px;
+  flex-direction: column;
+
   margin-top: 6px;
 `;
 
@@ -180,10 +189,16 @@ const Comment = styled.p`
   padding: 6px 0;
   font-size: var(--font-md);
   color: ${(props) => props.$color};
-  background-color: ${(props) => props.$bgColor};
 `;
 
 const CommentBox = styled.div`
+  display: flex;
+  gap: 10px;
+  background-color: ${(props) => props.$bgColor};
+  border-radius: 10px;
+`;
+const CommentReplies = styled.div`
+  margin-left: 30px;
   span {
     font-size: var(--font-sm);
     color: var(--sub-font-color);

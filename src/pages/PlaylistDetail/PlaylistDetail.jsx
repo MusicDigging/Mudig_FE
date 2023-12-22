@@ -39,7 +39,7 @@ export default function PlaylistDetail() {
   const { playlist, comments, music, user } = data;
   const musicList = music.map((obj) => obj.information);
   const musicLength = music.length;
-  console.log(playlistId);
+
   return (
     <>
       <PlaylistDetailWrap>

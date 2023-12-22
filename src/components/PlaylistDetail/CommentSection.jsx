@@ -8,9 +8,9 @@ export default function CommentSection(props) {
   const { playlistId } = props;
   const [more, setMore] = useState(false);
   const [content, setContent] = useState('');
-  const [editId, setEditId] = useState(null);
-  const [parentId, setParentId] = useState(null);
-  const [modalId, setModalId] = useState(null);
+  const [editId, setEditId] = useState(null); // 수정 진행 중인 comment id
+  const [parentId, setParentId] = useState(null); // 대상 부모 댓글 comment id
+  const [modalId, setModalId] = useState(null); // 모달창 활성화된 comment id
   const [visibleCount, setVisibleCount] = useState(2);
   const [opendReply, setOpendReply] = useState({});
 
@@ -84,6 +84,7 @@ export default function CommentSection(props) {
                     writer={comment.writer_profile.id}
                     comment={comment}
                     isVisible={index + 1 <= visibleCount}
+                    parentId={parentId}
                     setParentId={setParentId}
                     setContent={setContent}
                     editId={editId}
