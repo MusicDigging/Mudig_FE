@@ -55,6 +55,7 @@ export default function CommentForm(props) {
   const handleCloseBtnClick = () => {
     setEditId(null);
     setParentId(null);
+    setContent('');
   };
 
   return (
