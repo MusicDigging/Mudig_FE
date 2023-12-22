@@ -4,6 +4,8 @@ module.exports = {
     es2021: true,
   },
   extends: [
+    'react-app',
+    'prettier',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
@@ -20,10 +22,16 @@ module.exports = {
       },
     },
   ],
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
   plugins: ['react', 'prettier'],
-  rules: {},
+  rules: {
+    'react/prop-types': 0,
+    'react/react-in-jsx-scope': 0,
+    'no-unused-vars': 'off',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+  },
 };

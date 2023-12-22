@@ -1,0 +1,37 @@
+/* modal  */
+.customTitle {
+  font-size: 18px;
+  padding-top: 10px;
+}
+.customPopup {
+  width: 360px;
+}
+
+.customText {
+  font-size: 12px;
+  color: red;
+}
+
+.customIcon {
+  margin: 20px auto;
+  border: 2px solid lightblue;
+}
+
+/* toast  */
+.success,
+.info,
+.error {
+  font-size: 14px;
+  color: white;
+}
+.success {
+  background-color: #a5dc86 !important;
+}
+
+.info {
+  background-color: #3fc3ee !important;
+}
+
+.error {
+  background-color: #f27474 !important;
+}
