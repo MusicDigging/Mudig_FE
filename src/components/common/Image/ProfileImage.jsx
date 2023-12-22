@@ -3,18 +3,19 @@ import styled from 'styled-components';
 
 import { CircleImage } from './Image';
 
+import DefauldImg from '../../../img/default-user-img.svg';
 import ProfileDecoImg from '../../../img/profile-deco-img.svg';
 
 export default function ProfileImage(props) {
   const { src, alt, children } = props;
-  const filterdSrc =
+  const filteredSrc =
     src?.startsWith('karlo') || src?.startsWith('profile')
       ? `https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${src}`
-      : src;
+      : src || DefauldImg;
 
   return (
     <ProfileImgBox>
-      <CircleImage src={filterdSrc} alt={alt || '프로필 이미지'} />
+      <CircleImage src={filteredSrc} alt={alt || '프로필 이미지'} />
       {children}
     </ProfileImgBox>
   );

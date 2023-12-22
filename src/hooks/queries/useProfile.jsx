@@ -5,7 +5,7 @@ import {
 } from '../../library/apis/axiosInstance';
 
 export const useGetProfile = (user_id) => {
-  const { data, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching, isError } = useQuery(
     ['get-profile', user_id],
     () => {
       return privateInstance.get(`/user/profile/${user_id}/`);
@@ -15,7 +15,7 @@ export const useGetProfile = (user_id) => {
     },
   );
 
-  return { data, isLoading, isFetching };
+  return { data, isLoading, isFetching, isError };
 };
 
 // useGetFollowing 훅
