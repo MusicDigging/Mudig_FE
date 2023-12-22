@@ -40,9 +40,10 @@ export default function SearchResultByType(props) {
                   img={item.playlist.thumbnail}
                   title={item.playlist.title}
                   info={
-                    item.writer.name || item.writer === '유저 정보 없음'
+                    item.writer.name ||
+                    (item.writer === '유저 정보 없음'
                       ? '알 수 없는 사용자'
-                      : null
+                      : null)
                   }
                 />
               </Link>
