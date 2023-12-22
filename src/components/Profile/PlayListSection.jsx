@@ -10,12 +10,14 @@ import PlayIcon from '../../img/play-icon.svg';
 export default function PlayListSection(props) {
   const { isMyProfile } = props.data;
   const [playlists, setPlaylists] = useState(props.data);
+  const [sortType, setSortType] = useState('latest');
 
   const handleSortLatestBtn = () => {
     const sortedPlaylists = playlists
       .slice()
       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     setPlaylists(sortedPlaylists);
+    setSortType('latest');
   };
 
   const handleSortPopularBtn = () => {
@@ -23,6 +25,7 @@ export default function PlayListSection(props) {
       .slice()
       .sort((a, b) => b.like_count - a.like_count);
     setPlaylists(sortedPlaylists);
+    setSortType('popular');
   };
 
   return (
@@ -30,14 +33,23 @@ export default function PlayListSection(props) {
       <PlayListBox>
         <PlayListHeader>
           <h2>{isMyProfile && '내가'} 생성한 플레이리스트</h2>
-          {
-            <SortBtnBox>
-              <button onClick={handleSortLatestBtn} autoFocus>
-                최신순
-              </button>
-              |<button onClick={handleSortPopularBtn}>인기순</button>
-            </SortBtnBox>
-          }
+          <SortBtnBox>
+            <button
+              value='latest'
+              onClick={handleSortLatestBtn}
+              className={sortType === 'latest' ? 'active' : ''}
+            >
+              최신순
+            </button>
+            |
+            <button
+              value='popular'
+              onClick={handleSortPopularBtn}
+              className={sortType === 'popular' ? 'active' : ''}
+            >
+              인기순
+            </button>
+          </SortBtnBox>
         </PlayListHeader>
         {playlists.length === 0 && (
           <EmptyPlayList>
@@ -96,6 +108,10 @@ const SortBtnBox = styled.div`
   button:focus {
     color: var(--btn-border-color);
     outline: none;
+  }
+
+  .active {
+    color: var(--btn-border-color);
   }
 `;
 
