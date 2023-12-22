@@ -7,9 +7,7 @@ import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
 export default function SearchResultAll(props) {
   const { result, setCurrentNav } = props;
-  const maskedEmail = (email) => {
-    return email.replace(/@.*/, '');
-  };
+
   const handleNavPlaylist = () => {
     setCurrentNav({ all: false, playlist: true, user: false });
   };
@@ -75,8 +73,8 @@ export default function SearchResultAll(props) {
                         <CircleImage src={user.image} alt='유저이미지' />
                       </UserImgBox>
                       <UserInfoBox>
-                        <div>{maskedEmail(user.email)}</div>
-                        <p>{user.name}</p>
+                        <div>{user.name}</div>
+                        <p>{user.about}</p>
                       </UserInfoBox>
                     </UserItem>
                   </Link>

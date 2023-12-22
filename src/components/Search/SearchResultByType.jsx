@@ -10,10 +10,6 @@ export default function SearchResultByType(props) {
   const { result, currentNav } = props;
   const [type, setType] = useState('');
 
-  const maskedEmail = (email) => {
-    return email.replace(/@.*/, '');
-  };
-
   useEffect(() => {
     const SearchResultType = () => {
       if (result) {
@@ -69,8 +65,8 @@ export default function SearchResultByType(props) {
                       <CircleImage src={user.image} alt='유저이미지' />
                     </UserImgBox>
                     <UserInfoBox>
-                      <div>{maskedEmail(user.email)}</div>
-                      <p>{user.name}</p>
+                      <div>{user.name}</div>
+                      <p>{user.about}</p>
                     </UserInfoBox>
                   </UserItem>
                 </Link>
