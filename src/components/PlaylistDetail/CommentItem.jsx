@@ -74,7 +74,7 @@ export default function CommentItem(props) {
           to={
             myId === comment.writer_profile.id
               ? '/user/profile/my'
-              : `user/profile/${comment.writer_profile.id}`
+              : `/user/profile/${comment.writer_profile.id}`
           }
           state={{ id: comment.writer_profile.id }}
         >
@@ -88,7 +88,7 @@ export default function CommentItem(props) {
               to={
                 myId === comment.writer_profile.id
                   ? '/user/profile/my'
-                  : `user/profile/${comment.writer_profile.id}`
+                  : `/user/profile/${comment.writer_profile.id}`
               }
               state={{ id: comment.writer_profile.id }}
             >
