@@ -3,28 +3,59 @@ import styled from 'styled-components';
 import FollowUserList from '../../components/Profile/FollowUserList';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  useGetFollowing,
+  useGetFollower,
+} from '../../hooks/queries/useProfile';
+import { userInfoAtom } from '../../library/atom';
+import { useRecoilValue } from 'recoil';
 
 export default function Follow() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeList, setActiveList] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  const UserId = useRecoilValue(userInfoAtom).id;
+  const [activeList, setActiveList] = useState('followers');
+  const [refreshData, setRefreshData] = useState(false);
+
+  const {
+    data: followers,
+    isLoading: followingLoading,
+    refetch: refetchFollowers,
+  } = useGetFollower(UserId);
+  const {
+    data: followings,
+    isLoading: followerLoading,
+    refetch: refetchFollowings,
+  } = useGetFollowing(UserId);
 
   useEffect(() => {
+    const shouldRefetch = refreshData || location.state?.type;
+    if (shouldRefetch) {
+      refetchFollowers();
+      refetchFollowings();
+      setRefreshData(false);
+    }
+
     if (
       location.state?.type === 'followers' ||
       location.state?.type === 'followings'
     ) {
       setActiveList(location.state.type);
-    } else {
-      // 기본값 설정
-      setActiveList('followers');
     }
-    setIsLoading(false);
-  }, [location.state]);
+  }, [
+    refreshData,
+    location.state,
+    refetchFollowers,
+    refetchFollowings,
+    UserId,
+  ]);
+
+  const handleFollowClick = (userData) => {
+    setRefreshData(true);
+  };
 
   const renderUserList = (data, listType) => {
-    if (!data || data.length === 0) {
+    if (!Array.isArray(data) || data.length === 0) {
       return (
         <p>
           {listType === 'followers'
@@ -48,29 +79,30 @@ export default function Follow() {
 
   return (
     <FollowWrap>
-      <BackButton onClick={() => navigate(-1)}></BackButton>
+      <BackButton onClick={() => navigate(-1)}>
+        <img src={leftArrowIcon} alt='Back' />
+      </BackButton>
       <ListToggleButtonWrap>
         <ListToggleButton
           active={activeList === 'followers'}
           onClick={() => setActiveList('followers')}
         >
-          {location.state.follower?.length ?? 0} 팔로워
+          {followers?.length ?? 0} 팔로워
         </ListToggleButton>
         <ListToggleButton
           active={activeList === 'followings'}
           onClick={() => setActiveList('followings')}
         >
-          {location.state.following?.length ?? 0} 팔로잉
+          {followings?.length ?? 0} 팔로잉
         </ListToggleButton>
       </ListToggleButtonWrap>
-      {activeList === 'followers' &&
-        renderUserList(location.state.follower, 'followers')}
-      {activeList === 'followings' &&
-        renderUserList(location.state.following, 'followings')}
+      {activeList === 'followers' && renderUserList(followers, 'followers')}
+      {activeList === 'followings' && renderUserList(followings, 'followings')}
     </FollowWrap>
   );
 }
 
+// 스타일드 컴포넌트 정의들
 const FollowWrap = styled.div`
   width: 360px;
 `;

@@ -47,4 +47,43 @@ export const successModal = {
   },
 };
 
+export const SuccessToast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  iconColor: 'white',
+  icon: 'success',
+  customClass: {
+    popup: styles.success,
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+});
+
+export const InfoToast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  iconColor: 'white',
+  icon: 'info',
+  customClass: {
+    popup: styles.info,
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+});
+
+export const ErrorToast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  iconColor: 'white',
+  icon: 'error',
+  customClass: {
+    popup: styles.error,
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true,
+});
+
 export { showCustomModal };

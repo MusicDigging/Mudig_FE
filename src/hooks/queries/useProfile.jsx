@@ -5,7 +5,7 @@ import {
 } from '../../library/apis/axiosInstance';
 
 export const useGetProfile = (user_id) => {
-  const { data, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching, isError } = useQuery(
     ['get-profile', user_id],
     () => {
       return privateInstance.get(`/user/profile/${user_id}/`);
@@ -15,11 +15,12 @@ export const useGetProfile = (user_id) => {
     },
   );
 
-  return { data, isLoading, isFetching };
+  return { data, isLoading, isFetching, isError };
 };
 
+// useGetFollowing 훅
 export const useGetFollowing = (user_id) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     'get-following',
     () => {
       return privateInstance.get(`/user/${user_id}/following/`);
@@ -28,10 +29,12 @@ export const useGetFollowing = (user_id) => {
       select: (response) => response.data.following_list,
     },
   );
-  return { data, isLoading };
+  return { data, isLoading, isError, refetch };
 };
+
+// useGetFollower 훅
 export const useGetFollower = (user_id) => {
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     'get-follower',
     () => {
       return privateInstance.get(`/user/${user_id}/followers/`);
@@ -40,7 +43,7 @@ export const useGetFollower = (user_id) => {
       select: (response) => response.data.follower_list,
     },
   );
-  return { data, isLoading };
+  return { data, isLoading, isError, refetch };
 };
 
 export const useEditProfile = () => {

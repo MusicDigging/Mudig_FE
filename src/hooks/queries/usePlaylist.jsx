@@ -25,6 +25,34 @@ export const useGetPlaylistDetail = (id) => {
   return { data, isLoading, isError };
 };
 
+//내 플리 조회
+export const useMyPlayList = () => {
+  const { data, isLoading } = useQuery(
+    'get-my-playlist',
+    () => {
+      return privateInstance.get(`/playlist/myplaylist/`);
+    },
+    {
+      select: (response) => response.data,
+    },
+  );
+  return { data, isLoading };
+};
+
+export const usePutMyPlayList = () => {
+  const putMyPlayList = async (data) => {
+    const response = await privateInstance.put('/playlist/add/', {
+      playlist_id: data.playlist_id,
+      music: data.music, //랜덤뮤비 아이디 값은 문자열로!
+    });
+
+    return response.data;
+  };
+
+  const mutation = useMutation(putMyPlayList);
+  return mutation;
+};
+
 export const useGetPlaylistMusic = (ids) => {
   const { data, isLoading } = useQuery(
     'get-playlist-music',

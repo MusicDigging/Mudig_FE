@@ -33,8 +33,7 @@ export default function EditProfile() {
     formData.append('about', data.about);
     formData.append('genre', genreArr);
     formData.append('rep_playlist', repPlaylist);
-    formData.append('image', uploadImg);
-
+    if (uploadImg !== null) formData.append('image', uploadImg);
     editProfile(formData, {
       onSuccess: () => {
         alert('프로필 수정이 완료되었습니다.');
@@ -53,24 +52,26 @@ export default function EditProfile() {
       <S.MoveBackBtn to='/user/profile/my'>
         <img src={ArrowIcon} alt='' />
       </S.MoveBackBtn>
-      <SetProfileImage
-        src={previewImg}
-        fileInput={fileInput}
-        setUploadImg={setUploadImg}
-        setPreviewImg={setPreviewImg}
-      />
-      <ProfileInput
-        onSubmit={onSubmit}
-        profile={profile}
-        btnText='변경하기'
-        onChipSelect={handleChipSelect}
-      >
-        <SetRepPlaylist
-          playlist={playlist}
-          repPlaylist={repPlaylist}
-          setRepPlaylist={setRepPlaylist}
+      <S.EditProfileBox>
+        <SetProfileImage
+          src={previewImg}
+          fileInput={fileInput}
+          setUploadImg={setUploadImg}
+          setPreviewImg={setPreviewImg}
         />
-      </ProfileInput>
+        <ProfileInput
+          onSubmit={onSubmit}
+          profile={profile}
+          btnText='변경하기'
+          onChipSelect={handleChipSelect}
+        >
+          <SetRepPlaylist
+            playlist={playlist}
+            repPlaylist={repPlaylist}
+            setRepPlaylist={setRepPlaylist}
+          />
+        </ProfileInput>
+      </S.EditProfileBox>
     </S.EditProfileWrap>
   );
 }

@@ -54,7 +54,7 @@ const PlayBtnStyle = styled.button`
   gap: 4px;
 
   #playImg {
-    width: 24px; // 너비를 24px로 설정
-    height: 24px; // 높이를 24px로 설정
+    width: 14px;
+    height: 14px;
   }
 `;
