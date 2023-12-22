@@ -119,12 +119,12 @@ export default function AddModal({ videoId }) {
                       handleSelectPlaylist(playlist.title, playlist.id)
                     }
                   >
-                    {playlist.title}
+                    {playlist?.title}
                   </li>
                 ))}
               </PlaylistDropdown>
             )}
-            <ArrowIcon fill='black' />
+            {selectedPlaylist.length > 0 && <ArrowIcon fill='black' />}
           </PlaylistAdd>
         )}
         {/* 생성한 플리 여부에 따라 다른 버튼 보여주기 */}
@@ -197,18 +197,7 @@ const PlaylistAdd = styled.button`
   width: 295px;
   font-size: 14px;
   height: 44px;
-  svg {
-    transform: rotate(90deg);
-  }
-  &:active,
-  &.active {
-    border: 1px solid var(--btn-point-color);
-    color: var(--btn-point-color);
-    svg {
-      transform: rotate(270deg);
-      fill: var(--btn-point-color);
-    }
-  }
+
   p {
     overflow: hidden; // 을 사용해 영역을 감출 것
     text-overflow: ellipsis; // 로 ... 을 만들기
@@ -221,6 +210,13 @@ const PlaylistDropdown = styled.ul`
   position: absolute;
   top: 100%;
   left: 0;
+  max-height: 180px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   width: 100%;
   margin-top: 5px;
   border-radius: 10px;
