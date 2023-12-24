@@ -37,13 +37,15 @@ export default function PlayListInfo(props) {
   };
 
   return (
-    <PlayListInfoWrap isPlaylistSummary={isPlaylistSummary}>
+    <PlayListInfoWrap
+      isPlaylistSummary={isPlaylistSummary}
+      backgroundUrl={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${playlist.thumbnail}`}
+    >
       {!isPlaylistSummary && (
         <MoveBackBtn onClick={handleMoveBackBtnClick}>
           <img src={ArrowIcon} alt='뒤로가기' />
         </MoveBackBtn>
       )}
-
       {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
       <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
         <Image src={playlist.thumbnail} alt='썸네일' />
@@ -81,15 +83,35 @@ export default function PlayListInfo(props) {
   );
 }
 const PlayListInfoWrap = styled.section`
+  position: relative;
   padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
   position: relative;
   line-height: normal;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(${(props) => props.backgroundUrl}) lightgray 50% / cover
+      no-repeat;
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+    z-index: -1;
+  }
 `;
 
 export const MoveBackBtn = styled.button`
   position: absolute;
   top: 22px;
   left: 16px;
+  filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
+    brightness(104%) contrast(101%);
 `;
 
 const ThumbnailBox = styled.div`
