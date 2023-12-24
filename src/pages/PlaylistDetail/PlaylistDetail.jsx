@@ -71,6 +71,7 @@ export default function PlaylistDetail() {
             </MusicNothingSection>
           ) : (
             <DetailList
+              pause={pause}
               setPause={setPause}
               playing={playing}
               setPlaying={setPlaying}
