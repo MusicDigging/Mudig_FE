@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { set } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Image, CircleImage } from '../common/Image/Image';
-import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import PenIcon from '../../img/pen-icon.svg';
@@ -65,7 +63,7 @@ export default function PlayListInfo(props) {
           </Title>
         )}
         {!isModifyPath && (
-          <WriterInfo>
+          <WriterInfo to={`/user/profile/${user.id}`} state={{ id: user.id }}>
             <CircleImage src={user.image} alt='프로필 이미지' />
             <img src={ProfileBadge} alt='프로필 작성자 배지' />
             <p>{user.name}</p>
@@ -187,7 +185,7 @@ const ModifyBtn = styled.button`
   height: 24px;
 `;
 
-const WriterInfo = styled.div`
+const WriterInfo = styled(Link)`
   display: flex;
   gap: 8px;
   align-items: center;
