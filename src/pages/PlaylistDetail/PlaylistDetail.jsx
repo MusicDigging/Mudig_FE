@@ -43,7 +43,7 @@ export default function PlaylistDetail() {
   return (
     <>
       <PlaylistDetailWrap>
-        <PlayListInfo playlist={playlist} />
+        <PlayListInfo user={user} playlist={playlist} />
         {playing && (
           <MusicPlayer
             pause={pause}

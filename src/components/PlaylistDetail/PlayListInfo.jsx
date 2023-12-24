@@ -4,18 +4,19 @@ import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Image } from '../common/Image/Image';
+import { Image, CircleImage } from '../common/Image/Image';
 import MusicPlayer from './MusicPlayer';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import PenIcon from '../../img/pen-icon.svg';
 import Mudig from '../../img/playlist-mudig-img.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
+import ProfileBadge from '../../img/badge-icon.svg';
 
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { playlist, playlistDesc } = props;
+  const { user, playlist, playlistDesc } = props;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const isModifyPath =
@@ -36,6 +37,8 @@ export default function PlayListInfo(props) {
     setModalOpen(true);
   };
 
+  console.log(user);
+
   return (
     <PlayListInfoWrap
       isPlaylistSummary={isPlaylistSummary}
@@ -52,18 +55,26 @@ export default function PlayListInfo(props) {
       </ThumbnailBox>
       <InfoBox>
         {!isPlaylistSummary && (
-          <h2>{playlistDesc?.title || playlist?.title}</h2>
+          <Title>
+            <h2>{playlistDesc?.title || playlist?.title}</h2>
+            {isModifyPath && (
+              <ModifyBtn onClick={handleModify}>
+                <img src={PenIcon} alt='수정' />
+              </ModifyBtn>
+            )}
+          </Title>
         )}
-        <div>
+        {!isModifyPath && (
+          <WriterInfo>
+            <CircleImage src={user.image} alt='프로필 이미지' />
+            <img src={ProfileBadge} alt='프로필 작성자 배지' />
+            <p>{user.name}</p>
+          </WriterInfo>
+        )}
+        <Desc>
           <p>{playlistDesc?.content || playlist?.content}</p>
-          {isModifyPath ? (
-            <ModifyBtn onClick={handleModify}>
-              <img src={PenIcon} alt='수정' />
-            </ModifyBtn>
-          ) : (
-            <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>
-          )}
-        </div>
+          {!isModifyPath && <MoreBtn onClick={handleMoreBtn}>더보기</MoreBtn>}
+        </Desc>
         <PrivateCheck>
           {(isModifyPath ? playlistDesc?.is_public : playlist.is_public)
             ? '공개'
@@ -138,29 +149,57 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 62px 16px 16px;
+  padding: 67px 16px 0;
   background-color: #fff;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+`;
+
+const Title = styled.div`
+  width: 100%;
+  display: flex;
+
+  justify-content: space-between;
   h2 {
-    width: 310px;
+    width: 100%;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    p {
-      color: var(--sub-font-color);
-      font-size: var(--font-sm);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+`;
+
+const Desc = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  p {
+    color: var(--sub-font-color);
+    font-size: var(--font-sm);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+`;
+
+const ModifyBtn = styled.button`
+  height: 24px;
+`;
+
+const WriterInfo = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  img:first-child {
+    width: 24px;
+    height: 24px;
+  }
+
+  p {
+    font-size: var(--font-sm);
+    font-weight: var(--font-semi-bold);
   }
 `;
 
@@ -210,9 +249,4 @@ const MoreInfoBox = styled.div`
     font-weight: var(--font-regular);
     align-self: flex-end;
   }
-`;
-const ModifyBtn = styled.button`
-  position: absolute;
-  right: 0;
-  transform: translate(-50%, -100%);
 `;
