@@ -99,7 +99,7 @@ export const NextLink = styled(Link)`
   color: white;
   font-size: var(--font-md);
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
-  cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
 export const CompleteBtn = styled(NextLink)``;
 

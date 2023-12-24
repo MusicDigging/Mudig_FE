@@ -95,6 +95,7 @@ const PlayListDetailBox = styled.main`
   flex-direction: column;
   height: 100%;
   padding-bottom: 0;
+  background-color: #fff;
 `;
 const MusicNothingSection = styled.section`
   width: 328px;
