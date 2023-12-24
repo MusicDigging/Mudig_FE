@@ -117,6 +117,7 @@ const PlayBarWrap = styled.div`
   align-items: center;
   justify-content: center;
   gap: 35px;
+
   button img {
     vertical-align: middle;
   }
@@ -135,18 +136,20 @@ const MoreBtnBox = styled.div`
 
 const LikeBtn = styled.button`
   display: flex;
-  gap: 3px;
+  align-items: center;
+  gap: 0px;
   font-size: var(--font-md);
+  max-width: 24px;
 
   p {
-    margin-top: 1px;
+    margin-top: 4px;
     height: 24px;
+    font-size: var(--font-sm);
+    color: var(--sub-font-color);
   }
 
   img {
-    margin-bottom: -6px;
     width: 24px;
     height: 100%;
-    vertical-align: middle;
   }
 `;
