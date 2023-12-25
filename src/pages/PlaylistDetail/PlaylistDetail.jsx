@@ -39,7 +39,6 @@ export default function PlaylistDetail() {
   const { playlist, comments, music, user } = data;
   const musicList = music.map((obj) => obj.information);
   const musicLength = music.length;
-
   return (
     <>
       <PlaylistDetailWrap>
@@ -80,7 +79,11 @@ export default function PlaylistDetail() {
               setCurrMusic={setCurrMusic}
             />
           )}
-          <CommentSection playlistId={playlistId} comments={comments} />
+          <CommentSection
+            playlistId={playlistId}
+            playlistWriter={playlist.writer}
+            comments={comments}
+          />
         </PlayListDetailBox>
       </PlaylistDetailWrap>
     </>
