@@ -40,7 +40,7 @@ const InputStyle = styled.input`
   width: 328px;
   height: 44px;
   border-radius: 8px;
-  border: 1px solid var(--border-color);
+
   padding-left: 16px;
   margin-bottom: ${(props) => (props.marginBottom ? '8px' : '0')};
 `;
