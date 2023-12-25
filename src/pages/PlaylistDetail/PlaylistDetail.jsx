@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
-import NotFound from '../NotFound/NotFound';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
@@ -15,6 +14,7 @@ import { useRecoilState } from 'recoil';
 import { PlayListAtom } from '../../library/atom';
 
 export default function PlaylistDetail() {
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
   const playlistId = state?.id || location.pathname.split('/').pop(); // state로 받아오기 or url pathname에서 가져오기
@@ -33,7 +33,8 @@ export default function PlaylistDetail() {
 
   if (isLoading) return null;
   if (isError) {
-    return <NotFound />;
+    navigate('/*');
+    return;
   }
   const { playlist, comments, music, user } = data;
   const musicList = music.map((obj) => obj.information);
@@ -94,6 +95,7 @@ const PlayListDetailBox = styled.main`
   flex-direction: column;
   height: 100%;
   padding-bottom: 0;
+  background-color: #fff;
 `;
 const MusicNothingSection = styled.section`
   width: 328px;
