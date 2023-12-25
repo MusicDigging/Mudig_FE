@@ -110,7 +110,8 @@ const PlayListInfoWrap = styled.section`
     -moz-filter: blur(10px);
     -o-filter: blur(10px);
     -ms-filter: blur(10px);
-    filter: blur(10px);
+    filter: blur(8px);
+    transform: scale(1.05);
     z-index: -1;
   }
 `;
