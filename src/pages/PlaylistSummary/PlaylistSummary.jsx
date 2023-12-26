@@ -5,7 +5,6 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
-import TestImg from '../../img/thumbnail-img.svg';
 export default function PlaylistSummary() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,12 +19,10 @@ export default function PlaylistSummary() {
   };
   return (
     <>
-      <PlaylistInfoBox>
-        <PlayListInfo playlist={playlist} />
-      </PlaylistInfoBox>
+      <PlayListInfo playlist={playlist} />
       <PlayListBox>
         <PlayList>
-          {music.map((item, index) => (
+          {music.map((item) => (
             <PlayListItem
               key={item.id}
               img={item.thumbnail}
@@ -42,15 +39,9 @@ export default function PlaylistSummary() {
     </>
   );
 }
-const PlaylistInfoBox = styled.div`
-  position: fixed;
-  top: 0;
-  width: 360px;
-`;
 const PlayListBox = styled.div`
   background: #fff;
-  margin-top: 376px;
-  padding: 0 16px 165px;
+  padding: 10px 16px 180px;
   height: calc(100vh - 364px);
   overflow-y: scroll;
   -ms-overflow-style: none;

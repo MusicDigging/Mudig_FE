@@ -90,9 +90,10 @@ export default function PlayListInfo(props) {
       )}
       {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
       <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+        {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
         <Image src={playlist.thumbnail} alt='썸네일' />
       </ThumbnailBox>
-      <InfoBox>
+      <InfoBox isPlaylistSummary={isPlaylistSummary}>
         {!isPlaylistSummary && (
           <Title>
             <h2>{playlistDesc?.title || playlist?.title}</h2>
@@ -103,7 +104,7 @@ export default function PlayListInfo(props) {
             )}
           </Title>
         )}
-        {!isModifyPath && (
+        {!isModifyPath && !isPlaylistSummary && (
           <WriterInfo to={`/user/profile/${user.id}`} state={{ id: user.id }}>
             <CircleImage src={user.image} alt='프로필 이미지' />
             <img src={ProfileBadge} alt='프로필 작성자 배지' />
@@ -135,7 +136,6 @@ export default function PlayListInfo(props) {
 const PlayListInfoWrap = styled.section`
   position: relative;
   padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
-  position: relative;
   line-height: normal;
 
   &::before {
@@ -168,17 +168,19 @@ export const MoveBackBtn = styled.button`
 const ThumbnailBox = styled.div`
   position: absolute;
   width: 180px;
-  height: 180px;
-  top: 76px;
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  top: 0;
   transform: ${(props) =>
-    props.isPlaylistSummary ? 'translate(50%, 43px)' : 'translate(50%, 0)'};
+    props.isPlaylistSummary ? 'translate(50%, 56px)' : 'translate(50%, 46px)'};
+  img {
+    height: 180px;
+  }
 `;
 const SummaryTitle = styled.h2`
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(35%, 130%);
-  width: 60%;
+  width: 180px;
   text-align: center;
   word-break: keep-all;
   line-height: normal;
@@ -189,7 +191,8 @@ const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 67px 16px 0;
+  padding: ${(props) =>
+    props.isPlaylistSummary ? '53px 16px 0' : '67px 16px 0'};
   background-color: #fff;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
