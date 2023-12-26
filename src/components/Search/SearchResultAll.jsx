@@ -1,7 +1,4 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import TestImg from '../../img/playlist-test-img.svg';
-import MoreIcon from '../../img/more-icon.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
@@ -10,9 +7,7 @@ import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
 export default function SearchResultAll(props) {
   const { result, setCurrentNav } = props;
-  const maskedEmail = (email) => {
-    return email.replace(/@.*/, '');
-  };
+
   const handleNavPlaylist = () => {
     setCurrentNav({ all: false, playlist: true, user: false });
   };
@@ -43,9 +38,10 @@ export default function SearchResultAll(props) {
                       img={item.playlist.thumbnail}
                       title={item.playlist.title}
                       info={
-                        item.writer.name || item.writer === '유저 정보 없음'
+                        item.writer.name ||
+                        (item.writer === '유저 정보 없음'
                           ? '알 수 없는 사용자'
-                          : null
+                          : null)
                       }
                     />
                   </Link>
@@ -77,8 +73,8 @@ export default function SearchResultAll(props) {
                         <CircleImage src={user.image} alt='유저이미지' />
                       </UserImgBox>
                       <UserInfoBox>
-                        <div>{maskedEmail(user.email)}</div>
-                        <p>{user.name}</p>
+                        <div>{user.name}</div>
+                        <p>{user.about}</p>
                       </UserInfoBox>
                     </UserItem>
                   </Link>
