@@ -23,7 +23,7 @@ export const ImageStyle = styled.img`
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
-  object-position: 0 0;
+  object-position: 50% 0;
 `;
 
 const CircleImageStyle = styled(ImageStyle)`

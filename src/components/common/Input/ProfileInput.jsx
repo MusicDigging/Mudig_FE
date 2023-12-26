@@ -165,7 +165,7 @@ const FormWrap = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 40px;
+  gap: 16px;
 `;
 
 const Label = styled.label``;

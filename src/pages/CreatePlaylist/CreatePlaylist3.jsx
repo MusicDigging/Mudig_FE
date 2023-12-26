@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
@@ -15,8 +14,8 @@ export default function CreateNewPlaylist3() {
   const location = useLocation();
   const state = location.state || {};
   const { situations, genre } = state;
-  const [year, setYear] = useState((state && state.year) || '');
   const [isLoading, setIsLoading] = useState(false);
+  const [year, setYear] = useState((state && state.year) || '');
   const { mutate: createPlaylist } = useCreatePlaylist();
 
   const handleCompleteBtnClick = (e) => {
@@ -35,7 +34,13 @@ export default function CreateNewPlaylist3() {
       },
       onError: () => {
         setIsLoading(false);
-        alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
+        setTimeout(() => {
+          alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
+          // 처음 플리 생성 페이지로 이동
+          navigate('/playlist/create1', {
+            state: { situations, genre, year },
+          });
+        }, 0);
       },
     });
   };

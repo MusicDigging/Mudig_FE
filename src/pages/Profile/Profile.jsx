@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   useGetProfile,
@@ -12,10 +12,12 @@ import { userInfoAtom } from '../../library/atom';
 import ProfileSection from '../../components/Profile/ProfileSection';
 import MainPlayListSection from '../../components/Profile/MainPlayListSection';
 import PlayListSection from '../../components/Profile/PlayListSection';
+import Loading from '../../components/Loading/Loading';
 
 import * as S from './ProfileStyle';
 
 export default function Profile() {
+  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
   const my_id = useRecoilValue(userInfoAtom).id;
@@ -29,14 +31,27 @@ export default function Profile() {
     data: profileData,
     isLoading: profileLoading,
     isFetching: profileFetching,
+    isError: profileError,
   } = useGetProfile(user_id);
-  const { data: followingData, isLoading: followingLoading } =
-    useGetFollowing(user_id);
-  const { data: followerData, isLoading: followerLoading } =
-    useGetFollower(user_id);
+  const {
+    data: followingData,
+    isLoading: followingLoading,
+    isError: followingError,
+  } = useGetFollowing(user_id);
+  const {
+    data: followerData,
+    isLoading: followerLoading,
+    isError: followerError,
+  } = useGetFollower(user_id);
 
   if (profileLoading || profileFetching || followingLoading || followerLoading)
+    return <Loading isLoading={profileLoading} />;
+
+  if (profileError || followingError || followerError) {
+    navigate('/*');
     return;
+  }
+
   const repPlaylist = profileData.playlist.filter(
     (item) => item.id === profileData.profile.rep_playlist,
   )[0];

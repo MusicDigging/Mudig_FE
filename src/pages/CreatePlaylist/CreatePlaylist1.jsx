@@ -43,8 +43,18 @@ export default function CreateNewPlaylist1() {
               <p>현재 상황이나 기분을 알려주셔도 돼요 :)</p>
             </S.QuestionBox>
           </motion.div>
-
-          <img src={CharacterImg} alt='캐릭터 이미지' />
+          <motion.img
+            initial={backAnimation || { opacity: 0 }}
+            animate={
+              backAnimation || {
+                x: 0,
+                opacity: 1,
+                transition: { duration: 0.5 },
+              }
+            }
+            src={CharacterImg}
+            alt='캐릭터 이미지'
+          ></motion.img>
 
           <S.AnswerForm>
             <motion.div

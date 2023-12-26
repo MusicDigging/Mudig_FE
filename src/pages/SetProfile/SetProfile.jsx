@@ -137,7 +137,7 @@ export default function SetProfile() {
           {/* 프로필 설정 input, button  */}
           <ProfileInput
             onSubmit={onSubmit}
-            btnText='다음'
+            btnText='완료'
             onChipSelect={handleChipSelect}
           />
         </ProfileInputBox>

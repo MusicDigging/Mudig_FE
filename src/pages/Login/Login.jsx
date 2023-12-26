@@ -117,7 +117,7 @@ export default function Login() {
           <Button
             text='Google로 시작하기'
             btnBgColor='#FFF'
-            btnBorder='1px solid #DBDBDB'
+            btnBorder='1px solid #FFF'
             btnColor={'var(--font-color)'}
             imgSrc={GoogleIcon}
             onClick={googleLoginHandler}
