@@ -27,10 +27,12 @@ export default function MainPlayListSection(props) {
       </PlayListHeader>
       <MainPlayListInfoBox>
         <Link to={`/playlist/detail/${id}`} state={{ id }}>
-          <MainPlayListImg>
-            <Image src={thumbnail} alt='' />
+          <MainPlayListImgBox>
+            <Thumbnail>
+              <Image src={thumbnail} alt='플레이리스트 썸네일' />
+            </Thumbnail>
             <img src={VinylImg} alt='레코드 이미지' />
-          </MainPlayListImg>
+          </MainPlayListImgBox>
           <h4>{title}</h4>
         </Link>
         <p>{music.length}곡</p>
@@ -51,7 +53,6 @@ const MainPlayListSectionWrap = styled.section`
     display: flex;
     align-items: center;
   }
-  border-bottom: 6px solid #f1f1f5;
 `;
 
 const PlayListHeader = styled.div`
@@ -77,23 +78,28 @@ const MainPlayListInfoBox = styled.div`
   }
 `;
 
-const MainPlayListImg = styled.div`
+const MainPlayListImgBox = styled.div`
   position: relative;
   margin-bottom: 20px;
   height: 150px;
   display: flex;
   align-items: center;
+  justify-content: center;
+`;
+
+const Thumbnail = styled.div`
+  position: relative;
+  width: 150px;
+  height: 150px;
   &::after {
     content: '';
     position: absolute;
     display: inline-block;
     width: 40px;
     height: 40px;
-    left: 27%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: url(${WhitePlayIcon}) no-repeat center/contain;
-  }
-  img:first-child {
-    width: 150px;
-    height: 150px;
   }
 `;

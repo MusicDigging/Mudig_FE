@@ -8,9 +8,9 @@ import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
-  const { isMyProfile } = props.data;
+  const { type, isMyProfile } = props;
   const [playlists, setPlaylists] = useState(props.data);
-  const [sortType, setSortType] = useState('latest');
+  const [sortType, setSortType] = useState(playlists.length ? 'latest' : '');
 
   const handleSortLatestBtn = () => {
     const sortedPlaylists = playlists
@@ -32,29 +32,39 @@ export default function PlayListSection(props) {
     <PlayListSectionWrap>
       <PlayListBox>
         <PlayListHeader>
-          <h2>{isMyProfile && '내가'} 생성한 플레이리스트</h2>
+          <h2>
+            {type === 'myPlaylist' &&
+              `${isMyProfile ? '내가 ' : ''}생성한 플레이리스트`}
+            {type === 'likedPlaylist' && `좋아요 표시한 플레이리스트`}
+          </h2>
           <SortBtnBox>
-            <button
-              value='latest'
-              onClick={handleSortLatestBtn}
-              className={sortType === 'latest' ? 'active' : ''}
-            >
-              최신순
-            </button>
-            |
-            <button
-              value='popular'
-              onClick={handleSortPopularBtn}
-              className={sortType === 'popular' ? 'active' : ''}
-            >
-              인기순
-            </button>
+            {type === 'myPlaylist' && (
+              <>
+                <button
+                  value='latest'
+                  onClick={handleSortLatestBtn}
+                  className={sortType === 'latest' ? 'active' : ''}
+                >
+                  최신순
+                </button>
+                |
+                <button
+                  value='popular'
+                  onClick={handleSortPopularBtn}
+                  className={sortType === 'popular' ? 'active' : ''}
+                >
+                  인기순
+                </button>
+              </>
+            )}
           </SortBtnBox>
         </PlayListHeader>
         {playlists.length === 0 && (
           <EmptyPlayList>
-            <p>생성한 플레이리스트가 없습니다.</p>
-            <Link to='/playlist/create1'>플레이리스트 생성하러 가기</Link>
+            <p>앗 ! 아직 비어있어요</p>
+            {isMyProfile && (
+              <Link to='/playlist/create1'>플레이리스트 생성하러 가기</Link>
+            )}
           </EmptyPlayList>
         )}
         <PlayList>
@@ -82,13 +92,22 @@ export default function PlayListSection(props) {
 }
 
 const PlayListSectionWrap = styled.section`
+  flex: 1 0 auto;
   padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   background-color: #fff;
+  border-top: 6px solid #f1f1f5;
   h2 {
     font-size: var(--font-md);
+  }
+  ul {
+    max-height: 230px;
+    overflow-y: scroll;
+  }
+  ul::-webkit-scrollbar {
+    display: none;
   }
 `;
 const PlayListHeader = styled.div`
@@ -142,8 +161,8 @@ const EmptyPlayList = styled.div`
   justify-content: center;
   align-items: center;
   p {
-    font-size: var(--font-l);
-    color: var(--sub-font-color);
+    font-size: var(--font-lg);
+    color: #b0b0b0;
   }
   a {
     display: flex;
@@ -151,9 +170,9 @@ const EmptyPlayList = styled.div`
     align-items: center;
     width: 100%;
     height: 44px;
-    color: white;
+    color: var(--main-color);
     border-radius: 10px;
     border: 1px solid #fff;
-    background: #7d4fff;
+    background: #f5f2ff;
   }
 `;
