@@ -8,21 +8,12 @@ import {
 } from '../../hooks/queries/useComment';
 import { Button } from '../../components/common/Button/Button';
 
-import CloseIcon from '../../img/close-icon.svg';
-
 export default function CommentForm(props) {
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const {
-    content,
-    setContent,
-    playlistId,
-    parentId,
-    setParentId,
-    editId,
-    setEditId,
-  } = props;
+  const [content, setContent] = useState('');
+  const { playlistId, parentId, editId } = props;
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -32,13 +23,11 @@ export default function CommentForm(props) {
       // 댓글, 답글 수정
       data = { content, comment_id: editId };
       editComment(data);
-      setEditId(null);
     } else {
       if (parentId) {
         // 답글
         data = { content, playlist_id: playlistId, parent_id: parentId };
         writeReply(data);
-        setParentId(null);
       } else {
         // 댓글
         data = { content, playlist_id: playlistId };
@@ -50,12 +39,6 @@ export default function CommentForm(props) {
 
   const handleInputChange = (e) => {
     setContent(e.target.value);
-  };
-
-  const handleCloseBtnClick = () => {
-    setEditId(null);
-    setParentId(null);
-    setContent('');
   };
 
   return (
@@ -70,26 +53,25 @@ export default function CommentForm(props) {
         id='comment'
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      {(parentId || editId) && (
-        <button onClick={handleCloseBtnClick}>
-          <img src={CloseIcon} alt='답글 닫기' />
-        </button>
-      )}
-      <Button text='확인' type='submit' disabled={content.trim() === ''} />
+      <Button text='확인' type='submit' />
     </CommentFormWrap>
   );
 }
 
 const CommentFormWrap = styled.form`
-  background-color: white;
-  margin-bottom: 8px;
-  display: flex;
-  width: 100%;
-  gap: 8px;
-
+  padding: 16px 16px 24px;
+  position: absolute;
   bottom: 0px;
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  background-color: white;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
 
   button {
+    border: none;
+    background-color: #e5dcff;
+    color: var(--main-color);
     max-width: 56px;
   }
 `;

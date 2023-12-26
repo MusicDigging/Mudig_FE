@@ -9,70 +9,63 @@ import { useDeleteComment } from '../../hooks/queries/useComment';
 import { CircleImage } from '../common/Image/Image';
 import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 
+import {
+  convertDatetime,
+  checkDatetimeEqual,
+} from '../../library/DateTimeUtils';
+
 import MoreIcon from '../../img/more-icon.svg';
 import { ReactComponent as ProfileBadge } from '../../img/badge-icon.svg';
 
 export default function CommentItem(props) {
-  const myId = useRecoilValue(userInfoAtom).id;
-
-  const { mutate: deleteComment } = useDeleteComment();
-
   const {
+    mode,
+    playlistId,
     writer,
     comment,
-    isVisible,
+    replies,
     parentId,
-    setParentId,
-    setContent,
     editId,
-    setEditId,
     modalId,
     setModalId,
     parentWriter,
     playlistWriter,
-    children: replies,
+    children,
   } = props;
+  const myId = useRecoilValue(userInfoAtom).id;
+  const { mutate: deleteComment } = useDeleteComment();
 
-  const convertDatetime = (dateTime) => {
-    const date = new Date(dateTime);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hour = String(date.getHours()).padStart(2, '0');
-    const minute = String(date.getMinutes()).padStart(2, '0');
-    const convertedDatetime = `${year}.${month}.${day} ${hour}:${minute}`;
-    return convertedDatetime;
+  const isMyComment = myId === comment.writer;
+  const isPlaylistWriter = playlistWriter === comment.writer;
+  const isParentWriter = parentWriter === comment.writer;
+
+  const handleMoreBtnClick = () =>
+    setModalId(modalId === comment.id ? null : comment.id);
+
+  const handleDeleteBtnClick = () => deleteComment(comment.id);
+
+  const linkTo = isMyComment
+    ? '/user/profile/my'
+    : `/user/profile/${comment.writer}`;
+
+  const CommentLink = ({ children }) => (
+    <Link to={linkTo} state={{ id: comment.writer }}>
+      {children}
+    </Link>
+  );
+
+  // 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리
+  // 답글 페이지에서 댓글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리
+  const shouldDisplayMoreBtn = () => {
+    if (mode === 'reply') {
+      return comment.writer === myId;
+    } else {
+      return comment.parent === null || comment.writer === myId;
+    }
   };
 
-  const checkDatetimeEqual = (time1, time2) => {
-    // 두 시간의 초 단위(이후 소수점 무시)까지 비교, 같으면 true
-    return time1.slice(0, 19) === time2.slice(0, 19);
-  };
-
-  const handleMoreBtnClick = () => {
-    if (modalId === comment.id) setModalId(null);
-    else setModalId(comment.id);
-  };
-
-  const handleReplyBtnClick = () => {
-    setParentId(comment.id);
-    setEditId(null);
-    setModalId(null);
-    setContent('');
-  };
-
-  const handleEditBtnClick = () => {
-    setEditId(comment.id);
-    setParentId(null);
-    setContent(comment.content);
-    setModalId(null);
-  };
-  const handleDeleteBtnClick = () => {
-    deleteComment(comment.id);
-  };
-  console.log(parentId);
   return (
-    <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
+    <CommentItemWrap>
       <CommentBox
         $bgColor={
           editId === comment.id || parentId === comment.id
@@ -81,41 +74,26 @@ export default function CommentItem(props) {
         }
       >
         <ProfileImgBox>
-          <Link
-            to={
-              myId === comment.writer
-                ? '/user/profile/my'
-                : `/user/profile/${comment.writer}`
-            }
-            state={{ id: comment.writer }}
-          >
+          <CommentLink>
             <CircleImage
               src={comment.writer_profile.image}
               alt='프로필 이미지'
             />
-          </Link>
+          </CommentLink>
         </ProfileImgBox>
         <DescBox>
           <UserInfoBox>
             <UserInfo>
-              <Link
-                to={
-                  myId === comment.writer
-                    ? '/user/profile/my'
-                    : `/user/profile/${comment.writer}`
-                }
-                state={{ id: comment.writer }}
-              >
-                {playlistWriter === comment.writer ? (
+              <CommentLink>
+                {isPlaylistWriter ? (
                   <ProfileBadge alt='배지 아이콘' />
-                ) : parentWriter === comment.writer ? (
+                ) : isParentWriter ? (
                   <span>작성자</span>
                 ) : (
                   ''
                 )}
-
                 <p>{comment.writer_profile.name}</p>
-              </Link>
+              </CommentLink>
               <div>
                 <p>
                   {convertDatetime(comment.created_at)}
@@ -124,8 +102,7 @@ export default function CommentItem(props) {
                     comment.updated_at,
                   ) || <span> (수정됨)</span>}
                 </p>
-                {/* 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리*/}
-                {(comment.parent !== null && writer !== myId) || (
+                {shouldDisplayMoreBtn() && (
                   <MoreBtn onClick={handleMoreBtnClick}>
                     <img src={MoreIcon} alt='더보기' />
                   </MoreBtn>
@@ -134,15 +111,34 @@ export default function CommentItem(props) {
                 {modalId === comment.id && (
                   <MiniModalStyle>
                     {/* 댓글일 때만 답글 달기 기능 추가  */}
-                    {comment.parent === null && (
-                      <button onClick={handleReplyBtnClick}>답글 달기</button>
+                    {mode !== 'reply' && comment.parent === null && (
+                      <Link
+                        to={`/playlist/detail/${playlistId}/reply`}
+                        state={{
+                          mode: 'reply',
+                          comment: comment,
+                          replies,
+                          parentId: comment.id,
+                          playlistId,
+                          playlistWriter,
+                          animation: true,
+                        }}
+                      >
+                        답글 달기
+                      </Link>
                     )}
                     {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
                     {comment.writer === myId && (
                       <>
-                        <button onClick={handleEditBtnClick}>
+                        <Link
+                          to={
+                            comment.parent === null
+                              ? `/playlist/detail/${playlistId}/comment`
+                              : `/playlist/detail/${playlistId}/reply`
+                          }
+                        >
                           {comment.parent === null ? '댓글' : '답글'} 수정
-                        </button>
+                        </Link>
                         <button onClick={handleDeleteBtnClick}>
                           {comment.parent === null ? '댓글' : '답글'} 삭제
                         </button>
@@ -158,13 +154,13 @@ export default function CommentItem(props) {
           </Comment>
         </DescBox>
       </CommentBox>
-      <CommentReplies>{replies}</CommentReplies>
+      <CommentReplies>{children}</CommentReplies>
     </CommentItemWrap>
   );
 }
 
 const CommentItemWrap = styled.div`
-  display: ${(props) => props.display || 'flex'};
+  display: 'flex';
   flex-direction: column;
   padding: 12px 0;
 `;

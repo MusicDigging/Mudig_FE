@@ -27,3 +27,8 @@ export const isLoginAtom = atom({
   key: 'isLoginAtom',
   default: localStorage.getItem('token') ? true : false,
 });
+
+export const backAnimationAtom = atom({
+  key: 'backAnimationAtom',
+  default: false,
+});
