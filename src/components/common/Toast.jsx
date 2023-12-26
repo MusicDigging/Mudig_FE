@@ -11,7 +11,7 @@ export default function Toast({ setToast, text }) {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 1.5, ease: 'easeInOut' }}
+      transition={{ duration: 2.0, ease: 'easeInOut' }}
       onAnimationComplete={handleAnimationComplete}
     >
       <p>{text}</p>
