@@ -31,7 +31,7 @@ const MusicWaveWrap = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 5px;
+  gap: 4.5px;
 
   .wave-bar {
     width: 1.5px;
