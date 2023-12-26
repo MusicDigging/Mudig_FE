@@ -62,7 +62,9 @@ export default function PlayListSection(props) {
         {playlists.length === 0 && (
           <EmptyPlayList>
             <p>앗 ! 아직 비어있어요</p>
-            <Link to='/playlist/create1'>플레이리스트 생성하러 가기</Link>
+            {isMyProfile && (
+              <Link to='/playlist/create1'>플레이리스트 생성하러 가기</Link>
+            )}
           </EmptyPlayList>
         )}
         <PlayList>
@@ -90,6 +92,7 @@ export default function PlayListSection(props) {
 }
 
 const PlayListSectionWrap = styled.section`
+  flex: 1 0 auto;
   padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
