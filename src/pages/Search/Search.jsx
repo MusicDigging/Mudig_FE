@@ -52,6 +52,18 @@ export default function Search() {
     localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
   }, [recentKeywords]);
 
+  // 검색 페이지일 때 7일 이내 검색 기록만 남기도록 함
+  useEffect(() => {
+    const now = new Date().getTime();
+    const savedKeywords = recentKeywords.filter((keyword) => {
+      const createdTime = new Date(keyword.id);
+      const diffTime = now - createdTime;
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      return diffDays <= 7;
+    });
+    setRecentKeywords(savedKeywords);
+  }, []);
+
   return (
     <S.SearchWrap>
       <SearchInput setInputValue={setInputValue} onSubmit={SearchSubmit} />
