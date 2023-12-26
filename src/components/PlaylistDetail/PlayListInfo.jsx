@@ -1,12 +1,17 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Image, CircleImage } from '../common/Image/Image';
+import { useDeletePlaylist } from '../../hooks/queries/usePlaylist';
 import { modalAtom } from '../../atoms/modalAtom';
+import { userInfoAtom } from '../../library/atom';
+
+import { MiniModalWrap } from '../common/Modal/MiniModal';
+import { Image, CircleImage } from '../common/Image/Image';
 
 import PenIcon from '../../img/pen-icon.svg';
+import MoreIcon from '../../img/more-icon.svg';
 import Mudig from '../../img/playlist-mudig-img.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import ProfileBadge from '../../img/badge-icon.svg';
@@ -15,8 +20,11 @@ export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, playlist, playlistDesc } = props;
+  const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
+  const [miniModalOpen, setMiniModalOpen] = useState(false);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const { mutate: deletePlaylist } = useDeletePlaylist();
   const isModifyPath =
     location.pathname.includes('/playlist/detail/') &&
     location.pathname.includes('/edit');
@@ -35,8 +43,21 @@ export default function PlayListInfo(props) {
     setModalOpen(true);
   };
 
-  console.log(user);
+  const toggleModal = () => {
+    if (miniModalOpen === false) setMiniModalOpen(true);
+    else setMiniModalOpen(false);
+  };
 
+  const handleDeleteBtnClick = () => {
+    const id = playlist.id;
+    deletePlaylist(id, {
+      onSuccess: () => {
+        alert('플레이리스트가 정상적으로 삭제되었습니다.');
+        navigate(-1);
+      },
+    });
+  };
+  console.log(playlist.id);
   return (
     <PlayListInfoWrap
       isPlaylistSummary={isPlaylistSummary}
@@ -46,6 +67,26 @@ export default function PlayListInfo(props) {
         <MoveBackBtn onClick={handleMoveBackBtnClick}>
           <img src={ArrowIcon} alt='뒤로가기' />
         </MoveBackBtn>
+      )}
+      {(!isPlaylistSummary || !isModifyPath) && (
+        <MoreBtnBox>
+          {user?.id === myId && (
+            <button onClick={toggleModal}>
+              <img src={MoreIcon} alt='더보기 버튼' />
+            </button>
+          )}
+          {user?.id === myId && miniModalOpen && (
+            <MiniModalStyle>
+              <button onClick={handleDeleteBtnClick}>플리 삭제</button>
+              <Link
+                to={`/playlist/detail/${playlist?.id}/edit`}
+                state={{ id: playlist?.id }}
+              >
+                플리 수정
+              </Link>
+            </MiniModalStyle>
+          )}
+        </MoreBtnBox>
       )}
       {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
       <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
@@ -248,4 +289,18 @@ const MoreInfoBox = styled.div`
     font-weight: var(--font-regular);
     align-self: flex-end;
   }
+`;
+
+const MoreBtnBox = styled.div`
+  position: absolute;
+  top: 22px;
+  right: 16px;
+  img {
+    filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
+      brightness(104%) contrast(101%);
+  }
+`;
+const MiniModalStyle = styled(MiniModalWrap)`
+  right: 0;
+  top: 32px;
 `;
