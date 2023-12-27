@@ -29,7 +29,15 @@ export default function PlayListSection(props) {
   };
 
   return (
-    <PlayListSectionWrap>
+    <PlayListSectionWrap
+      maxHeight={
+        playlists.length === 1
+          ? '140px'
+          : playlists.length === 2
+            ? '210px'
+            : '300px'
+      }
+    >
       <PlayListBox>
         <PlayListHeader>
           <h2>
@@ -93,6 +101,7 @@ export default function PlayListSection(props) {
 
 const PlayListSectionWrap = styled.section`
   flex: 1 0 auto;
+  min-height: ${(props) => props.maxHeight};
   padding: 24px 16px 8px;
   display: flex;
   flex-direction: column;
@@ -103,7 +112,7 @@ const PlayListSectionWrap = styled.section`
     font-size: var(--font-md);
   }
   ul {
-    max-height: 230px;
+    flex: 1 0 0;
     overflow-y: scroll;
   }
   ul::-webkit-scrollbar {
