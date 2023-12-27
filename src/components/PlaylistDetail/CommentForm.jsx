@@ -11,6 +11,7 @@ import { commentAtom, commentEditIdAtom } from '../../library/atom';
 
 import { Button } from '../../components/common/Button/Button';
 
+import CloseIcon from '../../img/close-icon.svg';
 
 export default function CommentForm(props) {
   const { playlistId, parentId } = props;
@@ -47,6 +48,11 @@ export default function CommentForm(props) {
     setContent(e.target.value);
   };
 
+  const handleCloseBtnClick = () => {
+    setEditId(null);
+    setContent('');
+  };
+
   return (
     <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
@@ -59,6 +65,11 @@ export default function CommentForm(props) {
         id='comment'
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
+      {editId && (
+        <button onClick={handleCloseBtnClick}>
+          <img src={CloseIcon} alt='답글 닫기' />
+        </button>
+      )}
       <Button text='등록' type='button' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
