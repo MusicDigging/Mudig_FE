@@ -11,7 +11,7 @@ import DetailList from '../../components/PlaylistDetail/DetailList';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 
 import { useRecoilState } from 'recoil';
-import { PlayListAtom } from '../../library/atom';
+import { PlayListAtom, backAnimationAtom } from '../../library/atom';
 
 export default function PlaylistDetail() {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
+  const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
 
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
 
@@ -29,6 +30,7 @@ export default function PlaylistDetail() {
     if (isLoading) return;
     const { playlist, music } = data;
     setPlaylistInfo({ playlist, music });
+    setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
   if (isLoading) return null;

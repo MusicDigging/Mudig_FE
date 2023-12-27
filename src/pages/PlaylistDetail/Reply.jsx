@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
-import { backAnimationAtom, commentEditInfoAtom } from '../../library/atom';
+import { backAnimationAtom, commentEditIdAtom } from '../../library/atom';
 
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentItem from '../../components/PlaylistDetail/CommentItem';
@@ -46,7 +46,7 @@ export default function Reply() {
   return (
     <S.CommentWrap>
       <S.CommentBox
-        initial={{ x: 300, opacity: 0 }}
+        initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
       >
         <S.CommentTop>

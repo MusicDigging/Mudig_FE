@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -35,9 +35,12 @@ export default function CommentItem(props) {
     children,
   } = props;
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
   const myId = useRecoilValue(userInfoAtom).id;
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const [animation, setAnimation] = useRecoilState(backAnimationAtom);
   const { mutate: deleteComment } = useDeleteComment();
 
   const isMyComment = myId === comment.writer;
@@ -83,24 +86,32 @@ export default function CommentItem(props) {
   const handleEditBtnClick = () => {
     setEditId(comment.id);
     setContent(comment.content);
-        ? `/playlist/detail/${playlistId}/comment`
-        : `/playlist/detail/${playlistId}/reply`,
-      {
-        state:
-          comment.parent === null
-            ? {
-                mode: 'comment',
-                playlistId,
-                playlistWriter,
-              }
-            : {
-                mode: 'reply',
-                parentId: comment.parent,
-                playlistId,
-                playlistWriter,
-              },
-      },
-    );
+    const isComment = comment.parent === null;
+    const targetPath = isComment
+      ? `/playlist/detail/${playlistId}/comment`
+      : `/playlist/detail/${playlistId}/reply`;
+    const state = isComment
+      ? {
+          mode: 'comment',
+          playlistId,
+          playlistWriter,
+        }
+      : {
+          mode: 'reply',
+          parentId: comment.parent,
+          playlistId,
+          playlistWriter,
+        };
+
+    const allowedPaths = [
+      `/playlist/detail/${playlistId}/comment`,
+      `/playlist/detail/${playlistId}/reply`,
+    ];
+
+    if (!allowedPaths.includes(currentPath)) {
+      navigate(targetPath, { state });
+    }
+
     setModalId(null);
   };
 
