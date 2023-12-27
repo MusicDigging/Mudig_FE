@@ -40,8 +40,6 @@ export default function CommentSection(props) {
     navigate(`/playlist/detail/${playlistId}/comment`, {
       state: {
         mode: 'comment',
-        comments: filteredComments,
-        replies,
         playlistId,
         playlistWriter,
       },

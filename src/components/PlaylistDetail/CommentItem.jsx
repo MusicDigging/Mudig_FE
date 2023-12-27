@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { Link } from 'react-router-dom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { userInfoAtom } from '../../library/atom';
+import { userInfoAtom, commentEditInfoAtom } from '../../library/atom';
 import { useDeleteComment } from '../../hooks/queries/useComment';
 
 import { CircleImage } from '../common/Image/Image';
@@ -21,18 +21,17 @@ export default function CommentItem(props) {
   const {
     mode,
     playlistId,
-    writer,
     comment,
-    replies,
     parentId,
-    editId,
     modalId,
     setModalId,
     parentWriter,
     playlistWriter,
     children,
   } = props;
+  const navigate = useNavigate();
   const myId = useRecoilValue(userInfoAtom).id;
+  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
   const { mutate: deleteComment } = useDeleteComment();
 
   const isMyComment = myId === comment.writer;
@@ -64,11 +63,39 @@ export default function CommentItem(props) {
     }
   };
 
+  const handleEditBtnClick = () => {
+    setEditInfo({
+      editId: comment.id,
+      editContent: comment.content,
+    });
+    navigate(
+      comment.parent === null
+        ? `/playlist/detail/${playlistId}/comment`
+        : `/playlist/detail/${playlistId}/reply`,
+      {
+        state:
+          comment.parent === null
+            ? {
+                mode: 'comment',
+                playlistId,
+                playlistWriter,
+              }
+            : {
+                mode: 'reply',
+                parentId: comment.parent,
+                playlistId,
+                playlistWriter,
+              },
+      },
+    );
+    setModalId(null);
+  };
+
   return (
     <CommentItemWrap>
       <CommentBox
         $bgColor={
-          editId === comment.id || parentId === comment.id
+          editInfo?.editId === comment.id || parentId === comment.id
             ? 'rgba(137, 105, 255, 0.08)'
             : 'none'
         }
@@ -116,12 +143,9 @@ export default function CommentItem(props) {
                         to={`/playlist/detail/${playlistId}/reply`}
                         state={{
                           mode: 'reply',
-                          comment: comment,
-                          replies,
                           parentId: comment.id,
                           playlistId,
                           playlistWriter,
-                          animation: true,
                         }}
                       >
                         답글 달기
@@ -130,15 +154,12 @@ export default function CommentItem(props) {
                     {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
                     {comment.writer === myId && (
                       <>
-                        <Link
-                          to={
-                            comment.parent === null
-                              ? `/playlist/detail/${playlistId}/comment`
-                              : `/playlist/detail/${playlistId}/reply`
-                          }
-                        >
-                          {comment.parent === null ? '댓글' : '답글'} 수정
-                        </Link>
+                        {/* 현재 수정 중인 댓글에서 숨김 처리  */}
+                        {editInfo?.editId !== comment.id && (
+                          <button onClick={handleEditBtnClick}>
+                            {comment.parent === null ? '댓글' : '답글'} 수정
+                          </button>
+                        )}
                         <button onClick={handleDeleteBtnClick}>
                           {comment.parent === null ? '댓글' : '답글'} 삭제
                         </button>

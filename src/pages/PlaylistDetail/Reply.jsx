@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
-import { backAnimationAtom } from '../../library/atom';
+import { backAnimationAtom, commentEditInfoAtom } from '../../library/atom';
 
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentItem from '../../components/PlaylistDetail/CommentItem';
@@ -16,13 +16,15 @@ export default function Reply() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state || {};
-  const { mode, parentId, playlistId, playlistWriter } = state;
+  const { mode, parentId, playlistId, playlistWriter, editContent } = state;
 
   const [modalId, setModalId] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
+  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
 
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
+
   if (isLoading) return null;
   const { comments } = data;
 
@@ -35,8 +37,9 @@ export default function Reply() {
     setIsReplyOpen((prev) => !prev);
   };
 
-  const handleMoveBtn = () => {
+  const handleBackBtn = () => {
     setBackAnimation(true);
+    setEditInfo(null);
     navigate(-1);
   };
 
@@ -47,7 +50,7 @@ export default function Reply() {
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
       >
         <S.CommentTop>
-          <S.BackBtn onClick={handleMoveBtn}>
+          <S.BackBtn onClick={handleBackBtn}>
             <BackIcon />
           </S.BackBtn>
           <h1>답글 달기</h1>
@@ -85,6 +88,7 @@ export default function Reply() {
                           setModalId={setModalId}
                           isActive={reply.is_active}
                           parentId={comment.id}
+                          playlistId={playlistId}
                           parentWriter={comment.writer}
                           playlistWriter={playlistWriter}
                         />
@@ -94,7 +98,12 @@ export default function Reply() {
             )}
           </CommentItem>
         </S.CommentListBox>
-        <CommentForm playlistId={playlistId} parentId={parentId} />
+        <CommentForm
+          playlistId={playlistId}
+          parentId={parentId}
+          editInfo={editInfo}
+          setEditInfo={setEditInfo}
+        />
       </S.CommentBox>
     </S.CommentWrap>
   );

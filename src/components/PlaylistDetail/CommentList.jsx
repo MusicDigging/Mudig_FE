@@ -59,6 +59,7 @@ export default function CommentList(props) {
                               setModalId={setModalId}
                               isActive={reply.is_active}
                               parentId={comment.id}
+                              playlistId={playlistId}
                               parentWriter={comment.writer}
                               playlistWriter={playlistWriter}
                             />

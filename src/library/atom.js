@@ -32,3 +32,8 @@ export const backAnimationAtom = atom({
   key: 'backAnimationAtom',
   default: false,
 });
+
+export const commentEditInfoAtom = atom({
+  key: 'commentEditInfoAtom',
+  default: null,
+});

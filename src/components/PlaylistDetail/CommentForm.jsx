@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import {
@@ -6,23 +7,31 @@ import {
   useWriteReply,
   useEditComment,
 } from '../../hooks/queries/useComment';
+import { commentEditInfoAtom } from '../../library/atom';
+
 import { Button } from '../../components/common/Button/Button';
 
 export default function CommentForm(props) {
+  const { playlistId, parentId } = props;
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const [content, setContent] = useState('');
-  const { playlistId, parentId, editId } = props;
+  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
+  const [content, setContent] = useState(
+    editInfo?.editContent ? editInfo?.editContent : '',
+  );
 
   const onSubmit = (e) => {
     e.preventDefault();
     let data;
 
-    if (editId) {
+    if (editInfo?.editId) {
       // 댓글, 답글 수정
-      data = { content, comment_id: editId };
+      data = { content, comment_id: editInfo?.editId };
       editComment(data);
+      setEditInfo(null);
+      setContent('');
+      e.target.defaultValue = '';
     } else {
       if (parentId) {
         // 답글
@@ -47,7 +56,7 @@ export default function CommentForm(props) {
         댓글 입력하기
       </label>
       <InputStyle
-        value={content}
+        defaultValue={editInfo?.editContent ? editInfo?.editContent : ''}
         onChange={handleInputChange}
         type='text'
         id='comment'

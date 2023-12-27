@@ -1,8 +1,8 @@
-import React from 'react';
-import { useRecoilValue } from 'recoil';
+import React, { useState } from 'react';
+import { useRecoilValue, useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { backAnimationAtom } from '../../library/atom';
+import { backAnimationAtom, commentEditInfoAtom } from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import { filterComments, filterReplies } from '../../library/CommentUtils';
@@ -17,6 +17,7 @@ export default function Comment() {
   const location = useLocation();
   const state = location.state || {};
   const { playlistId, playlistWriter } = state;
+  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
   const backAnimation = useRecoilValue(backAnimationAtom);
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 
@@ -27,6 +28,11 @@ export default function Comment() {
   const filteredComments =
     comments.length > 1 ? filterComments(comments, replies) : comments;
 
+  const handleBackBtn = () => {
+    setEditInfo(null);
+    navigate(`/playlist/detail/${playlistId}`, { state: { id: playlistId } });
+  };
+
   return (
     <S.CommentWrap>
       <S.CommentBox
@@ -34,7 +40,7 @@ export default function Comment() {
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
       >
         <S.CommentTop>
-          <S.BackBtn onClick={() => navigate(-1)}>
+          <S.BackBtn onClick={handleBackBtn}>
             <BackIcon />
           </S.BackBtn>
           <h1>댓글 쓰기</h1>
@@ -48,7 +54,11 @@ export default function Comment() {
             playlistWriter={playlistWriter}
           ></CommentList>
         </S.CommentListBox>
-        <CommentForm playlistId={playlistId} />
+        <CommentForm
+          playlistId={playlistId}
+          editInfo={editInfo}
+          setEditInfo={setEditInfo}
+        />
       </S.CommentBox>
     </S.CommentWrap>
   );
