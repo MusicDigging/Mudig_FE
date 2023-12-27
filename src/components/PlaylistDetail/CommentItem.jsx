@@ -259,7 +259,7 @@ const CommentBox = styled.div`
   display: flex;
   gap: 10px;
   background-color: ${(props) => props.$bgColor};
-  border-radius: 10px;
+  border-radius: 10px 5px 5px 5px;
   padding: 0;
 `;
 const CommentReplies = styled.div`
