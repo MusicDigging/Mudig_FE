@@ -246,10 +246,12 @@ const CommentBox = styled.div`
   gap: 10px;
   background-color: ${(props) => props.$bgColor};
   border-radius: 10px;
+  padding: 0;
 `;
 const CommentReplies = styled.div`
   & > div {
     padding-left: 30px;
+    padding-bottom: 0;
   }
   span {
     font-size: var(--font-sm);
