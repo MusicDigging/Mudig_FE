@@ -53,6 +53,12 @@ export default function CommentForm(props) {
     setContent('');
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit(e);
+    }
+  };
   return (
     <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
@@ -61,6 +67,7 @@ export default function CommentForm(props) {
       <InputStyle
         value={content}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
         type='text'
         id='comment'
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
@@ -85,11 +92,15 @@ const CommentFormWrap = styled.form`
   background-color: white;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
 
-  button {
+  button:last-child {
     border: none;
     background-color: #e5dcff;
     color: var(--main-color);
     max-width: 56px;
+  }
+  button:last-child:disabled {
+    background-color: #ededed;
+    color: var(--sub-font-color);
   }
 `;
 
