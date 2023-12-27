@@ -42,3 +42,8 @@ export const commentAtom = atom({
   key: 'commentAtom',
   default: '',
 });
+
+export const toastAtom = atom({
+  key: 'toastAtom',
+  default: null,
+});

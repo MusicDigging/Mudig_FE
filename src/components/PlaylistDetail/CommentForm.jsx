@@ -7,7 +7,7 @@ import {
   useWriteReply,
   useEditComment,
 } from '../../hooks/queries/useComment';
-import { commentAtom, commentEditIdAtom } from '../../library/atom';
+import { commentAtom, commentEditIdAtom, toastAtom } from '../../library/atom';
 
 import { Button } from '../../components/common/Button/Button';
 
@@ -18,8 +18,9 @@ export default function CommentForm(props) {
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -30,15 +31,20 @@ export default function CommentForm(props) {
       data = { content, comment_id: editId };
       editComment(data);
       setEditId(null);
+      if (parentId) {
+        setToast('답글이 수정되었습니다. 💬');
+      } else setToast('댓글이 수정되었습니다. 💬');
     } else {
       if (parentId) {
         // 답글
         data = { content, playlist_id: playlistId, parent_id: parentId };
         writeReply(data);
+        setToast('답글이 등록되었습니다. 💬');
       } else {
         // 댓글
         data = { content, playlist_id: playlistId };
         writeComment(data);
+        setToast('댓글이 등록되었습니다. 💬');
       }
     }
     setContent('');
@@ -77,7 +83,7 @@ export default function CommentForm(props) {
           <img src={CloseIcon} alt='답글 닫기' />
         </button>
       )}
-      <Button text='등록' type='button' disabled={content.trim() === ''} />
+      <Button text='등록' type='submit' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
 }

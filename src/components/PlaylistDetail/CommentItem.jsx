@@ -4,8 +4,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
-  userInfoAtom,
+  toastAtom,
   commentAtom,
+  userInfoAtom,
   backAnimationAtom,
   commentEditIdAtom,
 } from '../../library/atom';
@@ -38,6 +39,7 @@ export default function CommentItem(props) {
   const location = useLocation();
   const currentPath = location.pathname;
   const myId = useRecoilValue(userInfoAtom).id;
+  const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [animation, setAnimation] = useRecoilState(backAnimationAtom);
@@ -50,7 +52,11 @@ export default function CommentItem(props) {
   const handleMoreBtnClick = () =>
     setModalId(modalId === comment.id ? null : comment.id);
 
-  const handleDeleteBtnClick = () => deleteComment(comment.id);
+  const handleDeleteBtnClick = () => {
+    deleteComment(comment.id);
+    if (parentId) setToast('해당 답글이 삭제되었습니다. 💬');
+    else setToast('해당 댓글이 삭제되었습니다. 💬');
+  };
 
   const linkTo = isMyComment
     ? '/user/profile/my'
@@ -114,7 +120,7 @@ export default function CommentItem(props) {
 
     setModalId(null);
   };
-
+  console.log(toast);
   return (
     <CommentItemWrap>
       <CommentBox
