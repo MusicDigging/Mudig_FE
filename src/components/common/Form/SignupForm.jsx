@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { SignupInput } from '../Input/SignupInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 
-export const SignupForm = ({ onSubmit }) => {
+export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
+  const { mutate: postOtpValid } = useOtpValid();
   const methods = useForm({
     defaultValues: {
       email: '',
@@ -34,33 +34,29 @@ export const SignupForm = ({ onSubmit }) => {
     console.log('이메일 인증 활성화 :', isEmailValidated);
   }, [isEmailValidated]);
 
-  const handleEmailValidation = async () => {
-    try {
-      if (!disabledConfirm) {
-        setIsEmailValidated(false);
-        setShowTimeText(false);
-        console.log('이메일 검사 실패');
-        return;
-      }
-      setIsEmailValidated(true);
+  const handleEmailValidation = () => {
+    if (!disabledConfirm) {
+      setIsEmailValidated(false);
 
-      const response = await axios.post('https://api.mudig.co.kr/user/otp/', {
-        email: watchEmail,
-      });
-
-      if (response.status === 200) {
-        InfoToast.fire({
-          title: '해당 메일로 인증번호가 전송되었습니다!',
-        });
-        const { message, otp } = response.data;
-        setOtpNum(otp);
-      }
-    } catch (error) {
-      setError('email', {
-        message: '이미 가입된 이메일입니다.',
-      });
-      console.error('otp 전송 실패', error);
+      return;
     }
+    setIsEmailValidated(true);
+    postOtpValid(watchEmail, {
+      onSuccess: (data) => {
+        if (onEmailToastMsg) {
+          onEmailToastMsg();
+        }
+        const { message, otp } = data;
+        console.log(otp);
+        setOtpNum(otp);
+      },
+      onError: (error) => {
+        setError('email', {
+          message: '이미 가입된 이메일입니다.',
+        });
+        console.error('otp 전송 실패', error);
+      },
+    });
   };
 
   return (
@@ -92,6 +88,7 @@ export const SignupForm = ({ onSubmit }) => {
               disabled={!disabledConfirm}
             />
           </EmailValidBox>
+
           {isEmailValidated && (
             <SignupInput
               validation={{
@@ -100,7 +97,8 @@ export const SignupForm = ({ onSubmit }) => {
                 validate: {
                   comfirmOtp: (fieldValue) => {
                     return (
-                      fieldValue == otpNum || '인증번호가 일치하지 않습니다.'
+                      fieldValue.trim() == otpNum ||
+                      '인증번호가 일치하지 않습니다.'
                     );
                   },
                 },
@@ -150,8 +148,6 @@ const EmailValidBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 16px;
-  /* box-shadow: 0 0 10px red inset; */
-  /* margin-bottom: 16px; */
 `;
 
 const Box = styled.div``;
