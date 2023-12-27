@@ -56,13 +56,7 @@ export default function Follow() {
 
   const renderUserList = (data, listType) => {
     if (!Array.isArray(data) || data.length === 0) {
-      return (
-        <p>
-          {listType === 'followers'
-            ? '팔로워가 없습니다.'
-            : '팔로잉이 없습니다.'}
-        </p>
-      );
+      return <p id='FollowNone'>앗! 아직 비어있어요</p>;
     }
     return (
       <FollowUserList users={data.map(transformUserData)} listType={listType} />
@@ -105,6 +99,11 @@ export default function Follow() {
 // 스타일드 컴포넌트 정의들
 const FollowWrap = styled.div`
   width: 360px;
+  #FollowNone {
+    color: #b0b0b0;
+    margin-top: 50px;
+    text-align: center;
+  }
 `;
 
 const BackButton = styled.button`
