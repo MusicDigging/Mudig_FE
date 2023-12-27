@@ -7,31 +7,28 @@ import {
   useWriteReply,
   useEditComment,
 } from '../../hooks/queries/useComment';
-import { commentEditInfoAtom } from '../../library/atom';
+import { commentAtom, commentEditIdAtom } from '../../library/atom';
 
 import { Button } from '../../components/common/Button/Button';
+
 
 export default function CommentForm(props) {
   const { playlistId, parentId } = props;
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
-  const [content, setContent] = useState(
-    editInfo?.editContent ? editInfo?.editContent : '',
-  );
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const [content, setContent] = useRecoilState(commentAtom);
 
   const onSubmit = (e) => {
     e.preventDefault();
     let data;
 
-    if (editInfo?.editId) {
+    if (editId) {
       // 댓글, 답글 수정
-      data = { content, comment_id: editInfo?.editId };
+      data = { content, comment_id: editId };
       editComment(data);
-      setEditInfo(null);
-      setContent('');
-      e.target.defaultValue = '';
+      setEditId(null);
     } else {
       if (parentId) {
         // 답글
@@ -56,13 +53,13 @@ export default function CommentForm(props) {
         댓글 입력하기
       </label>
       <InputStyle
-        defaultValue={editInfo?.editContent ? editInfo?.editContent : ''}
+        value={content}
         onChange={handleInputChange}
         type='text'
         id='comment'
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      <Button text='확인' type='submit' />
+      <Button text='등록' type='button' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
 }

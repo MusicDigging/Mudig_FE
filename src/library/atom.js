@@ -33,7 +33,12 @@ export const backAnimationAtom = atom({
   default: false,
 });
 
-export const commentEditInfoAtom = atom({
-  key: 'commentEditInfoAtom',
+export const commentEditIdAtom = atom({
+  key: 'commentEditIdAtom',
   default: null,
+});
+
+export const commentAtom = atom({
+  key: 'commentAtom',
+  default: '',
 });

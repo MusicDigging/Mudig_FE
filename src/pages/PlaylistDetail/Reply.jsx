@@ -16,12 +16,12 @@ export default function Reply() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state || {};
-  const { mode, parentId, playlistId, playlistWriter, editContent } = state;
+  const { mode, parentId, playlistId, playlistWriter } = state;
 
   const [modalId, setModalId] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
-  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 
@@ -39,7 +39,7 @@ export default function Reply() {
 
   const handleBackBtn = () => {
     setBackAnimation(true);
-    setEditInfo(null);
+    setEditId(null);
     navigate(-1);
   };
 
@@ -101,8 +101,8 @@ export default function Reply() {
         <CommentForm
           playlistId={playlistId}
           parentId={parentId}
-          editInfo={editInfo}
-          setEditInfo={setEditInfo}
+          editId={editId}
+          setEditId={setEditId}
         />
       </S.CommentBox>
     </S.CommentWrap>

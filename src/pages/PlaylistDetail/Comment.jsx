@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { backAnimationAtom, commentEditInfoAtom } from '../../library/atom';
+import { backAnimationAtom, commentEditIdAtom } from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import { filterComments, filterReplies } from '../../library/CommentUtils';
@@ -17,7 +17,7 @@ export default function Comment() {
   const location = useLocation();
   const state = location.state || {};
   const { playlistId, playlistWriter } = state;
-  const [editInfo, setEditInfo] = useRecoilState(commentEditInfoAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const backAnimation = useRecoilValue(backAnimationAtom);
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 
@@ -29,8 +29,9 @@ export default function Comment() {
     comments.length > 1 ? filterComments(comments, replies) : comments;
 
   const handleBackBtn = () => {
-    setEditInfo(null);
-    navigate(`/playlist/detail/${playlistId}`, { state: { id: playlistId } });
+    setEditId(null);
+
+    navigate(-1);
   };
 
   return (
@@ -56,8 +57,8 @@ export default function Comment() {
         </S.CommentListBox>
         <CommentForm
           playlistId={playlistId}
-          editInfo={editInfo}
-          setEditInfo={setEditInfo}
+          editId={editId}
+          setEditId={setEditId}
         />
       </S.CommentBox>
     </S.CommentWrap>
