@@ -28,7 +28,7 @@ export default function Comment() {
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 
   if (isLoading) return null;
-  const { comments } = data;
+  const { comments, playlist } = data;
 
   const replies = filterReplies(comments);
   const filteredComments =
@@ -56,7 +56,7 @@ export default function Comment() {
             <BackIcon />
           </S.BackBtn>
           <h1>댓글 쓰기</h1>
-          <p>드라이브 할 때 듣기 좋은 K-POP</p>
+          <p>{playlist.title}</p>
         </S.CommentTop>
         <S.CommentListBox>
           <CommentList
