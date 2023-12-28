@@ -7,6 +7,7 @@ import {
   toastAtom,
   backAnimationAtom,
   commentEditIdAtom,
+  commentAtom,
 } from '../../library/atom';
 
 import Toast from '../../components/common/Toast';
@@ -14,7 +15,7 @@ import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentItem from '../../components/PlaylistDetail/CommentItem';
 
 import { ReactComponent as CommentIcon } from '../../img/comment-icon.svg';
-import { ReactComponent as BackIcon } from '../../img/left-arrow-icon-white.svg';
+import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
 
 export default function Reply() {
@@ -26,7 +27,7 @@ export default function Reply() {
   const [modalId, setModalId] = useState(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
   const [toast, setToast] = useRecoilState(toastAtom);
-
+  const [content, setContent] = useRecoilState(commentAtom);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 
@@ -47,6 +48,7 @@ export default function Reply() {
   const handleBackBtn = () => {
     setBackAnimation(true);
     setEditId(null);
+    setContent('');
     navigate(-1);
   };
 
@@ -80,12 +82,12 @@ export default function Reply() {
           >
             {replies && (
               <>
-                <div>
+                <S.ReplyBtnBox className={mode === 'reply' ? 'isReply' : ''}>
                   <S.ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
                     <CommentIcon alt='답글' />
                     {replies.length}
                   </S.ReplyBtn>
-                </div>
+                </S.ReplyBtnBox>
 
                 {isReplyOpen &&
                   replies.map(
