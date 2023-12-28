@@ -50,7 +50,7 @@ export default function PlaylistDetail() {
             <Toast setToast={setToast} text={toast} />
           </ToastBox>
         )}
-        <PlayListInfo user={user} playlist={playlist} />
+        <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
           <MusicPlayer
             pause={pause}

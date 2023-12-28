@@ -19,7 +19,7 @@ import ProfileBadge from '../../img/badge-icon.svg';
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, playlist, playlistDesc } = props;
+  const { user, playlist, playlistDesc, playing } = props;
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [miniModalOpen, setMiniModalOpen] = useState(false);
@@ -88,10 +88,12 @@ export default function PlayListInfo(props) {
           )}
         </MoreBtnBox>
       )}
-      <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
-        {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
-        <Image src={playlist.thumbnail} alt='썸네일' />
-      </ThumbnailBox>
+      {!playing && (
+        <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+          {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
+          <Image src={playlist.thumbnail} alt='썸네일' />
+        </ThumbnailBox>
+      )}
       <InfoBox isPlaylistSummary={isPlaylistSummary}>
         {!isPlaylistSummary && (
           <Title>
