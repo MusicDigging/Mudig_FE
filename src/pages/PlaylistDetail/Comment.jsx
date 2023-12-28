@@ -14,7 +14,7 @@ import { filterComments, filterReplies } from '../../library/CommentUtils';
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentList from '../../components/PlaylistDetail/CommentList';
 
-import { ReactComponent as BackIcon } from '../../img/left-arrow-icon-white.svg';
+import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
 
 export default function Comment() {

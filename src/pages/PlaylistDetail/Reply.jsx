@@ -14,7 +14,7 @@ import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentItem from '../../components/PlaylistDetail/CommentItem';
 
 import { ReactComponent as CommentIcon } from '../../img/comment-icon.svg';
-import { ReactComponent as BackIcon } from '../../img/left-arrow-icon-white.svg';
+import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
 
 export default function Reply() {

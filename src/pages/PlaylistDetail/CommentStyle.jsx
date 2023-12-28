@@ -10,7 +10,7 @@ export const CommentBox = styled(motion.div)`
 `;
 export const CommentTop = styled.header`
   position: relative;
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +23,11 @@ export const CommentTop = styled.header`
     font-weight: var(--font-semi-bold);
   }
   p {
+    max-width: 240px;
     font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -33,7 +37,10 @@ export const CommentListBox = styled.main`
 
 export const BackBtn = styled.button`
   position: absolute;
-  left: 22.5px;
+  top: 22px;
+  left: 16px;
+  filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
+    brightness(104%) contrast(101%);
 `;
 
 export const ReplyBtn = styled.button`
