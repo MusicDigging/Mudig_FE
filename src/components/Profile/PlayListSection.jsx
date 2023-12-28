@@ -123,6 +123,7 @@ const PlayListHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 33px;
 `;
 
 const SortBtnBox = styled.div`
@@ -147,7 +148,6 @@ const PlayListBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   padding: 24px 0 16px;
   border-top: 1.5px solid #ededed;
 `;
