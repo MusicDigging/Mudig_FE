@@ -70,7 +70,7 @@ const MusicPlayerWrap = styled.div`
   left: 50%;
   transform: translate(-50%, 0);
   /* margin: 80px 0 25px; */
-  z-index: 2;
+  z-index: 1;
   .player {
     position: absolute;
     top: 0%;

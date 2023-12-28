@@ -148,6 +148,7 @@ const SaveBtn = styled.button`
   width: 44px;
   height: 44px;
   font-size: var(--font-md);
+  color: #fff;
 `;
 
 const DelBtn = styled.button`

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import {
@@ -6,23 +7,20 @@ import {
   useWriteReply,
   useEditComment,
 } from '../../hooks/queries/useComment';
+import { commentAtom, commentEditIdAtom, toastAtom } from '../../library/atom';
+
 import { Button } from '../../components/common/Button/Button';
 
 import CloseIcon from '../../img/close-icon.svg';
 
 export default function CommentForm(props) {
+  const { playlistId, parentId } = props;
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const {
-    content,
-    setContent,
-    playlistId,
-    parentId,
-    setParentId,
-    editId,
-    setEditId,
-  } = props;
+  const [toast, setToast] = useRecoilState(toastAtom);
+  const [content, setContent] = useRecoilState(commentAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -33,16 +31,20 @@ export default function CommentForm(props) {
       data = { content, comment_id: editId };
       editComment(data);
       setEditId(null);
+      if (parentId) {
+        setToast('답글이 수정되었습니다. 💬');
+      } else setToast('댓글이 수정되었습니다. 💬');
     } else {
       if (parentId) {
         // 답글
         data = { content, playlist_id: playlistId, parent_id: parentId };
         writeReply(data);
-        setParentId(null);
+        setToast('답글이 등록되었습니다. 💬');
       } else {
         // 댓글
         data = { content, playlist_id: playlistId };
         writeComment(data);
+        setToast('댓글이 등록되었습니다. 💬');
       }
     }
     setContent('');
@@ -54,9 +56,15 @@ export default function CommentForm(props) {
 
   const handleCloseBtnClick = () => {
     setEditId(null);
-    setParentId(null);
+    setContent('');
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit(e);
+    }
+  };
   return (
     <CommentFormWrap onSubmit={onSubmit}>
       <label htmlFor='comment' className='a11y-hidden'>
@@ -65,31 +73,41 @@ export default function CommentForm(props) {
       <InputStyle
         value={content}
         onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
         type='text'
         id='comment'
+        maxLength={50}
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
-      {(parentId || editId) && (
+      {editId && (
         <button onClick={handleCloseBtnClick}>
           <img src={CloseIcon} alt='답글 닫기' />
         </button>
       )}
-      <Button text='확인' type='submit' disabled={content.trim() === ''} />
+      <Button text='등록' type='submit' disabled={content.trim() === ''} />
     </CommentFormWrap>
   );
 }
 
 const CommentFormWrap = styled.form`
-  background-color: white;
-  margin-bottom: 8px;
-  display: flex;
-  width: 100%;
-  gap: 8px;
-
+  padding: 16px 16px 24px;
+  position: absolute;
   bottom: 0px;
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  background-color: white;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
 
-  button {
+  button:last-child {
+    border: none;
+    background-color: #e5dcff;
+    color: var(--main-color);
     max-width: 56px;
+  }
+  button:last-child:disabled {
+    background-color: #ededed;
+    color: var(--sub-font-color);
   }
 `;
 
