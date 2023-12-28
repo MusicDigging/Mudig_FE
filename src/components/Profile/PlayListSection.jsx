@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
-
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
@@ -106,13 +105,6 @@ const PlayListSectionWrap = styled.section`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.9) 40%,
-    rgba(255, 255, 255, 0.9) 80%,
-    transparent 100%
-  );
 
   h2 {
     font-size: var(--font-md);

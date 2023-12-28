@@ -50,14 +50,6 @@ const MainPlayListSectionWrap = styled.section`
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
   }
-
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    white 60%,
-    white 80%,
-    transparent 100%
-  );
 `;
 
 const PlayListHeader = styled.div`
