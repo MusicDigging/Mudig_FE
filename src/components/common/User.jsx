@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { CircleImage } from '../../components/common/Image/Image';
 
 const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
   const handleClick = () => {
@@ -9,8 +10,8 @@ const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
   };
   return (
     <UserWrap>
-      <Link to={`/profile/${user}`}>
-        <ProfilePicture src={profilePicture} alt={`${name}'s profile`} />
+      <Link to={`/user/profile/${user}`}>
+        <CircleImage src={profilePicture} alt={`${name}'s profile`} />
         <UserNameBox>
           <UserName>{name}</UserName>
           <UserNickName>{name}</UserNickName>
@@ -32,13 +33,15 @@ const UserWrap = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 12px;
-`;
-
-const ProfilePicture = styled.img`
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin-right: 16px;
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 16px;
+  }
+  a {
+    display: contents;
+  }
 `;
 const UserNameBox = styled.div`
   flex-grow: 1;

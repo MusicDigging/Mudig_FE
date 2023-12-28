@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,25 +27,44 @@ export default function Profile() {
       location.pathname.split('/').pop()) ||
     my_id;
 
+  // Fetching 상태 추가
   const {
     data: profileData,
     isLoading: profileLoading,
-    isFetching: profileFetching,
     isError: profileError,
+    isFetching: profileFetching,
+    refetch: refetchProfile,
   } = useGetProfile(user_id);
+
   const {
     data: followingData,
     isLoading: followingLoading,
     isError: followingError,
+    isFetching: followingFetching,
+    refetch: refetchFollowing,
   } = useGetFollowing(user_id);
+
   const {
     data: followerData,
     isLoading: followerLoading,
     isError: followerError,
+    isFetching: followerFetching,
+    refetch: refetchFollower,
   } = useGetFollower(user_id);
 
-  if (profileLoading || profileFetching || followingLoading || followerLoading)
-    return <Loading isLoading={profileLoading} />;
+  useEffect(() => {
+    // user_id 변경 시 데이터를 새로 가져오기
+    // 프로필, 팔로잉, 팔로워 데이터 fetch 로직
+    refetchProfile();
+    refetchFollowing();
+    refetchFollower();
+  }, [user_id]); // user_id가 변경될 때만 실행
+  // isLoading 및 isFetching 통합
+  const isLoading = profileLoading || followingLoading || followerLoading;
+  const isFetching = profileFetching || followingFetching || followerFetching;
+  if (isLoading || isFetching) {
+    return <Loading />;
+  }
 
   if (profileError || followingError || followerError) {
     navigate('/*');

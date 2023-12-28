@@ -12,6 +12,8 @@ import { useSetRecoilState } from 'recoil';
 import { isLoginAtom } from '../../library/atom';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 import MoreBtnIcon from '../../img/more-icon.svg';
+import useFollowUser from '../../hooks/queries/useFollow';
+
 export default function ProfileSection(props) {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
@@ -20,15 +22,38 @@ export default function ProfileSection(props) {
   const { follower, following, profile, playlist } = data;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate: logout } = useLogout();
-
+  const { followUser } = useFollowUser();
   const handleMoreBtnClick = () => {
     return isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
   };
+  console.log(profile, userInfo, data);
+  const handleFollowClick = () => {
+    const followState = profile.is_following; // 현재 팔로우 상태
 
-  const handleFollowBtnClick = (e) => {
-    const { value } = e.target;
-    navigate(value);
+    followUser(profile.id, followState, {
+      onSuccess: () => {
+        // 팔로우 상태 업데이트
+        setUserInfo((prevUserInfo) => {
+          // 새로운 프로필 객체 생성하여 불변성 유지
+          const newProfile = {
+            ...prevUserInfo.profile,
+            is_following: !followState, // 팔로우 상태 토글
+          };
+
+          // 새로운 userInfo 객체 반환
+          return {
+            ...prevUserInfo,
+            profile: newProfile,
+          };
+        });
+      },
+      onError: (error) => {
+        console.error('Follow action failed:', error);
+        // 사용자에게 오류 메시지를 보여주는 로직을 추가할 수 있습니다.
+      },
+    });
   };
+
   const setIsLogin = useSetRecoilState(isLoginAtom);
 
   const handleLogoutBtnClick = (e) => {
@@ -73,14 +98,14 @@ export default function ProfileSection(props) {
         <UserInfo>
           <FollowInfo>
             <MoveFollowBtn
-              to='/user/profile/follow'
+              to='/user/profile/my/follow'
               state={{ type: 'followers', following, follower }}
             >
               <strong>{follower?.length}</strong>
               <p>팔로워</p>
             </MoveFollowBtn>
             <MoveFollowBtn
-              to='/user/profile/follow'
+              to='/user/profile/my/follow'
               state={{ type: 'followings', following, follower }}
             >
               <strong>{following?.length}</strong>
@@ -88,7 +113,12 @@ export default function ProfileSection(props) {
             </MoveFollowBtn>
           </FollowInfo>
           {!isMyProfile && (
-            <FollowBtn onClick={handleFollowBtnClick}>팔로우</FollowBtn>
+            <FollowBtn
+              onClick={handleFollowClick}
+              isFollowing={profile.is_following}
+            >
+              {profile.is_following ? '언팔로우' : '팔로우'}
+            </FollowBtn>
           )}
           {isMyProfile && (
             <MoveEditBtn to='/user/profile/edit' state={{ profile, playlist }}>
@@ -178,6 +208,13 @@ const FollowBtn = styled.button`
   border-radius: 10px;
   color: #fff;
   background-color: var(--btn-background-color);
+  ${({ is_following }) =>
+    is_following &&
+    `
+  background-color: #ffffff;
+  color: #7d4fff;
+  border: 1px solid #7d4fff;
+`}
 `;
 
 const MoveEditBtn = styled(Link)`
