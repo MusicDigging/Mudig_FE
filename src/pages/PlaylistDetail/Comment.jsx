@@ -6,6 +6,7 @@ import {
   toastAtom,
   backAnimationAtom,
   commentEditIdAtom,
+  commentAtom,
 } from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
@@ -14,7 +15,7 @@ import { filterComments, filterReplies } from '../../library/CommentUtils';
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentList from '../../components/PlaylistDetail/CommentList';
 
-import { ReactComponent as BackIcon } from '../../img/left-arrow-icon-white.svg';
+import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
 
 export default function Comment() {
@@ -23,6 +24,7 @@ export default function Comment() {
   const state = location.state || {};
   const { playlistId, playlistWriter } = state;
   const [toast, setToast] = useRecoilState(toastAtom);
+  const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const backAnimation = useRecoilValue(backAnimationAtom);
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
@@ -36,7 +38,7 @@ export default function Comment() {
 
   const handleBackBtn = () => {
     setEditId(null);
-
+    setContent('');
     navigate(-1);
   };
 
