@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import MusicWave from './MusicWave';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 
@@ -9,8 +10,15 @@ import TestImg from '../../img/thumbnail-img.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
 export default function DetailList(props) {
-  const { setPause, playing, setPlaying, music, currMusic, setCurrMusic } =
-    props;
+  const {
+    pause,
+    setPause,
+    playing,
+    setPlaying,
+    music,
+    currMusic,
+    setCurrMusic,
+  } = props;
   const [more, setMore] = useState(false);
   const [visibleCount, setVisibleCount] = useState(2);
 
@@ -41,19 +49,15 @@ export default function DetailList(props) {
             key={item.id}
             value={item.information}
             onClick={() => handlePlayListBtnClick(index)}
-            bgColor={index === currMusic ? 'rgba(137, 105, 255, 0.08)' : ''}
             display={index + 1 > visibleCount ? 'none' : 'block'}
+            $bgColor={index === currMusic ? 'rgba(137, 105, 255, 0.08)' : ''}
           >
             <PlayListItem
               img={item.thumbnail}
               title={item.song}
               info={item.singer}
             >
-              {index === currMusic && (
-                <button>
-                  <img src={PlayingIcon} alt='재생중' />
-                </button>
-              )}
+              {index === currMusic && !pause && <MusicWave />}
             </PlayListItem>
           </PlayListBtn>
         ))}
@@ -76,7 +80,7 @@ const DetailListWrap = styled.div`
 const PlayListBtn = styled.button`
   width: 100%;
   padding: 0 16px;
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.$bgColor};
   display: ${(props) => props.display};
 `;
 const ExtendBtn = styled.button`

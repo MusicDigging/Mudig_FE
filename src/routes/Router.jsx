@@ -27,6 +27,8 @@ import Follow from '../pages/Profile/Follow';
 import NotFound from '../pages/NotFound/NotFound';
 import SearchResult from '../pages/Search/SearchResult';
 import RecentSearch from '../components/Search/RecentSearch';
+import Comment from '../pages/PlaylistDetail/Comment';
+import Reply from '../pages/PlaylistDetail/Reply';
 
 export function Router() {
   return (
@@ -61,6 +63,8 @@ export function Router() {
           <Route path='/playlist/detail'>
             <Route path=':id' element={<PlaylistDetail />} />
             <Route path=':id/edit' element={<PlaylistModify />} />
+            <Route path=':id/comment' element={<Comment />} />
+            <Route path=':id/reply' element={<Reply />} />
           </Route>
         </Route>
         <Route path='/*' element={<NotFound />} />
