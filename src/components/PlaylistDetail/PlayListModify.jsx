@@ -136,15 +136,12 @@ export default function PlayListModify({ playlistDesc }) {
 }
 
 const PlayListModifyWrap = styled.div`
+  flex: 1 0 0;
   padding: 25px 16px;
-  height: 100%;
   background-color: #fff;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
-  }
-  ul {
-    padding-bottom: 25px;
   }
 `;
 
