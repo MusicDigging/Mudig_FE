@@ -38,7 +38,7 @@ export default function CommentList(props) {
         <ul>
           {/* visibleCount만큼 리턴, visibleCount값이 없을 땐 전체 리턴 */}
           {comments
-            .slice(0, visibleCount + 1 || comments.length)
+            .slice(0, visibleCount || comments.length)
             .map((comment, index) =>
               comment.is_active || replies[comment.id] ? (
                 <li key={comment.id}>
