@@ -3,7 +3,12 @@ import { useLocation, useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { PlayListAtom, backAnimationAtom, toastAtom } from '../../library/atom';
+import {
+  PlayListAtom,
+  backAnimationAtom,
+  toastAtom,
+  commentEditIdAtom,
+} from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import Toast from '../../components/common/Toast';
@@ -23,8 +28,13 @@ export default function PlaylistDetail() {
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
   const [toast, setToast] = useRecoilState(toastAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
+
+  useEffect(() => {
+    setEditId(null);
+  }, []);
 
   useEffect(() => {
     if (isLoading) return;
