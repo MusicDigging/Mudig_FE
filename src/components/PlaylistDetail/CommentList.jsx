@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentItem from './CommentItem';
@@ -8,12 +8,23 @@ import { ReactComponent as CommentIcon } from '../../img/comment-icon.svg';
 
 export default function CommentList(props) {
   const { comments, replies, playlistId, playlistWriter, visibleCount } = props;
+  const navigate = useNavigate();
   const [modalId, setModalId] = useState(null); // 모달창 활성화된 comment id
 
   const [opendReply, setOpendReply] = useState({});
 
-  const handleReplyBtnClick = (id) => {
-    setOpendReply((prev) => ({ ...prev, [id]: !prev[id] }));
+  const handleReplyBtnClick = (commentId) => {
+    if (replies[commentId])
+      setOpendReply((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
+    else
+      navigate(`/playlist/detail/${playlistId}/reply`, {
+        state: {
+          mode: 'reply',
+          parentId: commentId,
+          playlistId,
+          playlistWriter,
+        },
+      });
   };
 
   return (
@@ -39,33 +50,33 @@ export default function CommentList(props) {
                     setModalId={setModalId}
                     playlistWriter={playlistWriter}
                   >
-                    {replies[comment.id] && (
-                      <>
-                        <div>
-                          <ReplyBtn
-                            onClick={() => handleReplyBtnClick(comment.id)}
-                          >
-                            <CommentIcon alt='답글' />
-                            {replies[comment.id].length}
-                          </ReplyBtn>
-                        </div>
-                        {opendReply[comment.id] &&
-                          replies[comment.id].map((reply) => (
-                            <CommentItem
-                              key={reply.id}
-                              writer={reply.writer}
-                              comment={reply}
-                              modalId={modalId}
-                              setModalId={setModalId}
-                              isActive={reply.is_active}
-                              parentId={comment.id}
-                              playlistId={playlistId}
-                              parentWriter={comment.writer}
-                              playlistWriter={playlistWriter}
-                            />
-                          ))}
-                      </>
-                    )}
+                    <>
+                      <div>
+                        <ReplyBtn
+                          onClick={() => handleReplyBtnClick(comment.id)}
+                        >
+                          <CommentIcon alt='답글' />
+                          {replies[comment.id]?.length
+                            ? replies[comment.id]?.length
+                            : '0'}
+                        </ReplyBtn>
+                      </div>
+                      {opendReply[comment.id] &&
+                        replies[comment.id].map((reply) => (
+                          <CommentItem
+                            key={reply.id}
+                            writer={reply.writer}
+                            comment={reply}
+                            modalId={modalId}
+                            setModalId={setModalId}
+                            isActive={reply.is_active}
+                            parentId={comment.id}
+                            playlistId={playlistId}
+                            parentWriter={comment.writer}
+                            playlistWriter={playlistWriter}
+                          />
+                        ))}
+                    </>
                   </CommentItem>
                 </li>
               ) : null,
@@ -77,6 +88,7 @@ export default function CommentList(props) {
 }
 
 const CommentListWrap = styled.div`
+  flex: 1 0 auto;
   li {
     border-bottom: 1px solid #f6f6f6;
   }
