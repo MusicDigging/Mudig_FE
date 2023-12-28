@@ -19,7 +19,6 @@ export default function PlayListSection(props) {
     setSortType('latest');
   };
 
-  console.log(isEmpty);
   const handleSortPopularBtn = () => {
     const sortedPlaylists = playlists
       .slice()

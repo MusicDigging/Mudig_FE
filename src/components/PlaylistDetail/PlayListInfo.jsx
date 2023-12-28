@@ -57,7 +57,7 @@ export default function PlayListInfo(props) {
       },
     });
   };
-  console.log(playlist.id);
+
   return (
     <PlayListInfoWrap
       isPlaylistSummary={isPlaylistSummary}
