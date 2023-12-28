@@ -82,12 +82,12 @@ export default function Reply() {
           >
             {replies && (
               <>
-                <div>
+                <S.ReplyBtnBox className={mode === 'reply' ? 'isReply' : ''}>
                   <S.ReplyBtn onClick={() => handleReplyBtnClick(comment.id)}>
                     <CommentIcon alt='답글' />
                     {replies.length}
                   </S.ReplyBtn>
-                </div>
+                </S.ReplyBtnBox>
 
                 {isReplyOpen &&
                   replies.map(

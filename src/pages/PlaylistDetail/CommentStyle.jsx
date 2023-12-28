@@ -43,6 +43,13 @@ export const BackBtn = styled.button`
     brightness(104%) contrast(101%);
 `;
 
+export const ReplyBtnBox = styled.div`
+  &.isReply {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ededed;
+  }
+`;
+
 export const ReplyBtn = styled.button`
   display: flex;
   align-items: center;
