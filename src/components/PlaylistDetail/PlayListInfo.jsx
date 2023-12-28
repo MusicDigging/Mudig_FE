@@ -19,7 +19,7 @@ import ProfileBadge from '../../img/badge-icon.svg';
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, playlist, playlistDesc } = props;
+  const { user, playlist, playlistDesc, playing } = props;
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [miniModalOpen, setMiniModalOpen] = useState(false);
@@ -68,7 +68,7 @@ export default function PlayListInfo(props) {
           <img src={ArrowIcon} alt='뒤로가기' />
         </MoveBackBtn>
       )}
-      {(!isPlaylistSummary || !isModifyPath) && (
+      {(!isPlaylistSummary || isModifyPath) && (
         <MoreBtnBox>
           {user?.id === myId && (
             <button onClick={toggleModal}>
@@ -88,11 +88,12 @@ export default function PlayListInfo(props) {
           )}
         </MoreBtnBox>
       )}
-      {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
-      <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
-        {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
-        <Image src={playlist.thumbnail} alt='썸네일' />
-      </ThumbnailBox>
+      {!playing && (
+        <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
+          {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
+          <Image src={playlist.thumbnail} alt='썸네일' />
+        </ThumbnailBox>
+      )}
       <InfoBox isPlaylistSummary={isPlaylistSummary}>
         {!isPlaylistSummary && (
           <Title>
@@ -121,12 +122,21 @@ export default function PlayListInfo(props) {
             : '비공개'}
         </PrivateCheck>
       </InfoBox>
+      {/* 더보기 박스 */}
       {moreInfoView && (
         <>
           <ThumbnailBlurBox />
           <MoreInfoBox>
-            <p>{playlistDesc?.content || playlist?.content}</p>
-            <button onClick={handleCloseBtn}>닫기</button>
+            <h2>{playlistDesc?.title || playlist?.title}</h2>
+            <WriterInfo to={`/user/profile/${user.id}`} state={{ id: user.id }}>
+              <CircleImage src={user.image} alt='프로필 이미지' />
+              <img src={ProfileBadge} alt='프로필 작성자 배지' />
+              <p>{user.name}</p>
+            </WriterInfo>
+            <div>
+              <p>{playlistDesc?.content || playlist?.content}</p>
+              <button onClick={handleCloseBtn}>닫기</button>
+            </div>
           </MoreInfoBox>
         </>
       )}
@@ -135,7 +145,7 @@ export default function PlayListInfo(props) {
 }
 const PlayListInfoWrap = styled.section`
   position: relative;
-  padding-top: ${(props) => (props.isPlaylistSummary ? '260px' : ' 216px')};
+  padding-top: ${(props) => (props.isPlaylistSummary ? '270px' : ' 216px')};
   line-height: normal;
 
   &::before {
@@ -163,18 +173,19 @@ export const MoveBackBtn = styled.button`
   left: 16px;
   filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
     brightness(104%) contrast(101%);
+  z-index: 5;
 `;
 
 const ThumbnailBox = styled.div`
   position: absolute;
   width: 180px;
-  height: 240px;
+  height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   top: 0;
   transform: ${(props) =>
-    props.isPlaylistSummary ? 'translate(50%, 56px)' : 'translate(50%, 46px)'};
+    props.isPlaylistSummary ? 'translate(50%, 56px)' : 'translate(50%, 30px)'};
   img {
     height: 180px;
   }
@@ -186,13 +197,14 @@ const SummaryTitle = styled.h2`
   line-height: normal;
   font-size: var(--font-lg);
   font-weight: var(--font-semi-bold);
+  color: #fff;
 `;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: ${(props) =>
-    props.isPlaylistSummary ? '53px 16px 0' : '67px 16px 0'};
+    props.isPlaylistSummary ? '53px 16px 0' : '47px 16px 0'};
   background-color: #fff;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -207,6 +219,12 @@ const Title = styled.div`
     width: 100%;
     font-size: var(--font-lg);
     font-weight: var(--font-semi-bold);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
   }
 `;
 
@@ -260,8 +278,9 @@ const ThumbnailBlurBox = styled.div`
   position: absolute;
   top: 0;
   width: 360px;
-  height: 100%;
-  background: rgba(15, 15, 16, 0.8);
+  height: 90%;
+  /* background: rgba(15, 15, 16, 0.5); */
+  backdrop-filter: blur(2px);
   z-index: 3;
 `;
 
@@ -270,13 +289,22 @@ const MoreInfoBox = styled.div`
   width: 100%;
   z-index: 3;
   display: flex;
-  bottom: 0px;
+  bottom: 17px;
   flex-direction: column;
-  padding: 16px;
-  background-color: var(--playlist-info-bg-color);
-  color: #fff;
+  gap: 8px;
+  padding: 24px 16px 0px;
+  background-color: #fff;
+  color: var(--tertiary-font-color);
   font-size: var(--font-sm);
   line-height: normal;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  h2 {
+    width: 100%;
+    color: var(--font-color);
+    font-size: var(--font-lg);
+    font-weight: var(--font-semi-bold);
+  }
   &::before {
     content: '';
     position: absolute;
@@ -288,7 +316,8 @@ const MoreInfoBox = styled.div`
     background: url(${Mudig}) no-repeat center/contain;
   }
   button {
-    color: var(--playlist-info-sub-color);
+    float: right;
+    color: var(--font-color);
     font-weight: var(--font-regular);
     align-self: flex-end;
   }
@@ -298,6 +327,7 @@ const MoreBtnBox = styled.div`
   position: absolute;
   top: 22px;
   right: 16px;
+  z-index: 5;
   img {
     filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
       brightness(104%) contrast(101%);

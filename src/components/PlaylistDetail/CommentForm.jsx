@@ -76,6 +76,7 @@ export default function CommentForm(props) {
         onKeyDown={handleKeyDown}
         type='text'
         id='comment'
+        maxLength={50}
         placeholder={`${parentId ? '답글' : '댓글'}을 입력해 주세요.`}
       ></InputStyle>
       {editId && (

@@ -207,6 +207,7 @@ const CommentItemWrap = styled.div`
 `;
 
 const ProfileImgBox = styled.div`
+  flex-shrink: 0;
   width: 24px;
   height: 24px;
 `;
