@@ -14,7 +14,7 @@ function NavBar() {
     <NavBarWrap>
       <ul>
         {/* 각 Link 컴포넌트에 isActive 함수를 이용해 현재 위치를 확인 */}
-        <StyledLink to='/main' active={isActive('/main')}>
+        <StyledLink to='/main' $active={isActive('/main')}>
           <li>
             <img src={HomeIcon} alt='홈 버튼'></img>
             <p>메인</p>
@@ -22,20 +22,23 @@ function NavBar() {
         </StyledLink>
         <StyledLink
           to='/playlist/create1'
-          active={isActive('/playlist/create1')}
+          $active={isActive('/playlist/create1')}
         >
           <li>
             <img src={PlaylistIcon} alt='플리 생성 버튼'></img>
             <p>플리 생성</p>
           </li>
         </StyledLink>
-        <StyledLink to='/randomplay' active={isActive('/randomplay')}>
+        <StyledLink to='/randomplay' $active={isActive('/randomplay')}>
           <li>
             <img src={MovieIcon} alt='랜덤 뮤비 버튼'></img>
             <p>뮤비</p>
           </li>
         </StyledLink>
-        <StyledLink to='/user/profile/my' active={isActive('/user/profile/my')}>
+        <StyledLink
+          to='/user/profile/my'
+          $active={isActive('/user/profile/my')}
+        >
           <li>
             <img src={ProfileIcon} alt='프로필 버튼'></img>
             <p>마이페이지</p>
@@ -89,8 +92,8 @@ const NavBarWrap = styled.nav`
 `;
 // isActive 속성에 따라 스타일을 변경하는 StyledLink 컴포넌트 생성
 const StyledLink = styled(Link)`
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     css`
       li img {
         object-position: -24px center;
