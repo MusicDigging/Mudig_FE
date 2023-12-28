@@ -13,7 +13,7 @@ export default function SetRepPlaylist(props) {
   const [currRepPlaylist, setCurrRepPlaylist] = useState(
     playlist.find((obj) => obj.id === repPlaylist),
   );
-
+  const repPlaylistData = playlist.filter((item) => item.is_public);
   const handlePrivateView = () => {
     setisPlaylistShowed(!isPlaylistShowed);
   };
@@ -42,14 +42,16 @@ export default function SetRepPlaylist(props) {
                 <strong>{currRepPlaylist?.title}</strong>
               </div>
             </>
+          ) : repPlaylistData.length === 0 ? (
+            <>플레이리스트 생성 및 공개 설정 후 설정 가능합니다.</>
           ) : (
             <>대표 플레이리스트를 설정해보세요!</>
           )}
-          {playlist.length > 0 && <ArrowIcon fill='black' />}
+          {repPlaylistData.length > 0 && <ArrowIcon fill='black' />}
         </CurrRepPlaylist>
         {isPlaylistShowed && playlist && (
           <SetRepPlaylistList>
-            {playlist.map((item) => (
+            {repPlaylistData.map((item) => (
               <li key={item?.id}>
                 <SetRepPlaylistBtn
                   type='button'

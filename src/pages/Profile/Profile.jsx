@@ -70,7 +70,20 @@ export default function Profile() {
         }}
       />
       {repPlaylist && <MainPlayListSection data={repPlaylist} />}
-      <PlayListSection data={playlist} isMyProfile={my_id === user_id} />
+      {/* 생성한 플리 */}
+      <PlayListSection
+        type='myPlaylist'
+        data={playlist}
+        isMyProfile={my_id === user_id}
+      />
+      {/* 좋아요한 플리 */}
+      {profileData.liked_playlists.length > 0 && (
+        <PlayListSection
+          type='likedPlaylist'
+          data={profileData?.liked_playlists}
+          isMyProfile={my_id === user_id}
+        />
+      )}
     </S.ProfileWrap>
   );
 }
