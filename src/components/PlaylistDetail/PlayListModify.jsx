@@ -139,6 +139,13 @@ const PlayListModifyWrap = styled.div`
   padding: 25px 16px;
   height: 100%;
   background-color: #fff;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  ul {
+    padding-bottom: 25px;
+  }
 `;
 
 const SaveBtn = styled.button`
