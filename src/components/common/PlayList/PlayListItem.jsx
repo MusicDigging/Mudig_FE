@@ -69,6 +69,6 @@ const InfoBox = styled.div`
     line-height: normal;
   }
   p:last-child {
-    color: var(--sub-font-color);
+    color: var(--extra-font-color);
   }
 `;
