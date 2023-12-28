@@ -8,7 +8,7 @@ import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
-  const { type, isMyProfile } = props;
+  const { type, isMyProfile, isEmpty } = props;
   const [playlists, setPlaylists] = useState(props.data);
   const [sortType, setSortType] = useState(playlists.length ? 'latest' : '');
 
@@ -20,6 +20,7 @@ export default function PlayListSection(props) {
     setSortType('latest');
   };
 
+  console.log(isEmpty);
   const handleSortPopularBtn = () => {
     const sortedPlaylists = playlists
       .slice()
@@ -38,7 +39,7 @@ export default function PlayListSection(props) {
             : '320px'
       }
     >
-      <PlayListBox>
+      <PlayListBox isEmpty={isEmpty}>
         <PlayListHeader>
           <h2>
             {type === 'myPlaylist' &&
@@ -98,18 +99,24 @@ export default function PlayListSection(props) {
     </PlayListSectionWrap>
   );
 }
-
 const PlayListSectionWrap = styled.section`
-  background-color: rgba(255, 255, 255, 0.5);
   flex: 1 0 auto;
   min-height: ${(props) => props.maxHeight};
   padding: 0px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.9) 40%,
+    rgba(255, 255, 255, 0.9) 80%,
+    transparent 100%
+  );
 
   h2 {
     font-size: var(--font-md);
+    font-weight: var(--font-semi-bold);
   }
   ul {
     flex: 1 0 0;
@@ -149,7 +156,8 @@ const PlayListBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 24px 0 16px;
-  border-top: 1.5px solid #ededed;
+  border-top: 1.5px solid
+    ${(props) => (props.isEmpty ? 'transparent' : '#ededed')};
 `;
 
 const PlayBtnStyle = styled.button`

@@ -7,8 +7,6 @@ export const ProfileWrap = styled.main`
   overflow-x: hidden;
   font-size: var(--font-md);
   color: var(--font-color);
-  h2 {
-    font-size: var(--font-lg);
-    font-weight: var(--font-semi-bold);
-  }
+
+  background-color: rgba(255, 255, 255, 0.4);
 `;

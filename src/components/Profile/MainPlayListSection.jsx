@@ -43,12 +43,21 @@ export default function MainPlayListSection(props) {
 }
 
 const MainPlayListSectionWrap = styled.section`
-  background-color: rgba(255, 255, 255, 0.5);
   padding: 24px 0px 24px 24px;
   h2 {
     display: flex;
     align-items: center;
+    font-size: var(--font-lg);
+    font-weight: var(--font-semi-bold);
   }
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    white 60%,
+    white 80%,
+    transparent 100%
+  );
 `;
 
 const PlayListHeader = styled.div`
