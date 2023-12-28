@@ -32,10 +32,10 @@ export default function PlayListSection(props) {
     <PlayListSectionWrap
       maxHeight={
         playlists.length === 1
-          ? '140px'
+          ? '150px'
           : playlists.length === 2
-            ? '210px'
-            : '300px'
+            ? '230px'
+            : '320px'
       }
     >
       <PlayListBox>
@@ -100,14 +100,14 @@ export default function PlayListSection(props) {
 }
 
 const PlayListSectionWrap = styled.section`
+  background-color: rgba(255, 255, 255, 0.5);
   flex: 1 0 auto;
   min-height: ${(props) => props.maxHeight};
-  padding: 24px 16px 8px;
+  padding: 0px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: #fff;
-  border-top: 6px solid #f1f1f5;
+
   h2 {
     font-size: var(--font-md);
   }
@@ -147,7 +147,9 @@ const PlayListBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
+  padding: 24px 0 16px;
+  border-top: 1.5px solid #ededed;
 `;
 
 const PlayBtnStyle = styled.button`
