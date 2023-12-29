@@ -9,6 +9,8 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
+import { useSetRecoilState } from 'recoil';
+import { toastAtom } from '../../library/atom';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ export default function EditProfile() {
     profile.image ||
       'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   );
+  const setToast = useSetRecoilState(toastAtom);
   const { mutate: editProfile } = useEditProfile();
 
   const onSubmit = async (data) => {
@@ -36,7 +39,8 @@ export default function EditProfile() {
     if (uploadImg !== null) formData.append('image', uploadImg);
     editProfile(formData, {
       onSuccess: () => {
-        alert('프로필 수정이 완료되었습니다.');
+        // alert('프로필 수정이 완료되었습니다.');
+        setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
         navigate(-1);
       },
     });

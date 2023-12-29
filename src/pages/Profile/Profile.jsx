@@ -1,5 +1,5 @@
 import { React, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -7,7 +7,7 @@ import {
   useGetFollowing,
   useGetFollower,
 } from '../../hooks/queries/useProfile';
-import { userInfoAtom } from '../../library/atom';
+import { toastAtom, userInfoAtom } from '../../library/atom';
 
 import ProfileSection from '../../components/Profile/ProfileSection';
 import MainPlayListSection from '../../components/Profile/MainPlayListSection';
@@ -15,6 +15,7 @@ import PlayListSection from '../../components/Profile/PlayListSection';
 import Loading from '../../components/Loading/Loading';
 
 import * as S from './ProfileStyle';
+import Toast from '../../components/common/Toast';
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Profile() {
     (!isNaN(location.pathname.split('/').pop()) &&
       location.pathname.split('/').pop()) ||
     my_id;
-
+  const [toast, setToast] = useRecoilState(toastAtom);
   // Fetching 상태 추가
   const {
     data: profileData,
@@ -67,6 +68,9 @@ export default function Profile() {
 
   return (
     <S.ProfileWrap>
+      {toast && (
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
+      )}
       <ProfileSection
         isMyProfile={my_id === user_id}
         data={{
