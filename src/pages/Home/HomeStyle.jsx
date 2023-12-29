@@ -13,11 +13,25 @@ export const HomeSection = styled.section`
   #bold {
     font-weight: 500;
   }
-  #MyPlayListNoneInfo {
+`;
+export const MyPlayListNoneInfo = styled.div`
+  width: 300px;
+  margin: auto;
+  #MyPlayListNoneInfoText {
     font-size: 14px;
     margin: 34px auto;
     display: block;
-    width: 300px;
     font-weight: 100;
+    text-align: center;
+  }
+  #MyPlayListNoneInfoBtn {
+    font-weight: 100;
+    width: 243px;
+    display: block;
+    margin: auto;
+    height: 44px;
+    color: #7d4fff;
+    background-color: #f5f2ff;
+    border-radius: 5px;
   }
 `;
