@@ -60,6 +60,8 @@ export const AuthForm = () => {
   const handleCheckboxChange = () => {
     const checkbox = document.getElementById('checkbox');
     if (checkbox) {
+      const autoLogin = checkbox.checked;
+      localStorage.setItem('autoLogin', autoLogin ? 'true' : 'false');
       checkbox.click();
     }
   };
