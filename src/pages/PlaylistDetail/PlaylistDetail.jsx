@@ -119,12 +119,12 @@ const PlayListDetailBox = styled.main`
   background-color: #fff;
 `;
 const MusicNothingSection = styled.section`
-  width: 328px;
+  width: 100%;
   text-align: center;
   font-size: var(--font-md);
   color: var(--font-color);
   line-height: normal;
-  margin: 50px 16px 66px;
+  padding: 50px 16px 66px;
   p {
     font-weight: var(--font-semi-bold);
   }
