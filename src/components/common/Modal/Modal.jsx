@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom } from '../../../library/atom';
-import { useModifyPlaylist } from '../../../hooks/queries/usePlaylist';
 export default function Modal({ playlistDesc, setPlaylistDesc }) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
@@ -140,7 +139,6 @@ const ModalWrap = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 const ModalBox = styled.div`
-  height: 393px;
   position: absolute;
   top: 25%;
   left: 5%;
@@ -198,7 +196,6 @@ const PrivateCheckBtn = styled.button`
   }
 `;
 const PrivateCheckBtnBox = styled.div`
-  position: relative;
   width: 295px;
   border-radius: 10px;
   border: 1px solid var(--border-color);

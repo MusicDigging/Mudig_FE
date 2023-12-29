@@ -8,7 +8,8 @@ import { useLogout } from '../../hooks/queries/useProfile';
 
 import ProfileImage from '../common/Image/ProfileImage';
 import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
-
+import { useSetRecoilState } from 'recoil';
+import { isLoginAtom } from '../../library/atom';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 import MoreBtnIcon from '../../img/more-icon.svg';
 export default function ProfileSection(props) {
@@ -28,15 +29,17 @@ export default function ProfileSection(props) {
     const { value } = e.target;
     navigate(value);
   };
+  const setIsLogin = useSetRecoilState(isLoginAtom);
 
   const handleLogoutBtnClick = (e) => {
     logout(undefined, {
       onSuccess: (res) => {
         alert('로그아웃 되었습니다.');
         setUserInfo({});
+        setIsLogin(false); // 로그인 상태를 false로 설정합니다.
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
-        navigate('/');
+        navigate('/'); // 홈으로 리다이렉트
       },
     });
   };

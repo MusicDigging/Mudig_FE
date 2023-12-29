@@ -136,9 +136,13 @@ export default function PlayListModify({ playlistDesc }) {
 }
 
 const PlayListModifyWrap = styled.div`
+  flex: 1 0 0;
   padding: 25px 16px;
-  height: 100%;
   background-color: #fff;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SaveBtn = styled.button`
@@ -148,6 +152,7 @@ const SaveBtn = styled.button`
   width: 44px;
   height: 44px;
   font-size: var(--font-md);
+  color: #fff;
 `;
 
 const DelBtn = styled.button`
