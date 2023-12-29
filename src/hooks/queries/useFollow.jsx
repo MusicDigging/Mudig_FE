@@ -12,6 +12,7 @@ const useFollowUser = () => {
         // 팔로잉 목록 쿼리 갱신
         queryClient.invalidateQueries('get-following');
         queryClient.invalidateQueries('get-follower');
+        queryClient.invalidateQueries('get-profile');
       },
     },
   );
@@ -23,6 +24,7 @@ const useFollowUser = () => {
         // 팔로잉 목록 쿼리 갱신
         queryClient.invalidateQueries('get-following');
         queryClient.invalidateQueries('get-follower');
+        queryClient.invalidateQueries('get-profile');
       },
     },
   );
