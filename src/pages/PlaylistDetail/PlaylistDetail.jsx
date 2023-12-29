@@ -57,7 +57,7 @@ export default function PlaylistDetail() {
       <PlaylistDetailWrap>
         {toast && (
           <ToastBox>
-            <Toast setToast={setToast} text={toast} />
+            <Toast setToast={setToast} text={toast.content} type={toast.type} />
           </ToastBox>
         )}
         <PlayListInfo user={user} playlist={playlist} playing={playing} />
@@ -136,5 +136,5 @@ const ToastBox = styled.div`
   position: absolute;
   top: 13px;
   left: 13px;
-  z-index: 1;
+  z-index: 10;
 `;
