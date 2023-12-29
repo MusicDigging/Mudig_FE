@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button } from '../Button/Button';
 import { modalAtom } from '../../../atoms/modalAtom';
+import { toastAtom } from '../../../library/atom';
+import Toast from '../Toast';
 import closeIcon from '../../../img/close-icon.svg';
 import { useSetRecoilState } from 'recoil';
 import { useRecoilState } from 'recoil';
@@ -21,6 +23,7 @@ export default function AddModal({ videoId }) {
   const { data } = useMyPlayList();
   const { mutate: putMyPlayList } = usePutMyPlayList();
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const setToast = useSetRecoilState(toastAtom);
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
@@ -90,16 +93,19 @@ export default function AddModal({ videoId }) {
     putMyPlayList(data, {
       onSuccess: (data) => {
         console.log(data);
-        SuccessToast.fire({
-          title: '플레이리스트 추가 완료',
+        setToast({
+          content: '플레이리스트에 추가 되었습니다.',
+          type: 'success',
         });
         setModalOpen(false);
         // navigate(`/playlist/detail/${playlist_id}`);
       },
       onError: (error) => {
+        setModalOpen(false);
         console.error('플리추가 실패', error);
-        ErrorToast.fire({
-          title: `플레이리스트 추가가 실패하였습니다. \n 다시 시도해주세요`,
+        setToast({
+          content: '플레이리스트 추가 실패, 다시 시도해 주세요.',
+          type: 'error',
         });
       },
     });
