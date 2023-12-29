@@ -40,7 +40,6 @@ const Input = styled.input`
   border-radius: 8px;
   background: #f6f6f6;
   padding: 12px 16px;
-  margin-right: 19px;
   &:placeholder {
     color: #bfbfbf;
   }
