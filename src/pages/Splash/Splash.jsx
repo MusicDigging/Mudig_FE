@@ -15,9 +15,18 @@ export default function Splash() {
   useEffect(() => {
     // 3초 후에 실행될 함수
     const timer = setTimeout(() => {
+      // 현재 시간을 가져옵니다.
+      const now = new Date();
+      const hours = now.getHours(); // 0-23 사이의 시간
+
       if (isLoggedIn) {
-        // 로그인 상태라면 메인 페이지로 이동
-        navigate('/main');
+        if (hours >= 16 && hours < 22) {
+          // 만약 현재 시간이 18시에서 22시 사이라면 이벤트 페이지로 이동
+          navigate('/event');
+        } else {
+          // 로그인 상태라면 메인 페이지로 이동
+          navigate('/main');
+        }
       } else {
         // 로그인 상태가 아니라면 로그인 페이지로 이동
         navigate('/login');
@@ -26,7 +35,7 @@ export default function Splash() {
 
     // 컴포넌트 언마운트 시 타이머 제거
     return () => clearTimeout(timer);
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate]); // 의존성 배열에 포함된 변수들
 
   return (
     <SplashWrap>
