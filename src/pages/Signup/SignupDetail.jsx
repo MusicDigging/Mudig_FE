@@ -70,7 +70,6 @@ const PageNum = styled.span`
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
-  z-index: -1;
 `;
 
 const DetailTitle = styled.h1`
