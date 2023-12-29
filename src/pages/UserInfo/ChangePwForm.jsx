@@ -7,6 +7,7 @@ import usePasswordToggle from '../../hooks/ussPasswordToggle';
 import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
+
 import {
   showCustomModal,
   changePassworrdModal,
@@ -28,8 +29,7 @@ export default function ChangePwForm() {
 
   const { formState, setError, watch, getValues } = methods;
   const { isValid } = formState;
-  const confirmPassword = getValues('confirmPassword');
-  const newPassword = getValues('newPassword');
+
   const handlePasswordSubmit = (data) => {
     changePassword(data, {
       onSuccess: (data) => {
@@ -78,12 +78,11 @@ export default function ChangePwForm() {
               validate: {
                 comfirmPw: (fieldValue) => {
                   const oldPassword = watch('password');
-                  // const confirmPassword = getValues('confirmPassword');
+
                   if (fieldValue === oldPassword) {
                     return '현재 비밀번호와 새 비밀번호는 동일할 수 없습니다.';
-                  } else if (newPassword !== confirmPassword) {
-                    return '비밀번호 확인이 일치하지 않습니다.';
                   }
+
                   return null;
                 },
               },
@@ -106,10 +105,11 @@ export default function ChangePwForm() {
                 comfirmPw: (fieldValue) => {
                   return (
                     fieldValue == watch('newPassword') ||
-                    '비밀번호 확인이 일치하지 않습니다.'
+                    '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. '
                   );
                 },
               },
+
               required: 'X 8~16자 영문 대 소문자, 숫자를 사용하세요.',
             }}
             placeholder='새 비밀번호 확인'
