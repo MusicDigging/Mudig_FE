@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
+import { toastAtom } from '../../../library/atom';
+import { useSetRecoilState } from 'recoil';
 export function Button(props) {
   const {
     type,
@@ -54,6 +56,7 @@ const ButtonStyle = styled.button`
 
 export function ChipButton(props) {
   const { name, onSelect, selectedChips } = props;
+  const setToast = useSetRecoilState(toastAtom);
   const isChipSelected = selectedChips.includes(name);
 
   const handleClick = () => {
@@ -65,9 +68,9 @@ export function ChipButton(props) {
       if (selectedChips.length < 3) {
         onSelect([...selectedChips, name]);
       } else {
-        InfoToast.fire({
-          icon: 'info',
-          title: '관심사는 최대 3개까지 선택 가능합니다.',
+        setToast({
+          content: '관심사는 최대 3개까지 선택 가능합니다.',
+          type: 'warning',
         });
       }
     }
