@@ -66,7 +66,6 @@ const UserNickName = styled.span`
 const FollowButton = styled.button`
   font-size: 14px;
   width: 89px;
-  padding: 5px 9px;
   border: none;
   border-radius: 5px;
   background-color: #7d4fff;
