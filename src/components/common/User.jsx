@@ -1,27 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { CircleImage } from '../../components/common/Image/Image';
+import { userInfoAtom } from '../../library/atom';
 
 const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
+  const myInfo = useRecoilValue(userInfoAtom);
+
   const handleClick = () => {
     onFollowClick();
     // 여기서 데이터 새로고침 함수 호출
   };
+  const myProfile = user === myInfo.id;
   return (
     <UserWrap>
-      <Link to={`/profile/${user}`}>
-        <ProfilePicture src={profilePicture} alt={`${name}'s profile`} />
+      <Link to={`/user/profile/${user}`}>
+        <CircleImage src={profilePicture} alt={`${name}'s profile`} />
         <UserNameBox>
           <UserName>{name}</UserName>
           <UserNickName>{name}</UserNickName>
         </UserNameBox>
       </Link>
-      <FollowButton
-        isFollowing={isFollowing}
-        onClick={handleClick} // 이벤트 핸들러 변경
-      >
-        {isFollowing ? 'unfollow' : 'follow'}
-      </FollowButton>
+      {!myProfile && (
+        <FollowButton
+          isFollowing={isFollowing}
+          onClick={handleClick} // 이벤트 핸들러 변경
+        >
+          {isFollowing ? '팔로잉' : '팔로우'}
+        </FollowButton>
+      )}
     </UserWrap>
   );
 };
@@ -32,13 +40,15 @@ const UserWrap = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 12px;
-`;
-
-const ProfilePicture = styled.img`
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  margin-right: 16px;
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 16px;
+  }
+  a {
+    display: contents;
+  }
 `;
 const UserNameBox = styled.div`
   flex-grow: 1;
@@ -54,6 +64,7 @@ const UserNickName = styled.span`
 `;
 
 const FollowButton = styled.button`
+  font-size: 14px;
   width: 89px;
   padding: 5px 9px;
   border: none;
@@ -67,8 +78,8 @@ const FollowButton = styled.button`
   ${({ isFollowing }) =>
     isFollowing &&
     `
-    background-color: #ffffff;
-    color: #7d4fff;
-    border: 1px solid #7d4fff;
+    background-color: #F6F6F6;
+    color: #000;
+    border: 1px solid #F6F6F6;
   `}
 `;

@@ -7,23 +7,16 @@ import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
-  const { type, isMyProfile, isEmpty } = props;
-  const [playlists, setPlaylists] = useState(props.data);
+  const { type, isMyProfile, data: playlists } = props;
   const [sortType, setSortType] = useState(playlists.length ? 'latest' : '');
 
   const handleSortLatestBtn = () => {
-    const sortedPlaylists = playlists
-      .slice()
-      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    setPlaylists(sortedPlaylists);
+    playlists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     setSortType('latest');
   };
 
   const handleSortPopularBtn = () => {
-    const sortedPlaylists = playlists
-      .slice()
-      .sort((a, b) => b.like_count - a.like_count);
-    setPlaylists(sortedPlaylists);
+    playlists.sort((a, b) => b.like_count - a.like_count);
     setSortType('popular');
   };
 
@@ -37,7 +30,7 @@ export default function PlayListSection(props) {
             : '320px'
       }
     >
-      <PlayListBox isEmpty={isEmpty}>
+      <PlayListBox>
         <PlayListHeader>
           <h2>
             {type === 'myPlaylist' &&

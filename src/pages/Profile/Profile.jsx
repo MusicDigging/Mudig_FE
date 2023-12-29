@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -27,25 +27,31 @@ export default function Profile() {
       location.pathname.split('/').pop()) ||
     my_id;
 
+  // Fetching 상태 추가
   const {
     data: profileData,
     isLoading: profileLoading,
-    isFetching: profileFetching,
     isError: profileError,
+    refetch: refetchProfile,
   } = useGetProfile(user_id);
+
   const {
     data: followingData,
     isLoading: followingLoading,
     isError: followingError,
   } = useGetFollowing(user_id);
+
   const {
     data: followerData,
     isLoading: followerLoading,
     isError: followerError,
   } = useGetFollower(user_id);
 
-  if (profileLoading || profileFetching || followingLoading || followerLoading)
-    return <Loading isLoading={profileLoading} />;
+  const isLoading = profileLoading || followingLoading || followerLoading;
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (profileError || followingError || followerError) {
     navigate('/*');
@@ -67,6 +73,7 @@ export default function Profile() {
           ...profileData,
           following: followingData,
           follower: followerData,
+          UserId: user_id,
         }}
       />
       {repPlaylist && <MainPlayListSection data={repPlaylist} />}
