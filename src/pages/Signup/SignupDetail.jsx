@@ -25,6 +25,7 @@ export default function SignupDetail() {
           <Toast
             setToast={setToast}
             text='해당메일로 인증번호가 전송되었습니다  ✉️'
+            type='warning'
           />
         </ToastBox>
       )}
