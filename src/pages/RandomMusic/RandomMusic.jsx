@@ -10,6 +10,8 @@ import { modalAtom } from '../../atoms/modalAtom';
 import { InfoToast } from '../../library/sweetAlert/sweetAlert';
 import BgImg from '../../img/background-img2.svg';
 
+import Toast from '../../components/common/Toast';
+import { toastAtom } from '../../library/atom';
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
@@ -18,6 +20,7 @@ export default function RandomMusic() {
   const selectId = id.join(',');
   //개별 뮤비 아이디
   const [videoId, setVideoId] = useState('');
+  const [toast, setToast] = useRecoilState(toastAtom);
   const [page, setPage] = useState(0);
   const targetRef = useRef(null);
   const [allVideos, setAllVideos] = useState([]);
@@ -85,7 +88,13 @@ export default function RandomMusic() {
 
   return (
     <>
+      {toast && (
+        <ToastBox>
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
+        </ToastBox>
+      )}
       <MainHeader />
+
       <PlayerWrap>
         {allVideos &&
           allVideos.map((video, index) => (
@@ -112,4 +121,11 @@ const PlayerWrap = styled.main`
 const PlayerBox = styled.div`
   padding: 8px 16px;
   font-size: var(--font-md);
+`;
+
+const ToastBox = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 1;
 `;
