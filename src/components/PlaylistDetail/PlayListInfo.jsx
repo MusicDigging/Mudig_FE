@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,6 +20,7 @@ import ProfileBadge from '../../img/badge-icon.svg';
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const { user, playlist, playlistDesc, playing } = props;
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
@@ -52,6 +54,7 @@ export default function PlayListInfo(props) {
     const id = playlist.id;
     deletePlaylist(id, {
       onSuccess: () => {
+        queryClient.removeQueries('get-playlist-detail');
         alert('플레이리스트가 정상적으로 삭제되었습니다.');
         navigate(-1);
       },

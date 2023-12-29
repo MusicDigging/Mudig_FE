@@ -37,13 +37,13 @@ export default function PlaylistDetail() {
   }, []);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!data || isLoading) return;
     const { playlist, music } = data;
     setPlaylistInfo({ playlist, music });
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (isLoading) return null;
+  if (!data || isLoading) return null;
   if (isError) {
     navigate('/*');
     return;
