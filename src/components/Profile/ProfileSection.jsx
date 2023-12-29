@@ -27,6 +27,7 @@ export default function ProfileSection(props) {
   const handleMoreBtnClick = () => {
     return isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
   };
+  const UserId = props.data.UserId;
 
   const handleFollowClick = (e) => {
     e.preventDefault();
@@ -55,6 +56,10 @@ export default function ProfileSection(props) {
       },
     });
   };
+
+  const followPath = isMyProfile
+    ? `/user/profile/my/follow`
+    : `/user/profile/${UserId}/follow`;
 
   const setIsLogin = useSetRecoilState(isLoginAtom);
 
@@ -100,14 +105,14 @@ export default function ProfileSection(props) {
         <UserInfo>
           <FollowInfo>
             <MoveFollowBtn
-              to='/user/profile/my/follow'
+              to={followPath}
               state={{ type: 'followers', following, follower }}
             >
               <strong>{follower?.length}</strong>
               <p>팔로워</p>
             </MoveFollowBtn>
             <MoveFollowBtn
-              to='/user/profile/my/follow'
+              to={followPath}
               state={{ type: 'followings', following, follower }}
             >
               <strong>{following?.length}</strong>

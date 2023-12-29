@@ -73,6 +73,7 @@ export default function Profile() {
           ...profileData,
           following: followingData,
           follower: followerData,
+          UserId: user_id,
         }}
       />
       {repPlaylist && <MainPlayListSection data={repPlaylist} />}
