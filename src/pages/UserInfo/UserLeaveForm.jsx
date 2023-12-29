@@ -9,17 +9,13 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useUserResign } from '../../hooks/queries/useUserInfo';
 import ResignModal from '../../components/common/Modal/ResignModal';
 import { useNavigate } from 'react-router-dom';
-import {
-  showCustomModal,
-  confirmModal,
-  successModal,
-} from '../../library/sweetAlert/sweetAlert';
+import { toastAtom } from '../../library/atom';
 import { modalAtom } from '../../atoms/modalAtom';
 export default function UserLeaveForm() {
   const [isModalOpen, setModalOpen] = useRecoilState(modalAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
-
+  const setToast = useSetRecoilState(toastAtom);
   const navigate = useNavigate();
 
   const userEmail = useRecoilValue(userInfoAtom).email;
@@ -33,7 +29,7 @@ export default function UserLeaveForm() {
     mode: 'onSubmit',
   });
 
-  const { formState, setError, trigger, getValues } = methods;
+  const { formState, setError, getValues } = methods;
 
   const { isValid, errors } = formState;
   const password = getValues('password');
@@ -46,8 +42,7 @@ export default function UserLeaveForm() {
         setUserInfo({});
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
-
-        navigate('/register');
+        setToast({ content: '회원탈퇴가 완료되었습니다.', type: 'success' });
         console.log(data);
       },
 
