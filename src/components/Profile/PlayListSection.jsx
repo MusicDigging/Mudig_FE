@@ -30,7 +30,7 @@ export default function PlayListSection(props) {
             : '320px'
       }
     >
-      <PlayListBox isEmpty={isEmpty}>
+      <PlayListBox>
         <PlayListHeader>
           <h2>
             {type === 'myPlaylist' &&
