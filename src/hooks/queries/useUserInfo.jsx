@@ -7,7 +7,7 @@ import {
 
 export const useOtpValid = () => {
   const postOtpValid = async (email) => {
-    console.log(email);
+    // console.log(email);
     const response = await axiosInstance.post('/user/otp/', {
       email: email,
     });

@@ -8,6 +8,7 @@ import PlayListTable from '../../components/Home/PlayListTable';
 import useGetHome from '../../hooks/queries/useHome';
 import Loading from '../../components/Loading/Loading';
 import NotFound from '../NotFound/NotFound';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   const { data, isLoading, error } = useGetHome();
@@ -36,9 +37,14 @@ export default function Home() {
         {my_playlist && my_playlist.length > 0 ? (
           <MyPlayListTable playlistData={my_playlist} />
         ) : (
-          <p id='MyPlayListNoneInfo'>
-            내가 만든 플리가 없습니다. 플리를 생성해보세요😊
-          </p>
+          <S.MyPlayListNoneInfo>
+            <p id='MyPlayListNoneInfoText'>앗 ! 아직 비어있어요</p>
+            <Link to='/playlist/create1'>
+              <button id='MyPlayListNoneInfoBtn'>
+                플레이리스트 생성하러 가기
+              </button>
+            </Link>
+          </S.MyPlayListNoneInfo>
         )}
         <h2>신규 플레이리스트</h2>
         <PlayListTable

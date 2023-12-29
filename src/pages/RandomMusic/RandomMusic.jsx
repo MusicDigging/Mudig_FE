@@ -8,6 +8,9 @@ import { useRandomMv } from '../../hooks/queries/useRandomMv';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { InfoToast } from '../../library/sweetAlert/sweetAlert';
+
+import Toast from '../../components/common/Toast';
+import { toastAtom } from '../../library/atom';
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
@@ -16,13 +19,14 @@ export default function RandomMusic() {
   const selectId = id.join(',');
   //개별 뮤비 아이디
   const [videoId, setVideoId] = useState('');
+  const [toast, setToast] = useRecoilState(toastAtom);
   const [page, setPage] = useState(0);
   const targetRef = useRef(null);
   const [allVideos, setAllVideos] = useState([]);
   const [isEnd, setIsEnd] = useState(false);
   //버튼 클릭히 해당 뮤비 아이디 함수
   const handleAddButtonClick = (videoId) => {
-    console.log(`선택된 뮤비 ${videoId}`);
+    // console.log(`선택된 뮤비 ${videoId}`);
     setVideoId(videoId);
     setModalOpen(true);
   };
@@ -30,7 +34,7 @@ export default function RandomMusic() {
   useEffect(() => {
     const fetchRandomMv = async () => {
       const data = { selectId, page };
-      console.log(data);
+      // console.log(data);
       getRandomMv(data, {
         onSuccess: (newVideoData) => {
           if (newVideoData.length === 0) {
@@ -53,7 +57,7 @@ export default function RandomMusic() {
     const observerCallback = async ([entry]) => {
       if (entry.isIntersecting) {
         await fetchRandomMv();
-        console.log('스크롤 이벤트 발생!');
+        // console.log('스크롤 이벤트 발생!');
       }
     };
 
@@ -83,7 +87,13 @@ export default function RandomMusic() {
 
   return (
     <>
+      {toast && (
+        <ToastBox>
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
+        </ToastBox>
+      )}
       <MainHeader />
+
       <PlayerWrap>
         {allVideos &&
           allVideos.map((video, index) => (
@@ -109,4 +119,11 @@ const PlayerWrap = styled.main`
 const PlayerBox = styled.div`
   padding: 8px 16px;
   font-size: var(--font-md);
+`;
+
+const ToastBox = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 1;
 `;

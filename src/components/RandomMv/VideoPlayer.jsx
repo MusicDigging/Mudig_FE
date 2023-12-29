@@ -16,7 +16,7 @@ export default function VideoPlayer({ url }) {
 }
 
 const VideoBox = styled.div`
-  width: 328px;
+  width: 100%;
   height: 200px;
   border-radius: 10px;
   overflow: hidden;

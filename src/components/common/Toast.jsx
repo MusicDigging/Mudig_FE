@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import SuccessIcon from '../../img/success-icon.svg';
+import ErrorIcon from '../../img/error-icon.svg';
+import WarningIcon from '../../img/warning-icon.svg';
 
-export default function Toast({ setToast, text }) {
+export default function Toast({ setToast, text, type }) {
   let timer;
   const handleAnimationComplete = () => {
     timer = setTimeout(() => {
@@ -20,7 +23,18 @@ export default function Toast({ setToast, text }) {
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 1.3, ease: 'easeInOut' }}
       onAnimationComplete={handleAnimationComplete}
+      type={type}
     >
+      <img
+        src={
+          type === 'success'
+            ? SuccessIcon
+            : type === 'error'
+              ? ErrorIcon
+              : WarningIcon
+        }
+        alt=''
+      />
       <p>{text}</p>
     </ToastWrap>
   );
@@ -29,12 +43,28 @@ export default function Toast({ setToast, text }) {
 const ToastWrap = styled(motion.div)`
   width: 334px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: var(--btn-point-color);
+  align-items: center;
+  gap: 12px;
+  background-color: ${(props) =>
+    props.type === 'success'
+      ? '#faf8ff'
+      : props.type === 'error'
+        ? '#FFEFF3'
+        : '#FFF3E8'};
+  border: ${(props) =>
+    props.type === 'success'
+      ? '1px solid var(--main-color)'
+      : props.type === 'error'
+        ? '1px solid #FF434B'
+        : '1px solid #FF9D43'};
   padding: 24px 22px;
   border-radius: 10px;
-  color: white;
+  color: var(--font-color);
   font-size: var(--font-md);
   font-weight: var(--font-semi-bold);
+
+  img {
+    width: 22px;
+    height: 22px;
+  }
 `;

@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom } from '../../../library/atom';
-import { useModifyPlaylist } from '../../../hooks/queries/usePlaylist';
 export default function Modal({ playlistDesc, setPlaylistDesc }) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
@@ -113,17 +112,13 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
             <BtnBox>
               <Button
                 text='취소'
-                btnWidth='143px'
+                btnWidth='50%'
                 btnBgColor='var(--input-background-color)'
                 btnColor='var(--font-color)'
                 btnBorder='1px solid var(--input-background-color)'
                 onClick={handleClose}
               />
-              <Button
-                text='수정'
-                btnWidth='143px'
-                onClick={handleModifyClick}
-              />
+              <Button text='수정' btnWidth='50%' onClick={handleModifyClick} />
             </BtnBox>
           )}
         </ModalForm>
@@ -140,11 +135,11 @@ const ModalWrap = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 const ModalBox = styled.div`
-  height: 393px;
   position: absolute;
   top: 25%;
   left: 5%;
-  width: 327px;
+  min-width: 327px;
+  width: 90%;
   padding: 16px;
   border-radius: 10px;
   background-color: #fff;
@@ -198,8 +193,8 @@ const PrivateCheckBtn = styled.button`
   }
 `;
 const PrivateCheckBtnBox = styled.div`
-  position: relative;
-  width: 295px;
+  min-width: 295px;
+  width: 100%;
   border-radius: 10px;
   border: 1px solid var(--border-color);
   background-color: #fff;

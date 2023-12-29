@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import {
+  PlayListAtom,
+  backAnimationAtom,
+  toastAtom,
+  commentEditIdAtom,
+} from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
+import Toast from '../../components/common/Toast';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
-
-import { useRecoilState } from 'recoil';
-import { PlayListAtom } from '../../library/atom';
 
 export default function PlaylistDetail() {
   const navigate = useNavigate();
@@ -22,16 +27,23 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
-
+  const [toast, setToast] = useRecoilState(toastAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+  const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
 
   useEffect(() => {
-    if (isLoading) return;
+    setEditId(null);
+  }, []);
+
+  useEffect(() => {
+    if (!data || isLoading) return;
     const { playlist, music } = data;
     setPlaylistInfo({ playlist, music });
+    setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (isLoading) return null;
+  if (!data || isLoading) return null;
   if (isError) {
     navigate('/*');
     return;
@@ -39,11 +51,16 @@ export default function PlaylistDetail() {
   const { playlist, comments, music, user } = data;
   const musicList = music.map((obj) => obj.information);
   const musicLength = music.length;
-  console.log(playlistId);
+
   return (
     <>
       <PlaylistDetailWrap>
-        <PlayListInfo playlist={playlist} />
+        {toast && (
+          <ToastBox>
+            <Toast setToast={setToast} text={toast.content} type={toast.type} />
+          </ToastBox>
+        )}
+        <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
           <MusicPlayer
             pause={pause}
@@ -55,7 +72,6 @@ export default function PlaylistDetail() {
         )}
         <MusicPlayBar
           playlist={playlist}
-          userId={user.id}
           playlistId={playlistId}
           pause={pause}
           setPause={setPause}
@@ -71,6 +87,7 @@ export default function PlaylistDetail() {
             </MusicNothingSection>
           ) : (
             <DetailList
+              pause={pause}
               setPause={setPause}
               playing={playing}
               setPlaying={setPlaying}
@@ -79,7 +96,11 @@ export default function PlaylistDetail() {
               setCurrMusic={setCurrMusic}
             />
           )}
-          <CommentSection playlistId={playlistId} comments={comments} />
+          <CommentSection
+            playlistId={playlistId}
+            playlistWriter={playlist.writer}
+            comments={comments}
+          />
         </PlayListDetailBox>
       </PlaylistDetailWrap>
     </>
@@ -110,4 +131,10 @@ const MusicNothingSection = styled.section`
   span {
     font-size: var(--font-sm);
   }
+`;
+const ToastBox = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 10;
 `;

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
+import { toastAtom } from '../../../library/atom';
+import { useSetRecoilState } from 'recoil';
 export function Button(props) {
   const {
     type,
@@ -34,7 +36,7 @@ export function Button(props) {
 }
 
 const ButtonStyle = styled.button`
-  width: ${(props) => props.btnWidth || '328px'};
+  width: ${(props) => props.btnWidth || '100%'};
   height: ${(props) => props.btnHeight || '44px'};
   margin: ${(props) => props.btnMargin || '0px'};
   background: ${(props) =>
@@ -54,6 +56,7 @@ const ButtonStyle = styled.button`
 
 export function ChipButton(props) {
   const { name, onSelect, selectedChips } = props;
+  const setToast = useSetRecoilState(toastAtom);
   const isChipSelected = selectedChips.includes(name);
 
   const handleClick = () => {
@@ -65,9 +68,9 @@ export function ChipButton(props) {
       if (selectedChips.length < 3) {
         onSelect([...selectedChips, name]);
       } else {
-        InfoToast.fire({
-          icon: 'info',
-          title: '관심사는 최대 3개까지 선택 가능합니다.',
+        setToast({
+          content: '관심사는 최대 3개까지 선택 가능합니다.',
+          type: 'warning',
         });
       }
     }
@@ -87,14 +90,13 @@ export function ChipButton(props) {
 const ChipButtonStyle = styled.button`
   height: 36px;
   font-size: 14px;
-  border: 1px solid ${(props) => (props.clicked ? 'transparent' : '#fff')};
   border-radius: 20px;
-  color: ${(props) => (props.clicked ? 'white' : 'black')};
+  border: 1px solid ${(props) => (props.clicked ? 'var(--main-color)' : '#fff')};
+  color: ${(props) =>
+    props.clicked ? 'var(--main-color)' : 'var( --sub-font-color)'};
   background-color: ${(props) =>
-    props.clicked ? 'var(--btn-point-color)' : 'rgba(255, 255, 255, 0.6)'};
+    props.clicked ? '#E5DCFF' : 'rgba(255, 255, 255, 0.6)'};
   padding: 8px 16px;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+  transition: 0.3s;
   cursor: pointer;
 `;

@@ -43,7 +43,7 @@ export default PlayListTable;
 
 const PlayListTableWrap = styled.div`
   ul {
-    width: 360px;
+    width: 100%;
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;

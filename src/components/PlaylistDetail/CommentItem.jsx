@@ -1,154 +1,215 @@
 import React, { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { Link } from 'react-router-dom';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { userInfoAtom } from '../../library/atom';
+import {
+  toastAtom,
+  commentAtom,
+  userInfoAtom,
+  backAnimationAtom,
+  commentEditIdAtom,
+} from '../../library/atom';
 import { useDeleteComment } from '../../hooks/queries/useComment';
 
 import { CircleImage } from '../common/Image/Image';
 import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 
+import {
+  convertDatetime,
+  checkDatetimeEqual,
+} from '../../library/DateTimeUtils';
+
 import MoreIcon from '../../img/more-icon.svg';
+import { ReactComponent as ProfileBadge } from '../../img/badge-icon.svg';
 
 export default function CommentItem(props) {
-  const myId = useRecoilValue(userInfoAtom).id;
-
-  const { mutate: deleteComment } = useDeleteComment();
-
   const {
-    writer,
+    mode,
+    playlistId,
     comment,
-    isVisible,
-    setParentId,
-    setContent,
-    editId,
-    setEditId,
+    parentId,
     modalId,
     setModalId,
-    children: replies,
+    parentWriter,
+    playlistWriter,
+    children,
   } = props;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const myId = useRecoilValue(userInfoAtom).id;
+  const [toast, setToast] = useRecoilState(toastAtom);
+  const [content, setContent] = useRecoilState(commentAtom);
+  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const [animation, setAnimation] = useRecoilState(backAnimationAtom);
+  const { mutate: deleteComment } = useDeleteComment();
 
-  const convertDatetime = (dateTime) => {
-    const date = new Date(dateTime);
-    const convertedDatetime = date.toLocaleString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-    });
-    return convertedDatetime;
+  const isMyComment = myId === comment.writer;
+  const isPlaylistWriter = playlistWriter === comment.writer;
+  const isParentWriter = parentWriter === comment.writer;
+
+  const handleMoreBtnClick = () =>
+    setModalId(modalId === comment.id ? null : comment.id);
+
+  const handleDeleteBtnClick = () => {
+    deleteComment(comment.id);
+    if (parentId)
+      setToast({ content: '해당 답글이 삭제되었습니다. 💬', type: 'success' });
+    else
+      setToast({ content: '해당 댓글이 삭제되었습니다. 💬', type: 'success' });
   };
 
-  const checkDatetimeEqual = (time1, time2) => {
-    // 두 시간의 초 단위(이후 소수점 무시)까지 비교, 같으면 true
-    return time1.slice(0, 19) === time2.slice(0, 19);
-  };
+  const linkTo = isMyComment
+    ? '/user/profile/my'
+    : `/user/profile/${comment.writer}`;
 
-  const handleMoreBtnClick = () => {
-    if (modalId) setModalId(null);
-    else setModalId(comment.id);
+  const CommentLink = ({ children }) => (
+    <Link to={linkTo} state={{ id: comment.writer }}>
+      {children}
+    </Link>
+  );
+
+  // 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리
+  // 답글 페이지에서 댓글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리
+  const shouldDisplayMoreBtn = () => {
+    if (mode === 'reply') {
+      return comment.writer === myId;
+    } else {
+      return comment.parent === null || comment.writer === myId;
+    }
   };
 
   const handleReplyBtnClick = () => {
-    setParentId(comment.id);
+    setEditId(null);
+    navigate(`/playlist/detail/${playlistId}/reply`, {
+      state: {
+        mode: 'reply',
+        parentId: comment.id,
+        playlistId,
+        playlistWriter,
+      },
+    });
+  };
+  const handleEditBtnClick = () => {
+    setEditId(comment.id);
+    setContent(comment.content);
+    const isComment = comment.parent === null;
+    const targetPath = isComment
+      ? `/playlist/detail/${playlistId}/comment`
+      : `/playlist/detail/${playlistId}/reply`;
+    const state = isComment
+      ? {
+          mode: 'comment',
+          playlistId,
+          playlistWriter,
+        }
+      : {
+          mode: 'reply',
+          parentId: comment.parent,
+          playlistId,
+          playlistWriter,
+        };
+
+    const allowedPaths = [
+      `/playlist/detail/${playlistId}/comment`,
+      `/playlist/detail/${playlistId}/reply`,
+    ];
+
+    if (!allowedPaths.includes(currentPath)) {
+      navigate(targetPath, { state });
+    }
+
     setModalId(null);
   };
 
-  const handleEditBtnClick = () => {
-    if (comment.parent) setParentId(comment.parent);
-    setEditId(comment.id);
-    setContent(comment.content);
-    setModalId(null);
-  };
-  const handleDeleteBtnClick = () => {
-    deleteComment(comment.id);
-  };
-  console.log(comment);
   return (
-    <CommentItemWrap display={isVisible === false ? 'none' : 'flex'}>
-      <ProfileImgBox>
-        <Link
-          to={
-            myId === comment.writer_profile.id
-              ? '/user/profile/my'
-              : `user/profile/${comment.writer_profile.id}`
-          }
-          state={{ id: comment.writer_profile.id }}
-        >
-          <CircleImage src={comment.writer_profile.image} alt='프로필 이미지' />
-        </Link>
-      </ProfileImgBox>
-      <DescBox>
-        <UserInfoBox>
-          <div>
-            <Link
-              to={
-                myId === comment.writer_profile.id
-                  ? '/user/profile/my'
-                  : `user/profile/${comment.writer_profile.id}`
-              }
-              state={{ id: comment.writer_profile.id }}
-            >
-              <p>{comment.writer_profile.name}</p>
-            </Link>
-            <p>
-              {convertDatetime(comment.created_at)}
-              {checkDatetimeEqual(comment.created_at, comment.updated_at) || (
-                <span> (수정됨)</span>
-              )}
-            </p>
-          </div>
-          {/* 답글의 작성자와 현재 접속한 유저가 다를 때 버튼 안보이게 처리*/}
-          {(comment.parent !== null && writer !== myId) || (
-            <MoreBtn onClick={handleMoreBtnClick}>
-              <img src={MoreIcon} alt='더보기' />
-            </MoreBtn>
-          )}
-          {/* modal이 오픈된 댓글 id 비교  */}
-          {modalId === comment.id && (
-            <MiniModalStyle>
-              {/* 댓글일 때만 답글 달기 기능 추가  */}
-              {comment.parent === null && (
-                <button onClick={handleReplyBtnClick}>답글 달기</button>
-              )}
-              {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
-              {writer === myId && (
-                <>
-                  <button onClick={handleEditBtnClick}>
-                    {comment.parent === null ? '댓글' : '답글'} 수정
-                  </button>
-                  <button onClick={handleDeleteBtnClick}>
-                    {comment.parent === null ? '댓글' : '답글'} 삭제
-                  </button>
-                </>
-              )}
-            </MiniModalStyle>
-          )}
-        </UserInfoBox>
-        <Comment
-          $color={comment.is_active ? '' : 'var(--sub-font-color)'}
-          $bgColor={
-            editId === comment.id ? 'rgba(137, 105, 255, 0.05)' : 'none'
-          }
-        >
-          {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
-        </Comment>
-        <CommentBox>{replies}</CommentBox>
-      </DescBox>
+    <CommentItemWrap>
+      <CommentBox
+        $bgColor={
+          editId === comment.id || parentId === comment.id
+            ? 'rgba(137, 105, 255, 0.08)'
+            : 'none'
+        }
+      >
+        <ProfileImgBox>
+          <CommentLink>
+            <CircleImage
+              src={comment.writer_profile.image}
+              alt='프로필 이미지'
+            />
+          </CommentLink>
+        </ProfileImgBox>
+        <DescBox>
+          <UserInfoBox>
+            <UserInfo>
+              <CommentLink>
+                {isPlaylistWriter ? (
+                  <ProfileBadge alt='배지 아이콘' />
+                ) : isParentWriter ? (
+                  <span>작성자</span>
+                ) : (
+                  ''
+                )}
+                <p>{comment.writer_profile.name}</p>
+              </CommentLink>
+              <div>
+                <p>
+                  {convertDatetime(comment.created_at)}
+                  {checkDatetimeEqual(
+                    comment.created_at,
+                    comment.updated_at,
+                  ) || <span> (수정됨)</span>}
+                </p>
+                {shouldDisplayMoreBtn() && (
+                  <MoreBtn onClick={handleMoreBtnClick}>
+                    <img src={MoreIcon} alt='더보기' />
+                  </MoreBtn>
+                )}
+                {/* modal이 오픈된 댓글 id 비교  */}
+                {modalId === comment.id && (
+                  <MiniModalStyle>
+                    {/* 댓글일 때만 답글 달기 기능 추가  */}
+                    {mode !== 'reply' && comment.parent === null && (
+                      <button onClick={handleReplyBtnClick}>답글 달기</button>
+                    )}
+                    {/* 작성자와 현재 접속한 유저가 같을 때만 수정/삭제 기능 추가  */}
+                    {comment.writer === myId && (
+                      <>
+                        {/* 현재 수정 중인 댓글에서 숨김 처리  */}
+                        {editId !== comment.id && (
+                          <button onClick={handleEditBtnClick}>
+                            {comment.parent === null ? '댓글' : '답글'} 수정
+                          </button>
+                        )}
+                        <button onClick={handleDeleteBtnClick}>
+                          {comment.parent === null ? '댓글' : '답글'} 삭제
+                        </button>
+                      </>
+                    )}
+                  </MiniModalStyle>
+                )}
+              </div>
+            </UserInfo>
+          </UserInfoBox>
+          <Comment $color={comment.is_active ? '' : 'var(--sub-font-color)'}>
+            {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
+          </Comment>
+        </DescBox>
+      </CommentBox>
+      <CommentReplies>{children}</CommentReplies>
     </CommentItemWrap>
   );
 }
 
 const CommentItemWrap = styled.div`
-  display: ${(props) => props.display || 'flex'};
-  gap: 10px;
-  margin-top: 6px;
+  display: 'flex';
+  flex-direction: column;
+  padding: 12px 0;
 `;
 
 const ProfileImgBox = styled.div`
+  flex-shrink: 0;
   width: 24px;
   height: 24px;
 `;
@@ -160,29 +221,62 @@ const DescBox = styled.div`
 const UserInfoBox = styled.div`
   position: relative;
   display: flex;
-  padding-top: 4px;
   font-size: var(--font-sm);
+
   p {
-    margin-top: 4px;
     color: var(--sub-font-color);
   }
   a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    span {
+      display: flex;
+      align-items: center;
+      height: 18px;
+      padding: 0 7px;
+      font-size: 11px;
+      border-radius: 10px;
+      background: #e5dcff;
+      font-weight: var(--font-semi-bold);
+      color: var(--point, #7d4fff);
+    }
     p {
-      margin-top: 1px;
       color: #000;
       font-weight: var(--font-semi-bold);
     }
   }
 `;
 
+const UserInfo = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+`;
+
 const Comment = styled.p`
-  padding: 6px 0;
+  padding: 8px 0;
   font-size: var(--font-md);
   color: ${(props) => props.$color};
-  background-color: ${(props) => props.$bgColor};
 `;
 
 const CommentBox = styled.div`
+  display: flex;
+  gap: 10px;
+  background-color: ${(props) => props.$bgColor};
+  border-radius: 10px 5px 5px 5px;
+  padding: 0;
+`;
+const CommentReplies = styled.div`
+  & > div {
+    padding-left: 30px;
+    padding-bottom: 0;
+  }
   span {
     font-size: var(--font-sm);
     color: var(--sub-font-color);

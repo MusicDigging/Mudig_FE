@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil';
 import { isLoginAtom } from '../../library/atom';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Gradation from '../../components/common/Gradation';
 import Logo from '../../img/icon_splash_logo.svg';
 import Mudig from '../../img/icon_splash_mudig.svg';
 import MudigHand from '../../img/icon_splash_mudig_hand.svg';
@@ -30,55 +29,46 @@ export default function Splash() {
 
   return (
     <SplashWrap>
-      <GradationBox>
-        <Gradation />
-      </GradationBox>
       <LogoImg src={Logo} alt='로고 이미지' />
-      <MudigImg src={Mudig} alt='캐릭터 이미지' />
-      <img id='mudigHand' src={MudigHand} alt='캐릭터 손 이미지' />
+      <MudigBox>
+        <MudigImg src={Mudig} alt='캐릭터 이미지' />
+        <MudigHandImg src={MudigHand} alt='캐릭터 손 이미지' />
+      </MudigBox>
     </SplashWrap>
   );
 }
 
 const SplashWrap = styled.div`
-  position: relative;
-  width: 360px;
+  max-width: 430px;
   @keyframes waveHand {
     0% {
-      transform: rotate(0deg);
+      transform: rotate(-10deg);
     }
     50% {
-      transform: rotate(15deg);
+      transform: rotate(5deg);
     }
     100% {
-      transform: rotate(0deg);
+      transform: rotate(-10deg);
     }
   }
+`;
 
-  #mudigHand {
-    position: absolute;
-    top: 173px;
-    right: -29px;
-    animation: waveHand 1s ease-in-out infinite;
-  }
-`;
-const GradationBox = styled.div`
-  width: 100%;
-  height: 100%;
-  //   div {
-  //     position: absolute;
-  //     z-index: -10; // z-index 설정
-  //   }
-`;
 const LogoImg = styled.img`
   display: block;
   margin: 173px auto 0 auto;
-  position: relative; // position 추가
-  z-index: 1; // z-index 설정
 `;
 const MudigImg = styled.img`
   position: absolute;
-  z-index: 1;
   margin-left: -140px;
-  bottom: -600%;
+`;
+const MudigHandImg = styled.img`
+  position: absolute;
+  right: 13px;
+  top: -16px;
+  animation: waveHand 1s ease-in-out infinite;
+`;
+const MudigBox = styled.div`
+  position: relative;
+  margin-top: 50px;
+  width: 385px;
 `;

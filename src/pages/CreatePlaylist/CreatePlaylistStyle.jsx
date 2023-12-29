@@ -89,7 +89,7 @@ export const LinkBox = styled.div`
 `;
 
 export const NextLink = styled(Link)`
-  width: 328px;
+  width: 100%;
   height: 44px;
   display: flex;
   justify-content: center;

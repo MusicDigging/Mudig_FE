@@ -53,10 +53,11 @@ const NavList = styled.ul`
     width: 100%;
     height: 44px;
     padding: 10px;
+    border-bottom: 2px solid transparent;
     &:active,
     &.active {
       color: var(--btn-point-color);
-      box-shadow: inset 0 -2px var(--btn-point-color);
+      border-bottom: 2px solid var(--btn-point-color);
     }
   }
 `;
