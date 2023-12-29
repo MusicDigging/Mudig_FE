@@ -12,8 +12,6 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
-import { useSetRecoilState } from 'recoil';
-import { toastAtom } from '../../library/atom';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -30,7 +28,7 @@ export default function EditProfile() {
     profile.image ||
       'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   );
-  const setToast = useSetRecoilState(toastAtom);
+
   const { mutate: editProfile } = useEditProfile();
 
   const onSubmit = async (data) => {
@@ -62,9 +60,7 @@ export default function EditProfile() {
   return (
     <S.EditProfileWrap>
       {toast && (
-        <S.ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </S.ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='' />
