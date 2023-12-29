@@ -18,14 +18,14 @@ export default function SetProfileImage(props) {
     const isValid = imgValidation(file);
     if (!isValid) return;
     try {
-      console.log('압축 전:', file);
+      // console.log('압축 전:', file);
       const { compressedFile, preview } = await ImgCompression(file);
 
-      console.log('압축 후:', compressedFile);
+      // console.log('압축 후:', compressedFile);
       setUploadImg(compressedFile);
       setPreviewImg(preview);
     } catch (error) {
-      console.log('이미지 압축 실패', error);
+      // console.log('이미지 압축 실패', error);
     }
   };
 

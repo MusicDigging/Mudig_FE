@@ -54,21 +54,27 @@ const NavBarWrap = styled.nav`
   border-top: 1px solid var(--border-color);
   position: fixed;
   bottom: 0;
-  border-radius: 12px 12px 0px 0px;
+  border-radius: 12px 12px 0 0;
   background: var(--white, #fff);
   box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.05);
+  width: 100%; /* 반응형을 위해 100%로 설정 */
+  max-width: 430px; /* 최대 430px */
+  min-width: 360px; /* 최소 360px */
 
   ul {
-    width: 360px;
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 0;
     display: flex;
     justify-content: space-around;
+    width: 100%; /* 부모 컨테이너에 맞춰서 100% */
 
     li {
-      width: 90px;
+      min-width: 90px;
       height: 88px;
       list-style: none;
       overflow: hidden;
     }
+
     img {
       width: 24px;
       height: 24px;
@@ -77,14 +83,17 @@ const NavBarWrap = styled.nav`
       object-fit: cover;
       object-position: 0;
     }
+
     p {
       font-size: 12px;
       display: block;
       text-align: center;
     }
+
     li:hover img {
       object-position: -24px;
     }
+
     li:hover p {
       color: #7d4fff;
     }

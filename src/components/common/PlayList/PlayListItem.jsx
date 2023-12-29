@@ -16,21 +16,23 @@ export default function PlayListItem(props) {
   } = props;
   return (
     <PlayListItemWrap ref={innerRef} {...draggableProps}>
-      {modify && (
-        <button type='button' {...dragHandleProps}>
-          <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경 아이콘' />
-        </button>
-      )}
-      <PlayListItemBox>
-        <ImageBox>
-          <Image src={img} alt='플레이 리스트 커버 이미지' />
-          {/* 'img' props로 이미지 src 삽입 */}
-        </ImageBox>
-        <InfoBox modify={modify}>
-          <div>{title}</div> {/* 제목 */}
-          <p>{info}</p> {/* 제목 및 설명, 곡 / 아티스트명 * 정보 / 만든이 */}
-        </InfoBox>
-      </PlayListItemBox>
+      <div>
+        {modify && (
+          <button type='button' {...dragHandleProps}>
+            <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경 아이콘' />
+          </button>
+        )}
+        <PlayListItemBox>
+          <ImageBox>
+            <Image src={img} alt='플레이 리스트 커버 이미지' />
+            {/* 'img' props로 이미지 src 삽입 */}
+          </ImageBox>
+          <InfoBox modify={modify}>
+            <div>{title}</div> {/* 제목 */}
+            <p>{info}</p> {/* 제목 및 설명, 곡 / 아티스트명 * 정보 / 만든이 */}
+          </InfoBox>
+        </PlayListItemBox>
+      </div>
       {children} {/* 버튼 삽입 */}
     </PlayListItemWrap>
   );
@@ -40,8 +42,13 @@ const PlayListItemWrap = styled.li`
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
+
   padding: 8px 0;
+  & > div {
+    display: flex;
+    gap: 8px;
+  }
 `;
 
 const PlayListItemBox = styled.div`

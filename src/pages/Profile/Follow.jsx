@@ -116,7 +116,11 @@ export default function Follow() {
 
 // 스타일드 컴포넌트 정의들
 const FollowWrap = styled.div`
-  width: 360px;
+  width: 100%;
+  max-width: 430px;
+  min-width: 360px;
+  margin: 0 auto;
+
   #FollowNone {
     color: #b0b0b0;
     margin-top: 50px;
@@ -135,14 +139,19 @@ const ListToggleButtonWrap = styled.div`
   display: flex;
   gap: 16px;
   padding: 0 9.5px;
+  flex-grow: 1;
 `;
 
 const ListToggleButton = styled.button`
-  width: 163px;
+  flex: 1;
   padding: 8px 16px;
   border-bottom: 2px solid transparent;
   border-color: ${(props) => (props.active ? '#7d4fff' : 'transparent')};
   color: ${(props) => (props.active ? '#7d4fff' : 'black')};
   margin-right: 4px;
   cursor: pointer;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

@@ -184,8 +184,11 @@ const ThumbnailBox = styled.div`
   flex-direction: column;
   justify-content: space-around;
   top: 0;
+  left: 50%;
   transform: ${(props) =>
-    props.isPlaylistSummary ? 'translate(50%, 56px)' : 'translate(50%, 30px)'};
+    props.isPlaylistSummary
+      ? 'translate(-50%, 56px)'
+      : 'translate(-50%, 30px)'};
   img {
     height: 180px;
   }
@@ -293,7 +296,7 @@ const MoreInfoBox = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 24px 16px 0px;
-  background-color: #fff;
+  background: linear-gradient(180deg, #f5f2ff 0%, #fff 100%);
   color: var(--tertiary-font-color);
   font-size: var(--font-sm);
   line-height: normal;

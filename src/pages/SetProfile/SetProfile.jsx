@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import { userInfoAtom, isLoginAtom } from '../../library/atom';
+import { userInfoAtom, isLoginAtom, toastAtom } from '../../library/atom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ImgCompression } from '../../library/ImgCompression';
 import { useNavigate } from 'react-router-dom';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
+import BasicProfileImage from '../../img/basic-profile-img.svg';
 // import { postUserProfile } from '../../library/apis/api';
 import { useUserProfile } from '../../hooks/queries/useUserInfo';
+import Toast from '../../components/common/Toast';
 export default function SetProfile() {
   const navigate = useNavigate();
 
@@ -17,17 +19,15 @@ export default function SetProfile() {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState([]);
-  const [previewImg, setPreviewImg] = useState(
-    'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
-  );
+  const [previewImg, setPreviewImg] = useState(BasicProfileImage);
   const [uploadImg, setUploadImg] = useState(null);
   const fileInput = useRef(null);
   const userType = userInfo.type;
-
+  const [toast, setToast] = useRecoilState(toastAtom);
   // 장르 선택 함수 props
   const handleChipSelect = (newSelectedChips) => {
     setGenre(newSelectedChips);
-    console.log('장르선택:', newSelectedChips);
+    // console.log('장르선택:', newSelectedChips);
   };
 
   const selectGenre = genre.join(',');
@@ -42,7 +42,7 @@ export default function SetProfile() {
     formData.append('genre', selectGenre);
     if (uploadImg !== null) formData.append('image', uploadImg);
 
-    console.log(uploadImg);
+    // console.log(uploadImg);
     postUserProfile(formData, {
       onSuccess: (data) => {
         const { user, token } = data;
@@ -71,6 +71,11 @@ export default function SetProfile() {
 
   return (
     <SetProfileWrap>
+      {toast && (
+        <ToastBox>
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
+        </ToastBox>
+      )}
       <PageNum>2/2</PageNum>
       <SetProfileTitle>
         가입을 축하드려요! <br />
@@ -117,14 +122,14 @@ const SetProfileBox = styled.div`
 const PageNum = styled.span`
   position: absolute;
   top: 24px;
-  left: 317px;
+  right: 16px;
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
 `;
 
 const SetProfileTitle = styled.h1`
-  width: 252px;
+  /* width: 252px; */
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
   line-height: 33px;
@@ -141,4 +146,11 @@ const ImgUploadBtn = styled.button`
 
 const ProfileInputBox = styled.div`
   height: 100%;
+`;
+
+const ToastBox = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 1;
 `;
