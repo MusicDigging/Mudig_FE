@@ -57,10 +57,3 @@ export const ReplyBtn = styled.button`
   font-size: var(--font-sm);
   color: var(--sub-font-color);
 `;
-
-export const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
-`;
