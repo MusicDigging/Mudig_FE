@@ -88,9 +88,7 @@ export default function RandomMusic() {
   return (
     <>
       {toast && (
-        <ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <MainHeader />
 
@@ -119,11 +117,4 @@ const PlayerWrap = styled.main`
 const PlayerBox = styled.div`
   padding: 8px 16px;
   font-size: var(--font-md);
-`;
-
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;

@@ -97,9 +97,7 @@ export default function Login() {
   return (
     <LoginWrap>
       {toast && (
-        <ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <LoginHeader>
         <LoginTitle>
@@ -200,11 +198,4 @@ const NavUserInfo = styled.nav`
 const NavUserInfoLink = styled.span`
   font-size: var(--font-sm);
   cursor: pointer;
-`;
-
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;
