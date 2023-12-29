@@ -28,7 +28,7 @@ export default function SignupDetail() {
           />
         </ToastBox>
       )}
-      <PageNum>1/3</PageNum>
+      <PageNum>1/2</PageNum>
 
       <SignupDetailBox>
         <DetailTitle>
