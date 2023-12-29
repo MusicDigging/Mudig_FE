@@ -10,13 +10,12 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
-import { PlayListAtom } from '../../library/atom';
+import { PlayListAtom, toastAtom } from '../../library/atom';
 import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
 import { useNavigate } from 'react-router-dom';
 
 export default function PlayListModify({ playlistDesc }) {
   const navigate = useNavigate();
-  // const { music } = props;
   const [playlistInfo, setPlayListInfo] = useRecoilState(PlayListAtom);
   const [music, setMusic] = useState(playlistInfo.music || []);
   const { mutate: modifyPlaylist } = useModifyPlaylist(
@@ -24,6 +23,7 @@ export default function PlayListModify({ playlistDesc }) {
   );
   const [delMusic, setDelMusic] = useState([]);
   const [changedOrder, setChangedOrder] = useState([]);
+  const [toast, setToast] = useRecoilState(toastAtom);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -48,20 +48,20 @@ export default function PlayListModify({ playlistDesc }) {
     modifyPlaylist(reqData, {
       onSuccess: () => {
         setIsLoading(false);
+        setToast({ content: '수정에 성공하였습니다.', type: 'success' });
         navigate(-1);
       },
       onError: (error) => {
         setIsLoading(false);
-        alert('수정에 실패하였습니다. 다시 시도해주세요.');
-        console.log('수정 실패 에러: ', error);
+        setToast({ content: '수정에 실패하였습니다.', type: 'warning' });
       },
     });
   };
 
   // Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }) => {
-    console.log('>>> source', source);
-    console.log('>>> destination', destination);
+    // console.log('>>> source', source);
+    // console.log('>>> destination', destination);
     if (!destination) return;
     const _items = JSON.parse(JSON.stringify(music));
     const [targetItem] = _items.splice(source.index, 1);
