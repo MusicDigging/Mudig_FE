@@ -45,9 +45,7 @@ export default function Comment() {
   return (
     <S.CommentWrap>
       {toast && (
-        <S.ToastBox>
-          <Toast setToast={setToast} text={toast} />
-        </S.ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <S.CommentBox
         initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}

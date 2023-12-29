@@ -29,8 +29,6 @@ export default function EventPage() {
         situations: inputValue,
       });
 
-      console.log('response.data:', response.data);
-
       if (response.status === 200) {
         setResponseData(response.data); // 데이터 저장
         navigate('/playlist/summary', {

@@ -32,19 +32,20 @@ export default function CommentForm(props) {
       editComment(data);
       setEditId(null);
       if (parentId) {
-        setToast('답글이 수정되었습니다. 💬');
-      } else setToast('댓글이 수정되었습니다. 💬');
+        setToast({ content: '답글이 수정되었습니다. 💬', type: 'success' });
+      } else
+        setToast({ content: '댓글이 수정되었습니다. 💬', type: 'success' });
     } else {
       if (parentId) {
         // 답글
         data = { content, playlist_id: playlistId, parent_id: parentId };
         writeReply(data);
-        setToast('답글이 등록되었습니다. 💬');
+        setToast({ content: '답글이 등록되었습니다. 💬', type: 'success' });
       } else {
         // 댓글
         data = { content, playlist_id: playlistId };
         writeComment(data);
-        setToast('댓글이 등록되었습니다. 💬');
+        setToast({ content: '댓글이 등록되었습니다. 💬', type: 'success' });
       }
     }
     setContent('');

@@ -5,7 +5,7 @@ import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { isLoginAtom, userInfoAtom } from '../../library/atom';
+import { isLoginAtom, toastAtom, userInfoAtom } from '../../library/atom';
 import {
   getKakaoInfo,
   getGoogleInfo,
@@ -13,8 +13,9 @@ import {
 } from '../../library/apis/api';
 import { useMutation, useQuery } from 'react-query';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-
+import Toast from '../../components/common/Toast';
 export default function Login() {
+  const [toast, setToast] = useRecoilState(toastAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const location = useLocation();
@@ -79,7 +80,7 @@ export default function Login() {
         setUserInfo({ email, type: 'social' });
         navigate('/setprofile');
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error('Error', error);
     }
@@ -95,6 +96,9 @@ export default function Login() {
 
   return (
     <LoginWrap>
+      {toast && (
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
+      )}
       <LoginHeader>
         <LoginTitle>
           선곡 고민 끝, <br />
@@ -140,6 +144,7 @@ export default function Login() {
 const LoginWrap = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 16px;
 `;
 
 const LoginHeader = styled.header`
@@ -147,7 +152,7 @@ const LoginHeader = styled.header`
   flex-direction: column;
   position: relative;
   top: 56px;
-  left: 16px;
+
   line-height: 33px;
 `;
 
@@ -162,7 +167,7 @@ const LoginText = styled.span`
   line-height: 33px;
 `;
 const LoginMain = styled.main`
-  padding: 0 16px;
+  /* padding: 0 16px; */
   position: relative;
   text-align: center;
   top: 149px;
@@ -171,6 +176,8 @@ const LoginMain = styled.main`
 const LoginBtnBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 16px;
   margin-bottom: 25px;
 `;

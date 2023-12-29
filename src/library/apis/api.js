@@ -12,10 +12,10 @@ export const loginUser = async (data) => {
 export const getKakaoInfo = async () => {
   try {
     const response = await axiosInstance.get('/user/login/kakao');
-    console.log(response.data);
+    // console.log(response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -36,7 +36,7 @@ export const postUserCode = async (code, social) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    //   console.log(error);
   }
 };
 
@@ -45,6 +45,6 @@ export const getGoogleInfo = async () => {
     const response = await axiosInstance.get('/user/login/google/');
     return response.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };

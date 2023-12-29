@@ -37,13 +37,13 @@ export default function PlaylistDetail() {
   }, []);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!data || isLoading) return;
     const { playlist, music } = data;
     setPlaylistInfo({ playlist, music });
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (isLoading) return null;
+  if (!data || isLoading) return null;
   if (isError) {
     navigate('/*');
     return;
@@ -56,9 +56,7 @@ export default function PlaylistDetail() {
     <>
       <PlaylistDetailWrap>
         {toast && (
-          <ToastBox>
-            <Toast setToast={setToast} text={toast} />
-          </ToastBox>
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
         )}
         <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
@@ -131,10 +129,4 @@ const MusicNothingSection = styled.section`
   span {
     font-size: var(--font-sm);
   }
-`;
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;

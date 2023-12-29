@@ -21,8 +21,7 @@ export const AuthForm = () => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-  const errorMessage =
-    '아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해 주세요';
+  const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해 주세요`;
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
@@ -45,10 +44,10 @@ export const AuthForm = () => {
       localStorage.setItem('token', access);
       localStorage.setItem('refreshToken', refresh);
       navigate('/main');
-      console.log('로그인 성공', data);
+      // console.log('로그인 성공', data);
     },
     onError: (error) => {
-      console.error('로그인 실패', error);
+      // console.error('로그인 실패', error);
       methods.setError('email', { message: errorMessage }); //setError methods로 에러 설정
       methods.setError('password', { message: errorMessage }); //setError methods로 에러 설정
     },
@@ -61,6 +60,8 @@ export const AuthForm = () => {
   const handleCheckboxChange = () => {
     const checkbox = document.getElementById('checkbox');
     if (checkbox) {
+      const autoLogin = checkbox.checked;
+      localStorage.setItem('autoLogin', autoLogin ? 'true' : 'false');
       checkbox.click();
     }
   };
@@ -79,7 +80,7 @@ export const AuthForm = () => {
               required: true, //true
             }}
             placeholder='이메일을 입력하세요'
-            type='text'
+            type='email'
             name='email'
             marginBottom
           />
@@ -109,11 +110,13 @@ export const AuthForm = () => {
           </Label>
 
           {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
-          {errors.email || errors.password ? (
-            <ErrorMsg>
-              {errors.email?.message || errors.password?.message}
-            </ErrorMsg>
-          ) : null}
+          <ErrorBox>
+            {errors.email || errors.password ? (
+              <ErrorMsg>
+                {errors.email?.message || errors.password?.message}
+              </ErrorMsg>
+            ) : null}
+          </ErrorBox>
         </FormContainer>
         <ButtonBox>
           <Button text='로그인' type='submit' disabled={!isValid}></Button>
@@ -128,20 +131,21 @@ const Form = styled.form``;
 const FormContainer = styled.div`
   display: flex;
   margin-top: 24px;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   position: relative;
 `;
 
-const ErrorMsg = styled.span`
+const ErrorBox = styled.div`
+  margin-top: 8px;
   color: red;
   font-size: 12px;
   text-align: left;
-  margin-top: 8px;
-  margin-right: 36px;
   line-height: 18px;
   white-space: pre-wrap;
 `;
+
+const ErrorMsg = styled.span``;
 const CheckboxContainer = styled.div`
   display: flex;
   width: 100%;

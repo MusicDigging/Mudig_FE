@@ -54,8 +54,10 @@ export default function CommentItem(props) {
 
   const handleDeleteBtnClick = () => {
     deleteComment(comment.id);
-    if (parentId) setToast('해당 답글이 삭제되었습니다. 💬');
-    else setToast('해당 댓글이 삭제되었습니다. 💬');
+    if (parentId)
+      setToast({ content: '해당 답글이 삭제되었습니다. 💬', type: 'success' });
+    else
+      setToast({ content: '해당 댓글이 삭제되었습니다. 💬', type: 'success' });
   };
 
   const linkTo = isMyComment
@@ -120,7 +122,7 @@ export default function CommentItem(props) {
 
     setModalId(null);
   };
-  console.log(toast);
+
   return (
     <CommentItemWrap>
       <CommentBox
@@ -253,6 +255,7 @@ const UserInfo = styled.div`
   div {
     display: flex;
     align-items: center;
+    gap: 4px;
   }
 `;
 
