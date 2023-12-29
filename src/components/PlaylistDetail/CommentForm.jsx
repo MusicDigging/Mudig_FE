@@ -84,13 +84,19 @@ export default function CommentForm(props) {
           <img src={CloseIcon} alt='답글 닫기' />
         </button>
       )}
-      <Button text='등록' type='submit' disabled={content.trim() === ''} />
+      <Button
+        text='등록'
+        type='submit'
+        disabled={content.trim() === ''}
+        btnHeight='38px'
+      />
     </CommentFormWrap>
   );
 }
 
 const CommentFormWrap = styled.form`
   padding: 16px 16px 24px;
+
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -113,7 +119,8 @@ const CommentFormWrap = styled.form`
 
 const InputStyle = styled.input`
   width: 100%;
-  padding: 14px 18px;
+  height: 38px;
+  padding: 9px 18px;
   border-radius: 8px;
   font-size: var(--font-md);
   background-color: var(--input-background-color);

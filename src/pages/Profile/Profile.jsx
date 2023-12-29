@@ -81,6 +81,7 @@ export default function Profile() {
         type='myPlaylist'
         data={playlist}
         isMyProfile={my_id === user_id}
+        isEmpty={!repPlaylist}
       />
       {/* 좋아요한 플리 */}
       {profileData.liked_playlists.length > 0 && (

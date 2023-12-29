@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
-
 import PlayIcon from '../../img/play-icon.svg';
 
 export default function PlayListSection(props) {
@@ -22,8 +21,16 @@ export default function PlayListSection(props) {
   };
 
   return (
-    <PlayListSectionWrap>
-      <PlayListBox>
+    <PlayListSectionWrap
+      maxHeight={
+        playlists.length === 1
+          ? '150px'
+          : playlists.length === 2
+            ? '230px'
+            : '320px'
+      }
+    >
+      <PlayListBox isEmpty={isEmpty}>
         <PlayListHeader>
           <h2>
             {type === 'myPlaylist' &&
@@ -83,20 +90,20 @@ export default function PlayListSection(props) {
     </PlayListSectionWrap>
   );
 }
-
 const PlayListSectionWrap = styled.section`
   flex: 1 0 auto;
-  padding: 24px 16px 8px;
+  min-height: ${(props) => props.maxHeight};
+  padding: 0px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: #fff;
-  border-top: 6px solid #f1f1f5;
+
   h2 {
     font-size: var(--font-md);
+    font-weight: var(--font-semi-bold);
   }
   ul {
-    max-height: 230px;
+    flex: 1 0 0;
     overflow-y: scroll;
   }
   ul::-webkit-scrollbar {
@@ -107,6 +114,7 @@ const PlayListHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 33px;
 `;
 
 const SortBtnBox = styled.div`
@@ -131,7 +139,9 @@ const PlayListBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  padding: 24px 0 16px;
+  border-top: 1.5px solid
+    ${(props) => (props.isEmpty ? 'transparent' : '#ededed')};
 `;
 
 const PlayBtnStyle = styled.button`

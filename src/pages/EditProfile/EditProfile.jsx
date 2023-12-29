@@ -44,7 +44,6 @@ export default function EditProfile() {
 
   const handleChipSelect = (newSelectedChips) => {
     setGenre(newSelectedChips);
-    console.log('장르선택:', newSelectedChips);
   };
 
   return (

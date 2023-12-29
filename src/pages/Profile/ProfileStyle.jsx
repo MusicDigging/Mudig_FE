@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import BGImg from '../../img/background-img2.svg';
 
 export const ProfileWrap = styled.main`
   height: 100%;
@@ -7,8 +8,5 @@ export const ProfileWrap = styled.main`
   overflow-x: hidden;
   font-size: var(--font-md);
   color: var(--font-color);
-  h2 {
-    font-size: var(--font-lg);
-    font-weight: var(--font-semi-bold);
-  }
+  background: url(${BGImg}) top left / cover no-repeat;
 `;

@@ -43,15 +43,12 @@ export default function MainPlayListSection(props) {
 }
 
 const MainPlayListSectionWrap = styled.section`
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  padding: 24px 0px 16px 24px;
+  padding: 24px 0px 24px 24px;
   h2 {
     display: flex;
     align-items: center;
+    font-size: var(--font-lg);
+    font-weight: var(--font-semi-bold);
   }
 `;
 
