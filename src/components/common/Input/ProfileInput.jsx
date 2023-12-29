@@ -103,7 +103,7 @@ export default function ProfileInput(props) {
           {errors.nickName ? (
             <ErrorMsg>{errors.nickName.message}</ErrorMsg>
           ) : (
-            <ErrorMsg>{nickNameValid}</ErrorMsg>
+            <SuccessMsg>{nickNameValid}</SuccessMsg>
           )}
         </InputWrap>
 
@@ -178,8 +178,15 @@ const InputBox = styled.div`
   position: relative;
 `;
 
+const SuccessMsg = styled.span`
+  color: #00c04b;
+  font-size: 12px;
+  display: block;
+  padding-top: 8px;
+`;
+
 const ErrorMsg = styled.span`
-  color: red;
+  color: var(--error-color);
   font-size: 12px;
   display: block;
   padding-top: 8px;
