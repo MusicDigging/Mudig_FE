@@ -1,9 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import ChangePwForm from './ChangePwForm';
+import BackBtnIcon from '../../img/left-arrow-Icon.svg';
+import { useNavigate } from 'react-router-dom';
 export default function ChangePassword() {
+  const navigate = useNavigate();
   return (
     <ChangePwWrap>
+      <BackBtn>
+        <button onClick={() => navigate(-1)}>
+          <img src={BackBtnIcon} alt='뒤로가기 버튼' />
+        </button>
+      </BackBtn>
       <ChangePwTitle>
         뮤딕아이디의
         <br /> 비밀번호를 변경해주세요
@@ -25,4 +33,10 @@ const ChangePwTitle = styled.h1`
   position: relative;
   top: 56px;
   left: 16px;
+`;
+
+const BackBtn = styled.div`
+  position: absolute;
+  top: 15px;
+  left: 12px;
 `;
