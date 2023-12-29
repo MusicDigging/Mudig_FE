@@ -55,7 +55,8 @@ export function Router() {
           <Route path='/user' element={<Outlet />}>
             <Route path='profile/my' element={<Profile />} />
             <Route path='profile/:id' element={<Profile />} />
-            <Route path='profile/follow' element={<Follow />} />
+            <Route path='profile/my/follow' element={<Follow />} />
+            <Route path='profile/:id/follow' element={<Follow />} />
             <Route path='profile/edit' element={<EditProfile />} />
             <Route path='password' element={<ChangePassword />} />
             <Route path='resign' element={<Resign />} />

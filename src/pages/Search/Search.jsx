@@ -12,6 +12,7 @@ export default function Search() {
 
   const SearchSubmit = (e) => {
     e.preventDefault();
+    if (inputValue.length === 0) return;
     handleAddRecentKeyword(inputValue);
     navigate(`/search/${inputValue}`);
   };

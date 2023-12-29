@@ -92,14 +92,14 @@ export default function SearchResultAll(props) {
 const SearchListBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 15px;
 `;
 const SearchListSection = styled.section`
   h2 {
     font-size: 20px;
   }
   ul {
-    height: 228px;
+    /* height: 228px; */
   }
 `;
 const SearchListTitleBox = styled.div`
@@ -107,7 +107,7 @@ const SearchListTitleBox = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 11px 0;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;
 const UserList = styled.ul`
   display: flex;

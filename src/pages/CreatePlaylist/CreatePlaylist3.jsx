@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useQueryClient } from 'react-query';
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
 import Loading from '../../components/Loading/Loading';
@@ -12,6 +12,7 @@ import * as S from './CreatePlaylistStyle';
 export default function CreateNewPlaylist3() {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const state = location.state || {};
   const { situations, genre } = state;
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +28,7 @@ export default function CreateNewPlaylist3() {
     setIsLoading(true);
     createPlaylist(data, {
       onSuccess: (data) => {
+        queryClient.invalidateQueries('get-profile');
         setIsLoading(false);
         navigate('/playlist/summary', {
           state: { playlist: data.data.playlist.id },
