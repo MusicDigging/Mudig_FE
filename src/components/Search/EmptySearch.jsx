@@ -5,9 +5,9 @@ export default function EmptySearch() {
 }
 
 const EmptySearchWrap = styled.div`
-  /* width: 100%; */
-  font-size: var(--font-xl);
-  color: var(--sub-font-color);
+  height: 133px;
+  font-size: var(--font-lg);
+  color: #b0b0b0;
   text-align: center;
-  padding: 90px 0;
+  padding: 55px 0;
 `;
