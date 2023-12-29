@@ -8,6 +8,8 @@ import { useRandomMv } from '../../hooks/queries/useRandomMv';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { InfoToast } from '../../library/sweetAlert/sweetAlert';
+import BgImg from '../../img/background-img2.svg';
+
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
@@ -105,6 +107,7 @@ export default function RandomMusic() {
 
 const PlayerWrap = styled.main`
   margin-top: 6px;
+  background: url(${BgImg}) top left / cover no-repeat;
 `;
 const PlayerBox = styled.div`
   padding: 8px 16px;

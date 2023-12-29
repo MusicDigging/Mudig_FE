@@ -25,11 +25,11 @@ export default function SignupDetail() {
           <Toast
             setToast={setToast}
             text='해당메일로 인증번호가 전송되었습니다  ✉️'
-            type='warning'
+            type='success'
           />
         </ToastBox>
       )}
-      <PageNum>1/3</PageNum>
+      <PageNum>1/2</PageNum>
 
       <SignupDetailBox>
         <DetailTitle>
@@ -70,7 +70,6 @@ const PageNum = styled.span`
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
-  z-index: -1;
 `;
 
 const DetailTitle = styled.h1`

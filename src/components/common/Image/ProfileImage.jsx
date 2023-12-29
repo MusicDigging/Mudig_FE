@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { CircleImage } from './Image';
 
-import DefauldImg from '../../../img/default-user-img.svg';
+import DefauldImg from '../../../img/basic-profile-img.svg';
 import ProfileDecoImg from '../../../img/profile-deco-img.svg';
 
 export default function ProfileImage(props) {
