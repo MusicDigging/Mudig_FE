@@ -51,13 +51,17 @@ export default function EditProfile() {
     setGenre(newSelectedChips);
   };
 
+  const handleMoveBackBtnClick = () => {
+    navigate(-1);
+  };
+
   return (
     <S.EditProfileWrap>
       {toast && (
         <S.ToastBox>
           <Toast setToast={setToast} text={toast.content} type={toast.type} />
         </S.ToastBox>
-      <S.MoveBackBtn to='/user/profile/my'>
+      )}
       <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='' />
       </S.MoveBackBtn>
