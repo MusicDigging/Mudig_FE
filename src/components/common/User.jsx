@@ -27,7 +27,7 @@ const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
           isFollowing={isFollowing}
           onClick={handleClick} // 이벤트 핸들러 변경
         >
-          {isFollowing ? 'unfollow' : 'follow'}
+          {isFollowing ? '팔로잉' : '팔로우'}
         </FollowButton>
       )}
     </UserWrap>
@@ -64,6 +64,7 @@ const UserNickName = styled.span`
 `;
 
 const FollowButton = styled.button`
+  font-size: 14px;
   width: 89px;
   padding: 5px 9px;
   border: none;
@@ -77,8 +78,8 @@ const FollowButton = styled.button`
   ${({ isFollowing }) =>
     isFollowing &&
     `
-    background-color: #ffffff;
-    color: #7d4fff;
-    border: 1px solid #7d4fff;
+    background-color: #F6F6F6;
+    color: #000;
+    border: 1px solid #F6F6F6;
   `}
 `;

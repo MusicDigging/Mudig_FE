@@ -125,7 +125,7 @@ export default function ProfileSection(props) {
               onClick={handleFollowClick}
               isFollowing={profile.is_following}
             >
-              {profile.is_following ? '언팔로우' : '팔로우'}
+              {profile.is_following ? '팔로잉' : '팔로우'}
             </FollowBtn>
           )}
           {isMyProfile && (
@@ -211,18 +211,19 @@ const MoveFollowBtn = styled(Link)`
 `;
 
 const FollowBtn = styled.button`
+  width: 89px;
   height: 34px;
   padding: 4px 25px;
   border-radius: 10px;
   color: #fff;
   background-color: var(--btn-background-color);
-  ${({ is_following }) =>
-    is_following &&
+  ${({ isFollowing }) =>
+    isFollowing &&
     `
-  background-color: #ffffff;
-  color: #7d4fff;
-  border: 1px solid #7d4fff;
-`}
+    background-color: #F6F6F6;
+    color: #000;
+    border: 1px solid #F6F6F6;
+  `}
 `;
 
 const MoveEditBtn = styled(Link)`
