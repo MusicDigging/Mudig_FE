@@ -44,10 +44,10 @@ export const AuthForm = () => {
       localStorage.setItem('token', access);
       localStorage.setItem('refreshToken', refresh);
       navigate('/main');
-      console.log('로그인 성공', data);
+      // console.log('로그인 성공', data);
     },
     onError: (error) => {
-      console.error('로그인 실패', error);
+      // console.error('로그인 실패', error);
       methods.setError('email', { message: errorMessage }); //setError methods로 에러 설정
       methods.setError('password', { message: errorMessage }); //setError methods로 에러 설정
     },
@@ -129,18 +129,16 @@ const Form = styled.form``;
 const FormContainer = styled.div`
   display: flex;
   margin-top: 24px;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
   position: relative;
 `;
 
 const ErrorBox = styled.div`
   margin-top: 8px;
-  text-align: left;
   color: red;
   font-size: 12px;
   text-align: left;
-
   line-height: 18px;
   white-space: pre-wrap;
 `;

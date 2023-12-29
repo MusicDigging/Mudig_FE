@@ -5,11 +5,11 @@ const SearchWrap = styled.div`
   height: 100%;
   padding: 13.32px 16px;
   form {
+    width: 100%;
     display: flex;
-    flex-direction: row;
-    margin-bottom: 8px;
     align-items: center;
     gap: 19px;
+    margin-bottom: 8px;
     button {
       width: 24px;
       height: 24px;

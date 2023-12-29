@@ -80,7 +80,7 @@ export default function Login() {
         setUserInfo({ email, type: 'social' });
         navigate('/setprofile');
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error('Error', error);
     }
@@ -146,6 +146,7 @@ export default function Login() {
 const LoginWrap = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 16px;
 `;
 
 const LoginHeader = styled.header`
@@ -153,7 +154,7 @@ const LoginHeader = styled.header`
   flex-direction: column;
   position: relative;
   top: 56px;
-  left: 16px;
+
   line-height: 33px;
 `;
 
@@ -168,7 +169,7 @@ const LoginText = styled.span`
   line-height: 33px;
 `;
 const LoginMain = styled.main`
-  padding: 0 16px;
+  /* padding: 0 16px; */
   position: relative;
   text-align: center;
   top: 149px;
@@ -177,6 +178,8 @@ const LoginMain = styled.main`
 const LoginBtnBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 16px;
   margin-bottom: 25px;
 `;

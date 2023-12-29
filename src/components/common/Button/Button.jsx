@@ -36,7 +36,7 @@ export function Button(props) {
 }
 
 const ButtonStyle = styled.button`
-  width: ${(props) => props.btnWidth || '328px'};
+  width: ${(props) => props.btnWidth || '100%'};
   height: ${(props) => props.btnHeight || '44px'};
   margin: ${(props) => props.btnMargin || '0px'};
   background: ${(props) =>

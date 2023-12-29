@@ -43,7 +43,7 @@ export default function UserLeaveForm() {
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         setToast({ content: '회원탈퇴가 완료되었습니다.', type: 'success' });
-        console.log(data);
+        // console.log(data);
       },
 
       onError: (error) => {
@@ -97,18 +97,25 @@ export default function UserLeaveForm() {
   );
 }
 
-const FormWrap = styled.form``;
-
-const InputBox = styled.div`
+const FormWrap = styled.form`
+  flex: 1 0 0;
+  padding: 261px 16px 24px;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  position: absolute;
-  padding: 0 16px;
-  top: 348px;
+  justify-content: space-between;
+`;
+
+const InputBox = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ButtonBox = styled.div`
-  position: absolute;
+  width: 100%;
+
   bottom: 24px;
-  padding: 0 16px;
 `;

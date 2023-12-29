@@ -31,7 +31,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
   const disabledConfirm = emailRegex.test(watchEmail);
 
   useEffect(() => {
-    console.log('이메일 인증 활성화 :', isEmailValidated);
+    // console.log('이메일 인증 활성화 :', isEmailValidated);
   }, [isEmailValidated]);
 
   const handleEmailValidation = () => {
@@ -47,7 +47,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
           onEmailToastMsg();
         }
         const { message, otp } = data;
-        console.log(otp);
+        // console.log(otp);
         setOtpNum(otp);
       },
       onError: (error) => {
@@ -76,7 +76,6 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
                 placeholder='이메일'
                 type='text'
                 name='email'
-                btnWidth='211px'
                 showTimeText={showTimeText}
               />
             </Box>
@@ -130,30 +129,42 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
           <Button text='다음' type='submit' disabled={!isValid}></Button>
         </ButtonBox>
       </Form>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </FormProvider>
   );
 };
 
-const Form = styled.form``;
-
-const FormContainer = styled.div`
+const Form = styled.form`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  position: relative;
-  top: 335px;
+  justify-content: space-between;
+  padding-top: 335px;
+  padding-bottom: 24px;
+`;
+
+const FormContainer = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const EmailValidBox = styled.div`
   display: flex;
   justify-content: center;
   gap: 16px;
+  button {
+    flex-shirink: 0;
+  }
 `;
 
-const Box = styled.div``;
+const Box = styled.div`
+  flex: 1 0 0;
+`;
 
 const ButtonBox = styled.div`
-  position: absolute;
+  width: 100%;
+  /* position: absolute; */
 
   bottom: 24px;
 `;

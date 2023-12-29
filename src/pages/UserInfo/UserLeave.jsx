@@ -28,12 +28,16 @@ export default function UserLeave() {
 const UserLeavewWrap = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* position: relative;
+  padding: 0 16px; */
 `;
 
 const BackBtn = styled.div`
   position: absolute;
-  top: 15px;
-  left: 12px;
+  top: 22px;
+  left: 16px;
 `;
 
 const UserLeaveTitle = styled.h1`

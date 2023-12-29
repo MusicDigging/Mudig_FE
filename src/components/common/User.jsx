@@ -12,10 +12,16 @@ const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
     onFollowClick();
     // 여기서 데이터 새로고침 함수 호출
   };
+  let profileLink;
   const myProfile = user === myInfo.id;
+  if (!myProfile) {
+    profileLink = `/user/profile/${user}`;
+  } else {
+    profileLink = '/user/profile/my';
+  }
   return (
     <UserWrap>
-      <Link to={`/user/profile/${user}`}>
+      <Link to={profileLink}>
         <CircleImage src={profilePicture} alt={`${name}'s profile`} />
         <UserNameBox>
           <UserName>{name}</UserName>
@@ -71,6 +77,7 @@ const FollowButton = styled.button`
   background-color: #7d4fff;
   color: white;
   cursor: pointer;
+  height: 34px;
   &:hover {
     opacity: 0.9;
   }

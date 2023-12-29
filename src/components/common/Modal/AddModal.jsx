@@ -84,10 +84,10 @@ export default function AddModal({ videoId }) {
     const playlist_id = selectedPlaylistId; //담을 플리
     const music = String(videoId); //선택한 음악
     const data = { playlist_id, music };
-    console.log(data);
+    // console.log(data);
     putMyPlayList(data, {
       onSuccess: (data) => {
-        console.log(data);
+        // console.log(data);
         SuccessToast.fire({
           title: '플레이리스트 추가 완료',
         });
@@ -164,8 +164,9 @@ const ModalWrap = styled.div`
 
 const ModalBox = styled.div`
   position: absolute;
-  top: 25%;
-  left: 5%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 327px;
   padding: 16px;
   border-radius: 10px;

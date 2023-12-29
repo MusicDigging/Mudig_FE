@@ -29,6 +29,7 @@ export default function SignupDetail() {
           />
         </ToastBox>
       )}
+
       <PageNum>1/2</PageNum>
 
       <SignupDetailBox>
@@ -45,7 +46,11 @@ export default function SignupDetail() {
 }
 
 const SingupDetailWrap = styled.div`
+  padding: 0 16px;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 `;
 
@@ -59,14 +64,14 @@ const SignupDetailBox = styled.div`
   display: flex;
   position: relative;
   top: 56px;
-  left: 16px;
+  /* left: 16px; */
   line-height: 33px;
 `;
 
 const PageNum = styled.span`
   position: absolute;
   top: 24px;
-  left: 317px;
+  right: 16px;
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
@@ -78,5 +83,5 @@ const DetailTitle = styled.h1`
 `;
 
 const Main = styled.div`
-  padding: 0 16px;
+  height: 100%;
 `;

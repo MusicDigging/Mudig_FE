@@ -19,7 +19,6 @@ export default function SearchInput({ setInputValue, onSubmit }) {
       inputRef.current.value = keyword;
     }
   }, [path]);
-
   return (
     <form onSubmit={onSubmit}>
       <Input
@@ -36,10 +35,12 @@ export default function SearchInput({ setInputValue, onSubmit }) {
   );
 }
 const Input = styled.input`
-  width: 274px;
+  min-width: 274px;
+  width: calc(100% - 24px);
   border-radius: 8px;
   background: #f6f6f6;
   padding: 12px 16px;
+  // font-size: var(--font-lg);
   &:placeholder {
     color: #bfbfbf;
   }

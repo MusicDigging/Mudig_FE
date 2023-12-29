@@ -8,7 +8,6 @@ import { useRandomMv } from '../../hooks/queries/useRandomMv';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { InfoToast } from '../../library/sweetAlert/sweetAlert';
-import BgImg from '../../img/background-img2.svg';
 
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
@@ -24,7 +23,7 @@ export default function RandomMusic() {
   const [isEnd, setIsEnd] = useState(false);
   //버튼 클릭히 해당 뮤비 아이디 함수
   const handleAddButtonClick = (videoId) => {
-    console.log(`선택된 뮤비 ${videoId}`);
+    // console.log(`선택된 뮤비 ${videoId}`);
     setVideoId(videoId);
     setModalOpen(true);
   };
@@ -32,7 +31,7 @@ export default function RandomMusic() {
   useEffect(() => {
     const fetchRandomMv = async () => {
       const data = { selectId, page };
-      console.log(data);
+      // console.log(data);
       getRandomMv(data, {
         onSuccess: (newVideoData) => {
           if (newVideoData.length === 0) {
@@ -55,7 +54,7 @@ export default function RandomMusic() {
     const observerCallback = async ([entry]) => {
       if (entry.isIntersecting) {
         await fetchRandomMv();
-        console.log('스크롤 이벤트 발생!');
+        // console.log('스크롤 이벤트 발생!');
       }
     };
 
@@ -107,7 +106,6 @@ export default function RandomMusic() {
 
 const PlayerWrap = styled.main`
   margin-top: 6px;
-  background: url(${BgImg}) top left / cover no-repeat;
 `;
 const PlayerBox = styled.div`
   padding: 8px 16px;

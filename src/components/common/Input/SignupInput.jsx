@@ -34,7 +34,7 @@ export const SignupInput = (props) => {
           name={name}
           marginBottom={marginBottom}
           style={{
-            width: btnWidth || '328px',
+            width: btnWidth || '100%',
           }}
         />
         {showTimeText && <TimeText>05:00</TimeText>}
@@ -55,14 +55,14 @@ export const SignupInput = (props) => {
 
 const Label = styled.label``;
 const InputBox = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
 `;
 
 const InputStyle = styled.input`
-  flex: 1;
-  width: 328px;
+  /* flex: 1; */
   height: 44px;
   border-radius: 8px;
   border: 1px solid lightgray;
