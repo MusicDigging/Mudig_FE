@@ -4,8 +4,9 @@ import warningIcon from '../../../img/warning-red-icon.svg';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 
-export default function ResignModal({ setConfirmResgin }) {
+export default function ResignModal({ handleResign }) {
   const setModalOpen = useSetRecoilState(modalAtom);
+
   return (
     <ModalWrap>
       <ModalBox>
@@ -18,9 +19,7 @@ export default function ResignModal({ setConfirmResgin }) {
         </ModalTextBox>
         <ModalBtnBox>
           <CanlcleBtn onClick={() => setModalOpen(false)}>취소</CanlcleBtn>
-          <ResignBtn onClick={() => setConfirmResgin((prev) => !prev)}>
-            탈퇴
-          </ResignBtn>
+          <ResignBtn onClick={handleResign}>탈퇴</ResignBtn>
         </ModalBtnBox>
       </ModalBox>
     </ModalWrap>

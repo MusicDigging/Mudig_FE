@@ -19,7 +19,7 @@ export default function UserLeaveForm() {
   const [isModalOpen, setModalOpen] = useRecoilState(modalAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
-  const [confirmResgin, setConfirmResgin] = useState(false);
+
   const navigate = useNavigate();
 
   const userEmail = useRecoilValue(userInfoAtom).email;
@@ -30,36 +30,45 @@ export default function UserLeaveForm() {
       email: userEmail,
     },
 
-    mode: 'onBlur',
+    mode: 'onSubmit',
   });
 
-  const { formState, setError } = methods;
+  const { formState, setError, trigger, getValues } = methods;
+
   const { isValid } = formState;
-  const onSubmit = ({ password }) => {
+  const password = getValues('password');
+
+  const handleResign = () => {
+    userResign(password, {
+      onSuccess: (data) => {
+        setIsLogin(false);
+        setUserInfo({});
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+
+        navigate('/register');
+        console.log(data);
+      },
+
+      onError: (error) => {
+        console.error('회원탈퇴 실패', error);
+        setModalOpen(false);
+        setError('password', {
+          message: '현재 비밀번호가 일치하지 않습니다.',
+        });
+      },
+    });
+
+    setModalOpen(false);
+  };
+
+  const onSubmit = () => {
     setModalOpen(true);
-    if (confirmResgin) {
-      userResign(password, {
-        onSuccess: (data) => {
-          setIsLogin(false);
-          setUserInfo({});
-          localStorage.removeItem('token');
-          localStorage.removeItem('refreshToken');
-          navigate('/register');
-          console.log(data);
-        },
-        onError: (error) => {
-          console.error('회원탈퇴 실패', error);
-          setError('password', {
-            message: '현재 비밀번호가 일치하지 않습니다.',
-          });
-        },
-      });
-    }
   };
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   return (
     <>
-      {isModalOpen && <ResignModal setConfirmResgin={setConfirmResgin} />}
+      {isModalOpen && <ResignModal handleResign={handleResign} />}
       <FormProvider {...methods}>
         <FormWrap onSubmit={methods.handleSubmit(onSubmit)}>
           <InputBox>
