@@ -17,25 +17,16 @@ export default function Follow() {
   const location = useLocation();
   const { id } = useParams();
   const myId = useRecoilValue(userInfoAtom).id;
-  const [UserId, setUserId] = useState(myId); // 초기 값으로 myId를 설정
 
-  useEffect(() => {
-    // URL 파라미터가 'my'이면 로그인된 사용자의 ID를,
-    // 그렇지 않다면 URL 파라미터의 id 값을 UserId로 설정
-    if (id === true) {
-      setUserId(id);
-    } else {
-      setUserId(myId);
-    }
-  }, [id, myId]); // id 또는 myId가 변경될 때마다 이 effect를 재실행
-  console.log(id);
   const [activeList, setActiveList] = useState('followers');
   const [refreshData, setRefreshData] = useState(false);
   const [users, setUsers] = useState();
-  const { data: followers, isLoading: followingLoading } =
-    useGetFollower(UserId);
-  const { data: followings, isLoading: followerLoading } =
-    useGetFollowing(UserId);
+  const { data: followers, isLoading: followingLoading } = useGetFollower(
+    id || myId,
+  );
+  const { data: followings, isLoading: followerLoading } = useGetFollowing(
+    id || myId,
+  );
 
   useEffect(() => {
     const shouldRefetch = refreshData || location.state?.type;
@@ -49,7 +40,7 @@ export default function Follow() {
     ) {
       setActiveList(location.state.type);
     }
-  }, [refreshData, location.state, UserId]);
+  }, [refreshData, location.state]);
 
   const { followUser } = useFollowUser(); // 커스텀 훅 사용
 
