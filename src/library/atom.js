@@ -27,3 +27,23 @@ export const isLoginAtom = atom({
   key: 'isLoginAtom',
   default: localStorage.getItem('token') ? true : false,
 });
+
+export const backAnimationAtom = atom({
+  key: 'backAnimationAtom',
+  default: false,
+});
+
+export const commentEditIdAtom = atom({
+  key: 'commentEditIdAtom',
+  default: null,
+});
+
+export const commentAtom = atom({
+  key: 'commentAtom',
+  default: '',
+});
+
+export const toastAtom = atom({
+  key: 'toastAtom',
+  default: null,
+});

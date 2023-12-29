@@ -20,7 +20,7 @@ export default function PlaylistModify() {
   });
 
   return (
-    <>
+    <PlaylistModifyBox>
       {modalOpen && (
         <Modal
           playlistDesc={playlistDesc}
@@ -33,6 +33,12 @@ export default function PlaylistModify() {
         playlistDesc={playlistDesc}
       />
       <PlayListModify playlistDesc={playlistDesc} />
-    </>
+    </PlaylistModifyBox>
   );
 }
+
+const PlaylistModifyBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
