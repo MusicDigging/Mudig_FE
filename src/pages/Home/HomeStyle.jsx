@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-
+import BgImg from '../../img/background-img2.svg';
 export const HomeWrap = styled.main`
   width: 360px;
   height: 100%;
+  background: url(${BgImg}) top left / cover no-repeat;
 `;
 export const HomeSection = styled.section`
   h2 {
