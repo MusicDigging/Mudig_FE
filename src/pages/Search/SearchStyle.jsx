@@ -5,20 +5,15 @@ const SearchWrap = styled.div`
   height: 100%;
   padding: 13.32px 16px;
   form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 19px;
     margin-bottom: 8px;
     button {
-      vertical-align: middle;
+      width: 24px;
+      height: 24px;
     }
-  }
-`;
-const SearchInput = styled.input`
-  width: 274px;
-  border-radius: 8px;
-  background: #f6f6f6;
-  padding: 12px 16px;
-  margin-right: 19px;
-  &:placeholder {
-    color: #bfbfbf;
   }
 `;
 const NavList = styled.ul`
@@ -84,7 +79,6 @@ const UserInfoBox = styled.div`
 `;
 export {
   SearchWrap,
-  SearchInput,
   NavList,
   SearchListBox,
   SearchListSection,

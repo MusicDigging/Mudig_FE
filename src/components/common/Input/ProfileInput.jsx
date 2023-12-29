@@ -151,7 +151,7 @@ export default function ProfileInput(props) {
           disabled={!isValid || selectedChips.length === 0}
         />
       </ButtonBox>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </FormWrap>
   );
 }
@@ -186,7 +186,7 @@ const ErrorMsg = styled.span`
 `;
 
 const InputStyle = styled.input`
-  width: 328px;
+  width: 100%;
   height: 44px;
   /* margin: 8px 0 16px 0; */
   border-radius: 8px;

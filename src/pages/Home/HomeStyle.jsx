@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import BgImg from '../../img/background-img2.svg';
 export const HomeWrap = styled.main`
-  width: 360px;
+  width: 100%;
   height: 100%;
   background: url(${BgImg}) top left / cover no-repeat;
 `;
@@ -16,7 +16,7 @@ export const HomeSection = styled.section`
   }
 `;
 export const MyPlayListNoneInfo = styled.div`
-  width: 300px;
+  width: 100%;
   margin: auto;
   #MyPlayListNoneInfoText {
     font-size: 14px;

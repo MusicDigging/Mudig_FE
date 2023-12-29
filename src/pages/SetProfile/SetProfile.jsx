@@ -27,7 +27,7 @@ export default function SetProfile() {
   // 장르 선택 함수 props
   const handleChipSelect = (newSelectedChips) => {
     setGenre(newSelectedChips);
-    console.log('장르선택:', newSelectedChips);
+    // console.log('장르선택:', newSelectedChips);
   };
 
   const selectGenre = genre.join(',');
@@ -42,7 +42,7 @@ export default function SetProfile() {
     formData.append('genre', selectGenre);
     if (uploadImg !== null) formData.append('image', uploadImg);
 
-    console.log(uploadImg);
+    // console.log(uploadImg);
     postUserProfile(formData, {
       onSuccess: (data) => {
         const { user, token } = data;
@@ -122,14 +122,14 @@ const SetProfileBox = styled.div`
 const PageNum = styled.span`
   position: absolute;
   top: 24px;
-  left: 317px;
+  right: 16px;
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
 `;
 
 const SetProfileTitle = styled.h1`
-  width: 252px;
+  /* width: 252px; */
   font-size: var(--font-xl);
   font-weight: var(--font-bold);
   line-height: 33px;

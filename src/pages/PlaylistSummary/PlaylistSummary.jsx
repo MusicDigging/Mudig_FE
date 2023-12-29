@@ -35,7 +35,7 @@ export default function PlaylistSummary() {
       </PlayListBox>
       <BlurBox />
       <BtnBox>
-        <Button onClick={handleNextBtn} text='확인' />
+        <Button onClick={handleNextBtn} text='확인' btnWidth='100%' />
       </BtnBox>
     </>
   );
@@ -60,6 +60,8 @@ const BlurBox = styled.div`
 `;
 const BtnBox = styled.div`
   position: absolute;
+  width: 90%;
+  min-width: 328px;
   z-index: 10;
   bottom: 113px;
   left: 15.5px;
