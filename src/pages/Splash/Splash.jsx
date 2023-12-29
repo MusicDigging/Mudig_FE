@@ -25,7 +25,7 @@ export default function Splash() {
 
     // 컴포넌트 언마운트 시 타이머 제거
     return () => clearTimeout(timer);
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate]); // 의존성 배열에 포함된 변수들
 
   return (
     <SplashWrap>
