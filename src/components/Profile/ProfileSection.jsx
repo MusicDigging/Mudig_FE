@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { userInfoAtom } from '../../library/atom';
 import { useLogout } from '../../hooks/queries/useProfile';
 
-import ProfileImage from '../common/Image/ProfileImage';
-import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
-import { useSetRecoilState } from 'recoil';
 import { isLoginAtom } from '../../library/atom';
-import BackBtnIcon from '../../img/left-arrow-Icon.svg';
-import MoreBtnIcon from '../../img/more-icon.svg';
+
+import ProfileImage from '../common/Image/ProfileImage';
 import useFollowUser from '../../hooks/queries/useFollow';
+import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
+
+import MoreBtnIcon from '../../img/more-icon.svg';
+import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 
 export default function ProfileSection(props) {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
@@ -26,8 +27,9 @@ export default function ProfileSection(props) {
   const handleMoreBtnClick = () => {
     return isModalOpen ? setIsModalOpen(false) : setIsModalOpen(true);
   };
-  console.log(profile, userInfo, data);
-  const handleFollowClick = () => {
+
+  const handleFollowClick = (e) => {
+    e.preventDefault();
     const followState = profile.is_following; // 현재 팔로우 상태
 
     followUser(profile.id, followState, {
@@ -114,6 +116,7 @@ export default function ProfileSection(props) {
           </FollowInfo>
           {!isMyProfile && (
             <FollowBtn
+              type='button'
               onClick={handleFollowClick}
               isFollowing={profile.is_following}
             >
