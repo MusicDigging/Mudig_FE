@@ -56,7 +56,7 @@ export default function Reply() {
     <S.CommentWrap>
       {toast && (
         <S.ToastBox>
-          <Toast setToast={setToast} text={toast} />
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
         </S.ToastBox>
       )}
       <S.CommentBox
