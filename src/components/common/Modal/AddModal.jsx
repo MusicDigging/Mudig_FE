@@ -24,6 +24,7 @@ export default function AddModal({ videoId }) {
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [arrowRotation, setArrowRotation] = useState(90);
   const modalRef = useRef(null);
   //선택한 플레이리스트 아이디
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
@@ -42,6 +43,7 @@ export default function AddModal({ videoId }) {
 
   const handleToggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
+    setArrowRotation(isDropdownOpen ? 90 : 270);
   };
 
   const handleMakePlaylist = () => {
@@ -108,7 +110,7 @@ export default function AddModal({ videoId }) {
         <img onClick={handleClose} src={closeIcon} alt='닫기버튼' />
         <h1>플레이 리스트 추가</h1>
         {selectedPlaylist && (
-          <PlaylistAdd type='button' onClick={handleToggleDropdown}>
+          <PlaylistAddBtn type='button' onClick={handleToggleDropdown}>
             <p>{selectedPlaylist}</p>
             {isDropdownOpen && data.myplaylist && (
               <PlaylistDropdown ref={dropdownRef}>
@@ -124,8 +126,13 @@ export default function AddModal({ videoId }) {
                 ))}
               </PlaylistDropdown>
             )}
-            {selectedPlaylist.length > 0 && <ArrowIcon fill='black' />}
-          </PlaylistAdd>
+            {selectedPlaylist.length > 0 && (
+              <ArrowIcon
+                fill='black'
+                style={{ transform: `rotate(${arrowRotation}deg)` }}
+              />
+            )}
+          </PlaylistAddBtn>
         )}
         {/* 생성한 플리 여부에 따라 다른 버튼 보여주기 */}
         {isPlaylistAvailable ? (
@@ -185,7 +192,7 @@ const ModalBox = styled.div`
   }
 `;
 
-const PlaylistAdd = styled.button`
+const PlaylistAddBtn = styled.button`
   position: relative;
   border-radius: 10px;
   border: 1px solid var(--border-color);
@@ -197,7 +204,6 @@ const PlaylistAdd = styled.button`
   width: 295px;
   font-size: 14px;
   height: 44px;
-
   p {
     overflow: hidden; // 을 사용해 영역을 감출 것
     text-overflow: ellipsis; // 로 ... 을 만들기
@@ -228,7 +234,9 @@ const PlaylistDropdown = styled.ul`
     padding: 8px;
     cursor: pointer;
     &:hover {
-      background-color: #f0f0f0;
+      /* background-color: #f0f0f0; */
+      background-color: #fff;
+      color: var(--btn-point-color);
     }
   }
 `;
