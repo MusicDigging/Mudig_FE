@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { CircleImage } from '../../components/common/Image/Image';
+import { userInfoAtom } from '../../library/atom';
 
 const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
+  const myInfo = useRecoilValue(userInfoAtom);
+
   const handleClick = () => {
     onFollowClick();
     // 여기서 데이터 새로고침 함수 호출
   };
+  const myProfile = user === myInfo.id;
   return (
     <UserWrap>
       <Link to={`/user/profile/${user}`}>
@@ -17,12 +22,14 @@ const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
           <UserNickName>{name}</UserNickName>
         </UserNameBox>
       </Link>
-      <FollowButton
-        isFollowing={isFollowing}
-        onClick={handleClick} // 이벤트 핸들러 변경
-      >
-        {isFollowing ? 'unfollow' : 'follow'}
-      </FollowButton>
+      {!myProfile && (
+        <FollowButton
+          isFollowing={isFollowing}
+          onClick={handleClick} // 이벤트 핸들러 변경
+        >
+          {isFollowing ? 'unfollow' : 'follow'}
+        </FollowButton>
+      )}
     </UserWrap>
   );
 };
