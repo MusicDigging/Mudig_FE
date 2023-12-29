@@ -1,13 +1,29 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import closeIcon from '../../img/close-icon.svg';
 import eventPageBg from '../../img/eventPageBg.svg';
+
+const moveDiagonally = keyframes`
+  0% {
+    background-position: -240px -60px;
+  }
+  100% {
+    background-position: -135px -60px;
+  }
+`;
 
 export const EventPageWrap = styled.div`
   width: 360px;
   height: 100vh;
   background-repeat: no-repeat;
   background-image: url(${eventPageBg});
+
+  /* 애니메이션 적용 */
+  animation: ${moveDiagonally} 5s 1;
+  animation-fill-mode: forwards; /* 애니메이션이 끝난 후 최종 상태 유지 */
+  background-size: auto;
+  animation-timing-function: linear;
 `;
+
 export const QuestionBox = styled.div`
   position: absolute;
   bottom: 30px;
