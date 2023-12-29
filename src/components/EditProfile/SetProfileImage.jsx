@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil';
+
+import { toastAtom } from '../../library/atom';
 import { ImgCompression } from '../../library/ImgCompression';
 import ProfileImage from '../../components/common/Image/ProfileImage';
 
@@ -7,7 +10,7 @@ import UploadImgBtn from '../../img/selectImg.svg';
 
 export default function SetProfileImage(props) {
   const { fileInput, src, setUploadImg, setPreviewImg } = props;
-
+  const setToast = useSetRecoilState(toastAtom);
   const handleImageUpload = () => {
     fileInput.current.click();
   };
@@ -35,7 +38,10 @@ export default function SetProfileImage(props) {
     }
 
     if (file.size > 1024 * 1024 * 10) {
-      alert('이미지 파일의 크기를 초과하였습니다. (최대 10MB)');
+      setToast({
+        content: '이미지 파일의 크기를 초과하였습니다.(최대 10MB)',
+        type: 'error',
+      });
       return false;
     }
 
@@ -48,9 +54,11 @@ export default function SetProfileImage(props) {
       !file.name.includes('tif') &&
       !file.name.includes('heic')
     ) {
-      alert(
-        `이미지 형식을 확인해 주세요!\n(지원형식 : .jpg, .png, .jpeg,.bmp, .tif, *.heic)`,
-      );
+      setToast({
+        content:
+          '이미지 형식을 확인해 주세요! (지원형식: .jpg, .png, .jpeg, .bmp, .tif, *.heic)',
+        type: 'warning',
+      });
       return false;
     }
     return true; //모두 만족 한다면 true
