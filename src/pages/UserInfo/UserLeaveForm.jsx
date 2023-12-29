@@ -35,8 +35,9 @@ export default function UserLeaveForm() {
 
   const { formState, setError, trigger, getValues } = methods;
 
-  const { isValid } = formState;
+  const { isValid, errors } = formState;
   const password = getValues('password');
+  const passwordError = errors['password'];
 
   const handleResign = () => {
     userResign(password, {
@@ -89,7 +90,11 @@ export default function UserLeaveForm() {
             />
           </InputBox>
           <ButtonBox>
-            <Button text='회원탈퇴' type='submit' disabled={!isValid}></Button>
+            <Button
+              text='회원탈퇴'
+              type='submit'
+              disabled={!isValid || passwordError}
+            ></Button>
           </ButtonBox>
         </FormWrap>
       </FormProvider>
