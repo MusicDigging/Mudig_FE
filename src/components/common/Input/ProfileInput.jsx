@@ -179,7 +179,7 @@ const InputBox = styled.div`
 `;
 
 const SuccessMsg = styled.span`
-  color: #00c04b;
+  color: #724fff;
   font-size: 12px;
   display: block;
   padding-top: 8px;
