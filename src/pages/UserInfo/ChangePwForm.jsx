@@ -152,6 +152,10 @@ const FormWrap = styled.form`
   padding: 261px 16px 24px;
   width: 100%;
   display: flex;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   flex-direction: column;
   justify-content: space-between;
 `;
