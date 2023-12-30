@@ -37,13 +37,13 @@ export default function PlaylistDetail() {
   }, []);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!data || isLoading) return;
     const { playlist, music } = data;
     setPlaylistInfo({ playlist, music });
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (isLoading) return null;
+  if (!data || isLoading) return null;
   if (isError) {
     navigate('/*');
     return;
@@ -56,9 +56,7 @@ export default function PlaylistDetail() {
     <>
       <PlaylistDetailWrap>
         {toast && (
-          <ToastBox>
-            <Toast setToast={setToast} text={toast.content} type={toast.type} />
-          </ToastBox>
+          <Toast setToast={setToast} text={toast.content} type={toast.type} />
         )}
         <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
@@ -119,22 +117,16 @@ const PlayListDetailBox = styled.main`
   background-color: #fff;
 `;
 const MusicNothingSection = styled.section`
-  width: 328px;
+  width: 100%;
   text-align: center;
   font-size: var(--font-md);
   color: var(--font-color);
   line-height: normal;
-  margin: 50px 16px 66px;
+  padding: 50px 16px 66px;
   p {
     font-weight: var(--font-semi-bold);
   }
   span {
     font-size: var(--font-sm);
   }
-`;
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 10;
 `;

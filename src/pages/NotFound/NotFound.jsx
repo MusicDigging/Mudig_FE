@@ -32,6 +32,10 @@ const BackButton = styled.button`
 `;
 const NotFoundSection = styled.section`
   text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
   img {
     display: block;
     margin: 250px auto 25px auto;

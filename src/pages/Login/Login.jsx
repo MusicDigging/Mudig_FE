@@ -28,8 +28,16 @@ export default function Login() {
   const socialQuery = new URLSearchParams(location.search);
 
   useEffect(() => {
+    const now = new Date();
+    const hours = now.getHours(); // 0-23 사이의 시간
     if (isLogin) {
-      navigate('/main');
+      if (hours >= 18 && hours < 24) {
+        navigate('/event');
+        console.log(now, hours, isLogin);
+      } else {
+        // 로그인 상태라면 메인 페이지로 이동
+        navigate('/main');
+      }
       return;
     }
 
@@ -44,7 +52,7 @@ export default function Login() {
     } else if (result) {
       sendCode(result, 'kakao');
     }
-  }, []);
+  }, [navigate, isLogin]);
 
   const sendCode = async (code, social) => {
     try {
@@ -80,7 +88,7 @@ export default function Login() {
         setUserInfo({ email, type: 'social' });
         navigate('/setprofile');
       }
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.error('Error', error);
     }
@@ -97,9 +105,7 @@ export default function Login() {
   return (
     <LoginWrap>
       {toast && (
-        <ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <LoginHeader>
         <LoginTitle>
@@ -146,6 +152,7 @@ export default function Login() {
 const LoginWrap = styled.div`
   width: 100%;
   height: 100%;
+  padding: 0 16px;
 `;
 
 const LoginHeader = styled.header`
@@ -153,7 +160,7 @@ const LoginHeader = styled.header`
   flex-direction: column;
   position: relative;
   top: 56px;
-  left: 16px;
+
   line-height: 33px;
 `;
 
@@ -168,7 +175,7 @@ const LoginText = styled.span`
   line-height: 33px;
 `;
 const LoginMain = styled.main`
-  padding: 0 16px;
+  /* padding: 0 16px; */
   position: relative;
   text-align: center;
   top: 149px;
@@ -177,6 +184,8 @@ const LoginMain = styled.main`
 const LoginBtnBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 16px;
   margin-bottom: 25px;
 `;
@@ -197,11 +206,4 @@ const NavUserInfo = styled.nav`
 const NavUserInfoLink = styled.span`
   font-size: var(--font-sm);
   cursor: pointer;
-`;
-
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;

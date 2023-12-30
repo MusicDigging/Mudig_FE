@@ -37,10 +37,10 @@ export const AuthInput = (props) => {
 };
 
 const InputStyle = styled.input`
-  width: 328px;
+  width: 100%;
   height: 44px;
   border-radius: 8px;
-
+  font-size: 16px;
   padding-left: 16px;
   margin-bottom: ${(props) => (props.marginBottom ? '8px' : '0')};
 `;

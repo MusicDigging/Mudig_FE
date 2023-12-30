@@ -22,7 +22,7 @@ function App() {
             </Layout>
           </RecoilRoot>
         </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
+        {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right' /> */}
       </QueryClientProvider>
     </Wrap>
   );
@@ -32,7 +32,8 @@ export default App;
 
 const Wrap = styled.div`
   position: relative;
-  width: 360px;
+
+  max-width: 430px;
   height: 100vh;
   margin: 0 auto;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);

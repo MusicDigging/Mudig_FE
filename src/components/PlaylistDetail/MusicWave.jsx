@@ -17,7 +17,7 @@ const WaveAnimation = keyframes`
   }
 
   50% {
-    height: 14px;
+    height: 15px;
   }
 
   100% {
@@ -34,7 +34,7 @@ const MusicWaveWrap = styled.div`
   gap: 4.5px;
 
   .wave-bar {
-    width: 1.5px;
+    width: 2px;
     height: 14px;
     border-radius: 10px;
     background-color: #7d4fff;

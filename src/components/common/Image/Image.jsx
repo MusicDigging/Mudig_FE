@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import DefaultImg from '../../../img/default-user-img.svg';
+import DefaultImg from '../../../img/basic-profile-img.svg';
 
 export function Image({ src, alt }) {
   // 이미지 주소 필터링

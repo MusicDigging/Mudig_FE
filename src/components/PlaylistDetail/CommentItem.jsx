@@ -122,7 +122,7 @@ export default function CommentItem(props) {
 
     setModalId(null);
   };
-  console.log(toast);
+
   return (
     <CommentItemWrap>
       <CommentBox
@@ -255,6 +255,7 @@ const UserInfo = styled.div`
   div {
     display: flex;
     align-items: center;
+    gap: 4px;
   }
 `;
 

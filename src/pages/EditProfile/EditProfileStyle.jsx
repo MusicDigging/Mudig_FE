@@ -18,8 +18,15 @@ export const EditProfileBox = styled.div`
   }
 `;
 
-export const MoveBackBtn = styled(Link)`
+export const MoveBackBtn = styled.button`
   position: absolute;
   top: 22px;
   left: 16px;
+`;
+export const ToastBox = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 10;
 `;

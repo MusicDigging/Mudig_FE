@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,6 +20,7 @@ import ProfileBadge from '../../img/badge-icon.svg';
 export default function PlayListInfo(props) {
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const { user, playlist, playlistDesc, playing } = props;
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
@@ -52,6 +54,7 @@ export default function PlayListInfo(props) {
     const id = playlist.id;
     deletePlaylist(id, {
       onSuccess: () => {
+        queryClient.removeQueries('get-playlist-detail');
         alert('플레이리스트가 정상적으로 삭제되었습니다.');
         navigate(-1);
       },
@@ -184,8 +187,11 @@ const ThumbnailBox = styled.div`
   flex-direction: column;
   justify-content: space-around;
   top: 0;
+  left: 50%;
   transform: ${(props) =>
-    props.isPlaylistSummary ? 'translate(50%, 56px)' : 'translate(50%, 30px)'};
+    props.isPlaylistSummary
+      ? 'translate(-50%, 56px)'
+      : 'translate(-50%, 30px)'};
   img {
     height: 180px;
   }
@@ -293,7 +299,7 @@ const MoreInfoBox = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 24px 16px 0px;
-  background-color: #fff;
+  background: linear-gradient(180deg, #f5f2ff 0%, #fff 100%);
   color: var(--tertiary-font-color);
   font-size: var(--font-sm);
   line-height: normal;

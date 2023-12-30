@@ -45,6 +45,7 @@ export default function ChangePwForm() {
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         navigate('/login');
+        // console.log(data);
       },
       onError: (error) => {
         console.error('비밀번호 변경 실패', error);
@@ -147,8 +148,12 @@ export default function ChangePwForm() {
 }
 
 const FormWrap = styled.form`
-  height: 100%;
-  padding: 0px 16px;
+  flex: 1 0 0;
+  padding: 261px 16px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const InputTitle = styled.p`
@@ -156,15 +161,16 @@ const InputTitle = styled.p`
 `;
 
 const InputBox = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  position: absolute;
-  top: 261px;
+
   gap: 4px;
   /* gap: 4px; */
 `;
 
 const ButtonBox = styled.div`
-  position: absolute;
+  width: 100%;
+
   bottom: 24px;
 `;

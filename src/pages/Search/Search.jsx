@@ -64,7 +64,6 @@ export default function Search() {
     });
     setRecentKeywords(savedKeywords);
   }, []);
-
   return (
     <S.SearchWrap>
       <SearchInput setInputValue={setInputValue} onSubmit={SearchSubmit} />

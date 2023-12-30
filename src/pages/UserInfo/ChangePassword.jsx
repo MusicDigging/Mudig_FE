@@ -16,6 +16,7 @@ export default function ChangePassword() {
         뮤딕아이디의
         <br /> 비밀번호를 변경해주세요
       </ChangePwTitle>
+
       <ChangePwForm />
     </ChangePwWrap>
   );
@@ -24,6 +25,8 @@ export default function ChangePassword() {
 const ChangePwWrap = styled.div`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ChangePwTitle = styled.h1`
@@ -37,6 +40,6 @@ const ChangePwTitle = styled.h1`
 
 const BackBtn = styled.div`
   position: absolute;
-  top: 15px;
-  left: 12px;
+  top: 22px;
+  left: 16px;
 `;

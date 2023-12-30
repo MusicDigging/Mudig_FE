@@ -27,8 +27,6 @@ const SignupText = styled.span`
 `;
 
 const SignupMain = styled.main`
-  margin: 0 auto;
-  width: 328px;
   position: absolute;
   top: 287px;
   text-align: center;

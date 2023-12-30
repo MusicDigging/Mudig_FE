@@ -21,14 +21,15 @@ export default function SignupDetail() {
   return (
     <SingupDetailWrap>
       {toast && (
-        <ToastBox>
-          <Toast
-            setToast={setToast}
-            text='해당메일로 인증번호가 전송되었습니다  ✉️'
-            type='success'
-          />
-        </ToastBox>
+        // <ToastBox>
+        <Toast
+          setToast={setToast}
+          text='해당메일로 인증번호가 전송되었습니다  ✉️'
+          type='success'
+        />
+        // </ToastBox>
       )}
+
       <PageNum>1/2</PageNum>
 
       <SignupDetailBox>
@@ -45,28 +46,33 @@ export default function SignupDetail() {
 }
 
 const SingupDetailWrap = styled.div`
+  padding: 0 16px;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 `;
 
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
-`;
+// const ToastBox = styled.div`
+//   position: absolute;
+//   top: 13px;
+//   left: 13px;
+//   z-index: 1;
+//   width: 94%;
+// `;
 const SignupDetailBox = styled.div`
   display: flex;
   position: relative;
   top: 56px;
-  left: 16px;
+  /* left: 16px; */
   line-height: 33px;
 `;
 
 const PageNum = styled.span`
   position: absolute;
   top: 24px;
-  left: 317px;
+  right: 16px;
   font-size: var(--font-l);
   color: var(--sub-font-color);
   font-weight: 500;
@@ -78,5 +84,5 @@ const DetailTitle = styled.h1`
 `;
 
 const Main = styled.div`
-  padding: 0 16px;
+  height: 100%;
 `;
