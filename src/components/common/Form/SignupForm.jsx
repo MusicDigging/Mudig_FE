@@ -69,7 +69,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
                 validation={{
                   pattern: {
                     value: emailRegex,
-                    message: '이메일을 다시 확인해주세요.',
+                    message: '이메일 형식에 맞지 않는 메일주소 입니다.',
                   },
                   required: '이메일을 입력하세요',
                 }}
@@ -112,7 +112,8 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
               validation={{
                 pattern: {
                   value: pawwrodRegex,
-                  message: 'X 8~16자 영문 대 소문자, 숫자를 사용하세요.',
+                  message:
+                    '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
                 },
                 required: '비밀번호를 입력하세요',
               }}
