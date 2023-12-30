@@ -28,8 +28,16 @@ export default function Login() {
   const socialQuery = new URLSearchParams(location.search);
 
   useEffect(() => {
+    const now = new Date();
+    const hours = now.getHours(); // 0-23 사이의 시간
     if (isLogin) {
-      navigate('/main');
+      if (hours >= 18 && hours < 24) {
+        navigate('/event');
+        console.log(now, hours, isLogin);
+      } else {
+        // 로그인 상태라면 메인 페이지로 이동
+        navigate('/main');
+      }
       return;
     }
 
@@ -44,7 +52,7 @@ export default function Login() {
     } else if (result) {
       sendCode(result, 'kakao');
     }
-  }, []);
+  }, [navigate, isLogin]);
 
   const sendCode = async (code, social) => {
     try {
@@ -97,9 +105,7 @@ export default function Login() {
   return (
     <LoginWrap>
       {toast && (
-        <ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <LoginHeader>
         <LoginTitle>
@@ -200,11 +206,4 @@ const NavUserInfo = styled.nav`
 const NavUserInfoLink = styled.span`
   font-size: var(--font-sm);
   cursor: pointer;
-`;
-
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;
