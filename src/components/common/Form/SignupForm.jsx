@@ -22,6 +22,8 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
   const { isValid } = formState;
 
   const watchEmail = watch('email');
+  const watchOtpNum = watch('otpNum');
+
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   const [isEmailValidated, setIsEmailValidated] = useState(false);
   const [showTimeText, setShowTimeText] = useState(false);
@@ -29,6 +31,8 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
 
   //인증버튼 활성화 확인 여부 변수
   const disabledConfirm = emailRegex.test(watchEmail);
+  const isOtpValidated = isEmailValidated && watchOtpNum !== '';
+  const formIsValid = isValid && isOtpValidated;
 
   useEffect(() => {
     // console.log('이메일 인증 활성화 :', isEmailValidated);
@@ -96,7 +100,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
                 validate: {
                   comfirmOtp: (fieldValue) => {
                     return (
-                      fieldValue.trim() == otpNum ||
+                      fieldValue.trim() === otpNum ||
                       '인증번호가 일치하지 않습니다.'
                     );
                   },
@@ -124,9 +128,8 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
             />
           </PasswordContainer>
         </FormContainer>
-
         <ButtonBox>
-          <Button text='다음' type='submit' disabled={!isValid}></Button>
+          <Button text='다음' type='submit' disabled={!formIsValid}></Button>
         </ButtonBox>
       </Form>
       {/* <DevTool control={control} /> */}
@@ -154,7 +157,7 @@ const EmailValidBox = styled.div`
   justify-content: center;
   gap: 16px;
   button {
-    flex-shirink: 0;
+    flex-shrink: 0;
   }
 `;
 
