@@ -20,7 +20,7 @@ const onResponseError = async (error) => {
   // console.log('토큰 만료');
   const originalRequest = error.config;
   const isAutoLogin = localStorage.getItem('autoLogin');
-  if (error.response.status === 401 && isAutoLogin === 'true') {
+  if (error.response.status === 401) {
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (refreshToken) {
@@ -45,9 +45,6 @@ const onResponseError = async (error) => {
         console.error(' 토큰 교체 실패:', Error);
       }
     }
-  } else if (error.response.status === 401 && isAutoLogin === 'false') {
-    localStorage.removeItem('token');
-    localStorage.removeItem('refresh');
   }
 };
 
