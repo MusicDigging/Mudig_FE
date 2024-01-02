@@ -119,15 +119,7 @@ GPT (Generative Pretrained Transformer) 기술과 Karlo(T2I, Text to Image)를 �
    </tr>
 </table>
 
-## 역할
-
-### 김예지
-
-### 윤서준
-
-### 이지수
-
-### 차다연
+![FE-Roles](https://github.com/MusicDigging/Mudig_FE/assets/107910342/9b229360-1c16-42d8-9264-7a61ac6f154a)
 
 # 협업 방식
 
