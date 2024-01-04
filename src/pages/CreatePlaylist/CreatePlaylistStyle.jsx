@@ -1,13 +1,23 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { Link } from 'react-router-dom';
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const CreateNewPlaylistWrap = styled.main`
   height: 100%;
-
+  transition: opacity 0.5s ease;
   img {
     height: 234px;
+    transition: 0.5s;
   }
   span + div {
     height: 100%;
@@ -23,6 +33,12 @@ export const PageNum = styled.span`
   justify-content: flex-end;
   font-size: var(--font-l);
   color: var(--sub-font-color);
+`;
+
+export const ImgBox = styled.div`
+  img {
+    animation: ${({ isLoading }) => isLoading && fadeIn} 0.5s ease-in-out;
+  }
 `;
 
 export const NewPlaylistBox = styled.div`

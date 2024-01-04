@@ -6,7 +6,8 @@ import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
 import Loading from '../../components/Loading/Loading';
 
-import CharacterImg from '../../img/character-img.svg';
+import CharacterImg from '../../img/character-img4.svg';
+import CharacterImg2 from '../../img/character-img5.svg';
 import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist3() {
@@ -76,7 +77,12 @@ export default function CreateNewPlaylist3() {
             <p>트랜드한 음악들 중 어떤 걸 추천해드릴까요?</p>
           </S.QuestionBox>
         </motion.div>
-        <img src={CharacterImg} alt='캐릭터 이미지' />
+        <S.ImgBox isLoading={isLoading}>
+          <img
+            src={isLoading ? CharacterImg2 : CharacterImg}
+            alt='캐릭터 이미지'
+          />
+        </S.ImgBox>
         <S.AnswerForm>
           <motion.div
             initial={{ x: 300, opacity: 0 }}
