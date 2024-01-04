@@ -2,23 +2,22 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { modalAtom } from '../../atoms/modalAtom';
-
 import { Image } from '../common/Image/Image';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
 export default function SetRepPlaylist(props) {
-  const { playlist, repPlaylist, setRepPlaylist } = props;
+  const { publicPlaylist, repPlaylist, setRepPlaylist } = props;
+
   const [isPlaylistShowed, setisPlaylistShowed] = useState(false);
   const [currRepPlaylist, setCurrRepPlaylist] = useState(
-    playlist.find((obj) => obj.id === repPlaylist),
+    publicPlaylist?.find((obj) => obj.id === repPlaylist),
   );
-  const repPlaylistData = playlist.filter((item) => item.is_public);
+
   const handlePrivateView = () => {
     setisPlaylistShowed(!isPlaylistShowed);
   };
   const handleRepPlaylistCheck = (id) => {
-    const data = playlist.find((obj) => obj.id === parseInt(id));
+    const data = publicPlaylist.find((obj) => obj.id === parseInt(id));
 
     setRepPlaylist(id);
     setCurrRepPlaylist(data);
@@ -33,25 +32,26 @@ export default function SetRepPlaylist(props) {
           type='button'
           onClick={handlePrivateView}
           className={isPlaylistShowed ? 'active' : ''}
-          bdBottom={isPlaylistShowed && playlist.length !== 0}
+          bdBottom={isPlaylistShowed && publicPlaylist.length !== 0}
+          disabled={publicPlaylist.length === 0}
         >
-          {repPlaylist ? (
+          {repPlaylist || currRepPlaylist ? (
             <>
               <Image src={currRepPlaylist?.thumbnail} />
               <div>
                 <strong>{currRepPlaylist?.title}</strong>
               </div>
             </>
-          ) : repPlaylistData.length === 0 ? (
+          ) : publicPlaylist.length === 0 ? (
             <>플레이리스트 생성 및 공개 설정 후 설정 가능합니다.</>
           ) : (
             <>대표 플레이리스트를 설정해보세요!</>
           )}
-          {repPlaylistData.length > 0 && <ArrowIcon fill='black' />}
+          {publicPlaylist.length > 0 && <ArrowIcon fill='black' />}
         </CurrRepPlaylist>
-        {isPlaylistShowed && playlist && (
+        {isPlaylistShowed && publicPlaylist && (
           <SetRepPlaylistList>
-            {repPlaylistData.map((item) => (
+            {publicPlaylist.map((item) => (
               <li key={item?.id}>
                 <SetRepPlaylistBtn
                   type='button'

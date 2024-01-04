@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router';
 
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
+import { useMyPlayList } from '../../hooks/queries/usePlaylist';
 
 import Toast from '../../components/common/Toast';
 import ProfileInput from '../../components/common/Input/ProfileInput';
@@ -18,7 +19,8 @@ export default function EditProfile() {
   const location = useLocation();
   const fileInput = useRef(null);
   const data = location.state;
-  const { playlist, profile } = data;
+  const { profile } = data;
+  const { data: myPlaylistData, isLoading } = useMyPlayList();
   const [genre, setGenre] = useState(profile?.genre.split(',') || []);
   const [uploadImg, setUploadImg] = useState(null);
   const [toast, setToast] = useRecoilState(toastAtom);
@@ -63,6 +65,8 @@ export default function EditProfile() {
     navigate(-1);
   };
 
+  if (isLoading) return null;
+
   return (
     <S.EditProfileWrap>
       {toast && (
@@ -85,7 +89,7 @@ export default function EditProfile() {
           onChipSelect={handleChipSelect}
         >
           <SetRepPlaylist
-            playlist={playlist}
+            publicPlaylist={myPlaylistData.myplaylist}
             repPlaylist={repPlaylist}
             setRepPlaylist={setRepPlaylist}
           />
