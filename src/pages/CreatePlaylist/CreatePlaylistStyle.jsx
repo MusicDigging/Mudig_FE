@@ -67,7 +67,21 @@ export const AnswerForm = styled.form`
   }
 `;
 
-export const Answer = styled(TextareaAutosize)`
+export const AnswerTextarea = styled(TextareaAutosize)`
+  width: 100%;
+  height: 60px;
+  padding: 22px 18px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  resize: none;
+  &:placeholder {
+    color: var(--sub-font-color);
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const AnswerInput = styled.input`
   width: 100%;
   height: 60px;
   padding: 22px 18px;
