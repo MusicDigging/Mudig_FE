@@ -74,7 +74,6 @@ export default function CreateNewPlaylist3() {
           <S.QuestionBox>
             <p>과거의 클래식한 음악부터 현재의</p>
             <p>트랜드한 음악들 중 어떤 걸 추천해드릴까요?</p>
-            <p>( 상관없음, 2000년대, 2020년대 등 )</p>
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
@@ -85,7 +84,7 @@ export default function CreateNewPlaylist3() {
           >
             <S.AnswerInput
               name='year'
-              placeholder='내용을 입력해주세요.'
+              placeholder='ex) 2000년대, 2020년대 등'
               value={year}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
