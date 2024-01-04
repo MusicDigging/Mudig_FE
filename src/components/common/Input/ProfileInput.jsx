@@ -94,9 +94,9 @@ export default function ProfileInput(props) {
               })}
               placeholder='8글자 내로 작성해주세요'
               type='text'
+              autoComplete='off'
               id='nickName'
               onChange={handleNickNameChecked}
-              autocomplete='off'
             />
             <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
           </InputBox>
@@ -114,6 +114,7 @@ export default function ProfileInput(props) {
             {...register('about', { required: false })}
             defaultValue={profile?.about}
             placeholder='소개글을 작성해주세요'
+            autoComplete='off'
             type='text'
             id='about'
           />
@@ -141,6 +142,7 @@ export default function ProfileInput(props) {
                 />
               ))}
             </ChipBox>
+            <ChipMsg>{'관심사는 최대 3개까지 설정 가능합니다.'}</ChipMsg>
           </Chipwrap>
         </>
         {children}
@@ -184,6 +186,10 @@ const SuccessMsg = styled.span`
   font-size: 12px;
   display: block;
   padding-top: 8px;
+`;
+
+const ChipMsg = styled(SuccessMsg)`
+  padding-top: 15px;
 `;
 
 const ErrorMsg = styled.span`
