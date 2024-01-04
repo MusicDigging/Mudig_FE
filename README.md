@@ -16,15 +16,19 @@
 
 # 프로젝트 소개
 
-**뮤딕**(Mudig, Music Digging 이하 뮤딕)은 사용자들이 새로운 음악을 발견하고, 추천받으며, 공유할 수 있는 플랫폼을 말합니다.
+**뮤딕**(Mudig, Music Digging 이하 뮤딕)은 **사용자들이 새로운 음악을 발견하고, 추천받으며, 공유할 수 있는** 플랫폼입니다.
 
-GPT (Generative Pretrained Transformer) 기술과 Karlo(T2I, Text to Image)를 사용하여 개인화된 음악 추천과 인터렉티브한 경험을 제공하는 서비스입니다.
+**GPT** (Generative Pretrained Transformer) 기술과 **Karlo**(T2I, Text to Image)를 사용하여 개인화된 음악 추천과 인터렉티브한 경험을 제공하는 서비스입니다.
 
-자체 회원가입 뿐만 아니라 구글, 카카오를 이용한 소셜 로그인을 지원하고 있습니다.
-인공지능을 통해 새로운 음악을 찾는 즐거움을 드릴 수 있습니다.
-자신만의 플레이리스트를 공유하고, 소통하며 무료한 일상에 소소함 즐거움을 느낄 수 있도록 장소를 제공해드립니다.
+저희 뮤딕은
 
-> **디깅이란?** ‘디깅’이란 원래 디제이가 자신의 공연 리스트를 채우기 위해서 음악을 찾는 행위를 의미하나, 현재는 자신의 특색있는 플레이리스트를 짜는 것으로 그 의미가 확대 되어 일반인들도 사용하는 언어가 되었습니다.
+1. 자체 회원가입 뿐만 아니라 구글, 카카오를 이용한 소셜 로그인을 지원하고 있습니다.
+2. 인공지능을 통해 새로운 음악을 찾는 즐거움을 드릴 수 있습니다.
+3. 자신만의 플레이리스트를 공유하고, 소통하며 무료한 일상에 소소함 즐거움을 느낄 수 있도록 장소를 제공해드립니다.
+
+> ### 디깅이란?
+>
+> ‘디깅’이란 원래 디제이가 자신의 공연 리스트를 채우기 위해서 음악을 찾는 행위를 의미하나, 현재는 자신의 특색있는 플레이리스트를 짜는 것으로 그 의미가 확대 되어 일반인들도 사용하는 언어가 되었습니다.
 
 <!-- 프로젝트 소개, 설명 작성하기 -->
 
@@ -40,7 +44,6 @@ GPT (Generative Pretrained Transformer) 기술과 Karlo(T2I, Text to Image)를 �
    <img src="https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=ReactRouter&logoColor=white"/>&nbsp 
   <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>&nbsp 
    <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>&nbsp 
-   <img src="https://img.shields.io/badge/babel-F9DC3E?style=for-the-badge&logo=babel&logoColor=white"/>&nbsp
     </td>
 </tr>
 <tr>
@@ -123,6 +126,10 @@ GPT (Generative Pretrained Transformer) 기술과 Karlo(T2I, Text to Image)를 �
 
 # 협업 방식
 
+## 일정
+
+![schedule](https://github.com/MusicDigging/Mudig_FE/assets/116805856/322ab60a-49d1-4d35-a836-b4adcb76886b)
+
 ## Git 브랜치 전략
 
 - `main` : 최종 배포를 위한 브랜치
@@ -146,7 +153,62 @@ GPT (Generative Pretrained Transformer) 기술과 Karlo(T2I, Text to Image)를 �
 
 # 페이지 소개
 
-<!-- 각 페이지 GIF 삽입 + 간단 설명-->
+- ### 회원가입 페이지
+
+  카카오톡, 구글, 이메일 인증 회원가입
+
+- ### 로그인 페이지
+
+  소셜 로그인, 이메일 로그인
+
+- ### 홈 페이지
+
+  유저 추천 플리, 내가 만든 플리, 신규 플리, 인기 플리
+
+- ### 검색 페이지
+
+  유저, 플리 통합 검색, 검색 결과 페이지
+
+- ### 플리 생성 페이지
+
+  플리 생성 문항, 로딩
+
+- ### 플리 상세 페이지
+
+  플리 제목, 이미지, 설명, 생성된 곡 리스트
+
+- ### 플리 수정 페이지
+
+  리스트 순서 조정, 제목 수정, 설명 수정, 공개 비공개 설정
+
+- ### 랜덤 뮤비 페이지
+
+  랜덤 뮤비 추천, 플리에 곡 추가
+
+- ### 마이 프로필, 아더 프로필 페이지
+
+  팔로잉, 팔로워, 대표플리, 내가 만든 플리, 좋아요 누른 플리, 로그아웃
+
+- ### 프로필 수정 페이지
+
+  이미지, 닉네임, 소개 수정, 대표플리 설정
+
+- ### 이벤트 페이지
+
+  이벤트 플리 생성
+
+- ### 비밀번호 변경, 탈퇴 페이지
+
+  비밀번호 변경, 회원 탈퇴
+
+# 핵심 기능/코드
+
+- 리액트 쿼리 훅
+- 영상 재생 기능
+- react hook form
+- 구글/카카오 로그인?
+- 무한 스크롤?
+- 플리 수정 (순서 수정 등)
 
 # 트러블 슈팅
 
