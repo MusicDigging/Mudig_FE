@@ -43,6 +43,7 @@ const onResponseError = async (error) => {
         return axios(originalRequest);
       } catch (Error) {
         console.error(' 토큰 교체 실패:', Error);
+        window.localStorage.clear();
       }
     }
   }
