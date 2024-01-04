@@ -24,7 +24,7 @@ export const AuthInput = (props) => {
         type={showPassword ? 'text' : type}
         id={name}
         name={name}
-        autoComplete={name === 'email' ? 'email' : 'current-password'}
+        autocomplete='off'
         marginBottom={marginBottom}
       />
       {type === 'password' && (

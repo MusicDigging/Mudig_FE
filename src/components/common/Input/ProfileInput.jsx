@@ -96,6 +96,7 @@ export default function ProfileInput(props) {
               type='text'
               id='nickName'
               onChange={handleNickNameChecked}
+              autocomplete='off'
             />
             <CharacterCount>{`${nickNameCount}/8`}</CharacterCount>
           </InputBox>

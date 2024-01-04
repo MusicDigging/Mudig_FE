@@ -30,6 +30,7 @@ export const SignupInput = (props) => {
           {...register(name, validation)}
           placeholder={placeholder}
           type={showPassword ? 'text' : type}
+          autocomplete='off'
           id={name}
           name={name}
           marginBottom={marginBottom}
