@@ -33,7 +33,7 @@ export default function SetRepPlaylist(props) {
           type='button'
           onClick={handlePrivateView}
           className={isPlaylistShowed ? 'active' : ''}
-          bdBottom={isPlaylistShowed}
+          bdBottom={isPlaylistShowed && playlist.length !== 0}
         >
           {repPlaylist ? (
             <>
