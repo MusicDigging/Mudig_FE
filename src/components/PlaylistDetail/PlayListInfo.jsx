@@ -236,7 +236,7 @@ const Title = styled.div`
 
 const Desc = styled.div`
   display: flex;
-  align-items: flex-end;
+  justify-content: space-between;
   gap: 16px;
   p {
     color: var(--sub-font-color);
