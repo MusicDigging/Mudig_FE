@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { Button } from '../Button/Button';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
-import { PlayListAtom } from '../../../library/atom';
+import { PlayListAtom, toastAtom } from '../../../library/atom';
 export default function Modal({ playlistDesc, setPlaylistDesc }) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-
+  const setToast = useSetRecoilState(toastAtom);
   // 모달 Close
   const handleClose = () => {
     setPlaylistDesc(playlistInfo.playlist);
@@ -43,7 +43,14 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
     }
   };
 
-  const handleModifyClick = (e) => {
+  const handleModifyClick = () => {
+    if (!playlistDesc.title || !playlistDesc.content) {
+      setToast({
+        content: '제목과 설명은 필수 입력 항목입니다.',
+        type: 'error',
+      });
+      return;
+    }
     setModalOpen(false);
   };
 
@@ -119,6 +126,7 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
                 onClick={handleClose}
               />
               <Button
+                type='submit'
                 text='수정'
                 btnBgColor='#E5DCFF'
                 btnWidth='50%'
@@ -135,7 +143,7 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
 }
 const ModalWrap = styled.div`
   position: absolute;
-  z-index: 100;
+  z-index: 8;
   top: 0;
   width: 100%;
   height: 100vh;
