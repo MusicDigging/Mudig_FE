@@ -66,8 +66,9 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               defaultValue={playlistDesc.title || playlistInfo.playlist.title}
               placeholder='플레이리스트의 제목을 입력해주세요.'
               autoComplete='off'
-              required
               onChange={changeModifyDesc}
+              maxLength='50'
+              required
             />
           </label>
           <label>
@@ -80,8 +81,9 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               }
               placeholder='플레이리스트에 대한 설명을 입력해주세요.'
               autoComplete='off'
-              required
               onChange={changeModifyDesc}
+              maxLength='150'
+              required
             />
           </label>
           <PrivateCheckBtn
