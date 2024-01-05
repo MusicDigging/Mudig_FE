@@ -11,7 +11,8 @@ const GlobalStyle = createGlobalStyle`
    --sub-font-color:#767676;
    --extra-font-color: #909090;
    --tertiary-font-color: #575757;
-   --border-color:#DBDBDB;   
+   --border-color:#DBDBDB;
+   --modal-border-color: #EDEDED;
    --input-background-color:#F1F1F5;
    --btn-border-color:#724FFF;
    --btn-background-color:#724FFF;

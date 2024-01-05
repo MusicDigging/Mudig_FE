@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { Button } from '../Button/Button';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
-import { PlayListAtom } from '../../../library/atom';
+import { PlayListAtom, toastAtom } from '../../../library/atom';
 export default function Modal({ playlistDesc, setPlaylistDesc }) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-
+  const setToast = useSetRecoilState(toastAtom);
   // 모달 Close
   const handleClose = () => {
     setPlaylistDesc(playlistInfo.playlist);
@@ -43,7 +43,14 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
     }
   };
 
-  const handleModifyClick = (e) => {
+  const handleModifyClick = () => {
+    if (!playlistDesc.title || !playlistDesc.content) {
+      setToast({
+        content: '제목과 설명은 필수 입력 항목입니다.',
+        type: 'warning',
+      });
+      return;
+    }
     setModalOpen(false);
   };
 
@@ -59,8 +66,9 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               defaultValue={playlistDesc.title || playlistInfo.playlist.title}
               placeholder='플레이리스트의 제목을 입력해주세요.'
               autoComplete='off'
-              required
               onChange={changeModifyDesc}
+              maxLength='50'
+              required
             />
           </label>
           <label>
@@ -73,8 +81,9 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               }
               placeholder='플레이리스트에 대한 설명을 입력해주세요.'
               autoComplete='off'
-              required
               onChange={changeModifyDesc}
+              maxLength='150'
+              required
             />
           </label>
           <PrivateCheckBtn
@@ -114,11 +123,19 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
                 text='취소'
                 btnWidth='50%'
                 btnBgColor='var(--input-background-color)'
-                btnColor='var(--font-color)'
+                btnColor='var(--sub-font-color)'
                 btnBorder='1px solid var(--input-background-color)'
                 onClick={handleClose}
               />
-              <Button text='수정' btnWidth='50%' onClick={handleModifyClick} />
+              <Button
+                type='submit'
+                text='수정'
+                btnBgColor='#E5DCFF'
+                btnWidth='50%'
+                btnBorder='none'
+                btnColor='var(--btn-point-color)'
+                onClick={handleModifyClick}
+              />
             </BtnBox>
           )}
         </ModalForm>
@@ -128,7 +145,7 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
 }
 const ModalWrap = styled.div`
   position: absolute;
-  z-index: 100;
+  z-index: 8;
   top: 0;
   width: 100%;
   height: 100vh;
@@ -156,7 +173,7 @@ const ModalForm = styled.form`
     width: 100%;
     padding: 8px 16px;
     border-radius: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--modal-border-color);
     background: rgba(255, 255, 255, 0.6);
   }
 `;
@@ -170,15 +187,18 @@ const ContentInput = styled.textarea`
   height: 181px;
   font-weight: var(--font-regular);
   line-height: normal;
+  color: var(--tertiary-font-color);
+  font-size: var(--font-md);
 `;
 const PrivateCheckBtn = styled.button`
   position: relative;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--modal-border-color);
   padding: 8px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-size: var(--font-md);
   svg {
     transform: rotate(90deg);
   }
@@ -196,23 +216,28 @@ const PrivateCheckBtnBox = styled.div`
   min-width: 295px;
   width: 100%;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--modal-border-color);
   background-color: #fff;
-  font-size: var(--font-md);
   line-height: normal;
   button {
     width: 100%;
     text-align: left;
     padding: 10px 16px;
     border-radius: 9px;
+    font-size: var(--font-md);
     &:active,
     &.active {
-      color: #fff;
-      background-color: var(--playlist-info-bg-color);
+      color: var(--btn-point-color);
+      background-color: #e5dcff;
+      font-weight: var(--font-semi-bold);
     }
   }
 `;
 const BtnBox = styled.div`
   display: flex;
   gap: 8px;
+  button {
+    font-size: var(--font-md);
+    font-weight: var(--font-semi-bold);
+  }
 `;

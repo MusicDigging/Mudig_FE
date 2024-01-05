@@ -6,11 +6,12 @@ import Modal from '../../components/common/Modal/Modal';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListModify from '../../components/PlaylistDetail/PlayListModify';
 import { useState } from 'react';
-import { PlayListAtom } from '../../library/atom';
-import { useLocation } from 'react-router-dom';
+import { PlayListAtom, toastAtom } from '../../library/atom';
+import Toast from '../../components/common/Toast';
 
 export default function PlaylistModify() {
   const modalOpen = useRecoilValue(modalAtom);
+  const [toast, setToast] = useRecoilState(toastAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [playlistDesc, setPlaylistDesc] = useState({
     // 플리 설명 state
@@ -18,9 +19,11 @@ export default function PlaylistModify() {
     content: playlistInfo.playlist?.content,
     is_public: playlistInfo.playlist?.is_public,
   });
-
   return (
     <PlaylistModifyBox>
+      {toast && (
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
+      )}
       {modalOpen && (
         <Modal
           playlistDesc={playlistDesc}
