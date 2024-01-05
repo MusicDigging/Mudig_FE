@@ -47,7 +47,7 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
     if (!playlistDesc.title || !playlistDesc.content) {
       setToast({
         content: '제목과 설명은 필수 입력 항목입니다.',
-        type: 'error',
+        type: 'warning',
       });
       return;
     }
