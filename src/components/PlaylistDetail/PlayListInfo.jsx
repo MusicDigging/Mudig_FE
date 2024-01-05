@@ -315,7 +315,7 @@ const MoreInfoBox = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(-16px, -99%);
+    transform: translate(-16px, -95%);
     width: 110px;
     height: 76px;
     background: url(${MudigIcon}) no-repeat center/contain;
