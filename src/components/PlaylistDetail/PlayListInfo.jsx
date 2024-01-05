@@ -13,7 +13,7 @@ import { Image, CircleImage } from '../common/Image/Image';
 
 import PenIcon from '../../img/pen-icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
-import Mudig from '../../img/playlist-mudig-img.svg';
+import MudigIcon from '../../img/playlistinfo-mudig.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import ProfileBadge from '../../img/badge-icon.svg';
 
@@ -285,7 +285,6 @@ const ThumbnailBlurBox = styled.div`
   top: 0;
   width: 360px;
   height: 90%;
-  /* background: rgba(15, 15, 16, 0.5); */
   backdrop-filter: blur(2px);
   z-index: 3;
 `;
@@ -316,10 +315,10 @@ const MoreInfoBox = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(-10%, -99%);
-    width: 124px;
-    height: 78px;
-    background: url(${Mudig}) no-repeat center/contain;
+    transform: translate(-16px, -99%);
+    width: 110px;
+    height: 76px;
+    background: url(${MudigIcon}) no-repeat center/contain;
   }
   button {
     float: right;
