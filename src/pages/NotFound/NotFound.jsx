@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ErrorImg from '../../img/icon_error.svg';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
+import NotFoundBG from '../../img/not_found_bg.svg';
 
 export default function NotFound() {
   const navigate = useNavigate();
@@ -38,17 +39,17 @@ const NotFoundSection = styled.section`
   width: 360px;
   img {
     display: block;
-    margin: 250px auto 25px auto;
+    margin: 200px auto 25px auto;
   }
   p {
-    color: #7d4fff;
+    color: #767676;
   }
   button {
     margin-top: 20px;
-    width: 70px;
+    width: 243px;
     height: 38px;
-    background-color: #7d4fff;
-    color: #fff;
+    background-color: #f5f2ff;
+    color: #7d4fff;
     border-radius: 10px;
     font-size: 12px;
   }
