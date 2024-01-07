@@ -46,7 +46,7 @@ const ToastWrap = styled.div`
   position: absolute;
   top: 13px;
   left: 13px;
-  z-index: 1;
+  z-index: 10;
   width: 94%;
 `;
 const ToastBox = styled(motion.div)`
