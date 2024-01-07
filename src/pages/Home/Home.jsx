@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { userInfoAtom } from '../../library/atom'; // Use the actual path of 'userInfoAtom'
+import { userInfoAtom } from '../../library/atom';
 import * as S from './HomeStyle';
 import MainHeader from '../../components/common/Header/MainHeader';
 import MyPlayListTable from '../../components/Home/MyPlayListTable';
@@ -12,17 +12,15 @@ import { Link } from 'react-router-dom';
 
 export default function Home() {
   const { data, isLoading, error } = useGetHome();
-  const userInfo = useRecoilValue(userInfoAtom); // Fetch user info
+  const userInfo = useRecoilValue(userInfoAtom);
 
   if (isLoading) return <Loading isLoading={isLoading} />;
   if (error) return <NotFound />;
   const { liked_playlist, my_playlist, playlist_all, recommend_pli } = data;
-
   return (
     <S.HomeWrap>
       <MainHeader />
       <S.HomeSection>
-        {/* Replace with user's name */}
         <h2 id='bold'>{userInfo.name}님을 위한 플레이리스트</h2>
         <PlayListTable
           liSize={{ width: '152px' }}
