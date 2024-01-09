@@ -151,6 +151,10 @@
 - Rename: 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우
 ```
 
+# 아키텍처
+
+![Architecter](https://github.com/MusicDigging/Mudig_FE/assets/72855681/d76d5f80-783a-4f14-9d16-afd25192214d)
+
 # 페이지 소개
 
 - ### 회원가입 페이지
