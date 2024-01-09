@@ -153,7 +153,7 @@
 
 # 아키텍처
 
-![Architecter](https://github.com/MusicDigging/Mudig_FE/assets/72855681/d76d5f80-783a-4f14-9d16-afd25192214d)
+![Architecter](https://github.com/MusicDigging/Mudig_FE/assets/72855681/569915b7-de50-4a6d-ba88-a93337e03211)
 
 # 페이지 소개
 
