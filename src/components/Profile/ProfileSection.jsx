@@ -152,8 +152,11 @@ const ProfileSectionWrap = styled.section`
 `;
 
 const ProfileNavBtn = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
+  button + div {
+  }
 `;
 
 const UserInfoBox = styled.div`
@@ -169,7 +172,7 @@ const UserInfoBox = styled.div`
 `;
 
 const MiniModalStyle = styled(MiniModalWrap)`
-  right: 16px;
+  right: 0px;
 `;
 
 const UserDesc = styled.p`
