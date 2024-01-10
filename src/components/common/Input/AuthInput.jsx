@@ -3,6 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import hideEye from '../../../img/hidePw-icon.svg';
 import showEye from '../../../img/showPw-Icon.svg';
+
 export const AuthInput = (props) => {
   const {
     placeholder,
@@ -13,6 +14,7 @@ export const AuthInput = (props) => {
     toggleShowPassword,
     marginBottom,
   } = props;
+
   const { register } = useFormContext();
 
   return (
@@ -23,8 +25,7 @@ export const AuthInput = (props) => {
         placeholder={placeholder}
         type={showPassword ? 'text' : type}
         id={name}
-        name={name}
-        autoComplete={name === 'email' ? 'email' : 'current-password'}
+        autoComplete='off'
         marginBottom={marginBottom}
       />
       {type === 'password' && (
@@ -40,10 +41,11 @@ const InputStyle = styled.input`
   width: 100%;
   height: 44px;
   border-radius: 8px;
-  font-size: 16px;
+
   padding-left: 16px;
   margin-bottom: ${(props) => (props.marginBottom ? '8px' : '0')};
 `;
+
 const Label = styled.label``;
 
 const EyeIcon = styled.span`

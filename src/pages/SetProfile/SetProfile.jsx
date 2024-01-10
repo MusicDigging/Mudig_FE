@@ -72,9 +72,7 @@ export default function SetProfile() {
   return (
     <SetProfileWrap>
       {toast && (
-        <ToastBox>
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        </ToastBox>
+        <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       <PageNum>2/2</PageNum>
       <SetProfileTitle>
@@ -107,6 +105,10 @@ const SetProfileWrap = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SetProfileBox = styled.div`
@@ -146,11 +148,4 @@ const ImgUploadBtn = styled.button`
 
 const ProfileInputBox = styled.div`
   height: 100%;
-`;
-
-const ToastBox = styled.div`
-  position: absolute;
-  top: 13px;
-  left: 13px;
-  z-index: 1;
 `;

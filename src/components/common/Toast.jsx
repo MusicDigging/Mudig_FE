@@ -17,31 +17,41 @@ export default function Toast({ setToast, text, type }) {
   }, []);
 
   return (
-    <ToastWrap
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 1.3, ease: 'easeInOut' }}
-      onAnimationComplete={handleAnimationComplete}
-      type={type}
-    >
-      <img
-        src={
-          type === 'success'
-            ? SuccessIcon
-            : type === 'error'
-              ? ErrorIcon
-              : WarningIcon
-        }
-        alt=''
-      />
-      <p>{text}</p>
+    <ToastWrap>
+      <ToastBox
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        transition={{ duration: 1.3, ease: 'easeInOut' }}
+        onAnimationComplete={handleAnimationComplete}
+        type={type}
+      >
+        <img
+          src={
+            type === 'success'
+              ? SuccessIcon
+              : type === 'error'
+                ? ErrorIcon
+                : WarningIcon
+          }
+          alt=''
+        />
+        <p>{text}</p>
+      </ToastBox>
     </ToastWrap>
   );
 }
 
-const ToastWrap = styled(motion.div)`
-  width: 334px;
+const ToastWrap = styled.div`
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 1;
+  width: 94%;
+`;
+const ToastBox = styled(motion.div)`
+  width: 100%;
+  min-width: 334px;
   display: flex;
   align-items: center;
   gap: 12px;

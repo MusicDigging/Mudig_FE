@@ -19,7 +19,7 @@ export default function CommentSection(props) {
 
   const replies = filterReplies(comments);
   const filteredComments =
-    comments.length > 1 ? filterComments(comments, replies) : comments;
+    comments.length > 0 ? filterComments(comments, replies) : comments;
 
   const handleMore = () => {
     if (!more) {

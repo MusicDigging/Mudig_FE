@@ -17,7 +17,7 @@ export const AuthForm = () => {
       email: '',
       password: '',
     },
-    mode: 'onBlur',
+    mode: 'onSubmit',
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
@@ -60,6 +60,8 @@ export const AuthForm = () => {
   const handleCheckboxChange = () => {
     const checkbox = document.getElementById('checkbox');
     if (checkbox) {
+      const autoLogin = checkbox.checked;
+      localStorage.setItem('autoLogin', autoLogin ? 'true' : 'false');
       checkbox.click();
     }
   };
@@ -100,7 +102,6 @@ export const AuthForm = () => {
           <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
             <CheckboxInput
               type='checkbox'
-              // checked={autoLogin}
               onClick={handleCheckboxChange}
               id='checkbox'
             />
@@ -117,7 +118,7 @@ export const AuthForm = () => {
           </ErrorBox>
         </FormContainer>
         <ButtonBox>
-          <Button text='로그인' type='submit' disabled={!isValid}></Button>
+          <Button text='로그인' type='submit'></Button>
         </ButtonBox>
       </Form>
     </FormProvider>
