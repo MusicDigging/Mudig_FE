@@ -25,7 +25,7 @@ export default function CreateNewPlaylist3() {
     if (year.trim() === '') {
       return;
     }
-    const data = { situations, genre: genre.join(','), year: year.trim() };
+    const data = { situations, genre: genre, year: year.trim() };
 
     setIsLoading(true);
     createPlaylist(data, {
