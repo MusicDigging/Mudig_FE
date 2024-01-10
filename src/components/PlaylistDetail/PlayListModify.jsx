@@ -25,8 +25,6 @@ export default function PlayListModify({ playlistDesc }) {
   const [changedOrder, setChangedOrder] = useState([]);
   const [toast, setToast] = useRecoilState(toastAtom);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   // 음악 삭제 handler
   const handleDelBtn = (itemId) => {
     const newMusic = music.filter((item) => item.id !== itemId);
@@ -44,30 +42,24 @@ export default function PlayListModify({ playlistDesc }) {
       content: playlistDesc.content,
       is_public: playlistDesc.is_public,
     };
-    setIsLoading(true);
     modifyPlaylist(reqData, {
       onSuccess: () => {
-        setIsLoading(false);
         setToast({ content: '수정에 성공하였습니다.', type: 'success' });
         navigate(-1);
       },
       onError: (error) => {
-        setIsLoading(false);
         setToast({ content: '수정에 실패하였습니다.', type: 'warning' });
       },
     });
   };
 
-  // Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }) => {
-    // console.log('>>> source', source);
-    // console.log('>>> destination', destination);
     if (!destination) return;
     const _items = JSON.parse(JSON.stringify(music));
     const [targetItem] = _items.splice(source.index, 1);
     _items.splice(destination.index, 0, targetItem);
     setMusic(_items);
-    // 변경된 순서를 문자열로 변환하여 저장
+    // 변경된 순서를 저장
     const newOrder = _items.map((item) => item.id);
     setChangedOrder(newOrder);
   };
