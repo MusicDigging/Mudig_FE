@@ -11,7 +11,7 @@ export default function CreateNewPlaylist2() {
   const location = useLocation();
   const state = location.state || {};
   const { situations, year, backAnimation } = state;
-  const [genre, setGenre] = useState((state && state.genre) || []);
+  const [genre, setGenre] = useState((state && state.genre) || '');
 
   return (
     <S.CreateNewPlaylistWrap>
@@ -25,7 +25,6 @@ export default function CreateNewPlaylist2() {
         >
           <S.QuestionBox>
             <p>어떤 장르의 음악을 즐겨들으시나요?</p>
-            <p>(최대 3개까지 선택 가능)</p>
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
