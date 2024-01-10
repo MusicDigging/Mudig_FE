@@ -214,9 +214,10 @@ const MoveFollowBtn = styled(Link)`
 `;
 
 const FollowBtn = styled.button`
+  transition: 0.1s;
   width: 89px;
   height: 34px;
-  padding: 4px 25px;
+  padding: 4px 0;
   border-radius: 10px;
   color: #fff;
   background-color: var(--btn-background-color);
