@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
+
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import { CircleImage } from '../common/Image/Image';
 import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
+import SearchResultTitle from './SearchResultTitle';
 export default function SearchResultAll(props) {
   const { result, setCurrentNav } = props;
 
@@ -18,12 +19,10 @@ export default function SearchResultAll(props) {
     <>
       <SearchListBox>
         <SearchListSection>
-          <SearchListTitleBox>
-            <h2>플리 검색결과</h2>
-            <button onClick={handleNavPlaylist}>
-              <ArrowIcon fill='black' />
-            </button>
-          </SearchListTitleBox>
+          <SearchResultTitle
+            title='플리 검색결과'
+            handleNavPlaylist={handleNavPlaylist}
+          />
           <PlayList>
             {result.recent_playlists.length !== 0 ? (
               result.recent_playlists.map((item) => {
@@ -53,12 +52,10 @@ export default function SearchResultAll(props) {
           </PlayList>
         </SearchListSection>
         <SearchListSection>
-          <SearchListTitleBox>
-            <h2>유저 검색결과</h2>
-            <button onClick={handleNavUser}>
-              <ArrowIcon fill='black' />
-            </button>
-          </SearchListTitleBox>
+          <SearchResultTitle
+            title='유저 검색결과'
+            handleNavPlaylist={handleNavUser}
+          />
           <UserList>
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {
@@ -101,13 +98,6 @@ const SearchListSection = styled.section`
   ul {
     /* height: 228px; */
   }
-`;
-const SearchListTitleBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 11px 0;
-  margin-bottom: 16px;
 `;
 const UserList = styled.ul`
   display: flex;
