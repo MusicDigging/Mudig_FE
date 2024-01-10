@@ -34,7 +34,7 @@ const Wrap = styled.div`
   position: relative;
 
   max-width: 430px;
-  height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   overflow: hidden;
