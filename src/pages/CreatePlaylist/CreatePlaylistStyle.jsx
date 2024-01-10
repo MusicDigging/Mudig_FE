@@ -88,6 +88,7 @@ export const AnswerForm = styled.form`
 export const AnswerTextarea = styled(TextareaAutosize)`
   width: 100%;
   height: 60px;
+  font-size: 14px;
   padding: 22px 18px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.7);
