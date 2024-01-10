@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import NewPlaylistChip from '../../components/NewPlaylist/NewPlaylistChip';
+import NewPlaylistChip from '../../components/NewPlaylist/GenreSelection';
 
 import CharacterImg from '../../img/character-img3.svg';
 import * as S from './CreatePlaylistStyle';
@@ -33,10 +33,7 @@ export default function CreateNewPlaylist2() {
             initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
           >
-            <NewPlaylistChip
-              selectedChips={genre}
-              setSelectedChips={setGenre}
-            />
+            <NewPlaylistChip genre={genre} setGenre={setGenre} />
           </motion.div>
           <S.LinkBox>
             <S.BackLink

@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function NewPlaylistChip(props) {
-  const { selectedChips, setSelectedChips } = props;
-  const handleChipSelect = (e) => {
-    setSelectedChips(e.target.value);
+export default function GenreSelection(props) {
+  const { genre, setGenre } = props;
+  const handleRadioChange = (e) => {
+    setGenre(e.target.value);
   };
   return (
     <>
-      <Chipwrap>
+      <SelectionWrap>
         {[
           'POP',
           'K-POP',
@@ -19,25 +19,25 @@ export default function NewPlaylistChip(props) {
           '댄스',
           '인디',
           'OST',
-        ].map((chipName, index) => (
-          <ChipBox key={index}>
+        ].map((radioName, index) => (
+          <RadioBox key={index}>
             <input
-              id={chipName}
+              id={radioName}
               type='radio'
               name='genre'
-              value={chipName}
-              onChange={handleChipSelect}
-              checked={selectedChips === chipName}
+              value={radioName}
+              onChange={handleRadioChange}
+              checked={genre === radioName}
             />
-            <label htmlFor={chipName}>{chipName}</label>
-          </ChipBox>
+            <label htmlFor={radioName}>{radioName}</label>
+          </RadioBox>
         ))}
-      </Chipwrap>
+      </SelectionWrap>
     </>
   );
 }
 
-const Chipwrap = styled.div`
+const SelectionWrap = styled.div`
   font-weight: var(--font-regular);
   font-size: var(--font-md);
   display: flex;
@@ -46,7 +46,7 @@ const Chipwrap = styled.div`
   flex-wrap: wrap;
 `;
 
-const ChipBox = styled.div`
+const RadioBox = styled.div`
   input {
     display: none;
   }

@@ -36,6 +36,8 @@ export const PageNum = styled.span`
 `;
 
 export const ImgBox = styled.div`
+  display: flex;
+  justify-content: center;
   img {
     animation: ${({ isLoading }) => isLoading && fadeIn} 0.5s ease-in-out;
   }
