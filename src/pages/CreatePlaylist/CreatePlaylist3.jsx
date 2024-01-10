@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
 import Loading from '../../components/Loading/Loading';
+import YearSelection from '../../components/NewPlaylist/YearSelection';
 
 import CharacterImg from '../../img/character-img4.svg';
 import CharacterImg2 from '../../img/character-img5.svg';
@@ -88,14 +89,7 @@ export default function CreateNewPlaylist3() {
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
           >
-            <S.AnswerInput
-              name='year'
-              placeholder='ex) 2000년대, 2020년대 등'
-              value={year}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-            />
-            <span>{year.length}/100</span>
+            <YearSelection year={year} setYear={setYear} />
           </motion.div>
           <S.LinkBox>
             <S.BackLink
