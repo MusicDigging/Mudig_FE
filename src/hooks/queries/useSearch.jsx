@@ -11,3 +11,14 @@ export const useSearch = (query) => {
   );
   return { data, isLoading, refetch };
 };
+
+export const useSearchMusic = (query) => {
+  const { music } = useQuery(
+    'get-search-music',
+    () => {
+      return privateInstance.get(`/playlist/searchmusic/?query=${query}`);
+    },
+    { select: (response) => response.data },
+  );
+  return { music };
+};

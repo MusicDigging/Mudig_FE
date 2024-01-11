@@ -5,9 +5,11 @@ export default function SearchResultTitle({ title, handleNavPlaylist }) {
   return (
     <SearchListTitleBox>
       <h2>{title}</h2>
-      <button onClick={handleNavPlaylist}>
-        <ArrowIcon fill='black' />
-      </button>
+      {handleNavPlaylist && (
+        <button onClick={handleNavPlaylist}>
+          <ArrowIcon fill='black' />
+        </button>
+      )}
     </SearchListTitleBox>
   );
 }
@@ -17,4 +19,7 @@ const SearchListTitleBox = styled.div`
   align-items: center;
   padding: 11px 0;
   margin-bottom: 16px;
+  h2 {
+    font-size: 20px;
+  }
 `;
