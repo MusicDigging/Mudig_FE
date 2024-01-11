@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
 import Loading from '../../components/Loading/Loading';
+import YearSelection from '../../components/CreatePlaylist/YearSelection';
 
-import CharacterImg from '../../img/character-img.svg';
+import CharacterImg from '../../img/character-img4.svg';
+import CharacterImg2 from '../../img/character-img5.svg';
 import * as S from './CreatePlaylistStyle';
 
 export default function CreateNewPlaylist3() {
@@ -19,40 +21,35 @@ export default function CreateNewPlaylist3() {
   const [year, setYear] = useState((state && state.year) || '');
   const { mutate: createPlaylist } = useCreatePlaylist();
 
-  const handleCompleteBtnClick = (e) => {
-    if (year.trim() === '') {
-      return;
-    }
-    const data = { situations, genre: genre.join(','), year };
+  const handleCompleteBtnClick = useCallback(
+    (e) => {
+      if (year.trim() === '') {
+        return;
+      }
+      const data = { situations, genre: genre, year: year.trim() };
 
-    setIsLoading(true);
-    createPlaylist(data, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries('get-profile');
-        setIsLoading(false);
-        navigate('/playlist/summary', {
-          state: { playlist: data.data.playlist.id },
-        });
-      },
-      onError: () => {
-        setIsLoading(false);
-        setTimeout(() => {
-          alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
-          // 처음 플리 생성 페이지로 이동
-          navigate('/playlist/create1', {
-            state: { situations, genre, year },
+      setIsLoading(true);
+      createPlaylist(data, {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries('get-profile');
+          setIsLoading(false);
+          navigate('/playlist/summary', {
+            state: { playlist: data.data.playlist.id },
           });
-        }, 0);
-      },
-    });
-  };
-
-  const handleInputChange = (e) => {
-    const { value } = e.target;
-    if (value.length <= 100) {
-      setYear(value);
-    }
-  };
+        },
+        onError: () => {
+          setIsLoading(false);
+          setTimeout(() => {
+            alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
+            navigate('/playlist/create1', {
+              state: { situations, genre, year },
+            });
+          }, 0);
+        },
+      });
+    },
+    [year, situations, genre, createPlaylist, queryClient, navigate],
+  );
 
   return (
     <S.CreateNewPlaylistWrap>
@@ -68,25 +65,20 @@ export default function CreateNewPlaylist3() {
           <S.QuestionBox>
             <p>과거의 클래식한 음악부터 현재의</p>
             <p>트랜드한 음악들 중 어떤 걸 추천해드릴까요?</p>
-            <p>( 상관없음, 2000년대, 2020년대 등 )</p>
           </S.QuestionBox>
         </motion.div>
-        <img src={CharacterImg} alt='캐릭터 이미지' />
+        <S.ImgBox isLoading={isLoading}>
+          <img
+            src={isLoading ? CharacterImg2 : CharacterImg}
+            alt='캐릭터 이미지'
+          />
+        </S.ImgBox>
         <S.AnswerForm>
           <motion.div
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
           >
-            <S.Answer
-              name='year'
-              cacheMeasurements
-              placeholder='내용을 입력해주세요.'
-              maxRows={4}
-              minRows={1}
-              value={year}
-              onChange={handleInputChange}
-            />
-            <span>{year.length}/100</span>
+            <YearSelection year={year} setYear={setYear} />
           </motion.div>
           <S.LinkBox>
             <S.BackLink
