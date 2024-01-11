@@ -12,6 +12,7 @@ export default function CreateNewPlaylist2() {
   const state = location.state || {};
   const { situations, year, backAnimation } = state;
   const [genre, setGenre] = useState((state && state.genre) || '');
+  const isGenreEmpty = genre.length === 0;
 
   return (
     <S.CreateNewPlaylistWrap>
@@ -56,8 +57,8 @@ export default function CreateNewPlaylist2() {
                 year,
                 backAnimation: false,
               }}
-              disabled={genre.length === 0}
-              onClick={(e) => genre.length === 0 && e.preventDefault()}
+              disabled={isGenreEmpty}
+              onClick={(e) => isGenreEmpty && e.preventDefault()}
             >
               다음
             </S.NextLink>

@@ -15,9 +15,7 @@ export default function CreateNewPlaylist1() {
 
   const handleInputChange = (e) => {
     const { value } = e.target;
-    if (value.length <= 100) {
-      setSituations(value);
-    }
+    setSituations(value.slice(0, 100));
   };
 
   return (

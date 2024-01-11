@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -21,46 +21,35 @@ export default function CreateNewPlaylist3() {
   const [year, setYear] = useState((state && state.year) || '');
   const { mutate: createPlaylist } = useCreatePlaylist();
 
-  const handleCompleteBtnClick = (e) => {
-    if (year.trim() === '') {
-      return;
-    }
-    const data = { situations, genre: genre, year: year.trim() };
+  const handleCompleteBtnClick = useCallback(
+    (e) => {
+      if (year.trim() === '') {
+        return;
+      }
+      const data = { situations, genre: genre, year: year.trim() };
 
-    setIsLoading(true);
-    createPlaylist(data, {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries('get-profile');
-        setIsLoading(false);
-        navigate('/playlist/summary', {
-          state: { playlist: data.data.playlist.id },
-        });
-      },
-      onError: () => {
-        setIsLoading(false);
-        setTimeout(() => {
-          alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
-          // 처음 플리 생성 페이지로 이동
-          navigate('/playlist/create1', {
-            state: { situations, genre, year },
+      setIsLoading(true);
+      createPlaylist(data, {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries('get-profile');
+          setIsLoading(false);
+          navigate('/playlist/summary', {
+            state: { playlist: data.data.playlist.id },
           });
-        }, 0);
-      },
-    });
-  };
-
-  const handleInputChange = (e) => {
-    const { value } = e.target;
-    if (value.length <= 100) {
-      setYear(value);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-    }
-  };
+        },
+        onError: () => {
+          setIsLoading(false);
+          setTimeout(() => {
+            alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
+            navigate('/playlist/create1', {
+              state: { situations, genre, year },
+            });
+          }, 0);
+        },
+      });
+    },
+    [year, situations, genre, createPlaylist, queryClient, navigate],
+  );
 
   return (
     <S.CreateNewPlaylistWrap>
