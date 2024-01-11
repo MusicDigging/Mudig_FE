@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export default function YearSelection(props) {
   const { year, setYear } = props;
   const handleRadioChange = (e) => {
-    console.log(year);
     setYear(e.target.value);
   };
   return (
