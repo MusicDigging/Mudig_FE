@@ -16,7 +16,6 @@ export default function SearchResultAll(props) {
     setCurrentNav({ all: false, playlist: false, user: true });
   };
 
-  console.log('result: ', result);
   return (
     <>
       <SearchListBox>
