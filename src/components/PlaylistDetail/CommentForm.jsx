@@ -82,7 +82,7 @@ export default function CommentForm(props) {
       ></InputStyle>
       {editId && (
         <button onClick={handleCloseBtnClick}>
-          <img src={CloseIcon} alt='답글 닫기' />
+          <img src={CloseIcon} alt='닫기 버튼' />
         </button>
       )}
       <Button
@@ -96,16 +96,19 @@ export default function CommentForm(props) {
 }
 
 const CommentFormWrap = styled.form`
+  position: fixed;
   padding: 16px 16px 24px;
-
-  position: absolute;
   bottom: 0px;
   width: 100%;
+  max-width: 430px;
+  min-width: 360px;
   display: flex;
   gap: 8px;
   background-color: white;
   box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.05);
-
+  button {
+    font-size: 14px;
+  }
   button:last-child {
     border: none;
     background-color: #e5dcff;

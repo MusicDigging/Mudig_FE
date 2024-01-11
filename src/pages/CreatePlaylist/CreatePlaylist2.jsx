@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import NewPlaylistChip from '../../components/NewPlaylist/NewPlaylistChip';
+import NewPlaylistChip from '../../components/CreatePlaylist/GenreSelection';
 
 import CharacterImg from '../../img/character-img3.svg';
 import * as S from './CreatePlaylistStyle';
@@ -11,7 +11,8 @@ export default function CreateNewPlaylist2() {
   const location = useLocation();
   const state = location.state || {};
   const { situations, year, backAnimation } = state;
-  const [genre, setGenre] = useState((state && state.genre) || []);
+  const [genre, setGenre] = useState((state && state.genre) || '');
+  const isGenreEmpty = genre.length === 0;
 
   return (
     <S.CreateNewPlaylistWrap>
@@ -25,7 +26,6 @@ export default function CreateNewPlaylist2() {
         >
           <S.QuestionBox>
             <p>어떤 장르의 음악을 즐겨들으시나요?</p>
-            <p>(J-POP, 힙합, R&B 등 )</p>
           </S.QuestionBox>
         </motion.div>
         <img src={CharacterImg} alt='캐릭터 이미지' />
@@ -34,10 +34,7 @@ export default function CreateNewPlaylist2() {
             initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
           >
-            <NewPlaylistChip
-              selectedChips={genre}
-              setSelectedChips={setGenre}
-            />
+            <NewPlaylistChip genre={genre} setGenre={setGenre} />
           </motion.div>
           <S.LinkBox>
             <S.BackLink
@@ -60,8 +57,8 @@ export default function CreateNewPlaylist2() {
                 year,
                 backAnimation: false,
               }}
-              disabled={genre.length === 0}
-              onClick={(e) => genre.length === 0 && e.preventDefault()}
+              disabled={isGenreEmpty}
+              onClick={(e) => isGenreEmpty && e.preventDefault()}
             >
               다음
             </S.NextLink>
