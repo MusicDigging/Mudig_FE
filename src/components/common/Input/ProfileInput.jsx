@@ -121,7 +121,7 @@ export default function ProfileInput(props) {
         </InputWrap>
         <>
           <Chipwrap>
-            <Title>관심사</Title>
+            <Title>관심사 (최대 3개까지 선택)</Title>
             <ChipBox>
               {[
                 'POP',
