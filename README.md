@@ -151,6 +151,22 @@
 - Rename: 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우
 ```
 
+## GitHub
+
+### GitHub Project
+
+<img width="1079" alt="image" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/b592b3ca-0b9d-4f85-a07a-636c7456af0a">
+
+### GitHub issue template
+
+| <img width="300" alt="이슈 템플릿" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/76f66910-6103-48f3-89f6-0295d893cff4"> | <img width="230" alt="버그 이슈 템플릿" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/e45b981e-981a-419f-b474-8c511d66fdd4"> | <img width="909" alt="image" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/58dbe789-dd30-4968-8c15-ec6cff787b37"> |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+
+### GitHub PR template
+
+| <img width="284" alt="PR 템플릿" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/c1af47fe-1444-414a-aaa6-a3e0abc08acd"> | <img width="911" alt="image" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/797ea232-afb3-4796-8ca6-041db48225f1"> |
+| -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+
 # 아키텍처
 
 ![Architecter](https://github.com/MusicDigging/Mudig_FE/assets/72855681/569915b7-de50-4a6d-ba88-a93337e03211)
