@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import {
+  userInfoAtom,
   PlayListAtom,
   backAnimationAtom,
   toastAtom,
@@ -24,6 +26,7 @@ export default function PlaylistDetail() {
   const state = location.state;
   const playlistId = state?.id || location.pathname.split('/').pop(); // state로 받아오기 or url pathname에서 가져오기
   const { data, isLoading, isError } = useGetPlaylistDetail(playlistId);
+  const myId = useRecoilValue(userInfoAtom).id;
   const [pause, setPause] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [currMusic, setCurrMusic] = useState(null);
@@ -81,7 +84,12 @@ export default function PlaylistDetail() {
           {musicLength === 0 ? (
             <MusicNothingSection>
               <p>들을 수 있는 노래가 없어요 🥲</p>
-              <span>노래를 추가해보세요! 🎵</span>
+              {myId === user.id && (
+                <>
+                  <span>노래를 추가해보세요! 🎵</span>
+                  <Link to='/randomplay'>음악 추가하러 가기</Link>
+                </>
+              )}
             </MusicNothingSection>
           ) : (
             <DetailList
@@ -117,6 +125,13 @@ const PlayListDetailBox = styled.main`
   background-color: #fff;
 `;
 const MusicNothingSection = styled.section`
+  &,
+  a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   width: 100%;
   text-align: center;
   font-size: var(--font-md);
@@ -128,5 +143,15 @@ const MusicNothingSection = styled.section`
   }
   span {
     font-size: var(--font-sm);
+  }
+  a {
+    width: 243px;
+    height: 44px;
+    padding: 8px 16px;
+    margin-top: 16px;
+    border-radius: 10px;
+    background: #f5f2ff;
+    color: var(--main-color);
+    font-weight: var(--semi-font-bold);
   }
 `;
