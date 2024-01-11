@@ -63,10 +63,10 @@ export default function MusicPlayer(props) {
 
 const MusicPlayerWrap = styled.div`
   position: absolute;
-  border-radius: 10px;
-  width: 328px;
-  height: 180px;
-  top: 76px;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%; // 16:9 비율
+  top: 0px;
   left: 50%;
   transform: translate(-50%, 0);
   /* margin: 80px 0 25px; */
@@ -77,16 +77,15 @@ const MusicPlayerWrap = styled.div`
     left: 0px;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
     overflow: hidden;
   }
 `;
 
 const ProgressBar = styled.div`
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   width: 100%;
-  padding: 8px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   gap: 16px;
