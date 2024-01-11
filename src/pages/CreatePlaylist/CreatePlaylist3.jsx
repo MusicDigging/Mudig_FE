@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useCreatePlaylist } from '../../hooks/queries/usePlaylist';
 
 import Loading from '../../components/Loading/Loading';
-import YearSelection from '../../components/NewPlaylist/YearSelection';
+import YearSelection from '../../components/CreatePlaylist/YearSelection';
 
 import CharacterImg from '../../img/character-img4.svg';
 import CharacterImg2 from '../../img/character-img5.svg';

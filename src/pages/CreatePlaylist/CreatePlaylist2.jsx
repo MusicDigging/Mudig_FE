@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
-import NewPlaylistChip from '../../components/NewPlaylist/GenreSelection';
+import NewPlaylistChip from '../../components/CreatePlaylist/GenreSelection';
 
 import CharacterImg from '../../img/character-img3.svg';
 import * as S from './CreatePlaylistStyle';
