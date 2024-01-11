@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { CircleImage } from '../../components/common/Image/Image';
 
 import ProfileDecoImg from '../../img/profile-deco-img.svg';
-
 export default function ProfileImage() {
   return (
     <ProfileImgBox>

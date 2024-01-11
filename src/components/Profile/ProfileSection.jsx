@@ -125,7 +125,7 @@ export default function ProfileSection(props) {
               onClick={handleFollowClick}
               isFollowing={profile.is_following}
             >
-              {profile.is_following ? '팔로잉' : '팔로우'}
+              {profile.is_following ? '팔로우 취소' : '팔로우'}
             </FollowBtn>
           )}
           {isMyProfile && (
@@ -152,8 +152,11 @@ const ProfileSectionWrap = styled.section`
 `;
 
 const ProfileNavBtn = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
+  button + div {
+  }
 `;
 
 const UserInfoBox = styled.div`
@@ -169,7 +172,7 @@ const UserInfoBox = styled.div`
 `;
 
 const MiniModalStyle = styled(MiniModalWrap)`
-  right: 16px;
+  right: 0px;
 `;
 
 const UserDesc = styled.p`
@@ -211,9 +214,11 @@ const MoveFollowBtn = styled(Link)`
 `;
 
 const FollowBtn = styled.button`
-  width: 89px;
+  font-size: inherit;
+  max-width: 100px;
+  width: 100%;
   height: 34px;
-  padding: 4px 25px;
+  padding: 4px 12px;
   border-radius: 10px;
   color: #fff;
   background-color: var(--btn-background-color);
