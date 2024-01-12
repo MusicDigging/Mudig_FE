@@ -24,7 +24,7 @@ export default function SearchInput({ setInputValue, onSubmit }) {
       <Input
         onChange={handleInputChange}
         type='text'
-        placeholder='검색어를 입력하세요.'
+        placeholder='플리, 유저, 노래를 검색하세요'
         // defaultValue={keyword}
         ref={inputRef}
       />

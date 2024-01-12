@@ -5,7 +5,10 @@ import { useParams } from 'react-router-dom';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultAll from '../../components/Search/SearchResultAll';
 import SearchResultByType from '../../components/Search/SearchResultByType';
-import { useSearch } from '../../hooks/queries/useSearch';
+import { useSearch, useSearchMusic } from '../../hooks/queries/useSearch';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { modalAtom } from '../../atoms/modalAtom';
+import AddModal from '../../components/common/Modal/AddModal';
 
 export default function SearchResult() {
   const { keyword } = useParams();
@@ -16,7 +19,12 @@ export default function SearchResult() {
     playlist: false,
     user: false,
   });
-
+  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const [musicId, setMusicId] = useState('');
+  const handleAddPlaylist = (musicId) => {
+    setMusicId(musicId);
+    setModalOpen(true);
+  };
   useEffect(() => {
     refetch();
     setCurrentNav({ all: true, playlist: false, user: false });
@@ -25,13 +33,22 @@ export default function SearchResult() {
   if (isLoading) return;
   return (
     <>
+      {modalOpen && <AddModal videoId={musicId} />}
       <SearchNav currentNav={currentNav} setCurrentNav={setCurrentNav} />
       <SearchResultBox>
         {currentNav.all && (
-          <SearchResultAll result={result} setCurrentNav={setCurrentNav} />
+          <SearchResultAll
+            result={result}
+            setCurrentNav={setCurrentNav}
+            handleAddPlaylist={handleAddPlaylist}
+          />
         )}
         {(currentNav.playlist || currentNav.user) && (
-          <SearchResultByType result={result} currentNav={currentNav} />
+          <SearchResultByType
+            result={result}
+            currentNav={currentNav}
+            handleAddPlaylist={handleAddPlaylist}
+          />
         )}
       </SearchResultBox>
     </>

@@ -27,7 +27,7 @@ export default function SearchNav({ currentNav, setCurrentNav }) {
             onClick={handleNavPlaylist}
             className={currentNav.playlist ? 'active' : ''}
           >
-            플리
+            플리·노래
           </button>
         </li>
         <li>

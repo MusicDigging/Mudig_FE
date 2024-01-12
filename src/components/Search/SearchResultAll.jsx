@@ -1,30 +1,30 @@
 import styled from 'styled-components';
-import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import { CircleImage } from '../common/Image/Image';
 import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
-export default function SearchResultAll(props) {
-  const { result, setCurrentNav } = props;
+import SearchResultTitle from './SearchResultTitle';
+import AddPlaylist from '../../img/add-video-icon.svg';
 
+export default function SearchResultAll(props) {
+  const { result, setCurrentNav, handleAddPlaylist } = props;
   const handleNavPlaylist = () => {
     setCurrentNav({ all: false, playlist: true, user: false });
   };
   const handleNavUser = () => {
     setCurrentNav({ all: false, playlist: false, user: true });
   };
+
   return (
     <>
       <SearchListBox>
         <SearchListSection>
-          <SearchListTitleBox>
-            <h2>플리 검색결과</h2>
-            <button onClick={handleNavPlaylist}>
-              <ArrowIcon fill='black' />
-            </button>
-          </SearchListTitleBox>
-          <PlayList>
+          <SearchResultTitle
+            title='플리 검색결과'
+            handleNavPlaylist={handleNavPlaylist}
+          />
+          <ul>
             {result.recent_playlists.length !== 0 ? (
               result.recent_playlists.map((item) => {
                 return (
@@ -50,15 +50,42 @@ export default function SearchResultAll(props) {
             ) : (
               <EmptySearch />
             )}
-          </PlayList>
+          </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchListTitleBox>
-            <h2>유저 검색결과</h2>
-            <button onClick={handleNavUser}>
-              <ArrowIcon fill='black' />
-            </button>
-          </SearchListTitleBox>
+          <SearchResultTitle
+            title='노래 검색결과'
+            handleNavPlaylist={handleNavPlaylist}
+          />
+          <ul>
+            {result.search_music.length !== 0 ? (
+              result.search_music[0].music.slice(0, 3).map((item) => {
+                return (
+                  <PlayListItem
+                    key={item.id}
+                    img={item.thumbnail}
+                    title={item.song}
+                    info={item.singer}
+                  >
+                    <button
+                      type='button'
+                      onClick={() => handleAddPlaylist(item.id)}
+                    >
+                      <img src={AddPlaylist} alt='플리에추가' />
+                    </button>
+                  </PlayListItem>
+                );
+              })
+            ) : (
+              <EmptySearch />
+            )}
+          </ul>
+        </SearchListSection>
+        <SearchListSection>
+          <SearchResultTitle
+            title='유저 검색결과'
+            handleNavPlaylist={handleNavUser}
+          />
           <UserList>
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {
@@ -94,21 +121,7 @@ const SearchListBox = styled.div`
   flex-direction: column;
   gap: 15px;
 `;
-const SearchListSection = styled.section`
-  h2 {
-    font-size: 20px;
-  }
-  ul {
-    /* height: 228px; */
-  }
-`;
-const SearchListTitleBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 11px 0;
-  margin-bottom: 16px;
-`;
+const SearchListSection = styled.section``;
 const UserList = styled.ul`
   display: flex;
   flex-direction: column;

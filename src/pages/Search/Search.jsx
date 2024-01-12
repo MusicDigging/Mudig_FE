@@ -1,7 +1,7 @@
 import SearchInput from '../../components/Search/SearchInput';
 import { useState, useEffect } from 'react';
-import * as S from './SearchStyle';
 import { Outlet, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 export default function Search() {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export default function Search() {
     setRecentKeywords(savedKeywords);
   }, []);
   return (
-    <S.SearchWrap>
+    <SearchWrap>
       <SearchInput setInputValue={setInputValue} onSubmit={SearchSubmit} />
       <Outlet
         context={{
@@ -74,6 +74,22 @@ export default function Search() {
           handleRemoveAllRecentKeyword,
         }}
       />
-    </S.SearchWrap>
+    </SearchWrap>
   );
 }
+const SearchWrap = styled.div`
+  background-color: #fff;
+  height: 100%;
+  padding: 13px 16px;
+  form {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    margin-bottom: 8px;
+    button {
+      width: 24px;
+      height: 24px;
+    }
+  }
+`;
