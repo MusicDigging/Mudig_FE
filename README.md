@@ -154,8 +154,7 @@
 ## GitHub
 
 ### GitHub Project
-
-<img width="1079" alt="image" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/b592b3ca-0b9d-4f85-a07a-636c7456af0a">
+<img width="1079" alt="image" src="https://github.com/MusicDigging/Mudig_FE/assets/105140201/8703e1f3-f404-479f-b710-0ececf7ba251">
 
 ### GitHub issue template
 
