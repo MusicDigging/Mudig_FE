@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
-import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 
 import { toastAtom, userInfoAtom } from '../../library/atom';
