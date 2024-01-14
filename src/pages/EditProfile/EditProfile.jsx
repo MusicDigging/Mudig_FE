@@ -4,8 +4,9 @@ import { useNavigate, useLocation } from 'react-router';
 import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 
-import { toastAtom } from '../../library/atom';
+import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
+import { useMyPlayList } from '../../hooks/queries/usePlaylist';
 
 import Toast from '../../components/common/Toast';
 import ProfileInput from '../../components/common/Input/ProfileInput';
@@ -20,13 +21,13 @@ export default function EditProfile() {
   const location = useLocation();
   const fileInput = useRef(null);
   const data = location.state;
-  const { playlist, profile } = data;
+  const { profile } = data;
+  const { data: myPlaylistData, isLoading } = useMyPlayList();
   const [genre, setGenre] = useState(profile?.genre.split(',') || []);
   const [uploadImg, setUploadImg] = useState(null);
   const [toast, setToast] = useRecoilState(toastAtom);
-  const [repPlaylist, setRepPlaylist] = useState(profile.rep_playlist);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-
+  const [repPlaylist, setRepPlaylist] = useState(profile.rep_playlist);
   const [previewImg, setPreviewImg] = useState(
     profile.image ||
       'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
@@ -45,7 +46,6 @@ export default function EditProfile() {
     if (uploadImg !== null) formData.append('image', uploadImg);
     editProfile(formData, {
       onSuccess: () => {
-        // alert('프로필 수정이 완료되었습니다.');
         setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
         // userInfoAtom 상태 업데이트
         setUserInfo({
@@ -57,6 +57,13 @@ export default function EditProfile() {
           // uploadImg를 상태에 저장하려면 여기에 추가 (예: image: newImageURL)
         });
         navigate(-1);
+        setUserInfo({
+          ...userInfo,
+          name: data.nickName,
+          about: data.about,
+          rep_playlist: repPlaylist,
+          genre: genreArr,
+        });
       },
     });
   };
@@ -68,6 +75,8 @@ export default function EditProfile() {
   const handleMoveBackBtnClick = () => {
     navigate(-1);
   };
+
+  if (isLoading) return null;
 
   return (
     <S.EditProfileWrap>
@@ -91,7 +100,7 @@ export default function EditProfile() {
           onChipSelect={handleChipSelect}
         >
           <SetRepPlaylist
-            playlist={playlist}
+            publicPlaylist={myPlaylistData.myplaylist}
             repPlaylist={repPlaylist}
             setRepPlaylist={setRepPlaylist}
           />

@@ -1,13 +1,23 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { Link } from 'react-router-dom';
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
 export const CreateNewPlaylistWrap = styled.main`
   height: 100%;
-
+  transition: opacity 0.5s ease;
   img {
     height: 234px;
+    transition: 0.5s;
   }
   span + div {
     height: 100%;
@@ -23,6 +33,14 @@ export const PageNum = styled.span`
   justify-content: flex-end;
   font-size: var(--font-l);
   color: var(--sub-font-color);
+`;
+
+export const ImgBox = styled.div`
+  display: flex;
+  justify-content: center;
+  img {
+    animation: ${({ isLoading }) => isLoading && fadeIn} 0.5s ease-in-out;
+  }
 `;
 
 export const NewPlaylistBox = styled.div`
@@ -67,7 +85,22 @@ export const AnswerForm = styled.form`
   }
 `;
 
-export const Answer = styled(TextareaAutosize)`
+export const AnswerTextarea = styled(TextareaAutosize)`
+  width: 100%;
+  height: 60px;
+  font-size: 14px;
+  padding: 22px 18px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  resize: none;
+  &:placeholder {
+    color: var(--sub-font-color);
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const AnswerInput = styled.input`
   width: 100%;
   height: 60px;
   padding: 22px 18px;

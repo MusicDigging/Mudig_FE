@@ -15,9 +15,7 @@ export default function CreateNewPlaylist1() {
 
   const handleInputChange = (e) => {
     const { value } = e.target;
-    if (value.length <= 100) {
-      setSituations(value);
-    }
+    setSituations(value.slice(0, 100));
   };
 
   return (
@@ -61,7 +59,7 @@ export default function CreateNewPlaylist1() {
               initial={{ x: backAnimation ? -300 : 0, opacity: 0 }}
               animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
             >
-              <S.Answer
+              <S.AnswerTextarea
                 name='situations'
                 cacheMeasurements
                 placeholder='내용을 입력해주세요.'

@@ -5,9 +5,11 @@ import { CircleImage } from '../common/Image/Image';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import EmptySearch from './EmptySearch';
-
+import SearchResultTitle from './SearchResultTitle';
+import AddPlaylist from '../../img/add-video-icon.svg';
 export default function SearchResultByType(props) {
-  const { result, currentNav } = props;
+  const { result, currentNav, handleAddPlaylist } = props;
+  const musicResult = result.search_music[0].music;
   const [type, setType] = useState('');
 
   useEffect(() => {
@@ -23,31 +25,60 @@ export default function SearchResultByType(props) {
     <>
       {/* 플리 결과만 */}
       {type === 'playlist' && (
-        <PlayList>
-          {result.playlists.length !== 0 ? (
-            result.playlists.map((item) => (
-              <Link
-                to={`/playlist/detail/${item.playlist.id}`}
-                key={item.playlist.id}
-                state={{ id: item.playlist.id }}
-              >
-                <PlayListItem
-                  key={item.playlist.id}
-                  img={item.playlist.thumbnail}
-                  title={item.playlist.title}
-                  info={
-                    item.writer.name ||
-                    (item.writer === '유저 정보 없음'
-                      ? '알 수 없는 사용자'
-                      : null)
-                  }
-                />
-              </Link>
-            ))
-          ) : (
-            <EmptySearch />
-          )}
-        </PlayList>
+        <>
+          <PlaylistWrap>
+            <ul>
+              <SearchResultTitle title='플리 검색결과' />
+              {result.playlists.length !== 0 ? (
+                result.playlists.map((item) => (
+                  <Link
+                    to={`/playlist/detail/${item.playlist.id}`}
+                    key={item.playlist.id}
+                    state={{ id: item.playlist.id }}
+                  >
+                    <PlayListItem
+                      key={item.playlist.id}
+                      img={item.playlist.thumbnail}
+                      title={item.playlist.title}
+                      info={
+                        item.writer.name ||
+                        (item.writer === '유저 정보 없음'
+                          ? '알 수 없는 사용자'
+                          : null)
+                      }
+                    />
+                  </Link>
+                ))
+              ) : (
+                <EmptySearch />
+              )}
+            </ul>
+            <ul>
+              <SearchResultTitle title='노래 검색결과' />
+              {result.search_music[0].music_count !== 0 ? (
+                musicResult.map((music) => {
+                  return (
+                    <PlayListItem
+                      key={music.id}
+                      img={music.thumbnail}
+                      title={music.song}
+                      info={music.singer}
+                    >
+                      <button
+                        type='button'
+                        onClick={() => handleAddPlaylist(music.id)}
+                      >
+                        <img src={AddPlaylist} alt='플리에추가' />
+                      </button>
+                    </PlayListItem>
+                  );
+                })
+              ) : (
+                <EmptySearch />
+              )}
+            </ul>
+          </PlaylistWrap>
+        </>
       )}
       {/* 유저 결과만 */}
       {type === 'user' && (
@@ -80,6 +111,11 @@ export default function SearchResultByType(props) {
     </>
   );
 }
+const PlaylistWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
 const UserList = styled.ul`
   display: flex;
   flex-direction: column;
