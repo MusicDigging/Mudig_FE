@@ -48,7 +48,7 @@ export default function EventPage() {
       {isLoading && <Loading isLoading={isLoading} />}
       <S.CloseButton onClick={handleClose} />
       <S.QuestionBox>
-        <p>당신의 하루는 어떠셨나요?</p>
+        <h1>당신의 하루는 어떠셨나요?</h1>
         <input
           id='answer'
           placeholder='답변 입력하기'
@@ -56,7 +56,11 @@ export default function EventPage() {
           value={inputValue}
           onChange={handleInputChange}
         ></input>
-        <div>{inputValue.length}/100</div>
+        <div id='textValue'>{inputValue.length}/100</div>
+        <S.NotTodayBox>
+          <input type='checkbox' id='inputCheckbox'></input>
+          <p>오늘하루 보지 않기</p>
+        </S.NotTodayBox>
         <S.SubmitButton
           onClick={handleSubmit}
           disabled={inputValue.trim().length === 0}
