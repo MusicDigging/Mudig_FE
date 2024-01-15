@@ -29,6 +29,7 @@ import SearchResult from '../pages/Search/SearchResult';
 import RecentSearch from '../components/Search/RecentSearch';
 import Comment from '../pages/PlaylistDetail/Comment';
 import Reply from '../pages/PlaylistDetail/Reply';
+import MorePlaylist from '../pages/Home/MorePlaylist';
 
 export function Router() {
   return (
@@ -41,7 +42,10 @@ export function Router() {
         <Route path='/setprofile' element={<SetProfile />} />
         <Route element={<PrivateRoute />}>
           <Route path='/event' element={<EventPage />} />
-          <Route path='/main' element={<Home />} />
+          <Route path='/main' element={<Outlet />}>
+            <Route path='' element={<Home />} />
+            <Route path=':playlistType' element={<MorePlaylist />} />
+          </Route>
           <Route path='/intro' element={<Intro />} />
           <Route path='/search' element={<Search />}>
             <Route index element={<RecentSearch />} />
