@@ -22,7 +22,7 @@ export default function SearchResultAll(props) {
         <SearchListSection>
           <SearchResultTitle
             title='플리 검색결과'
-            handleNavPlaylist={handleNavPlaylist}
+            handleNav={handleNavPlaylist}
           />
           <ul>
             {result.recent_playlists.length !== 0 ? (
@@ -53,10 +53,7 @@ export default function SearchResultAll(props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle
-            title='노래 검색결과'
-            handleNavPlaylist={handleNavPlaylist}
-          />
+          <SearchResultTitle title='노래 검색결과' handleNav={handleNavMusic} />
           <ul>
             {result.search_music.length !== 0 ? (
               result.search_music[0].music.slice(0, 3).map((item) => {
@@ -82,10 +79,7 @@ export default function SearchResultAll(props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle
-            title='유저 검색결과'
-            handleNavPlaylist={handleNavUser}
-          />
+          <SearchResultTitle title='유저 검색결과' handleNav={handleNavUser} />
           <UserList>
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {

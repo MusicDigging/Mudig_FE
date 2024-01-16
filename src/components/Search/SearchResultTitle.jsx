@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-export default function SearchResultTitle({ title, handleNavPlaylist }) {
+export default function SearchResultTitle({ title, handleNav }) {
   return (
     <SearchListTitleBox>
       <h2>{title}</h2>
-      {handleNavPlaylist && (
-        <button onClick={handleNavPlaylist}>
+      {handleNav && (
+        <button onClick={handleNav}>
           <ArrowIcon fill='black' />
         </button>
       )}
