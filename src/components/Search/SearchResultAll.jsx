@@ -8,13 +8,13 @@ import SearchResultTitle from './SearchResultTitle';
 import AddPlaylist from '../../img/add-video-icon.svg';
 
 export default function SearchResultAll(props) {
-  const { result, setCurrentNav, handleAddPlaylist } = props;
-  const handleNavPlaylist = () => {
-    setCurrentNav({ all: false, playlist: true, user: false });
-  };
-  const handleNavUser = () => {
-    setCurrentNav({ all: false, playlist: false, user: true });
-  };
+  const {
+    result,
+    handleAddPlaylist,
+    handleNavPlaylist,
+    handleNavMusic,
+    handleNavUser,
+  } = props;
 
   return (
     <>
