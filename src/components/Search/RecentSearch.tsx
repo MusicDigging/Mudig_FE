@@ -1,15 +1,22 @@
-import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSearch } from '../../hooks/queries/useSearch';
 import CloseIcon from '../../img/close-icon.svg';
 import TimePastIcon from '../../img/time-past-icon.svg';
+interface StoredKeyword {
+  id: number;
+  keyword: string;
+}
+interface Props {
+  recentKeywords: StoredKeyword[];
+  handleRemoveAllRecentKeyword: () => void;
+  handleRemoveRecentKeyword: (arg0: number) => void;
+}
 export default function RecentSearch() {
   const {
     recentKeywords,
     handleRemoveAllRecentKeyword,
     handleRemoveRecentKeyword,
-  } = useOutletContext();
+  }: Props = useOutletContext();
   const navigate = useNavigate();
 
   return (
@@ -18,7 +25,7 @@ export default function RecentSearch() {
         <>
           <p>최근 검색어</p>
           <RecentSearchList>
-            {recentKeywords.map(({ id, keyword }) => {
+            {recentKeywords.map(({ id, keyword }: StoredKeyword) => {
               return (
                 <li key={id}>
                   <div>
