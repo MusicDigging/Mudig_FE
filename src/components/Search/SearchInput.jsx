@@ -25,7 +25,6 @@ export default function SearchInput({ setInputValue, onSubmit }) {
         onChange={handleInputChange}
         type='text'
         placeholder='플리, 유저, 노래를 검색하세요'
-        // defaultValue={keyword}
         ref={inputRef}
       />
       <button>
@@ -40,7 +39,7 @@ const Input = styled.input`
   border-radius: 8px;
   background: #f6f6f6;
   padding: 12px 16px;
-  // font-size: var(--font-lg);
+  font-size: var(--font-md);
   &:placeholder {
     color: #bfbfbf;
   }

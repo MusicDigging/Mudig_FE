@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultAll from '../../components/Search/SearchResultAll';
 import SearchResultByType from '../../components/Search/SearchResultByType';
-import { useSearch, useSearchMusic } from '../../hooks/queries/useSearch';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useSearch } from '../../hooks/queries/useSearch';
+import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import AddModal from '../../components/common/Modal/AddModal';
 
@@ -17,20 +17,33 @@ export default function SearchResult() {
   const [currentNav, setCurrentNav] = useState({
     all: true,
     playlist: false,
+    music: false,
     user: false,
   });
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const [musicId, setMusicId] = useState('');
+
   const handleAddPlaylist = (musicId) => {
     setMusicId(musicId);
     setModalOpen(true);
   };
+  const handleNavPlaylist = () => {
+    setCurrentNav({ all: false, playlist: true, user: false });
+  };
+  const handleNavMusic = () => {
+    setCurrentNav({ all: false, playlist: true, music: true, user: false });
+  };
+  const handleNavUser = () => {
+    setCurrentNav({ all: false, playlist: false, user: true });
+  };
+
   useEffect(() => {
     refetch();
     setCurrentNav({ all: true, playlist: false, user: false });
   }, [keyword]);
 
   if (isLoading) return;
+
   return (
     <>
       {modalOpen && <AddModal videoId={musicId} />}
@@ -39,8 +52,10 @@ export default function SearchResult() {
         {currentNav.all && (
           <SearchResultAll
             result={result}
-            setCurrentNav={setCurrentNav}
             handleAddPlaylist={handleAddPlaylist}
+            handleNavPlaylist={handleNavPlaylist}
+            handleNavMusic={handleNavMusic}
+            handleNavUser={handleNavUser}
           />
         )}
         {(currentNav.playlist || currentNav.user) && (
@@ -48,6 +63,7 @@ export default function SearchResult() {
             result={result}
             currentNav={currentNav}
             handleAddPlaylist={handleAddPlaylist}
+            handleNavMusic={handleNavMusic}
           />
         )}
       </SearchResultBox>
@@ -55,6 +71,7 @@ export default function SearchResult() {
   );
 }
 const SearchResultBox = styled.div`
+  position: relative;
   height: calc(100% - 89px);
   overflow-y: scroll;
   padding-bottom: 116px;
