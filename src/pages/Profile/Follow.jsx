@@ -11,6 +11,7 @@ import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import useFollowUser from '../../hooks/queries/useFollow';
 import { useParams } from 'react-router-dom';
+import BGImg from '../../img/background-img2.svg';
 
 export default function Follow() {
   const navigate = useNavigate();
@@ -120,6 +121,8 @@ const FollowWrap = styled.div`
   max-width: 430px;
   min-width: 360px;
   margin: 0 auto;
+  height: 100%;
+  background: url(${BGImg}) top left / cover no-repeat;
 
   #FollowNone {
     color: #b0b0b0;
