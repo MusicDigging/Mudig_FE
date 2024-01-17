@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ErrorImg from '../../img/icon_error.svg';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
 import NotFoundBG from '../../img/not_found_bg.svg';
+import BGImg from '../../img/background-img2.svg';
 
 export default function NotFound() {
   const navigate = useNavigate();
@@ -23,7 +24,8 @@ export default function NotFound() {
 }
 
 const NotFoundWrap = styled.div`
-  width: 360px;
+  height: 100%;
+  background: url(${BGImg}) top left / cover no-repeat;
 `;
 const BackButton = styled.button`
   width: 24px;
