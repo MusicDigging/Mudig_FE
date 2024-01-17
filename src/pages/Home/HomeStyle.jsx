@@ -44,6 +44,7 @@ export const PlaylistNameBox = styled.div`
   cursor: pointer;
   h2 {
     font-size: var(--font-lg);
+    font-weight: 500;
   }
 `;
 export const MoreBtn = styled.button`
