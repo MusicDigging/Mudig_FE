@@ -55,7 +55,7 @@ export const MoreBtn = styled.button`
 export const BackButton = styled.button`
   width: 24px;
   height: 24px;
-  margin: 15px 0 15px 22px;
+  margin: 22px 0 15px 16px;
   background-image: url(${leftArrowIcon});
 `;
 export const MorePlaylistWrap = styled.div`
