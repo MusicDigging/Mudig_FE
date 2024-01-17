@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
+import { useRecoilValue } from 'recoil';
 
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
@@ -45,6 +46,15 @@ export default function EditProfile() {
     editProfile(formData, {
       onSuccess: () => {
         setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
+        // userInfoAtom 상태 업데이트
+        setUserInfo({
+          ...userInfo, // 기존의 userInfo 복사
+          name: data.nickName || userInfo.name,
+          about: data.about || userInfo.about,
+          genre: genreArr || userInfo.genre,
+          rep_playlist: repPlaylist || userInfo.rep_playlist,
+          // uploadImg를 상태에 저장하려면 여기에 추가 (예: image: newImageURL)
+        });
         navigate(-1);
         setUserInfo({
           ...userInfo,
