@@ -10,7 +10,7 @@ export interface Playlist {
   created_at: string;
   updated_at: string;
   is_public: boolean;
-  writer: boolean;
+  writer: number;
   music: number[];
 }
 
