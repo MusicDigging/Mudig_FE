@@ -162,16 +162,15 @@ const TabButtonBox = styled.div`
   min-width: 328px;
   background: #fff;
 `;
-const TabButton = styled.button`
+const TabButton = styled.button<{ active: boolean }>`
   width: 60px;
   border-radius: 20px;
   padding: 4px 0px;
-  border: ${(props: { active: boolean }) =>
+  border: ${(props) =>
     props.active ? '1px solid var(--main-color)' : '1px solid #e5e5e5'};
-  background: ${(props: { active: boolean }) =>
+  background: ${(props) =>
     props.active ? '#e5dcff' : 'rgba(255, 255, 255, 0.6)'};
-  color: ${(props: { active: boolean }) =>
-    props.active ? 'var(--main-color)' : '#767676'};
+  color: ${(props) => (props.active ? 'var(--main-color)' : '#767676')};
   font-size: var(--font-md);
 `;
 const PlaylistWrap = styled.div`
