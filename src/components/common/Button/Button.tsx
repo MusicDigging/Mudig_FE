@@ -1,8 +1,22 @@
 import styled from 'styled-components';
-import { InfoToast } from '../../../library/sweetAlert/sweetAlert';
 import { toastAtom } from '../../../library/atom';
 import { useSetRecoilState } from 'recoil';
-export function Button(props) {
+
+interface IButtonProps {
+  type?: 'button' | 'submit' | 'reset';
+  text: string;
+  onClick?: () => void;
+  disabled?: boolean;
+  btnBgColor?: string;
+  btnColor?: string;
+  btnMargin?: string;
+  btnBorder?: string;
+  btnWidth?: string;
+  btnHeight?: string;
+  imgSrc?: string;
+}
+
+export function Button(props: IButtonProps) {
   const {
     type,
     text,
@@ -35,7 +49,18 @@ export function Button(props) {
   );
 }
 
-const ButtonStyle = styled.button`
+interface IButtonStyleProps {
+  btnWidth?: string;
+  btnHeight?: string;
+  btnMargin?: string;
+  btnBgColor?: string;
+  btnBorder?: string;
+  btnColor?: string;
+  disabled?: boolean;
+  imgSrc?: string;
+}
+
+const ButtonStyle = styled.button<IButtonStyleProps>`
   width: ${(props) => props.btnWidth || '100%'};
   height: ${(props) => props.btnHeight || '44px'};
   margin: ${(props) => props.btnMargin || '0px'};
@@ -46,7 +71,6 @@ const ButtonStyle = styled.button`
   color: ${(props) => props.btnColor || 'white'};
   cursor: ${(props) => (props.disabled ? 'initial' : 'pointer')};
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
-  //변하지 않는 값
   border-radius: 10px;
   &:not(:disabled) {
     cursor: pointer;
@@ -54,17 +78,27 @@ const ButtonStyle = styled.button`
   }
 `;
 
-export function ChipButton(props) {
+interface ChipButtonProps {
+  name: string;
+  onSelect: (selectedChips: string[]) => void;
+  selectedChips: string[];
+}
+
+interface IToast {
+  content: string;
+  type: string;
+}
+
+export function ChipButton(props: ChipButtonProps) {
   const { name, onSelect, selectedChips } = props;
-  const setToast = useSetRecoilState(toastAtom);
+  const setToast = useSetRecoilState<IToast | null>(toastAtom);
+
   const isChipSelected = selectedChips.includes(name);
 
   const handleClick = () => {
     if (isChipSelected) {
-      // 이미 선택된 chip인지 확인
       onSelect(selectedChips.filter((chipName) => chipName !== name));
     } else {
-      // 최대 chip 3개까지 설정
       if (selectedChips.length < 3) {
         onSelect([...selectedChips, name]);
       } else {
@@ -87,7 +121,11 @@ export function ChipButton(props) {
   );
 }
 
-const ChipButtonStyle = styled.button`
+interface ChipButtonStyleProps {
+  clicked: boolean;
+}
+
+const ChipButtonStyle = styled.button<ChipButtonStyleProps>`
   height: 36px;
   font-size: 14px;
   border-radius: 20px;
