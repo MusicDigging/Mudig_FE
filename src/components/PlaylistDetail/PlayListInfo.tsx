@@ -16,12 +16,20 @@ import MoreIcon from '../../img/more-icon.svg';
 import MudigIcon from '../../img/playlistinfo-mudig.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import ProfileBadge from '../../img/badge-icon.svg';
+import { User } from '../../types/user';
+import { Playlist } from '../../types/playlist';
 
-export default function PlayListInfo(props) {
+interface Props {
+  user?: User;
+  playlist: Playlist;
+  playlistDesc?: { title: string; content: string; is_public: boolean };
+  playing?: boolean;
+}
+export default function PlayListInfo(props: Props) {
+  const { user, playlist, playlistDesc, playing } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
-  const { user, playlist, playlistDesc, playing } = props;
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [miniModalOpen, setMiniModalOpen] = useState(false);
@@ -146,7 +154,10 @@ export default function PlayListInfo(props) {
     </PlayListInfoWrap>
   );
 }
-const PlayListInfoWrap = styled.section`
+const PlayListInfoWrap = styled.section<{
+  isPlaylistSummary: boolean;
+  backgroundUrl: string;
+}>`
   position: relative;
   padding-top: ${(props) => (props.isPlaylistSummary ? '270px' : ' 216px')};
   line-height: normal;
@@ -179,7 +190,7 @@ export const MoveBackBtn = styled.button`
   z-index: 5;
 `;
 
-const ThumbnailBox = styled.div`
+const ThumbnailBox = styled.div<{ isPlaylistSummary: boolean }>`
   position: absolute;
   width: 180px;
   height: 250px;
@@ -205,7 +216,7 @@ const SummaryTitle = styled.h2`
   font-weight: var(--font-semi-bold);
   color: #fff;
 `;
-const InfoBox = styled.div`
+const InfoBox = styled.div<{ isPlaylistSummary: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 8px;
