@@ -1,9 +1,13 @@
 import { useState } from 'react';
 
-const usePasswordToggle = () => {
-  const [showPassword, setShowPassword] = useState({}); // 객체로 변경
+interface IPasswordState {
+  [key: string]: boolean;
+}
 
-  const toggleShowPassword = (name) => {
+const usePasswordToggle = () => {
+  const [showPassword, setShowPassword] = useState<IPasswordState>({}); // 객체로 변경
+
+  const toggleShowPassword = (name: string) => {
     setShowPassword((prev) => ({
       ...prev,
       [name]: !prev[name], //해당 key값의 true/false만 변경
