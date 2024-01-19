@@ -11,21 +11,28 @@ import { InfoToast } from '../../library/sweetAlert/sweetAlert';
 
 import Toast from '../../components/common/Toast';
 import { toastAtom } from '../../library/atom';
+
+interface IVideo {
+  id: string;
+  information: string;
+  song: string;
+  singer: string;
+}
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
   //랜덤뮤비 중복 방지 위해 post 요청 보낼 id
-  const [id, setId] = useState([]);
+  const [id, setId] = useState<string[]>([]);
   const selectId = id.join(',');
   //개별 뮤비 아이디
   const [videoId, setVideoId] = useState('');
   const [toast, setToast] = useRecoilState(toastAtom);
   const [page, setPage] = useState(0);
-  const targetRef = useRef(null);
-  const [allVideos, setAllVideos] = useState([]);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [allVideos, setAllVideos] = useState<IVideo[]>([]);
   const [isEnd, setIsEnd] = useState(false);
-  //버튼 클릭히 해당 뮤비 아이디 함수
-  const handleAddButtonClick = (videoId) => {
+  //버튼 클릭히 해당 뮤비 아이디 함수`
+  const handleAddButtonClick = (videoId: string) => {
     // console.log(`선택된 뮤비 ${videoId}`);
     setVideoId(videoId);
     setModalOpen(true);
@@ -36,7 +43,7 @@ export default function RandomMusic() {
       const data = { selectId, page };
       // console.log(data);
       getRandomMv(data, {
-        onSuccess: (newVideoData) => {
+        onSuccess: (newVideoData: IVideo[]) => {
           if (newVideoData.length === 0) {
             setIsEnd(true);
             return;
@@ -54,7 +61,7 @@ export default function RandomMusic() {
       });
     };
 
-    const observerCallback = async ([entry]) => {
+    const observerCallback = async ([entry]: IntersectionObserverEntry[]) => {
       if (entry.isIntersecting) {
         await fetchRandomMv();
         // console.log('스크롤 이벤트 발생!');
