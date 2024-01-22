@@ -44,8 +44,8 @@ export const useGetFollower = (user_id) => {
 
 export const useEditProfile = () => {
   const queryClient = useQueryClient();
-  const editProfile = (data) => {
-    const response = imgPrivateInstance.put('/user/profile/edit/', data);
+  const editProfile = async (data: FormData) => {
+    const response = await imgPrivateInstance.put('/user/profile/edit/', data);
     return response.data;
   };
 

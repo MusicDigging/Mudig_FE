@@ -8,14 +8,23 @@ import ProfileImage from '../../components/common/Image/ProfileImage';
 
 import UploadImgBtn from '../../img/selectImg.svg';
 
-export default function SetProfileImage(props) {
+interface Props {
+  fileInput: React.RefObject<HTMLInputElement>;
+  src: string;
+  setUploadImg: React.Dispatch<React.SetStateAction<File | null>>;
+  setPreviewImg: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function SetProfileImage(props: Props) {
   const { fileInput, src, setUploadImg, setPreviewImg } = props;
   const setToast = useSetRecoilState(toastAtom);
   const handleImageUpload = () => {
-    fileInput.current.click();
+    fileInput.current?.click();
   };
 
-  const handleImageChange = async (event) => {
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     if (!event.target.files) return;
     const file = event.target.files[0];
     const isValid = imgValidation(file);
@@ -32,7 +41,7 @@ export default function SetProfileImage(props) {
     }
   };
 
-  const imgValidation = (file) => {
+  const imgValidation = (file: File) => {
     if (!file) {
       return false;
     }
@@ -66,7 +75,7 @@ export default function SetProfileImage(props) {
 
   return (
     <SetProfileImageWrap>
-      <ProfileImage src={src}>
+      <ProfileImage src={src} alt='프로필 이미지'>
         <ImgUploadBtn type='button' onClick={handleImageUpload}>
           <img src={UploadImgBtn} alt='이미지 업로드 버튼' />
           <input

@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
-import { useRecoilValue } from 'recoil';
 
+import { FormData, Profile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
 import { useMyPlayList } from '../../hooks/queries/usePlaylist';
@@ -14,60 +14,63 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
+import React from 'react';
 
 export default function EditProfile() {
   const navigate = useNavigate();
   const location = useLocation();
-  const fileInput = useRef(null);
-  const data = location.state;
+  const fileInput = useRef<HTMLInputElement>(null);
+  const data = location.state as { profile: Profile };
   const { profile } = data;
   const { data: myPlaylistData, isLoading } = useMyPlayList();
-  const [genre, setGenre] = useState(profile?.genre.split(',') || []);
-  const [uploadImg, setUploadImg] = useState(null);
+  const [genre, setGenre] = useState<string[]>(profile?.genre.split(',') || []);
+  const [uploadImg, setUploadImg] = useState<File | null>(null);
   const [toast, setToast] = useRecoilState(toastAtom);
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-  const [repPlaylist, setRepPlaylist] = useState(profile.rep_playlist);
-  const [previewImg, setPreviewImg] = useState(
+  const [repPlaylist, setRepPlaylist] = useState<number | null>(
+    profile.rep_playlist,
+  );
+  const [previewImg, setPreviewImg] = useState<string>(
     profile.image ||
       'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
   );
 
   const { mutate: editProfile } = useEditProfile();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormData) => {
     const formData = new FormData();
     const genreArr = genre.join(',');
 
     formData.append('name', data.nickName);
     formData.append('about', data.about);
     formData.append('genre', genreArr);
-    formData.append('rep_playlist', repPlaylist);
+    if (repPlaylist !== null) {
+      formData.append('rep_playlist', repPlaylist.toString());
+    }
     if (uploadImg !== null) formData.append('image', uploadImg);
     editProfile(formData, {
       onSuccess: () => {
         setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
         // userInfoAtom 상태 업데이트
-        setUserInfo({
-          ...userInfo, // 기존의 userInfo 복사
-          name: data.nickName || userInfo.name,
-          about: data.about || userInfo.about,
-          genre: genreArr || userInfo.genre,
-          rep_playlist: repPlaylist || userInfo.rep_playlist,
-          // uploadImg를 상태에 저장하려면 여기에 추가 (예: image: newImageURL)
-        });
         navigate(-1);
-        setUserInfo({
-          ...userInfo,
-          name: data.nickName,
-          about: data.about,
-          rep_playlist: repPlaylist,
-          genre: genreArr,
+        setUserInfo((prevUserInfo) => {
+          if (prevUserInfo !== null) {
+            return {
+              ...prevUserInfo,
+              name: data.nickName,
+              about: data.about,
+              rep_playlist: repPlaylist,
+              genre: genreArr,
+            };
+          } else {
+            return prevUserInfo;
+          }
         });
       },
     });
   };
 
-  const handleChipSelect = (newSelectedChips) => {
+  const handleChipSelect = (newSelectedChips: string[]) => {
     setGenre(newSelectedChips);
   };
 
