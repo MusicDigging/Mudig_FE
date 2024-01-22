@@ -1,11 +1,18 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
+
+import { Music } from '../../types/playlist';
+
 interface CreatePlaylistReq {
   situations: string;
   genre: string;
   year: string;
 }
 
+
+interface LikePlaylistReq {
+  playlist_id: number;
+}
 
 export const useCreatePlaylist = () => {
   const createPlaylist = (data: CreatePlaylistReq) => {
@@ -18,7 +25,7 @@ export const useCreatePlaylist = () => {
   return mutation;
 };
 
-export const useGetPlaylistDetail = (id) => {
+export const useGetPlaylistDetail = (id: number) => {
   const { data, isLoading, isError } = useQuery(
     'get-playlist-detail',
     () => {
@@ -80,12 +87,12 @@ export const useGetPlaylistMusic = (ids: number[]) => {
 export const useLikePlaylist = () => {
   const queryClient = useQueryClient();
 
-  const likePlaylist = (data) => {
+  const likePlaylist = (data: LikePlaylistReq) => {
     const response = privateInstance.post('/playlist/like/', data);
     return response;
   };
 
-  return useMutation((data) => likePlaylist(data), {
+  return useMutation((data: LikePlaylistReq) => likePlaylist(data), {
     onSuccess: () => {
       queryClient.invalidateQueries('get-playlist-detail');
     },
@@ -93,7 +100,7 @@ export const useLikePlaylist = () => {
 };
 
 export const useDeletePlaylist = () => {
-  const deletePlaylist = async (id) => {
+  const deletePlaylist = async (id: number) => {
     const response = await privateInstance.delete(`/playlist/delete/${id}`);
     return response;
   };
