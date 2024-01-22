@@ -6,7 +6,11 @@ import Header from '../Header/Header';
 import NavBar from '../NavBar/NavBar';
 import BackgroundImg from '../../../img/background-img.svg';
 
-export default function Layout({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }: Props) {
   const location = useLocation();
 
   const pathsWithNavBar = [
