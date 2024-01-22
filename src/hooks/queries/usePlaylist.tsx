@@ -1,8 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
+interface CreatePlaylistReq {
+  situations: string;
+  genre: string;
+  year: string;
+}
+
 
 export const useCreatePlaylist = () => {
-  const createPlaylist = (data) => {
+  const createPlaylist = (data: CreatePlaylistReq) => {
     const response = privateInstance.post('/playlist/create/', data);
     return response;
   };

@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function YearSelection(props) {
+interface Props {
+  year: string;
+  setYear: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function YearSelection(props: Props) {
   const { year, setYear } = props;
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setYear(e.target.value);
   };
   return (
@@ -13,7 +18,7 @@ export default function YearSelection(props) {
           (radioName, index) => (
             <RadioBox
               key={index}
-              className={year === radioName && 'checked'}
+              className={year === radioName ? 'checked' : ''}
               htmlFor={radioName}
             >
               <span></span>
