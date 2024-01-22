@@ -1,13 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { CircleImage } from './Image';
+import { CircleImage, Props } from './Image';
 
-import DefaultImg from '../../../img/basic-profile-img.svg';
 import ProfileDecoImg from '../../../img/profile-deco-img.svg';
 
-export default function ProfileImage(props) {
-  const { src, alt, children } = props;
+export default function ProfileImage({ src, alt, children }: Props) {
   const filteredSrc = src;
 
   return (

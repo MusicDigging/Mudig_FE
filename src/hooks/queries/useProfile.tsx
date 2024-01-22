@@ -4,7 +4,7 @@ import {
   imgPrivateInstance,
 } from '../../library/apis/axiosInstance';
 
-export const useGetProfile = (user_id) => {
+export const useGetProfile = (user_id: number) => {
   const { data, isLoading, isFetching, isError, refetch } = useQuery(
     ['get-profile', user_id],
     () => {
@@ -19,7 +19,7 @@ export const useGetProfile = (user_id) => {
 };
 
 // useGetFollowing 훅
-export const useGetFollowing = (user_id) => {
+export const useGetFollowing = (user_id: number) => {
   const { data, isLoading, isError } = useQuery(
     ['get-following', user_id], // user_id를 쿼리 키에 추가
     () => privateInstance.get(`/user/${user_id}/following/`),
@@ -31,7 +31,7 @@ export const useGetFollowing = (user_id) => {
 };
 
 // useGetFollower 훅
-export const useGetFollower = (user_id) => {
+export const useGetFollower = (user_id: number) => {
   const { data, isLoading, isError } = useQuery(
     ['get-follower', user_id], // user_id를 쿼리 키에 추가
     () => privateInstance.get(`/user/${user_id}/followers/`),

@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function MiniModal(props) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function MiniModal(props: Props) {
   const { children } = props;
   return <MiniModalWrap>{children}</MiniModalWrap>;
 }

@@ -3,7 +3,13 @@ import styled from 'styled-components';
 
 import DefaultImg from '../../../img/basic-profile-img.svg';
 
-export function Image({ src, alt }) {
+export interface Props {
+  src: string | undefined;
+  alt?: string;
+  children?: React.ReactNode;
+}
+
+export function Image({ src, alt }: Props) {
   // 이미지 주소 필터링
   const filteredSrc =
     src?.startsWith('karlo') || src?.startsWith('profile')
@@ -12,7 +18,7 @@ export function Image({ src, alt }) {
   return <ImageStyle src={filteredSrc} alt={alt} />;
 }
 
-export function CircleImage({ src, alt }) {
+export function CircleImage({ src, alt }: Props) {
   const filteredSrc = src
     ? src.startsWith('karlo') ||
       (src.startsWith('profile') && src !== 'profile/basic.png')

@@ -59,7 +59,7 @@ export const usePutMyPlayList = () => {
   return mutation;
 };
 
-export const useGetPlaylistMusic = (ids) => {
+export const useGetPlaylistMusic = (ids: number[]) => {
   const { data, isLoading } = useQuery(
     'get-playlist-music',
     () => {
@@ -67,7 +67,7 @@ export const useGetPlaylistMusic = (ids) => {
     },
     {
       select: (response) => {
-        const data = response.data.music.filter((item) =>
+        const data = response.data.music.filter((item: Music) =>
           ids.includes(item.id),
         );
         return data;

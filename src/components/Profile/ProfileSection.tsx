@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { userInfoAtom } from '../../library/atom';
-import { useLogout } from '../../hooks/queries/useProfile';
-
 import { isLoginAtom } from '../../library/atom';
+import { userInfoAtom } from '../../library/atom';
+import { ProfileData } from '../../types/profile';
+import { useLogout } from '../../hooks/queries/useProfile';
+import { UserInfo } from '../../types/user';
 
 import ProfileImage from '../common/Image/ProfileImage';
 import useFollowUser from '../../hooks/queries/useFollow';
@@ -15,7 +16,12 @@ import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
 import MoreBtnIcon from '../../img/more-icon.svg';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
 
-export default function ProfileSection(props) {
+interface Props {
+  isMyProfile: boolean;
+  data: ProfileData;
+}
+
+export default function ProfileSection(props: Props) {
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const { isMyProfile } = props;
@@ -29,32 +35,13 @@ export default function ProfileSection(props) {
   };
   const UserId = props.data.UserId;
 
-  const handleFollowClick = (e) => {
+  const handleFollowClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     e.preventDefault();
     const followState = profile.is_following; // 현재 팔로우 상태
 
-    followUser(profile.id, followState, {
-      onSuccess: () => {
-        // 팔로우 상태 업데이트
-        setUserInfo((prevUserInfo) => {
-          // 새로운 프로필 객체 생성하여 불변성 유지
-          const newProfile = {
-            ...prevUserInfo.profile,
-            is_following: !followState, // 팔로우 상태 토글
-          };
-
-          // 새로운 userInfo 객체 반환
-          return {
-            ...prevUserInfo,
-            profile: newProfile,
-          };
-        });
-      },
-      onError: (error) => {
-        console.error('Follow action failed:', error);
-        // 사용자에게 오류 메시지를 보여주는 로직을 추가할 수 있습니다.
-      },
-    });
+    followUser(profile.id, followState);
   };
 
   const followPath = isMyProfile
@@ -63,11 +50,13 @@ export default function ProfileSection(props) {
 
   const setIsLogin = useSetRecoilState(isLoginAtom);
 
-  const handleLogoutBtnClick = (e) => {
+  const handleLogoutBtnClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
     logout(undefined, {
       onSuccess: (res) => {
         alert('로그아웃 되었습니다.');
-        setUserInfo({});
+        setUserInfo(null);
         setIsLogin(false); // 로그인 상태를 false로 설정합니다.
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
@@ -213,7 +202,7 @@ const MoveFollowBtn = styled(Link)`
   }
 `;
 
-const FollowBtn = styled.button`
+const FollowBtn = styled.button<{ isFollowing: boolean | null }>`
   font-size: inherit;
   max-width: 100px;
   width: 100%;
