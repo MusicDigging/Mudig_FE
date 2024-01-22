@@ -13,38 +13,13 @@ export const SignUpAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-interface PlaylistTypes {
-  playlist: Playlist;
-  music: Music[];
-}
-export const PlayListAtom = atom<PlaylistTypes>({
+// interface PlaylistTypes {
+//   playlist: Playlist;
+//   music: Music[];
+// }
+export const PlayListAtom = atom<null>({
   key: 'PlayListAtom',
-  default: {
-    playlist: {
-      id: 0,
-      like_count: 0,
-      like_playlist: false,
-      title: '',
-      content: '',
-      thumbnail: '',
-      genre: '',
-      is_active: false,
-      created_at: '',
-      updated_at: '',
-      is_public: true,
-      writer: 0,
-      music: [],
-    },
-    // music: {
-    //   id: 0,
-    //   information: '',
-    //   singer: '',
-    //   song: '',
-    //   thumbnail: '',
-    //   created_at: '',
-    // },
-    music: [],
-  },
+  default: null,
 });
 
 export const userInfoAtom = atom({
