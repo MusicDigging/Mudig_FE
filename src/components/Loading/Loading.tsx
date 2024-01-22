@@ -1,14 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LoadingMudig from '../../img/loading-mudig.svg';
 import LoadingCircle from '../../img/loading-circle.svg';
 
-export default function Loading(props) {
+interface Props {
+  isLoading?: boolean;
+}
+
+export default function Loading(props: Props) {
   const { isLoading } = props;
   const [active, setActive] = useState('LoadingBox1');
+  let timeout: NodeJS.Timeout;
 
   useEffect(() => {
-    let timeout;
     if (isLoading) {
       if (active === '' || active === 'LoadingBox3')
         timeout = setTimeout(() => setActive('LoadingBox1'), 500);
