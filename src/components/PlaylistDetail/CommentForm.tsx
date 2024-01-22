@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -13,7 +13,12 @@ import { Button } from '../../components/common/Button/Button';
 
 import CloseIcon from '../../img/close-icon.svg';
 
-export default function CommentForm(props) {
+interface Props {
+  playlistId?: number;
+  parentId?: number;
+}
+
+export default function CommentForm(props: Props) {
   const { playlistId, parentId } = props;
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
@@ -22,7 +27,7 @@ export default function CommentForm(props) {
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     let data;
 
@@ -51,7 +56,7 @@ export default function CommentForm(props) {
     setContent('');
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
 
@@ -60,10 +65,10 @@ export default function CommentForm(props) {
     setContent('');
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      onSubmit(e);
+      onSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
     }
   };
   return (

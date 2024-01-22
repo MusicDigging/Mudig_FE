@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import CommentList from './CommentList';
+import { Comment } from '../../types/playlist';
 import { backAnimationAtom } from '../../library/atom';
 import { filterComments, filterReplies } from '../../library/CommentUtils';
 
 import { ReactComponent as PenIcon } from '../../img/pen-icon.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-export default function CommentSection(props) {
+interface Props {
+  comments: Comment[];
+  playlistId: number;
+  playlistWriter: number;
+}
+
+export default function CommentSection(props: Props) {
   const { comments, playlistId, playlistWriter } = props;
   const navigate = useNavigate();
-  const [more, setMore] = useState(false);
+  const [more, setMore] = useState<boolean>(false);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
-  const [visibleCount, setVisibleCount] = useState(2);
+  const [visibleCount, setVisibleCount] = useState<number>(2);
 
   const replies = filterReplies(comments);
-  const filteredComments =
+  const filteredComments: Comment[] =
     comments.length > 0 ? filterComments(comments, replies) : comments;
 
   const handleMore = () => {
@@ -108,7 +115,7 @@ const CommentTop = styled.div`
   }
 `;
 
-const ExtendBtn = styled.button`
+const ExtendBtn = styled.button<{ more: boolean }>`
   svg {
     transform: rotate(${({ more }) => (more ? '270deg' : '90deg')});
   }
