@@ -2,21 +2,25 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
-export default function SearchInput({ setInputValue, onSubmit }) {
-  const { keyword } = useParams();
+interface Props {
+  setInputValue: React.Dispatch<React.SetStateAction<string>>;
+  onSubmit: React.FormEventHandler<HTMLFormElement>;
+}
+export default function SearchInput({ setInputValue, onSubmit }: Props) {
+  const { keyword } = useParams() as { keyword: string };
   const location = useLocation();
   const path = location.pathname;
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   useEffect(() => {
     if (path === '/search') {
-      inputRef.current.value = '';
+      inputRef.current!.value = '';
     } else {
-      inputRef.current.value = keyword;
+      inputRef.current!.value = keyword;
     }
   }, [path]);
   return (

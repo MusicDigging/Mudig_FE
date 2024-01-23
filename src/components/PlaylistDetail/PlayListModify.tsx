@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import PlayList from '../common/PlayList/PlayList';
 import CloseIcon from '../../img/close-icon.svg';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   DragDropContext,
   Draggable,
@@ -13,22 +13,30 @@ import { useRecoilState } from 'recoil';
 import { PlayListAtom, toastAtom } from '../../library/atom';
 import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
 import { useNavigate } from 'react-router-dom';
+import { Music } from '../../types/playlist';
 
-export default function PlayListModify({ playlistDesc }) {
+interface Props {
+  playlistDesc: {
+    title: string;
+    content: string;
+    is_public: boolean;
+  };
+}
+export default function PlayListModify({ playlistDesc }: Props) {
   const navigate = useNavigate();
   const [playlistInfo, setPlayListInfo] = useRecoilState(PlayListAtom);
   const [music, setMusic] = useState(playlistInfo.music || []);
   const { mutate: modifyPlaylist } = useModifyPlaylist(
     playlistInfo.playlist.id,
   );
-  const [delMusic, setDelMusic] = useState([]);
+  const [delMusic, setDelMusic] = useState<number[]>([]);
   const [changedOrder, setChangedOrder] = useState([]);
   const [toast, setToast] = useRecoilState(toastAtom);
 
   const [isLoading, setIsLoading] = useState(false);
 
   // 음악 삭제 handler
-  const handleDelBtn = (itemId) => {
+  const handleDelBtn = (itemId: number) => {
     const newMusic = music.filter((item) => item.id !== itemId);
     setMusic(newMusic);
     const newOrder = changedOrder.filter((item) => item !== itemId);
@@ -36,7 +44,7 @@ export default function PlayListModify({ playlistDesc }) {
     setDelMusic([...delMusic, itemId]);
   };
   // 수정하기
-  const handleModifyClick = (e) => {
+  const handleModifyClick = (e: React.MouseEvent) => {
     const reqData = {
       del_music_list: delMusic.join(','),
       move_music: changedOrder.join(','),
@@ -59,16 +67,13 @@ export default function PlayListModify({ playlistDesc }) {
   };
 
   // Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
-  const onDragEnd = ({ source, destination }) => {
-    // console.log('>>> source', source);
-    // console.log('>>> destination', destination);
+  const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) return;
-    const _items = JSON.parse(JSON.stringify(music));
-    const [targetItem] = _items.splice(source.index, 1);
-    _items.splice(destination.index, 0, targetItem);
-    setMusic(_items);
-    // 변경된 순서를 문자열로 변환하여 저장
-    const newOrder = _items.map((item) => item.id);
+    const items = JSON.parse(JSON.stringify(music));
+    const [targetItem] = items.splice(source.index, 1);
+    items.splice(destination.index, 0, targetItem);
+    setMusic(items);
+    const newOrder = items.map((item: { id: number }) => item.id);
     setChangedOrder(newOrder);
   };
 

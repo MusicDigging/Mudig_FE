@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import SearchNav from '../../components/Search/SearchNav';
 import SearchResultAll from '../../components/Search/SearchResultAll';
@@ -11,7 +10,7 @@ import { modalAtom } from '../../atoms/modalAtom';
 import AddModal from '../../components/common/Modal/AddModal';
 
 export default function SearchResult() {
-  const { keyword } = useParams();
+  const { keyword } = useParams() as { keyword: string };
   const { data, isLoading, refetch } = useSearch(keyword);
   const result = data;
   const [currentNav, setCurrentNav] = useState({
@@ -21,25 +20,25 @@ export default function SearchResult() {
     user: false,
   });
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-  const [musicId, setMusicId] = useState('');
+  const [musicId, setMusicId] = useState<number | null>(null);
 
-  const handleAddPlaylist = (musicId) => {
+  const handleAddPlaylist = (musicId: number) => {
     setMusicId(musicId);
     setModalOpen(true);
   };
   const handleNavPlaylist = () => {
-    setCurrentNav({ all: false, playlist: true, user: false });
+    setCurrentNav({ all: false, playlist: true, music: false, user: false });
   };
   const handleNavMusic = () => {
     setCurrentNav({ all: false, playlist: true, music: true, user: false });
   };
   const handleNavUser = () => {
-    setCurrentNav({ all: false, playlist: false, user: true });
+    setCurrentNav({ all: false, playlist: false, music: false, user: true });
   };
 
   useEffect(() => {
     refetch();
-    setCurrentNav({ all: true, playlist: false, user: false });
+    setCurrentNav({ all: true, playlist: false, music: false, user: false });
   }, [keyword]);
 
   if (isLoading) return;
@@ -63,7 +62,6 @@ export default function SearchResult() {
             result={result}
             currentNav={currentNav}
             handleAddPlaylist={handleAddPlaylist}
-            handleNavMusic={handleNavMusic}
           />
         )}
       </SearchResultBox>

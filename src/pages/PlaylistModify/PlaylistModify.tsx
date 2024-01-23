@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import Modal from '../../components/common/Modal/Modal';
@@ -9,6 +8,11 @@ import { useState } from 'react';
 import { PlayListAtom, toastAtom } from '../../library/atom';
 import Toast from '../../components/common/Toast';
 
+interface PlaylistDesc {
+  title: string;
+  content: string;
+  is_public: boolean;
+}
 export default function PlaylistModify() {
   const modalOpen = useRecoilValue(modalAtom);
   const [toast, setToast] = useRecoilState(toastAtom);
@@ -25,11 +29,7 @@ export default function PlaylistModify() {
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       {modalOpen && (
-        <Modal
-          playlistDesc={playlistDesc}
-          setPlaylistDesc={setPlaylistDesc}
-          setPlaylistInfo={setPlaylistInfo}
-        />
+        <Modal playlistDesc={playlistDesc} setPlaylistDesc={setPlaylistDesc} />
       )}
       <PlayListInfo
         playlist={playlistInfo.playlist}

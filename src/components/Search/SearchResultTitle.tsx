@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-export default function SearchResultTitle({ title, handleNav }) {
+interface Props {
+  title: string;
+  handleNav?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export default function SearchResultTitle({ title, handleNav }: Props) {
   return (
     <SearchListTitleBox>
       <h2>{title}</h2>

@@ -5,7 +5,18 @@ import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom, toastAtom } from '../../../library/atom';
-export default function Modal({ playlistDesc, setPlaylistDesc }) {
+interface PlaylistDesc {
+  title: string;
+  content: string;
+  is_public: boolean;
+}
+
+interface Props {
+  playlistDesc: PlaylistDesc;
+  setPlaylistDesc: React.Dispatch<React.SetStateAction<PlaylistDesc>>;
+}
+
+export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
@@ -22,8 +33,8 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
     setIsPrivateView(!isPrivateView);
   };
 
-  const handlePrivateCheck = (e) => {
-    const ButtonType = e.target.innerText;
+  const handlePrivateCheck = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const ButtonType = (e.target as HTMLInputElement).innerText;
     if (ButtonType === '공개') {
       setIsPublic(true);
       setPlaylistDesc({ ...playlistDesc, is_public: true });
@@ -34,7 +45,9 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
     setIsPrivateView(false);
   };
 
-  const changeModifyDesc = (e) => {
+  const changeModifyDesc = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const value = e.target.value;
     if (e.target.name === 'playlistTitle') {
       setPlaylistDesc({ ...playlistDesc, title: `${value}` });
@@ -67,13 +80,12 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               placeholder='플레이리스트의 제목을 입력해주세요.'
               autoComplete='off'
               onChange={changeModifyDesc}
-              maxLength='50'
+              maxLength={50}
               required
             />
           </label>
           <label>
-            <ContentInput
-              type='text'
+            <ContentTextArea
               name='playlistDescription'
               id='playlistDescription'
               defaultValue={
@@ -82,7 +94,7 @@ export default function Modal({ playlistDesc, setPlaylistDesc }) {
               placeholder='플레이리스트에 대한 설명을 입력해주세요.'
               autoComplete='off'
               onChange={changeModifyDesc}
-              maxLength='150'
+              maxLength={150}
               required
             />
           </label>
@@ -182,7 +194,7 @@ const TitleInput = styled.input`
   font-weight: var(--font-semi-bold);
   line-height: 150%;
 `;
-const ContentInput = styled.textarea`
+const ContentTextArea = styled.textarea`
   resize: none;
   height: 181px;
   font-weight: var(--font-regular);
