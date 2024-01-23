@@ -1,19 +1,19 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, LinkProps, useLocation } from 'react-router-dom';
 import HomeIcon from '../../../img/home_icon.svg';
 import PlaylistIcon from '../../../img/playlist_icon.svg';
 import MovieIcon from '../../../img/movie_icon.svg';
 import ProfileIcon from '../../../img//profile_icon.svg';
 
-function NavBar() {
+function NavBar(): JSX.Element {
   const location = useLocation();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string): boolean => location.pathname === path;
+
   return (
     <NavBarWrap>
       <ul>
-        {/* 각 Link 컴포넌트에 isActive 함수를 이용해 현재 위치를 확인 */}
         <StyledLink to='/main' $active={isActive('/main')}>
           <li>
             <img src={HomeIcon} alt='홈 버튼'></img>
@@ -99,8 +99,11 @@ const NavBarWrap = styled.nav`
     }
   }
 `;
-// isActive 속성에 따라 스타일을 변경하는 StyledLink 컴포넌트 생성
-const StyledLink = styled(Link)`
+interface StyledLinkProps {
+  $active: boolean;
+}
+
+const StyledLink = styled(Link)<StyledLinkProps>`
   ${({ $active }) =>
     $active &&
     css`

@@ -5,7 +5,21 @@ import styled from 'styled-components';
 import { CircleImage } from '../../components/common/Image/Image';
 import { userInfoAtom } from '../../library/atom';
 
-const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
+interface UserProps {
+  user: string; // 혹은 적절한 타입으로 변경
+  name: string;
+  profilePicture: string;
+  isFollowing: boolean;
+  onFollowClick: () => void; // onFollowClick 함수의 타입
+}
+
+const User: React.FC<UserProps> = ({
+  user,
+  name,
+  profilePicture,
+  isFollowing,
+  onFollowClick,
+}) => {
   const myInfo = useRecoilValue(userInfoAtom);
 
   const handleClick = () => {
@@ -42,6 +56,10 @@ const User = ({ user, name, profilePicture, isFollowing, onFollowClick }) => {
 
 export default User;
 
+interface FollowButtonProps {
+  isFollowing: boolean;
+}
+
 const UserWrap = styled.div`
   display: flex;
   align-items: center;
@@ -69,7 +87,7 @@ const UserNickName = styled.span`
   color: #909090;
 `;
 
-const FollowButton = styled.button`
+const FollowButton = styled.button<FollowButtonProps>`
   font-size: 14px;
   width: 89px;
   border: none;

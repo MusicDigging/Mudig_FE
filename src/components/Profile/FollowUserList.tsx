@@ -2,7 +2,22 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import User from '../common/User';
 
-const FollowUserList = ({ users, onFollowClick }) => {
+interface UserDataType {
+  id: string; // 혹은 number
+  name: string;
+  profilePicture: string;
+  isFollowing: boolean;
+}
+
+interface FollowUserListProps {
+  users: UserDataType[];
+  onFollowClick: (user: UserDataType) => void; // 함수 타입 정의
+}
+
+const FollowUserList: React.FC<FollowUserListProps> = ({
+  users,
+  onFollowClick,
+}) => {
   if (!users || users.length === 0) {
     return <div>사용자가 없습니다.</div>;
   }

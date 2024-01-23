@@ -5,7 +5,18 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
-export default function MyPlayListTable({ playlistData }) {
+interface PlaylistItem {
+  id: string;
+  thumbnail: string;
+  title: string;
+  music: string[];
+}
+
+interface MyPlayListTableProps {
+  playlistData: PlaylistItem[];
+}
+
+const MyPlayListTable: React.FC<MyPlayListTableProps> = ({ playlistData }) => {
   return (
     <MyPlayListTableWrap>
       <PlayListBox>
@@ -32,7 +43,7 @@ export default function MyPlayListTable({ playlistData }) {
       </PlayListBox>
     </MyPlayListTableWrap>
   );
-}
+};
 
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
