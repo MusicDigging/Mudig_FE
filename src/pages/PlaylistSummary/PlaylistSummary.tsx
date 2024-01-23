@@ -5,6 +5,7 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
+import { Music } from '../../types/playlist';
 export default function PlaylistSummary() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +24,7 @@ export default function PlaylistSummary() {
       <PlayListInfo user={user} playlist={playlist} />
       <PlayListBox>
         <PlayList>
-          {music.map((item) => (
+          {music.map((item: Music) => (
             <PlayListItem
               key={item.id}
               img={item.thumbnail}
