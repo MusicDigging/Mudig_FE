@@ -14,6 +14,7 @@ interface IButtonProps {
   btnWidth?: string;
   btnHeight?: string;
   imgSrc?: string;
+  alt?: string;
 }
 
 export function Button(props: IButtonProps) {
@@ -91,7 +92,7 @@ interface IToast {
 
 export function ChipButton(props: ChipButtonProps) {
   const { name, onSelect, selectedChips } = props;
-  const setToast = useSetRecoilState<IToast | null>(toastAtom);
+  const setToast = useSetRecoilState(toastAtom);
 
   const isChipSelected = selectedChips.includes(name);
 
