@@ -19,12 +19,14 @@ export function Image({ src, alt }: Props) {
 }
 
 export function CircleImage({ src, alt }: Props) {
-  const filteredSrc = src
-    ? src.startsWith('karlo') ||
-      (src.startsWith('profile') && src !== 'profile/basic.png')
-      ? `https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${src}`
-      : DefaultImg
-    : DefaultImg;
+  let filteredSrc;
+  if (src === 'profile/basic.png') {
+    filteredSrc = DefaultImg;
+  } else if (src?.startsWith('karlo') || src?.startsWith('profile')) {
+    filteredSrc = `https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${src}`;
+  } else {
+    filteredSrc = src;
+  }
   return <CircleImageStyle src={filteredSrc} alt={alt} />;
 }
 
