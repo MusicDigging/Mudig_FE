@@ -1,40 +1,43 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import ProfileImage from '../../components/common/Image/ProfileImage';
-import UploadImgBtn from '../../img/selectImg.svg';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 import { userInfoAtom, isLoginAtom, toastAtom } from '../../library/atom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { ImgCompression } from '../../library/ImgCompression';
 import { useNavigate } from 'react-router-dom';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import BasicProfileImage from '../../img/basic-profile-img.svg';
 // import { postUserProfile } from '../../library/apis/api';
 import { useUserProfile } from '../../hooks/queries/useUserInfo';
 import Toast from '../../components/common/Toast';
+
+interface IUserProfileData {
+  email: string;
+  nickName: string;
+  about?: string;
+  genre: string[];
+  image?: string;
+}
 export default function SetProfile() {
   const navigate = useNavigate();
 
   const { mutate: postUserProfile } = useUserProfile();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
-  const [genre, setGenre] = useState([]);
+  const [genre, setGenre] = useState<string[]>([]);
   const [previewImg, setPreviewImg] = useState(BasicProfileImage);
   const [uploadImg, setUploadImg] = useState(null);
   const fileInput = useRef(null);
   const userType = userInfo.type;
   const [toast, setToast] = useRecoilState(toastAtom);
   // 장르 선택 함수 props
-  const handleChipSelect = (newSelectedChips) => {
+  const handleChipSelect = (newSelectedChips: string[]) => {
     setGenre(newSelectedChips);
-    // console.log('장르선택:', newSelectedChips);
   };
 
   const selectGenre = genre.join(',');
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: IUserProfileData) => {
     const formData = new FormData();
-
     formData.append('email', userInfo.email);
     formData.append('password', userInfo.password);
     formData.append('name', data.nickName);
