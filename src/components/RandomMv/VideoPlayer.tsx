@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Iframe from 'react-iframe';
-export default function VideoPlayer({ url }) {
+import { IVideoUrl } from '../../types/RandomMv';
+export default function VideoPlayer({ url }: IVideoUrl) {
   return (
     <VideoBox>
       <Iframe

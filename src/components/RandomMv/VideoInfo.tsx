@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import addIcon from '../../img/add-icon.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-
+import { IVideoInfoProps } from '../../types/RandomMv';
 import { modalAtom } from '../../atoms/modalAtom';
 
-const VideoInfo = ({ title, views, onAddButtonClick }) => {
+const VideoInfo = ({ title, views, onAddButtonClick }: IVideoInfoProps) => {
   const handleAddButtonClick = () => {
     //플리추가 콜백
     if (onAddButtonClick) {

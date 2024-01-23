@@ -8,16 +8,10 @@ import { useRandomMv } from '../../hooks/queries/useRandomMv';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { InfoToast } from '../../library/sweetAlert/sweetAlert';
-
+import { IVideoData } from '../../types/RandomMv';
 import Toast from '../../components/common/Toast';
 import { toastAtom } from '../../library/atom';
 
-interface IVideo {
-  id: string;
-  information: string;
-  song: string;
-  singer: string;
-}
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
@@ -29,7 +23,7 @@ export default function RandomMusic() {
   const [toast, setToast] = useRecoilState(toastAtom);
   const [page, setPage] = useState(0);
   const targetRef = useRef<HTMLDivElement>(null);
-  const [allVideos, setAllVideos] = useState<IVideo[]>([]);
+  const [allVideos, setAllVideos] = useState<IVideoData[]>([]);
   const [isEnd, setIsEnd] = useState(false);
   //버튼 클릭히 해당 뮤비 아이디 함수`
   const handleAddButtonClick = (videoId: string) => {
@@ -43,7 +37,7 @@ export default function RandomMusic() {
       const data = { selectId, page };
       // console.log(data);
       getRandomMv(data, {
-        onSuccess: (newVideoData: IVideo[]) => {
+        onSuccess: (newVideoData: IVideoData[]) => {
           if (newVideoData.length === 0) {
             setIsEnd(true);
             return;
