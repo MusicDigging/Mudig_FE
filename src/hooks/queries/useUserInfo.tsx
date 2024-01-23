@@ -38,12 +38,12 @@ interface IUserProfileData {
   email: string;
   name: string;
   about?: string;
-  genre: string;
+  genre: string[];
   image?: string;
 }
 
 export const useUserProfile = () => {
-  const postUserProfile = async (formData: IUserProfileData) => {
+  const postUserProfile = async (formData: FormData) => {
     // const { userType, formData } = userData;
     // const apiUrl = userType === 'social' ? '/user/socialjoin/' : '/user/join/';
 
