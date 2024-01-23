@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import MusicWave from './MusicWave';
+import { Music } from '../../types/playlist';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 
@@ -9,7 +10,17 @@ import PlayingIcon from '../../img/playing-icon.svg';
 import TestImg from '../../img/thumbnail-img.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-export default function DetailList(props) {
+interface Props {
+  pause: boolean;
+  setPause: React.Dispatch<React.SetStateAction<boolean>>;
+  playing: boolean;
+  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  music: Music[];
+  currMusic: number | null;
+  setCurrMusic: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+export default function DetailList(props: Props) {
   const {
     pause,
     setPause,
@@ -35,7 +46,7 @@ export default function DetailList(props) {
     }
   };
 
-  const handlePlayListBtnClick = (index) => {
+  const handlePlayListBtnClick = (index: number) => {
     if (!playing) setPlaying(!playing);
     setCurrMusic(index);
     setPause(false);
@@ -77,13 +88,13 @@ const DetailListWrap = styled.div`
   background-color: #fff;
 `;
 
-const PlayListBtn = styled.button`
+const PlayListBtn = styled.button<{ display: string; $bgColor: string }>`
   width: 100%;
   padding: 0 16px;
   background-color: ${(props) => props.$bgColor};
   display: ${(props) => props.display};
 `;
-const ExtendBtn = styled.button`
+const ExtendBtn = styled.button<{ more: boolean }>`
   svg {
     transform: rotate(${({ more }) => (more ? '270deg' : '90deg')});
   }

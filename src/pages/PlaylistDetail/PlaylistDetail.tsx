@@ -11,6 +11,7 @@ import {
   toastAtom,
   commentEditIdAtom,
 } from '../../library/atom';
+import { Music } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import Toast from '../../components/common/Toast';
@@ -26,10 +27,10 @@ export default function PlaylistDetail() {
   const state = location.state;
   const playlistId = state?.id || location.pathname.split('/').pop(); // state로 받아오기 or url pathname에서 가져오기
   const { data, isLoading, isError } = useGetPlaylistDetail(playlistId);
-  const myId = useRecoilValue(userInfoAtom).id;
-  const [pause, setPause] = useState(true);
-  const [playing, setPlaying] = useState(false);
-  const [currMusic, setCurrMusic] = useState(null);
+  const myId = useRecoilValue(userInfoAtom)?.id;
+  const [pause, setPause] = useState<boolean>(true);
+  const [playing, setPlaying] = useState<boolean>(false);
+  const [currMusic, setCurrMusic] = useState<number | null>(null);
   const [toast, setToast] = useRecoilState(toastAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
@@ -52,7 +53,7 @@ export default function PlaylistDetail() {
     return;
   }
   const { playlist, comments, music, user } = data;
-  const musicList = music.map((obj) => obj.information);
+  const musicList = music.map((obj: Music) => obj.information);
   const musicLength = music.length;
 
   return (
