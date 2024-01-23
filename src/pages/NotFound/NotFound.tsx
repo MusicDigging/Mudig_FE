@@ -6,7 +6,7 @@ import leftArrowIcon from '../../img/left-arrow-Icon.svg';
 import NotFoundBG from '../../img/not_found_bg.svg';
 import BGImg from '../../img/background-img2.svg';
 
-export default function NotFound() {
+const NotFound: React.FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -21,7 +21,7 @@ export default function NotFound() {
       </NotFoundSection>
     </NotFoundWrap>
   );
-}
+};
 
 const NotFoundWrap = styled.div`
   height: 100%;
