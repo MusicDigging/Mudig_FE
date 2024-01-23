@@ -1,11 +1,20 @@
-import { atom } from 'recoil';
+import { atom, RecoilValue } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { Music, Playlist } from '../types/playlist';
 
+import { User } from '../types/user';
+
 const { persistAtom } = recoilPersist();
 
-//회원가입 토큰 정보
-export const SignUpAtom = atom({
+export interface Toast {
+  content: string;
+  type: string;
+}
+
+// 회원가입 토큰 정보
+export const SignUpAtom = atom<{
+  isLogin: boolean;
+}>({
   key: 'SignUpAtom',
   default: {
     isLogin: false,
@@ -47,33 +56,33 @@ export const PlayListAtom = atom<PlaylistTypes>({
   },
 });
 
-export const userInfoAtom = atom({
+export const userInfoAtom = atom<User | null>({
   key: 'userInfoAtom',
-  default: {},
+  default: null,
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isLoginAtom = atom({
+export const isLoginAtom = atom<boolean>({
   key: 'isLoginAtom',
   default: localStorage.getItem('token') ? true : false,
 });
 
-export const backAnimationAtom = atom({
+export const backAnimationAtom = atom<boolean>({
   key: 'backAnimationAtom',
   default: false,
 });
 
-export const commentEditIdAtom = atom({
+export const commentEditIdAtom = atom<number | null>({
   key: 'commentEditIdAtom',
   default: null,
 });
 
-export const commentAtom = atom({
+export const commentAtom = atom<string>({
   key: 'commentAtom',
   default: '',
 });
 
-export const toastAtom = atom({
+export const toastAtom = atom<Toast | null>({
   key: 'toastAtom',
   default: null,
 });

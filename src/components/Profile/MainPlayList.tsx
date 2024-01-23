@@ -1,9 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { Music } from '../../types/playlist';
 import { Image } from '../common/Image/Image';
 
-export default function MainPlayList(props) {
+interface Props {
+  id: number;
+  data: Music[];
+}
+
+export default function MainPlayList(props: Props) {
   const { id } = props;
   const musicData = props.data || [];
 

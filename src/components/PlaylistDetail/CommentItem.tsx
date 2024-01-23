@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import {
   backAnimationAtom,
   commentEditIdAtom,
 } from '../../library/atom';
+import { Comment, Reply } from '../../types/playlist';
 import { useDeleteComment } from '../../hooks/queries/useComment';
 
 import { CircleImage } from '../common/Image/Image';
@@ -23,7 +24,28 @@ import {
 import MoreIcon from '../../img/more-icon.svg';
 import { ReactComponent as ProfileBadge } from '../../img/badge-icon.svg';
 
-export default function CommentItem(props) {
+interface Props {
+  playlistId: number;
+  comment: Comment;
+  replies?: Comment[];
+  writer?: number;
+  isActive?: boolean;
+  parentId?: number | null;
+  modalId: number | null;
+  setModalId: React.Dispatch<React.SetStateAction<number | null>>;
+  parentWriter?: number;
+  playlistWriter: number;
+  mode?: string;
+  children?: React.ReactNode;
+}
+
+interface CommentLinkProps {
+  children: React.ReactNode;
+  to: string;
+  state: { id: number };
+}
+
+export default function CommentItem(props: Props) {
   const {
     mode,
     playlistId,
@@ -38,16 +60,16 @@ export default function CommentItem(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
-  const myId = useRecoilValue(userInfoAtom).id;
+  const myId = useRecoilValue(userInfoAtom)?.id;
   const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [animation, setAnimation] = useRecoilState(backAnimationAtom);
   const { mutate: deleteComment } = useDeleteComment();
 
-  const isMyComment = myId === comment.writer;
-  const isPlaylistWriter = playlistWriter === comment.writer;
-  const isParentWriter = parentWriter === comment.writer;
+  const isMyComment = myId === comment?.writer;
+  const isPlaylistWriter = playlistWriter === comment?.writer;
+  const isParentWriter = parentWriter === comment?.writer;
 
   const handleMoreBtnClick = () =>
     setModalId(modalId === comment.id ? null : comment.id);
@@ -64,8 +86,8 @@ export default function CommentItem(props) {
     ? '/user/profile/my'
     : `/user/profile/${comment.writer}`;
 
-  const CommentLink = ({ children }) => (
-    <Link to={linkTo} state={{ id: comment.writer }}>
+  const CommentLink = ({ children, to, state }: CommentLinkProps) => (
+    <Link to={to} state={state}>
       {children}
     </Link>
   );
@@ -133,7 +155,7 @@ export default function CommentItem(props) {
         }
       >
         <ProfileImgBox>
-          <CommentLink>
+          <CommentLink to={linkTo} state={{ id: comment.writer }}>
             <CircleImage
               src={comment.writer_profile.image}
               alt='프로필 이미지'
@@ -143,7 +165,7 @@ export default function CommentItem(props) {
         <DescBox>
           <UserInfoBox>
             <UserInfo>
-              <CommentLink>
+              <CommentLink to={linkTo} state={{ id: comment.writer }}>
                 {isPlaylistWriter ? (
                   <ProfileBadge alt='배지 아이콘' />
                 ) : isParentWriter ? (
@@ -259,13 +281,13 @@ const UserInfo = styled.div`
   }
 `;
 
-const Comment = styled.p`
+const Comment = styled.p<{ $color: string }>`
   padding: 8px 0;
   font-size: var(--font-md);
   color: ${(props) => props.$color};
 `;
 
-const CommentBox = styled.div`
+const CommentBox = styled.div<{ $bgColor: string }>`
   display: flex;
   gap: 10px;
   background-color: ${(props) => props.$bgColor};

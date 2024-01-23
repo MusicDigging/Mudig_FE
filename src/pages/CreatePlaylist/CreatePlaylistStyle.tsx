@@ -1,7 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { Link } from 'react-router-dom';
+import { Link, LinkProps } from 'react-router-dom';
+
+interface NextLinkProps extends LinkProps {
+  disabled?: boolean;
+}
 
 const fadeIn = keyframes`
   0% {
@@ -35,7 +39,7 @@ export const PageNum = styled.span`
   color: var(--sub-font-color);
 `;
 
-export const ImgBox = styled.div`
+export const ImgBox = styled.div<{ isLoading: boolean }>`
   display: flex;
   justify-content: center;
   img {
@@ -121,7 +125,7 @@ export const LinkBox = styled.div`
   gap: 16px;
 `;
 
-export const NextLink = styled(Link)`
+export const NextLink = styled(Link)<NextLinkProps>`
   width: 100%;
   height: 44px;
   display: flex;
@@ -134,7 +138,19 @@ export const NextLink = styled(Link)`
   opacity: ${(props) => (props.disabled ? '0.5' : '1')};
   cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
 `;
-export const CompleteBtn = styled(NextLink)``;
+export const CompleteBtn = styled.button`
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: var(--main-color);
+  color: white;
+  font-size: var(--font-md);
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
+  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+`;
 
 export const BackLink = styled(NextLink)`
   background: #fff;

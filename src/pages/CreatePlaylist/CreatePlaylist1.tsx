@@ -1,19 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
 import CharacterImg from '../../img/character-img2.svg';
 import * as S from './CreatePlaylistStyle';
 
+export interface CreatePlaylist {
+  situations?: string;
+  genre?: string;
+  year?: string;
+  backAnimation?: boolean;
+}
+
 export default function CreateNewPlaylist1() {
   const location = useLocation();
-  const state = location.state || {};
-  const { genre, year, backAnimation } = state;
-  const [situations, setSituations] = useState(
+  const state: CreatePlaylist = location.state || {};
+  const { genre, year, backAnimation }: CreatePlaylist = state;
+  const [situations, setSituations] = useState<string>(
     (state && state.situations) || '',
   );
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setSituations(value.slice(0, 100));
   };
@@ -74,7 +81,9 @@ export default function CreateNewPlaylist1() {
               to='/playlist/create2'
               state={{ situations, genre, year, backAnimation: false }}
               disabled={situations.trim() === ''}
-              onClick={(e) => situations.trim() === '' && e.preventDefault()}
+              onClick={(e: React.MouseEvent<HTMLElement>) =>
+                situations.trim() === '' && e.preventDefault()
+              }
             >
               다음
             </S.NextLink>

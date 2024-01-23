@@ -1,17 +1,21 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useGetPlaylistMusic } from '../../hooks/queries/usePlaylist';
 
 import MainPlayList from './MainPlayList';
 import { Image } from '../common/Image/Image';
+import { Playlist } from '../../types/playlist';
 
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
 import WhitePlayIcon from '../../img/play-icon-white.svg';
 
-export default function MainPlayListSection(props) {
+interface Props {
+  data: Playlist;
+}
+
+export default function MainPlayListSection(props: Props) {
   const { id, title, thumbnail, music } = props.data;
   const { data: musicData, isLoading: musicLoading } =
     useGetPlaylistMusic(music);

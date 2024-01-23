@@ -1,23 +1,34 @@
-import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Image } from '../common/Image/Image';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-export default function SetRepPlaylist(props) {
+interface Playlist {
+  id: number;
+  thumbnail: string;
+  title: string;
+}
+
+interface Props {
+  publicPlaylist: Playlist[];
+  repPlaylist: number | null;
+  setRepPlaylist: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+export default function SetRepPlaylist(props: Props) {
   const { publicPlaylist, repPlaylist, setRepPlaylist } = props;
 
   const [isPlaylistShowed, setisPlaylistShowed] = useState(false);
-  const [currRepPlaylist, setCurrRepPlaylist] = useState(
+  const [currRepPlaylist, setCurrRepPlaylist] = useState<Playlist | undefined>(
     publicPlaylist?.find((obj) => obj.id === repPlaylist),
   );
 
   const handlePrivateView = () => {
     setisPlaylistShowed(!isPlaylistShowed);
   };
-  const handleRepPlaylistCheck = (id) => {
-    const data = publicPlaylist.find((obj) => obj.id === parseInt(id));
+  const handleRepPlaylistCheck = (id: number) => {
+    const data = publicPlaylist.find((obj) => obj.id === id);
 
     setRepPlaylist(id);
     setCurrRepPlaylist(data);
@@ -27,12 +38,11 @@ export default function SetRepPlaylist(props) {
   return (
     <SetRepPlaylistWrap>
       <label>대표 플레이리스트</label>
-      <SetRepPlaylistBox zIndex={isPlaylistShowed ? '999' : ''}>
+      <SetRepPlaylistBox>
         <CurrRepPlaylist
           type='button'
           onClick={handlePrivateView}
           className={isPlaylistShowed ? 'active' : ''}
-          bdBottom={isPlaylistShowed && publicPlaylist.length !== 0}
           disabled={publicPlaylist.length === 0}
         >
           {repPlaylist || currRepPlaylist ? (
@@ -55,7 +65,7 @@ export default function SetRepPlaylist(props) {
               <li key={item?.id}>
                 <SetRepPlaylistBtn
                   type='button'
-                  onClick={() => handleRepPlaylistCheck(item.id)}
+                  onClick={() => handleRepPlaylistCheck(item?.id)}
                 >
                   <>
                     <Image src={item?.thumbnail} />

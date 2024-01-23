@@ -1,9 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function GenreSelection(props) {
+interface Props {
+  genre: string;
+  setGenre: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function GenreSelection(props: Props) {
   const { genre, setGenre } = props;
-  const handleRadioChange = (e) => {
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGenre(e.target.value);
   };
   return (

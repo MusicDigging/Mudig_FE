@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -22,7 +22,7 @@ export default function CreateNewPlaylist3() {
   const { mutate: createPlaylist } = useCreatePlaylist();
 
   const handleCompleteBtnClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (year.trim() === '') {
         return;
       }

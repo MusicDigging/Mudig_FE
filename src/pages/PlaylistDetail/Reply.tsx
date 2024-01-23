@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { Comment } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import {
   toastAtom,
@@ -24,7 +25,7 @@ export default function Reply() {
   const state = location.state || {};
   const { mode, parentId, playlistId, playlistWriter } = state;
 
-  const [modalId, setModalId] = useState(null);
+  const [modalId, setModalId] = useState<number | null>(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
   const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
@@ -36,12 +37,12 @@ export default function Reply() {
   if (isLoading) return null;
   const { comments } = data;
 
-  const comment = comments.find((comment) => comment.id === parentId);
+  const comment = comments.find((comment: Comment) => comment.id === parentId);
   const replies = comments.filter(
-    (reply) => reply.parent === parentId && reply.is_active,
+    (reply: Comment) => reply.parent === parentId && reply.is_active,
   );
 
-  const handleReplyBtnClick = (id) => {
+  const handleReplyBtnClick = (id: number) => {
     setIsReplyOpen((prev) => !prev);
   };
 
@@ -76,7 +77,6 @@ export default function Reply() {
             modalId={modalId}
             setModalId={setModalId}
             playlistWriter={playlistWriter}
-            isVisible={true}
           >
             {replies && (
               <>
@@ -89,7 +89,7 @@ export default function Reply() {
 
                 {isReplyOpen &&
                   replies.map(
-                    (reply) =>
+                    (reply: Comment) =>
                       reply.is_active && (
                         <CommentItem
                           key={reply.id}
@@ -110,12 +110,7 @@ export default function Reply() {
             )}
           </CommentItem>
         </S.CommentListBox>
-        <CommentForm
-          playlistId={playlistId}
-          parentId={parentId}
-          editId={editId}
-          setEditId={setEditId}
-        />
+        <CommentForm playlistId={playlistId} parentId={parentId} />
       </S.CommentBox>
     </S.CommentWrap>
   );

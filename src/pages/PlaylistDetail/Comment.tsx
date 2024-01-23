@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -17,6 +16,7 @@ import CommentList from '../../components/PlaylistDetail/CommentList';
 
 import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
+import React from 'react';
 
 export default function Comment() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function Comment() {
             <BackIcon />
           </S.BackBtn>
           <h1>댓글 쓰기</h1>
-          <p>{playlist.title}</p>
+          <p>{playlist?.title}</p>
         </S.CommentTop>
         <S.CommentListBox>
           <CommentList
@@ -66,11 +66,7 @@ export default function Comment() {
             playlistWriter={playlistWriter}
           ></CommentList>
         </S.CommentListBox>
-        <CommentForm
-          playlistId={playlistId}
-          editId={editId}
-          setEditId={setEditId}
-        />
+        <CommentForm playlistId={playlistId} />
       </S.CommentBox>
     </S.CommentWrap>
   );

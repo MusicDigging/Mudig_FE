@@ -2,16 +2,28 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Playlist } from '../../types/playlist';
+
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
-export default function PlayListSection(props) {
+interface Props {
+  type: string;
+  data: Playlist[];
+  isMyProfile: boolean;
+  isEmpty?: boolean;
+}
+
+export default function PlayListSection(props: Props) {
   const { type, isMyProfile, data: playlists } = props;
   const [sortType, setSortType] = useState(playlists.length ? 'latest' : '');
 
   const handleSortLatestBtn = () => {
-    playlists.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    playlists.sort(
+      (a: Playlist, b: Playlist) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    );
     setSortType('latest');
   };
 
@@ -30,7 +42,7 @@ export default function PlayListSection(props) {
             : '320px'
       }
     >
-      <PlayListBox>
+      <PlayListBox isEmpty={props.isEmpty}>
         <PlayListHeader>
           <h2>
             {type === 'myPlaylist' &&
@@ -90,7 +102,7 @@ export default function PlayListSection(props) {
     </PlayListSectionWrap>
   );
 }
-const PlayListSectionWrap = styled.section`
+const PlayListSectionWrap = styled.section<{ maxHeight: string }>`
   flex: 1 0 auto;
   min-height: ${(props) => props.maxHeight};
   padding: 0px 16px;
@@ -135,7 +147,7 @@ const SortBtnBox = styled.div`
   }
 `;
 
-const PlayListBox = styled.div`
+const PlayListBox = styled.div<{ isEmpty?: boolean }>`
   height: 100%;
   display: flex;
   flex-direction: column;

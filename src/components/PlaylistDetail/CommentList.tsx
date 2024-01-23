@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentItem from './CommentItem';
-
+import { Comment, Reply } from '../../types/playlist';
 import { ReactComponent as CommentIcon } from '../../img/comment-icon.svg';
 
-export default function CommentList(props) {
+interface Props {
+  comments: Comment[];
+  replies: Reply;
+  playlistId: number;
+  playlistWriter: number;
+  visibleCount?: number;
+}
+
+export default function CommentList(props: Props) {
   const { comments, replies, playlistId, playlistWriter, visibleCount } = props;
   const navigate = useNavigate();
-  const [modalId, setModalId] = useState(null); // 모달창 활성화된 comment id
+  const [modalId, setModalId] = useState<number | null>(null); // 모달창 활성화된 comment id
 
-  const [opendReply, setOpendReply] = useState({});
+  const [opendReply, setOpendReply] = useState<Reply>({});
 
-  const handleReplyBtnClick = (commentId) => {
+  const handleReplyBtnClick = (commentId: number) => {
     if (replies[commentId])
       setOpendReply((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
     else

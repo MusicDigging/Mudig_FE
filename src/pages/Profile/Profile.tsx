@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -7,25 +7,27 @@ import {
   useGetFollowing,
   useGetFollower,
 } from '../../hooks/queries/useProfile';
+import { Playlist } from '../../types/playlist';
+import { Profile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 
-import ProfileSection from '../../components/Profile/ProfileSection';
-import MainPlayListSection from '../../components/Profile/MainPlayListSection';
-import PlayListSection from '../../components/Profile/PlayListSection';
+import Toast from '../../components/common/Toast';
 import Loading from '../../components/Loading/Loading';
+import ProfileSection from '../../components/Profile/ProfileSection';
+import PlayListSection from '../../components/Profile/PlayListSection';
+import MainPlayListSection from '../../components/Profile/MainPlayListSection';
 
 import * as S from './ProfileStyle';
-import Toast from '../../components/common/Toast';
 
 export default function Profile() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
-  const my_id = useRecoilValue(userInfoAtom).id;
+  const my_id = useRecoilValue(userInfoAtom)?.id;
   const user_id =
     state?.id ||
-    (!isNaN(location.pathname.split('/').pop()) &&
-      location.pathname.split('/').pop()) ||
+    (!isNaN(Number(location.pathname.split('/').pop())) &&
+      Number(location.pathname.split('/').pop())) ||
     my_id;
   const [toast, setToast] = useRecoilState(toastAtom);
   // Fetching 상태 추가
@@ -33,7 +35,7 @@ export default function Profile() {
     data: profileData,
     isLoading: profileLoading,
     isError: profileError,
-    refetch: refetchProfile,
+    // refetch: refetchProfile,
   } = useGetProfile(user_id);
 
   const {
@@ -60,11 +62,15 @@ export default function Profile() {
   }
 
   const repPlaylist = profileData.playlist.filter(
-    (item) => item.id === profileData.profile.rep_playlist,
+    (item: Playlist) => item.id === profileData.profile.rep_playlist,
   )[0];
+
   const playlist = profileData.playlist
-    .filter((item) => (my_id !== user_id ? item.is_public : item))
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    .filter((item: Playlist) => (my_id !== user_id ? item.is_public : item))
+    .sort(
+      (a: Playlist, b: Playlist) =>
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+    );
 
   return (
     <S.ProfileWrap>

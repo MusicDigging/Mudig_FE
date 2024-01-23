@@ -1,4 +1,4 @@
-export const convertDatetime = (dateTime) => {
+export const convertDatetime = (dateTime: string) => {
   const date = new Date(dateTime);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -9,7 +9,7 @@ export const convertDatetime = (dateTime) => {
   return convertedDatetime;
 };
 
-export const checkDatetimeEqual = (time1, time2) => {
+export const checkDatetimeEqual = (time1: string, time2: string) => {
   // 두 시간의 초 단위(이후 소수점 무시)까지 비교, 같으면 true
   return time1.slice(0, 19) === time2.slice(0, 19);
 };
