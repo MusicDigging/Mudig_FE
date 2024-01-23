@@ -4,7 +4,25 @@ import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
 import { Link } from 'react-router-dom';
 
-function PlayListTable({ liSize, playlistData }) {
+interface PlaylistItem {
+  id: string; // 혹은 number
+  thumbnail: string;
+  title: string;
+}
+
+interface LiSize {
+  width: string;
+}
+
+interface PlayListTableProps {
+  liSize: LiSize;
+  playlistData: PlaylistItem[];
+}
+
+const PlayListTable: React.FC<PlayListTableProps> = ({
+  liSize,
+  playlistData,
+}) => {
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
@@ -32,7 +50,7 @@ function PlayListTable({ liSize, playlistData }) {
       </ul>
     </PlayListTableWrap>
   );
-}
+};
 // 기본 props 설정
 PlayListTable.defaultProps = {
   liSize: {
@@ -72,7 +90,7 @@ const PlayListTableWrap = styled.div`
   }
 `;
 
-const StyledListItem = styled.li`
+const StyledListItem = styled.li<{ liSize: LiSize }>`
   width: ${(props) => props.liSize?.width};
   p {
     white-space: nowrap;
@@ -85,12 +103,12 @@ const StyledListItem = styled.li`
   position: relative;
 `;
 
-const ImageBox = styled.div`
+const ImageBox = styled.div<{ liSize: LiSize }>`
   width: ${(props) => props.liSize?.width};
   height: ${(props) => props.liSize?.width};
   border-radius: 8px;
 `;
-const PlayIconImg = styled.img`
+const PlayIconImg = styled.img<{ liSize: LiSize }>`
   position: absolute;
   bottom: ${(props) =>
     0.17647 * parseInt(props.liSize.width, 10) - 12.32353 + 26}px;

@@ -4,7 +4,7 @@ import Logo from '../../../img/logo.svg';
 import SearchIcon from '../../../img/search-icon.svg';
 import { Link } from 'react-router-dom';
 
-function MainHeader() {
+function MainHeader(): JSX.Element {
   return (
     <MainHeaderWrap>
       <Link to={'/main'}>
