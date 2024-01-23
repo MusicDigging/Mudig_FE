@@ -46,15 +46,14 @@ export default function Login() {
 
     const hasScope = socialQuery.get('scope');
     //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
-    if ((result, hasScope)) {
+    if (result && hasScope) {
       sendCode(result, 'google');
-      //url에서 scope값이 없다면 send code post 요청시 social = 'kakako'로 설정
     } else if (result) {
       sendCode(result, 'kakao');
     }
   }, [navigate, isLogin]);
 
-  const sendCode = async (code, social) => {
+  const sendCode = async (code: string, social: string) => {
     try {
       let response;
       if (social === 'kakao') {
