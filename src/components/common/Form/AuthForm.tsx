@@ -8,6 +8,29 @@ import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
+
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+interface ILoginResponse {
+  user: {
+    id: number;
+    name: string;
+    about?: string;
+    genre: string;
+    email: string;
+    image?: string;
+    rep_playlist: null | any;
+  };
+  message: string;
+  token: {
+    access: string;
+    refresh: string;
+  };
+}
+
 export const AuthForm = () => {
   const navigate = useNavigate();
   const emailRegex = /^\S+@\S+\.\S+$/;
@@ -25,11 +48,10 @@ export const AuthForm = () => {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
-    onSuccess: (data) => {
+    onSuccess: (data: ILoginResponse) => {
       const { user, token } = data;
       const { id, email, name, image, genre, about, rep_playlist } = user;
       const { access, refresh } = token;
-
       setUserInfo({
         id,
         email,
@@ -53,12 +75,12 @@ export const AuthForm = () => {
     },
   });
 
-  const handleLogin = (data) => {
+  const handleLogin = (data: ILoginData) => {
     mutate(data);
   };
 
   const handleCheckboxChange = () => {
-    const checkbox = document.getElementById('checkbox');
+    const checkbox = document.getElementById('checkbox') as HTMLInputElement;
     if (checkbox) {
       const autoLogin = checkbox.checked;
       localStorage.setItem('autoLogin', autoLogin ? 'true' : 'false');

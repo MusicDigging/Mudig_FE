@@ -1,7 +1,8 @@
 import { atom, RecoilValue } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import { Music, Playlist } from '../types/playlist';
 
-import { UserInfo } from '../types/user';
+import { User } from '../types/user';
 
 const { persistAtom } = recoilPersist();
 
@@ -21,12 +22,41 @@ export const SignUpAtom = atom<{
   effects_UNSTABLE: [persistAtom],
 });
 
-export const PlayListAtom = atom<Record<string, any>>({
+interface PlaylistTypes {
+  playlist: Playlist;
+  music: Music[];
+}
+export const PlayListAtom = atom<PlaylistTypes>({
   key: 'PlayListAtom',
-  default: {},
+  default: {
+    playlist: {
+      id: 0,
+      like_count: 0,
+      like_playlist: false,
+      title: '',
+      content: '',
+      thumbnail: '',
+      genre: '',
+      is_active: false,
+      created_at: '',
+      updated_at: '',
+      is_public: true,
+      writer: 0,
+      music: [],
+    },
+    // music: {
+    //   id: 0,
+    //   information: '',
+    //   singer: '',
+    //   song: '',
+    //   thumbnail: '',
+    //   created_at: '',
+    // },
+    music: [],
+  },
 });
 
-export const userInfoAtom = atom<UserInfo | null>({
+export const userInfoAtom = atom<User | null>({
   key: 'userInfoAtom',
   default: null,
   effects_UNSTABLE: [persistAtom],

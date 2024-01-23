@@ -1,16 +1,19 @@
 import SearchInput from '../../components/Search/SearchInput';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+interface StoredKeyword {
+  id: number;
+  keyword: string;
+}
 export default function Search() {
   const navigate = useNavigate();
-  const [recentKeywords, setRecentKeywords] = useState(
-    JSON.parse(localStorage.getItem('recent_keywords')) || [],
-  );
+  const storedKeywords = localStorage.getItem('recent_keywords');
+  const initialKeywords = storedKeywords ? JSON.parse(storedKeywords) : [];
+  const [recentKeywords, setRecentKeywords] = useState(initialKeywords);
   const [inputValue, setInputValue] = useState('');
 
-  const SearchSubmit = (e) => {
+  const SearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue.length === 0) return;
     handleAddRecentKeyword(inputValue);
@@ -18,15 +21,15 @@ export default function Search() {
   };
 
   // 최근 검색어 추가
-  const handleAddRecentKeyword = (keyword) => {
+  const handleAddRecentKeyword = (keyword: string) => {
     const isKeywordExist = recentKeywords.some(
-      (item) => item.keyword === keyword,
+      (item: StoredKeyword) => item.keyword === keyword,
     );
     let updatedKeywords;
     // 이미 검색한 단어인 경우
     if (isKeywordExist) {
       updatedKeywords = recentKeywords.filter(
-        (item) => item.keyword !== keyword,
+        (item: StoredKeyword) => item.keyword !== keyword,
       );
     } else {
       updatedKeywords = recentKeywords;
@@ -40,8 +43,10 @@ export default function Search() {
     setRecentKeywords([newKeyword, ...updatedKeywords]);
   };
   // 최근 검색어 선택 삭제
-  const handleRemoveRecentKeyword = (id) => {
-    const nextKeywords = recentKeywords.filter((keyword) => keyword.id !== id);
+  const handleRemoveRecentKeyword = (id: number) => {
+    const nextKeywords = recentKeywords.filter(
+      (keyword: StoredKeyword) => keyword.id !== id,
+    );
     setRecentKeywords(nextKeywords);
   };
   // 최근 검색어 전체 삭제
@@ -56,8 +61,8 @@ export default function Search() {
   // 검색 페이지일 때 7일 이내 검색 기록만 남기도록 함
   useEffect(() => {
     const now = new Date().getTime();
-    const savedKeywords = recentKeywords.filter((keyword) => {
-      const createdTime = new Date(keyword.id);
+    const savedKeywords = recentKeywords.filter((keyword: StoredKeyword) => {
+      const createdTime = new Date(keyword.id).getTime();
       const diffTime = now - createdTime;
       const diffDays = diffTime / (1000 * 60 * 60 * 24);
       return diffDays <= 7;

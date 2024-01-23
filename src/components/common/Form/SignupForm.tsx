@@ -7,7 +7,17 @@ import usePasswordToggle from '../../../hooks/ussPasswordToggle';
 import { useState, useEffect } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 
-export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
+interface ISignupFormProps {
+  onSubmit: () => void;
+  onEmailToastMsg?: () => void;
+}
+
+interface IOtpResponse {
+  message: string;
+  otp: string;
+}
+
+export const SignupForm = ({ onSubmit, onEmailToastMsg }: ISignupFormProps) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const { mutate: postOtpValid } = useOtpValid();
@@ -15,6 +25,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
     defaultValues: {
       email: '',
       password: '',
+      otpNum: '',
     },
     mode: 'onBlur',
   });
@@ -46,7 +57,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
     }
     setIsEmailValidated(true);
     postOtpValid(watchEmail, {
-      onSuccess: (data) => {
+      onSuccess: (data: IOtpResponse) => {
         if (onEmailToastMsg) {
           onEmailToastMsg();
         }
@@ -98,7 +109,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }) => {
                 required: '인증번호가 오지 않으셨나요?',
                 // custom validate 사용 현재 필드 값과 otpNum 불일치시 '인증번호가 일치하지 않습니다.' 출력
                 validate: {
-                  comfirmOtp: (fieldValue) => {
+                  comfirmOtp: (fieldValue: string) => {
                     return (
                       fieldValue.trim() === otpNum ||
                       '인증번호가 일치하지 않습니다.'

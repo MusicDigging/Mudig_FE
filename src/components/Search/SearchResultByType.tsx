@@ -1,4 +1,4 @@
-import { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { CircleImage } from '../common/Image/Image';
@@ -6,8 +6,15 @@ import PlayListItem from '../common/PlayList/PlayListItem';
 import EmptySearch from './EmptySearch';
 import SearchResultTitle from './SearchResultTitle';
 import AddPlaylist from '../../img/add-video-icon.svg';
+import { SearchResult } from '../../types/searchResult';
+import { SearchNavProps } from './SearchNav';
 
-export default function SearchResultByType(props) {
+interface Props {
+  result: SearchResult;
+  currentNav: SearchNavProps;
+  handleAddPlaylist: (arg0: number) => void;
+}
+export default function SearchResultByType(props: Props) {
   const { result, currentNav, handleAddPlaylist } = props;
   const musicResult = result.search_music[0]?.music;
   const [type, setType] = useState('');
@@ -29,10 +36,10 @@ export default function SearchResultByType(props) {
                 img={item.playlist.thumbnail}
                 title={item.playlist.title}
                 info={
-                  item.writer.name ||
-                  (item.writer === '유저 정보 없음'
+                  typeof item.writer === 'string' &&
+                  item.writer === '유저 정보 없음'
                     ? '알 수 없는 사용자'
-                    : null)
+                    : item.writer.name
                 }
               />
             </Link>
@@ -71,17 +78,7 @@ export default function SearchResultByType(props) {
       </ul>
     );
   };
-  // useImperativeHandle(
-  //   ref,
-  //   () => {
-  //     return {
-  //       scrollIntoView: () => {
-  //         musicContentRef.current?.scrollIntoView({ behavior: 'smooth' });
-  //       },
-  //     };
-  //   },
-  //   [],
-  // );
+
   useEffect(() => {
     const SearchResultType = () => {
       if (result) {
@@ -165,7 +162,7 @@ const TabButtonBox = styled.div`
   min-width: 328px;
   background: #fff;
 `;
-const TabButton = styled.button`
+const TabButton = styled.button<{ active: boolean }>`
   width: 60px;
   border-radius: 20px;
   padding: 4px 0px;

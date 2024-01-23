@@ -1,13 +1,21 @@
 import styled from 'styled-components';
-import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import { CircleImage } from '../common/Image/Image';
 import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
 import SearchResultTitle from './SearchResultTitle';
 import AddPlaylist from '../../img/add-video-icon.svg';
+import { SearchResult } from '../../types/searchResult';
 
-export default function SearchResultAll(props) {
+interface Props {
+  result: SearchResult;
+  handleAddPlaylist: (arg0: number) => void;
+  handleNavPlaylist: React.MouseEventHandler;
+  handleNavMusic: React.MouseEventHandler;
+  handleNavUser: React.MouseEventHandler;
+}
+
+export default function SearchResultAll(props: Props) {
   const {
     result,
     handleAddPlaylist,
@@ -38,10 +46,10 @@ export default function SearchResultAll(props) {
                       img={item.playlist.thumbnail}
                       title={item.playlist.title}
                       info={
-                        item.writer.name ||
-                        (item.writer === '유저 정보 없음'
+                        typeof item.writer === 'string' &&
+                        item.writer === '유저 정보 없음'
                           ? '알 수 없는 사용자'
-                          : null)
+                          : item.writer.name
                       }
                     />
                   </Link>
