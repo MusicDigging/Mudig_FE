@@ -1,6 +1,11 @@
 import { axiosInstance } from './axiosInstance';
 
-export const loginUser = async (data) => {
+interface ILoginData {
+  email: string;
+  password: string;
+}
+
+export const loginUser = async (data: ILoginData) => {
   const response = await axiosInstance.post('/user/login/', {
     email: data.email,
     password: data.password,
@@ -19,7 +24,7 @@ export const getKakaoInfo = async () => {
   }
 };
 
-export const postUserCode = async (code, social) => {
+export const postUserCode = async (code: string, social: string) => {
   try {
     const response = await axiosInstance.post(
       `/user/login/${social}/callback/`,
