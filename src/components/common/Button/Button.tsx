@@ -81,8 +81,8 @@ const ButtonStyle = styled.button<IButtonStyleProps>`
 
 interface ChipButtonProps {
   name: string;
-  onSelect: (selectedChips: string[]) => void;
-  selectedChips: string[];
+  onSelect?: (selectedChips: string[]) => void;
+  selectedChips?: string[];
 }
 
 interface IToast {
@@ -94,20 +94,18 @@ export function ChipButton(props: ChipButtonProps) {
   const { name, onSelect, selectedChips } = props;
   const setToast = useSetRecoilState(toastAtom);
 
-  const isChipSelected = selectedChips.includes(name);
+  const isChipSelected = selectedChips?.includes(name);
 
   const handleClick = () => {
-    if (isChipSelected) {
+    if (selectedChips && onSelect && isChipSelected) {
       onSelect(selectedChips.filter((chipName) => chipName !== name));
+    } else if (selectedChips && onSelect && selectedChips.length < 3) {
+      onSelect([...selectedChips, name]);
     } else {
-      if (selectedChips.length < 3) {
-        onSelect([...selectedChips, name]);
-      } else {
-        setToast({
-          content: '관심사는 최대 3개까지 선택 가능합니다.',
-          type: 'warning',
-        });
-      }
+      setToast({
+        content: '관심사는 최대 3개까지 선택 가능합니다.',
+        type: 'warning',
+      });
     }
   };
 
@@ -121,12 +119,7 @@ export function ChipButton(props: ChipButtonProps) {
     </ChipButtonStyle>
   );
 }
-
-interface ChipButtonStyleProps {
-  clicked: boolean;
-}
-
-const ChipButtonStyle = styled.button<ChipButtonStyleProps>`
+const ChipButtonStyle = styled.button<{ clicked: boolean | undefined }>`
   height: 36px;
   font-size: 14px;
   border-radius: 20px;

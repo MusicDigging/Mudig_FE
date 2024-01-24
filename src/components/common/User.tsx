@@ -13,13 +13,13 @@ interface UserProps {
   onFollowClick: () => void; // onFollowClick 함수의 타입
 }
 
-const User: React.FC<UserProps> = ({
+export default function User({
   user,
   name,
   profilePicture,
   isFollowing,
   onFollowClick,
-}) => {
+}: UserProps) {
   const myInfo = useRecoilValue(userInfoAtom);
 
   const handleClick = () => {
@@ -52,9 +52,7 @@ const User: React.FC<UserProps> = ({
       )}
     </UserWrap>
   );
-};
-
-export default User;
+}
 
 interface FollowButtonProps {
   isFollowing: boolean;

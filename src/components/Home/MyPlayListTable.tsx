@@ -15,8 +15,9 @@ interface PlaylistItem {
 interface MyPlayListTableProps {
   playlistData: PlaylistItem[];
 }
-
-const MyPlayListTable: React.FC<MyPlayListTableProps> = ({ playlistData }) => {
+export default function MyPlayListTable({
+  playlistData,
+}: MyPlayListTableProps) {
   return (
     <MyPlayListTableWrap>
       <PlayListBox>
@@ -43,8 +44,8 @@ const MyPlayListTable: React.FC<MyPlayListTableProps> = ({ playlistData }) => {
       </PlayListBox>
     </MyPlayListTableWrap>
   );
-};
-export default MyPlayListTable;
+}
+
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
   background-color: transperate;

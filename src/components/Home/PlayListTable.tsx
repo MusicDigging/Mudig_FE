@@ -21,11 +21,10 @@ interface PlayListTableProps {
 interface PlayListTableWrapProps {
   liSize: LiSize;
 }
-
-const PlayListTable: React.FC<PlayListTableProps> = ({
+export default function PlayListTable({
   liSize,
   playlistData,
-}) => {
+}: PlayListTableProps) {
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
@@ -53,14 +52,13 @@ const PlayListTable: React.FC<PlayListTableProps> = ({
       </ul>
     </PlayListTableWrap>
   );
-};
+}
 // 기본 props 설정
 PlayListTable.defaultProps = {
   liSize: {
     width: '118px', // 기본 너비 설정
   },
 };
-export default PlayListTable;
 
 const PlayListTableWrap = styled.div<PlayListTableWrapProps>`
   ul {
