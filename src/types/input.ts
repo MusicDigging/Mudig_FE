@@ -10,7 +10,7 @@ export interface IInputProps {
 }
 
 export interface IValidation {
-  required: string;
+  required: boolean;
   pattern: {
     value: RegExp;
     message: string;
