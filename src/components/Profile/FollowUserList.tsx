@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import User from '../common/User';
 
 interface UserDataType {
-  id: string; // 혹은 number
-  name: string;
-  profilePicture: string;
-  isFollowing: boolean;
+  id: number;
+  nickname: string;
+  profile_image: string;
+  is_following: boolean;
 }
 
 interface FollowUserListProps {
@@ -28,9 +28,9 @@ const FollowUserList: React.FC<FollowUserListProps> = ({
         <User
           key={userData.id}
           user={userData.id}
-          name={userData.name}
-          profilePicture={userData.profilePicture}
-          isFollowing={userData.isFollowing}
+          name={userData.nickname}
+          profilePicture={userData.profile_image}
+          isFollowing={userData.is_following}
           onFollowClick={() => onFollowClick(userData)}
         />
       ))}

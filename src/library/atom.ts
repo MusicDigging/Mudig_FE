@@ -56,9 +56,21 @@ export const PlayListAtom = atom<PlaylistTypes>({
   },
 });
 
-export const userInfoAtom = atom<User | null>({
+export const userInfoAtom = atom<User>({
   key: 'userInfoAtom',
-  default: null,
+  default: {
+    id: 0,
+    email: '',
+    name: '',
+    image: '',
+    genre: '',
+    about: '',
+    rep_playlist: null,
+    token: {
+      access: '',
+      refresh: '',
+    },
+  },
   effects_UNSTABLE: [persistAtom],
 });
 

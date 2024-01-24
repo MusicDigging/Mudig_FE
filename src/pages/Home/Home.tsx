@@ -10,14 +10,29 @@ import Loading from '../../components/Loading/Loading';
 import NotFound from '../NotFound/NotFound';
 import { Link, useNavigate } from 'react-router-dom';
 
+interface HomeData {
+  liked_playlist: Playlist[];
+  my_playlist: Playlist[];
+  playlist_all: Playlist[];
+  recommend_pli: Playlist[];
+}
+
+interface Playlist {
+  id: string;
+  title: string;
+}
+
 export default function Home() {
   const { data, isLoading, error } = useGetHome();
   const userInfo = useRecoilValue(userInfoAtom);
   const navigate = useNavigate();
+
   if (isLoading) return <Loading isLoading={isLoading} />;
   if (error) return <NotFound />;
+
   const { liked_playlist, my_playlist, playlist_all, recommend_pli } = data;
-  const handleMoreClick = (playlistType, data) => {
+
+  const handleMoreClick = (playlistType: string, data: Playlist[]) => {
     navigate(
       `/main/${playlistType}?data=${encodeURIComponent(JSON.stringify(data))}`,
     );

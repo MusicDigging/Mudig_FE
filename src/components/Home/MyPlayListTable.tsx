@@ -44,7 +44,7 @@ const MyPlayListTable: React.FC<MyPlayListTableProps> = ({ playlistData }) => {
     </MyPlayListTableWrap>
   );
 };
-
+export default MyPlayListTable;
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
   background-color: transperate;

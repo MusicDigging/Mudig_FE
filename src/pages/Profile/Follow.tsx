@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FollowUserList from '../../components/Profile/FollowUserList';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   useGetFollowing,
   useGetFollower,
@@ -10,23 +10,31 @@ import {
 import { userInfoAtom } from '../../library/atom';
 import { useRecoilValue } from 'recoil';
 import useFollowUser from '../../hooks/queries/useFollow';
-import { useParams } from 'react-router-dom';
 import BGImg from '../../img/background-img2.svg';
+
+interface UserData {
+  id: number;
+  nickname: string;
+  profile_image: string;
+  is_following: boolean;
+}
 
 export default function Follow() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { id } = useParams();
+  const { id } = useParams() as { id: string };
   const myId = useRecoilValue(userInfoAtom).id;
 
-  const [activeList, setActiveList] = useState('followers');
+  const [activeList, setActiveList] = useState<'followers' | 'followings'>(
+    'followers',
+  );
   const [refreshData, setRefreshData] = useState(false);
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState<UserData[]>([]);
   const { data: followers, isLoading: followingLoading } = useGetFollower(
-    id || myId,
+    parseInt(id) || myId,
   );
   const { data: followings, isLoading: followerLoading } = useGetFollowing(
-    id || myId,
+    parseInt(id) || myId,
   );
 
   useEffect(() => {
@@ -45,8 +53,8 @@ export default function Follow() {
 
   const { followUser } = useFollowUser(); // 커스텀 훅 사용
 
-  const handleFollowClick = (user) => {
-    const isUnfollowing = user.isFollowing;
+  const handleFollowClick = (user: UserData) => {
+    const isUnfollowing = user.is_following;
     followUser(user.id, isUnfollowing, {
       onSuccess: () => {
         // 성공적으로 상태 변경 후 사용자 목록 업데이트
@@ -67,25 +75,33 @@ export default function Follow() {
     });
   };
 
-  const renderUserList = (data, listType, onFollowClick) => {
+  const renderUserList = (
+    data: UserData[],
+    listType: 'followers' | 'followings',
+    onFollowClick: (user: UserData) => void,
+  ) => {
     if (!Array.isArray(data) || data.length === 0) {
       return <p id='FollowNone'>앗! 아직 비어있어요</p>;
     }
     return (
       <FollowUserList
         users={data.map(transformUserData)}
-        listType={listType}
         onFollowClick={onFollowClick}
       />
     );
   };
 
-  const transformUserData = (userData) => ({
+  interface userDataProps {
+    id: number;
+    nickname: string;
+    profile_image: string;
+    is_following: boolean;
+  }
+  const transformUserData = (userData: userDataProps) => ({
     id: userData.id,
-    user: userData.nickname,
-    name: userData.nickname,
-    profilePicture: userData.profile_image,
-    isFollowing: userData.is_following,
+    nickname: userData.nickname,
+    profile_image: userData.profile_image,
+    is_following: userData.is_following,
   });
 
   return (
@@ -145,7 +161,7 @@ const ListToggleButtonWrap = styled.div`
   flex-grow: 1;
 `;
 
-const ListToggleButton = styled.button`
+const ListToggleButton = styled.button<{ active: boolean }>`
   flex: 1;
   padding: 8px 16px;
   border-bottom: 2px solid transparent;

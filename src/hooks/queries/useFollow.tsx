@@ -31,12 +31,16 @@ const useFollowUser = () => {
   );
 
   // followUser 함수에 타입 지정
-  const followUser = (userId: string, isFollowing: boolean) => {
+  const followUser = (
+    userId: number,
+    isFollowing: boolean,
+    options: {
+      onSuccess?: () => void;
+    },
+  ) => {
     const action = isFollowing ? delFollow.mutate : postFollow.mutate;
-    action(userId);
+    action(userId.toString(), options);
   };
-
   return { followUser };
 };
-
 export default useFollowUser;
