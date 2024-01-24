@@ -1,12 +1,17 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import SuccessIcon from '../../img/success-icon.svg';
 import ErrorIcon from '../../img/error-icon.svg';
 import WarningIcon from '../../img/warning-icon.svg';
 
-export default function Toast({ setToast, text, type }) {
-  let timer;
+interface Props {
+  setToast: any;
+  text: string;
+  type: 'success' | 'error' | 'warning';
+}
+export default function Toast({ setToast, text, type }: Props) {
+  let timer: NodeJS.Timeout;
   const handleAnimationComplete = () => {
     timer = setTimeout(() => {
       setToast(false);
@@ -49,7 +54,7 @@ const ToastWrap = styled.div`
   z-index: 10;
   width: 94%;
 `;
-const ToastBox = styled(motion.div)`
+const ToastBox = styled(motion.div)<{ type: 'success' | 'error' | 'warning' }>`
   width: 100%;
   min-width: 334px;
   display: flex;

@@ -1,4 +1,8 @@
-import axios from 'axios';
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from 'axios';
 
 const BASE_URL = 'https://api.mudig.co.kr';
 
@@ -7,7 +11,7 @@ const baseConfig = {
   headers: { 'Content-Type': 'application/json' },
 };
 
-const onRequest = (config) => {
+const onRequest = (config: InternalAxiosRequestConfig) => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers = config.headers || {};
@@ -16,11 +20,11 @@ const onRequest = (config) => {
   return config;
 };
 
-const onResponseError = async (error) => {
+const onResponseError = async (error: AxiosError) => {
   // console.log('토큰 만료');
-  const originalRequest = error.config;
+  const originalRequest = error.config as AxiosRequestConfig;
   const isAutoLogin = localStorage.getItem('autoLogin');
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     const refreshToken = localStorage.getItem('refreshToken');
 
     if (refreshToken) {
@@ -37,7 +41,7 @@ const onResponseError = async (error) => {
         localStorage.setItem('token', newAccessToken);
         console.log(response.data);
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers!.Authorization = `Bearer ${newAccessToken}`;
         // console.log('토큰 교체 완료');
 
         return axios(originalRequest);
