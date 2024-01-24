@@ -39,7 +39,19 @@ export default function UserLeaveForm() {
     userResign(password, {
       onSuccess: (data) => {
         setIsLogin(false);
-        setUserInfo(null);
+        setUserInfo({
+          id: 0,
+          email: '',
+          name: '',
+          image: '',
+          genre: '',
+          about: '',
+          rep_playlist: null,
+          token: {
+            access: '',
+            refresh: '',
+          },
+        });
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         setToast({ content: '회원탈퇴가 완료되었습니다.', type: 'success' });
