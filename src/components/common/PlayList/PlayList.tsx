@@ -3,7 +3,13 @@ import styled from 'styled-components';
 
 import PlayListItem from './PlayListItem';
 
-export default function PlayList(props) {
+interface Props {
+  children: React.ReactNode;
+  innerRef?: any;
+  droppableProps?: any;
+}
+
+export default function PlayList(props: Props) {
   const { children, innerRef, droppableProps } = props;
   return (
     <PlayListWrap ref={innerRef} {...droppableProps}>

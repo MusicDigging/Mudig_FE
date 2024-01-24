@@ -2,19 +2,29 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
-export default function MusicPlayer(props) {
+import { Music } from '../../types/playlist';
+
+interface Props {
+  pause: boolean;
+  setPause: React.Dispatch<React.SetStateAction<boolean>>;
+  musicList: string[];
+  currMusic: number | null;
+  setCurrMusic: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+export default function MusicPlayer(props: Props) {
   const { pause, setPause, musicList, currMusic, setCurrMusic } = props; // 상위 컴포넌트에 playing, setPlaying true로 정의
-  const playerRef = useRef(null);
+  const playerRef = useRef<ReactPlayer>(null);
   const [ready, setReady] = useState(false);
   const [played, setPlayed] = useState(0);
   const [duration, setDuration] = useState(0);
 
   const onEnded = () => {
     if (currMusic === musicList.length - 1) setReady(false);
-    else setCurrMusic((prev) => prev + 1);
+    else setCurrMusic((prev: number | null) => prev && prev + 1);
   };
 
-  function formatTime(seconds) {
+  function formatTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     seconds = Math.floor(seconds % 60);
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
@@ -24,7 +34,7 @@ export default function MusicPlayer(props) {
     <>
       <MusicPlayerWrap>
         <ReactPlayer
-          url={musicList[currMusic]} // 링크 배열로 삽입 가능(종료 시 onEnded없이도 자동으로 다음 인덱스의 링크 재생)
+          url={currMusic !== null ? musicList[currMusic] : ''}
           ref={playerRef}
           className='player'
           playing={!pause} // 재생 상태, true - 재생중 / false - 일시 중지
@@ -47,10 +57,12 @@ export default function MusicPlayer(props) {
               max='0.999999'
               step='any'
               value={played}
-              style={{ '--progress': `${played * 100}%` }}
+              style={
+                { '--progress': `${played * 100}%` } as React.CSSProperties
+              }
               onChange={(e) => {
                 setPlayed(parseFloat(e.target.value));
-                playerRef.current.seekTo(parseFloat(e.target.value));
+                playerRef.current?.seekTo(parseFloat(e.target.value));
               }}
             />
             <time dateTime='P1S'>{formatTime(duration)}</time>

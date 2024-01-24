@@ -24,6 +24,7 @@ const NotFound: React.FC = () => {
 };
 export default NotFound;
 
+export default NotFound;
 const NotFoundWrap = styled.div`
   height: 100%;
   background: url(${BGImg}) top left / cover no-repeat;

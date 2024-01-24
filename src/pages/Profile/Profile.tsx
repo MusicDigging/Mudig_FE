@@ -58,7 +58,7 @@ export default function Profile() {
 
   if (profileError || followingError || followerError) {
     navigate('/*');
-    return;
+    // return;
   }
 
   const repPlaylist = profileData.playlist.filter(

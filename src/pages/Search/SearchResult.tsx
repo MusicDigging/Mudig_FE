@@ -8,6 +8,7 @@ import { useSearch } from '../../hooks/queries/useSearch';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import AddModal from '../../components/common/Modal/AddModal';
+import Loading from '../../components/Loading/Loading';
 
 export default function SearchResult() {
   const { keyword } = useParams() as { keyword: string };
@@ -41,7 +42,7 @@ export default function SearchResult() {
     setCurrentNav({ all: true, playlist: false, music: false, user: false });
   }, [keyword]);
 
-  if (isLoading) return;
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -68,6 +69,7 @@ export default function SearchResult() {
     </>
   );
 }
+
 const SearchResultBox = styled.div`
   position: relative;
   height: calc(100% - 89px);
