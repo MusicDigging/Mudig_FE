@@ -34,12 +34,25 @@ export default function UserLeaveForm() {
   const { isValid, errors } = formState;
   const password = getValues('password');
   const passwordError = errors['password'] as FieldValues['password'];
+  const reset = {
+    id: 0,
+    email: '',
+    name: '',
+    image: '',
+    genre: '',
+    about: '',
+    rep_playlist: null,
+    token: {
+      access: '',
+      refresh: '',
+    },
+  };
 
   const handleResign = () => {
     userResign(password, {
       onSuccess: (data) => {
         setIsLogin(false);
-        setUserInfo(null);
+        setUserInfo(reset);
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         setToast({ content: '회원탈퇴가 완료되었습니다.', type: 'success' });
