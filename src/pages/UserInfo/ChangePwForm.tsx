@@ -27,6 +27,7 @@ export default function ChangePwForm() {
       email: userEmail,
       password: '',
       newPassword: '',
+      confirmPassword: '',
     },
 
     mode: 'onBlur',
@@ -35,7 +36,7 @@ export default function ChangePwForm() {
   const { formState, setError, watch, getValues } = methods;
   const { isValid } = formState;
 
-  const handlePasswordSubmit = (data) => {
+  const handlePasswordSubmit = (data: IFormData) => {
     changePassword(data, {
       onSuccess: (data) => {
         setToast({
@@ -43,11 +44,22 @@ export default function ChangePwForm() {
           type: 'success',
         });
         setIsLogin(false);
-        setUserInfo(null);
+        setUserInfo({
+          id: 0,
+          email: '',
+          name: '',
+          image: '',
+          genre: '',
+          about: '',
+          rep_playlist: null,
+          token: {
+            access: '',
+            refresh: '',
+          },
+        });
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         navigate('/login');
-        // console.log(data);
       },
       onError: (error) => {
         console.error('비밀번호 변경 실패', error);
@@ -140,7 +152,7 @@ export default function ChangePwForm() {
           <Button
             text='변경'
             type='submit'
-            onSubmit={handlePasswordSubmit}
+            onClick={() => handlePasswordSubmit(getValues())}
             disabled={!isValid}
           ></Button>
         </ButtonBox>

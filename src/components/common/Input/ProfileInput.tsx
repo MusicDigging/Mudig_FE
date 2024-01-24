@@ -1,11 +1,28 @@
-import React, { ReactHTMLElement, useState } from 'react';
+import React, { ReactHTMLElement, ReactElement, useState } from 'react';
 import styled from 'styled-components';
-import { debounce } from 'lodash';
+import { debounce, DebouncedFunc } from 'lodash';
 import { Button, ChipButton } from '../Button/Button';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
-export default function ProfileInput(props) {
+import { IUserProfileData } from '../../../types/profile';
+import { Profile } from '../../../types/profile';
+
+interface IProfileInputProps {
+  profile: Profile | undefined;
+  btnText: string;
+  onSubmit: SubmitHandler<IUserProfileData>;
+  onChipSelect?: (newSelectedChips: string[]) => void;
+  children?: ReactElement;
+}
+
+interface FormValue {
+  nickName: string;
+  about: string;
+  genre: string;
+}
+
+export default function ProfileInput(props: IProfileInputProps): ReactElement {
   const { profile, btnText, onSubmit, onChipSelect, children } = props;
 
   const [nickNameCount, setNickNameCount] = useState(profile?.name.length || 0);
@@ -17,7 +34,7 @@ export default function ProfileInput(props) {
     setValue,
     control,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<FormValue>({
     defaultValues: {
       nickName: profile?.name || '',
       about: profile?.about || '',
@@ -27,7 +44,7 @@ export default function ProfileInput(props) {
     // /resolver를 사용하면 비동기적인 검증이 필요한 경우에도 쉽게 처리할 수 있다.
     // resolver 함수 내에서 async/await를 사용하여 비동기 작업을 수행하고, 검증 결과에 따라 폼을 유효하거나 유효하지 않은 상태로 설정할 수 있다.
     resolver: async (data) => {
-      const errors = {};
+      const errors: Record<string, { type: string; message: string }> = {};
       try {
         //닉네임 값이 없을 시
         if (!data.nickName) {
@@ -48,7 +65,7 @@ export default function ProfileInput(props) {
         }
       } catch (error) {
         console.error(error);
-        const errorMessage = error.response?.data?.error;
+        const errorMessage = '이미 사용 중인 닉네임 입니다';
         errors.nickName = { type: 'custom', message: errorMessage }; //중복검사 실패시 실패 메시지
       }
 
@@ -60,7 +77,7 @@ export default function ProfileInput(props) {
     profile ? profile.genre.split(',') : [],
   );
 
-  const handleChipSelect = (newSelectedChips) => {
+  const handleChipSelect = (newSelectedChips: string[]) => {
     setSelectedChips(newSelectedChips);
 
     //콜백함수로 onChipSelect props (관심사) 값 업데이트
@@ -70,7 +87,7 @@ export default function ProfileInput(props) {
   };
 
   const handleNickNameLengthChange = async (
-    event: React.ChangeEvent<HTMLSelectElement>,
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     let value = event.target.value;
     value = value.slice(0, 8);
@@ -78,9 +95,11 @@ export default function ProfileInput(props) {
 
     setValue('nickName', value, { shouldValidate: true });
   };
-  //loadsh 사용하여 닉네임 Onchange debounce 적용
-  const handleNickNameChecked = debounce(handleNickNameLengthChange, 1000);
 
+  // Explicitly define the type of the debounced function
+  const handleNickNameChecked: DebouncedFunc<
+    (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+  > = debounce(handleNickNameLengthChange, 1000);
   return (
     <FormWrap onSubmit={handleSubmit(onSubmit)}>
       <div>
@@ -92,6 +111,7 @@ export default function ProfileInput(props) {
                 required: '닉네임을 입력해주세요.',
                 maxLength: {
                   value: 8,
+                  message: '닉네임은 최대 8글자까지 입력 가능합니다.',
                 },
               })}
               placeholder='8글자 내로 작성해주세요'
