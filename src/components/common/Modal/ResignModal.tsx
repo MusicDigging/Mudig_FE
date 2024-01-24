@@ -3,8 +3,14 @@ import styled from 'styled-components';
 import warningIcon from '../../../img/warning-red-icon.svg';
 import { useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
-
-export default function ResignModal({ handleResign }) {
+interface HandleResignFunction {
+  (): void;
+}
+export default function ResignModal({
+  handleResign,
+}: {
+  handleResign: HandleResignFunction;
+}) {
   const setModalOpen = useSetRecoilState(modalAtom);
 
   return (
