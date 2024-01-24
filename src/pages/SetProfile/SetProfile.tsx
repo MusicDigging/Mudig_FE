@@ -14,15 +14,8 @@ import BasicProfileImage from '../../img/basic-profile-img.svg';
 // import { postUserProfile } from '../../library/apis/api';
 import { useUserProfile } from '../../hooks/queries/useUserInfo';
 import Toast from '../../components/common/Toast';
+import { IUserProfileData } from '../../types/profile';
 
-interface IUserProfileData {
-  email: string;
-  nickName: string;
-  about?: string;
-  genre: string[];
-  password?: string;
-  image?: string;
-}
 export default function SetProfile() {
   const navigate = useNavigate();
 

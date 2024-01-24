@@ -15,7 +15,7 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
 import React from 'react';
-
+import { IUserProfileData } from '../../types/profile';
 export default function EditProfile() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,10 +37,9 @@ export default function EditProfile() {
 
   const { mutate: editProfile } = useEditProfile();
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: IUserProfileData) => {
     const formData = new FormData();
     const genreArr = genre.join(',');
-
     formData.append('name', data.nickName);
     formData.append('about', data.about);
     formData.append('genre', genreArr);

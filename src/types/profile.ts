@@ -19,6 +19,16 @@ export interface Profile {
   image: string;
 }
 
+export interface IUserProfileData {
+  email?: string;
+  password?: string;
+  nickName: string;
+  about: string;
+  genre: string;
+  rep_playlist?: string | null;
+  image?: File | null;
+}
+
 export interface Follow {
   id: number;
   profile_image: string;
