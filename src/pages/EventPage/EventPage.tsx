@@ -71,3 +71,4 @@ const EventPage: React.FC = () => {
     </S.EventPageWrap>
   );
 };
+export default EventPage;
