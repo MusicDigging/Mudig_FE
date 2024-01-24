@@ -33,8 +33,8 @@ const useFollowUser = () => {
   // followUser 함수에 타입 지정
   const followUser = (
     userId: number,
-    isFollowing: boolean,
-    options: {
+    isFollowing: boolean | null,
+    options?: {
       onSuccess?: () => void;
     },
   ) => {

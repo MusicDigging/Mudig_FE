@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
 
-import { FormData, Profile } from '../../types/profile';
+import { FormDataType, Profile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
 import { useMyPlayList } from '../../hooks/queries/usePlaylist';
@@ -37,7 +37,7 @@ export default function EditProfile() {
 
   const { mutate: editProfile } = useEditProfile();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: FormDataType) => {
     const formData = new FormData();
     const genreArr = genre.join(',');
 

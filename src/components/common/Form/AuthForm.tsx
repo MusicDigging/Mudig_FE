@@ -18,10 +18,10 @@ interface ILoginResponse {
   user: {
     id: number;
     name: string;
-    about?: string;
+    about: string;
     genre: string;
     email: string;
-    image?: string;
+    image: string;
     rep_playlist: null | any;
   };
   message: string;

@@ -21,7 +21,7 @@ export default function SearchResult() {
     user: false,
   });
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-  const [musicId, setMusicId] = useState<number | null>(null);
+  const [musicId, setMusicId] = useState<number>(0);
 
   const handleAddPlaylist = (musicId: number) => {
     setMusicId(musicId);
@@ -46,7 +46,7 @@ export default function SearchResult() {
 
   return (
     <>
-      {modalOpen && <AddModal videoId={musicId} />}
+      {modalOpen && <AddModal videoId={musicId.toString()} />}
       <SearchNav currentNav={currentNav} setCurrentNav={setCurrentNav} />
       <SearchResultBox>
         {currentNav.all && (

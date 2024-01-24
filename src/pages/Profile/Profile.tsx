@@ -8,7 +8,6 @@ import {
   useGetFollower,
 } from '../../hooks/queries/useProfile';
 import { Playlist } from '../../types/playlist';
-import { Profile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 
 import Toast from '../../components/common/Toast';

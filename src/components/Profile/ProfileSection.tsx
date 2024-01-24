@@ -7,7 +7,6 @@ import { isLoginAtom } from '../../library/atom';
 import { userInfoAtom } from '../../library/atom';
 import { ProfileData } from '../../types/profile';
 import { useLogout } from '../../hooks/queries/useProfile';
-import { UserInfo } from '../../types/user';
 
 import ProfileImage from '../common/Image/ProfileImage';
 import useFollowUser from '../../hooks/queries/useFollow';
@@ -56,7 +55,19 @@ export default function ProfileSection(props: Props) {
     logout(undefined, {
       onSuccess: (res) => {
         alert('로그아웃 되었습니다.');
-        setUserInfo(null);
+        setUserInfo({
+          id: 0,
+          email: '',
+          name: '',
+          image: '',
+          genre: '',
+          about: '',
+          rep_playlist: null,
+          token: {
+            access: '',
+            refresh: '',
+          },
+        });
         setIsLogin(false); // 로그인 상태를 false로 설정합니다.
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
