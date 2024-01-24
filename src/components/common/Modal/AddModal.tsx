@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { Button } from '../Button/Button';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { toastAtom } from '../../../library/atom';
-import Toast from '../Toast';
 import closeIcon from '../../../img/close-icon.svg';
 import { useSetRecoilState } from 'recoil';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
-
 import {
   useMyPlayList,
   usePutMyPlayList,
@@ -24,7 +22,6 @@ interface ModalProps {
   videoId: string;
 }
 
-import React from 'react';
 export default function AddModal({ videoId }: ModalProps) {
   const navigate = useNavigate();
   const { data } = useMyPlayList();
@@ -96,7 +93,7 @@ export default function AddModal({ videoId }: ModalProps) {
 
   const handleSubmit = () => {
     const playlist_id = selectedPlaylistId; //담을 플리
-    const music = parseInt(videoId); //선택한 음악
+    const music = String(videoId); //선택한 음악
     const data = { playlist_id, music };
     // console.log(data);
     putMyPlayList(data, {

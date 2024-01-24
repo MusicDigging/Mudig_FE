@@ -21,9 +21,9 @@ interface LikePlaylistReq {
   playlist_id: number;
 }
 
-interface AddPlaylistReq {
+interface AddMVPlaylistReq {
   playlist_id: number;
-  music: number;
+  music: string;
 }
 
 export const useCreatePlaylist = () => {
@@ -65,7 +65,7 @@ export const useMyPlayList = () => {
 };
 
 export const usePutMyPlayList = () => {
-  const putMyPlayList = async (data: AddPlaylistReq) => {
+  const putMyPlayList = async (data: AddMVPlaylistReq) => {
     const response = await privateInstance.put('/playlist/add/', {
       playlist_id: data.playlist_id,
       music: data.music, //랜덤뮤비 아이디 값은 문자열로!
