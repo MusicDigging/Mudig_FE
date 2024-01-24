@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactHTMLElement, useState } from 'react';
 import styled from 'styled-components';
 import { debounce } from 'lodash';
 import { Button, ChipButton } from '../Button/Button';
@@ -69,7 +69,9 @@ export default function ProfileInput(props) {
     }
   };
 
-  const handleNickNameLengthChange = async (event) => {
+  const handleNickNameLengthChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     let value = event.target.value;
     value = value.slice(0, 8);
     setNickNameCount(value.length);

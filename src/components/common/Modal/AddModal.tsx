@@ -9,16 +9,23 @@ import { useSetRecoilState } from 'recoil';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
-import {
-  SuccessToast,
-  ErrorToast,
-} from '../../../library/sweetAlert/sweetAlert';
+
 import {
   useMyPlayList,
   usePutMyPlayList,
 } from '../../../hooks/queries/usePlaylist';
+
+interface IPlaylist {
+  id: number;
+  title: string;
+}
+
+interface ModalProps {
+  videoId: string;
+}
+
 import React from 'react';
-export default function AddModal({ videoId }) {
+export default function AddModal({ videoId }: ModalProps) {
   const navigate = useNavigate();
   const { data } = useMyPlayList();
   const { mutate: putMyPlayList } = usePutMyPlayList();
@@ -26,11 +33,11 @@ export default function AddModal({ videoId }) {
   const setToast = useSetRecoilState(toastAtom);
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  const [selectedPlaylist, setSelectedPlaylist] = useState('');
   const [arrowRotation, setArrowRotation] = useState(90);
   const modalRef = useRef(null);
   //선택한 플레이리스트 아이디
-  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(0);
   //플레이리스트 존재유무
   const isPlaylistAvailable =
     data && data.myplaylist && data.myplaylist.length > 0;
@@ -52,7 +59,7 @@ export default function AddModal({ videoId }) {
   const handleMakePlaylist = () => {
     navigate('/playlist/create1');
   };
-  const handleSelectPlaylist = (title, id) => {
+  const handleSelectPlaylist = (title: string, id: number) => {
     setSelectedPlaylist(title);
     setSelectedPlaylistId(id);
 
@@ -64,26 +71,28 @@ export default function AddModal({ videoId }) {
   };
 
   // 모달창 외부 클릭시 모달 닫기 & esc 모달창 닫기  키보드 이벤트 추가
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      // event target이 modalRef안에서 일어나지 않은 경우
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        handleClose();
-      }
-    };
-    const handleKeyDown = (event) => {
-      if (event.key === 'Escape') {
-        handleClose();
-      }
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('mousedown', handleOutsideClick);
+  // useEffect(() => {
+  //   const handleOutsideClick = (
+  //     event: React.KeyboardEvent<HTMLInputElement>,
+  //   ) => {
+  //     // event target이 modalRef안에서 일어나지 않은 경우
+  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
+  //       handleClose();
+  //     }
+  //   };
+  //   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //     if (event.key === 'Escape') {
+  //       handleClose();
+  //     }
+  //   };
+  //   document.addEventListener('keydown', handleKeyDown);
+  //   document.addEventListener('mousedown', handleOutsideClick);
 
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener('keydown', handleKeyDown);
+  //     document.removeEventListener('mousedown', handleOutsideClick);
+  //   };
+  // }, []);
 
   const handleSubmit = () => {
     const playlist_id = selectedPlaylistId; //담을 플리
@@ -120,7 +129,7 @@ export default function AddModal({ videoId }) {
             <p>{selectedPlaylist}</p>
             {isDropdownOpen && data.myplaylist && (
               <PlaylistDropdown ref={dropdownRef}>
-                {data.myplaylist.map((playlist, index) => (
+                {data.myplaylist.map((playlist: IPlaylist, index: number) => (
                   <li
                     key={index}
                     onClick={() =>

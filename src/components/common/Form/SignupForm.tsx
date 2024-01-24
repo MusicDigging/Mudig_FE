@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 
 interface ISignupFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: { email: string; password: string }) => void;
   onEmailToastMsg?: () => void;
 }
 
@@ -91,7 +91,6 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: ISignupFormProps) => {
                 placeholder='이메일'
                 type='text'
                 name='email'
-                showTimeText={showTimeText}
               />
             </Box>
             <Button

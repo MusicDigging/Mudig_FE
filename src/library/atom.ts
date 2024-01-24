@@ -1,7 +1,10 @@
 import { atom, RecoilValue } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { Music, Playlist } from '../types/playlist';
-import { User } from '../types/user';
+
+
+import { ISignup, User } from '../types/user';
+
 
 const { persistAtom } = recoilPersist();
 export interface Toast {
@@ -61,6 +64,16 @@ export const userInfoAtom = atom<User>({
       access: '',
       refresh: '',
     },
+  },
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const signUpInfoAtom = atom<ISignup>({
+  key: 'signUpInfoAtom',
+  default: {
+    email: '',
+    password: '',
+    type: '',
   },
   effects_UNSTABLE: [persistAtom],
 });

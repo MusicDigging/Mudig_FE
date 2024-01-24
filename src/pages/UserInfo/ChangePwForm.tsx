@@ -13,10 +13,15 @@ import {
   changePassworrdModal,
 } from '../../library/sweetAlert/sweetAlert';
 import { useNavigate } from 'react-router-dom';
-
+interface IFormData {
+  email?: string;
+  password: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 export default function ChangePwForm() {
   const navigate = useNavigate();
-  const userEmail = useRecoilValue(userInfoAtom).email;
+  const userEmail = useRecoilValue(userInfoAtom)?.email;
   const { mutate: changePassword } = useChangePassword();
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
@@ -25,6 +30,8 @@ export default function ChangePwForm() {
   const methods = useForm({
     defaultValues: {
       email: userEmail,
+      password: '',
+      newPassword: '',
     },
 
     mode: 'onBlur',
@@ -41,7 +48,7 @@ export default function ChangePwForm() {
           type: 'success',
         });
         setIsLogin(false);
-        setUserInfo({});
+        setUserInfo(null);
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         navigate('/login');
@@ -88,7 +95,7 @@ export default function ChangePwForm() {
                   '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
               },
               validate: {
-                comfirmPw: (fieldValue) => {
+                comfirmPw: (fieldValue: string) => {
                   const oldPassword = watch('password');
 
                   if (fieldValue === oldPassword) {
@@ -116,7 +123,7 @@ export default function ChangePwForm() {
                   '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
               },
               validate: {
-                comfirmPw: (fieldValue) => {
+                comfirmPw: (fieldValue: string) => {
                   return (
                     fieldValue == watch('newPassword') ||
                     '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. '

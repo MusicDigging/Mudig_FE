@@ -3,7 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import hideEye from '../../../img/hidePw-icon.svg';
 import showEye from '../../../img/showPw-Icon.svg';
-export const SignupInput = (props) => {
+import { IInputProps } from '../../../types/input';
+export const SignupInput = (props: IInputProps) => {
   const {
     placeholder,
     type,
@@ -12,8 +13,7 @@ export const SignupInput = (props) => {
     showPassword,
     toggleShowPassword,
     btnWidth,
-    marginBottom,
-    showTimeText,
+
     // onValidationSuccess,
   } = props;
   const {
@@ -33,12 +33,10 @@ export const SignupInput = (props) => {
           autoComplete='off'
           id={name}
           name={name}
-          marginBottom={marginBottom}
           style={{
             width: btnWidth || '100%',
           }}
         />
-        {showTimeText && <TimeText>05:00</TimeText>}
 
         <EyeIcon onClick={toggleShowPassword}>
           {type === 'password' && name !== 'confirmPassword' && (
@@ -69,15 +67,6 @@ const InputStyle = styled.input`
   border: 1px solid lightgray;
   padding-left: 16px;
   position: relative;
-`;
-
-const TimeText = styled.span`
-  color: var(--error-color);
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  font-size: 12px;
 `;
 
 const EyeIcon = styled.span`
