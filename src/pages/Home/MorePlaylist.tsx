@@ -10,9 +10,6 @@ import NotFound from '../NotFound/NotFound';
 type PlaylistType = 'recommend' | 'hot' | 'new';
 
 // playlistData의 구조에 대한 타입 정의 (예시)
-interface PlaylistData {
-  // 데이터 구조에 맞게 타입을 정의합니다.
-}
 
 export default function MorePlaylist() {
   const navigate = useNavigate();
@@ -20,9 +17,7 @@ export default function MorePlaylist() {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const data = query.get('data');
-  const playlistData: PlaylistData = data
-    ? JSON.parse(decodeURIComponent(data))
-    : null; // JSON.parse에 대한 타입 지정
+  const playlistData = data ? JSON.parse(decodeURIComponent(data)) : null; // JSON.parse에 대한 타입 지정
   const userInfo = useRecoilValue(userInfoAtom);
 
   // 데이터 불러오기 또는 컴포넌트 선택을 위한 로직

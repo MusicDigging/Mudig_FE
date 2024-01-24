@@ -33,7 +33,7 @@ const Splash: React.FC = () => {
     </SplashWrap>
   );
 };
-
+export default Splash;
 const SplashWrap = styled.div`
   max-width: 430px;
   @keyframes waveHand {

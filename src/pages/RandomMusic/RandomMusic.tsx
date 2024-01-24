@@ -7,7 +7,7 @@ import AddModal from '../../components/common/Modal/AddModal';
 import { useRandomMv } from '../../hooks/queries/useRandomMv';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
-import { InfoToast } from '../../library/sweetAlert/sweetAlert';
+
 import { IVideoData } from '../../types/RandomMv';
 import Toast from '../../components/common/Toast';
 import { toastAtom } from '../../library/atom';
@@ -73,12 +73,6 @@ export default function RandomMusic() {
 
     if (targetRef.current) {
       observer.observe(targetRef.current);
-    } else if (!isEnd) {
-      // 더 이상 데이터가 없는 경우
-      InfoToast.fire({
-        icon: 'info',
-        title: '더 이상 보여줄 뮤비 정보가 없습니다!',
-      });
     }
 
     return () => {

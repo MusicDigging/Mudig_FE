@@ -7,11 +7,6 @@ import usePasswordToggle from '../../hooks/ussPasswordToggle';
 import { isLoginAtom, toastAtom, userInfoAtom } from '../../library/atom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
-
-import {
-  showCustomModal,
-  changePassworrdModal,
-} from '../../library/sweetAlert/sweetAlert';
 import { useNavigate } from 'react-router-dom';
 interface IFormData {
   email?: string;
