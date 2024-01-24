@@ -7,25 +7,21 @@ import Logo from '../../img/icon_splash_logo.svg';
 import Mudig from '../../img/icon_splash_mudig.svg';
 import MudigHand from '../../img/icon_splash_mudig_hand.svg';
 
-export default function Splash() {
+const Splash: React.FC = () => {
   const navigate = useNavigate();
-  const isLoggedIn = useRecoilValue(isLoginAtom); // Recoil에서 로그인 상태 가져오기
+  const isLoggedIn = useRecoilValue(isLoginAtom);
 
   useEffect(() => {
-    // 3초 후에 실행될 함수
     const timer = setTimeout(() => {
       if (isLoggedIn) {
-        // 로그인 상태라면 메인 페이지로 이동
         navigate('/main');
       } else {
-        // 로그인 상태가 아니라면 로그인 페이지로 이동
         navigate('/login');
       }
-    }, 3000); // 3초 대기
+    }, 3000);
 
-    // 컴포넌트 언마운트 시 타이머 제거
     return () => clearTimeout(timer);
-  }, [isLoggedIn, navigate]); // 의존성 배열에 포함된 변수들
+  }, [isLoggedIn, navigate]);
 
   return (
     <SplashWrap>
@@ -36,7 +32,7 @@ export default function Splash() {
       </MudigBox>
     </SplashWrap>
   );
-}
+};
 
 const SplashWrap = styled.div`
   max-width: 430px;

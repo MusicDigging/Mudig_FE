@@ -1,19 +1,28 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { userInfoAtom } from '../../library/atom';
 import * as S from './HomeStyle';
 import MyPlayListTable from '../../components/Home/MyPlayListTable';
 import NotFound from '../NotFound/NotFound';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+
+// playlistType의 타입 정의
+type PlaylistType = 'recommend' | 'hot' | 'new';
+
+// playlistData의 구조에 대한 타입 정의 (예시)
+interface PlaylistData {
+  // 데이터 구조에 맞게 타입을 정의합니다.
+}
 
 export default function MorePlaylist() {
   const navigate = useNavigate();
-  const { playlistType } = useParams(); // 여기에서 playlistType은 'recommend', 'hot', 'new' 중 하나가 될 것입니다.
+  const { playlistType } = useParams<{ playlistType: PlaylistType }>(); // useParams 타입 지정
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const data = query.get('data');
-  const playlistData = data ? JSON.parse(decodeURIComponent(data)) : null;
+  const playlistData: PlaylistData = data
+    ? JSON.parse(decodeURIComponent(data))
+    : null; // JSON.parse에 대한 타입 지정
   const userInfo = useRecoilValue(userInfoAtom);
 
   // 데이터 불러오기 또는 컴포넌트 선택을 위한 로직

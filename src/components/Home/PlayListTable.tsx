@@ -18,6 +18,9 @@ interface PlayListTableProps {
   liSize: LiSize;
   playlistData: PlaylistItem[];
 }
+interface PlayListTableWrapProps {
+  liSize: LiSize;
+}
 
 const PlayListTable: React.FC<PlayListTableProps> = ({
   liSize,
@@ -59,7 +62,7 @@ PlayListTable.defaultProps = {
 };
 export default PlayListTable;
 
-const PlayListTableWrap = styled.div`
+const PlayListTableWrap = styled.div<PlayListTableWrapProps>`
   ul {
     width: 100%;
     display: flex;

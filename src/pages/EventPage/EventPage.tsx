@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { privateInstance } from '../../library/apis/axiosInstance';
 import Loading from '../../components/Loading/Loading';
 
-export default function EventPage() {
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseData, setResponseData] = useState(null);
+const EventPage: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [responseData, setResponseData] = useState<string | null>(null); // 'any' 대신 구체적인 타입을 사용할 수 있습니다
 
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ export default function EventPage() {
     navigate('/main');
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     if (newValue.length <= 100) {
       setInputValue(newValue);
@@ -70,4 +70,4 @@ export default function EventPage() {
       </S.QuestionBox>
     </S.EventPageWrap>
   );
-}
+};

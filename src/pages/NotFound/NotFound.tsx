@@ -22,6 +22,7 @@ const NotFound: React.FC = () => {
     </NotFoundWrap>
   );
 };
+export default NotFound;
 
 export default NotFound;
 const NotFoundWrap = styled.div`

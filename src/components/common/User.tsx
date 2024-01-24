@@ -6,7 +6,7 @@ import { CircleImage } from '../../components/common/Image/Image';
 import { userInfoAtom } from '../../library/atom';
 
 interface UserProps {
-  user: string; // 혹은 적절한 타입으로 변경
+  user: number; // 혹은 적절한 타입으로 변경
   name: string;
   profilePicture: string;
   isFollowing: boolean;
@@ -27,7 +27,7 @@ const User: React.FC<UserProps> = ({
     // 여기서 데이터 새로고침 함수 호출
   };
   let profileLink;
-  const myProfile = user === myInfo.id;
+  const myProfile = user === myInfo?.id;
   if (!myProfile) {
     profileLink = `/user/profile/${user}`;
   } else {
