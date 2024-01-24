@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { privateInstance } from '../../library/apis/axiosInstance';
 import Loading from '../../components/Loading/Loading';
 
-const EventPage: React.FC = () => {
+export default function EventPage() {
   const [inputValue, setInputValue] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [responseData, setResponseData] = useState<string | null>(null); // 'any' 대신 구체적인 타입을 사용할 수 있습니다
@@ -70,5 +70,4 @@ const EventPage: React.FC = () => {
       </S.QuestionBox>
     </S.EventPageWrap>
   );
-};
-export default EventPage;
+}

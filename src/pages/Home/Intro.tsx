@@ -5,7 +5,7 @@ import { Button } from '../../components/common/Button/Button';
 import closeIcon from '../../img/close-icon.svg';
 import GoogleGrayIcon from '../../img/google-gray-icon.svg';
 
-const Intro: React.FC = () => {
+export default function Intro() {
   return (
     <IntroWrap>
       <CloseButton>
@@ -38,9 +38,8 @@ const Intro: React.FC = () => {
       </AuthContainer>
     </IntroWrap>
   );
-};
+}
 
-export default Intro;
 interface TitleProps {
   bold: boolean;
 }

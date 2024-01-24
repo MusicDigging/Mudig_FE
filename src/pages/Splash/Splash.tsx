@@ -7,7 +7,7 @@ import Logo from '../../img/icon_splash_logo.svg';
 import Mudig from '../../img/icon_splash_mudig.svg';
 import MudigHand from '../../img/icon_splash_mudig_hand.svg';
 
-const Splash: React.FC = () => {
+export default function Splash() {
   const navigate = useNavigate();
   const isLoggedIn = useRecoilValue(isLoginAtom);
 
@@ -32,8 +32,8 @@ const Splash: React.FC = () => {
       </MudigBox>
     </SplashWrap>
   );
-};
-export default Splash;
+}
+
 const SplashWrap = styled.div`
   max-width: 430px;
   @keyframes waveHand {

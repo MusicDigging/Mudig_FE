@@ -14,10 +14,10 @@ interface FollowUserListProps {
   onFollowClick: (user: UserDataType) => void; // 함수 타입 정의
 }
 
-const FollowUserList: React.FC<FollowUserListProps> = ({
+export default function FollowUserList({
   users,
   onFollowClick,
-}) => {
+}: FollowUserListProps) {
   if (!users || users.length === 0) {
     return <div>사용자가 없습니다.</div>;
   }
@@ -36,9 +36,7 @@ const FollowUserList: React.FC<FollowUserListProps> = ({
       ))}
     </FollowUserListWrap>
   );
-};
-
-export default FollowUserList;
+}
 
 const FollowUserListWrap = styled.div`
   padding: 20px;
