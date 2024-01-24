@@ -9,7 +9,7 @@ import { IUserProfileData } from '../../../types/profile';
 import { Profile } from '../../../types/profile';
 
 interface IProfileInputProps {
-  profile: Profile | undefined;
+  profile?: Profile | undefined;
   btnText: string;
   onSubmit: SubmitHandler<IUserProfileData>;
   onChipSelect?: (newSelectedChips: string[]) => void;

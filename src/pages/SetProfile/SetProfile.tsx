@@ -25,7 +25,7 @@ export default function SetProfile() {
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState<string[]>([]);
   const [previewImg, setPreviewImg] = useState(BasicProfileImage);
-  const [uploadImg, setUploadImg] = useState(null);
+  const [uploadImg, setUploadImg] = useState<File | null>(null);
   const fileInput = useRef(null);
   const [toast, setToast] = useRecoilState(toastAtom);
   // 장르 선택 함수 props
