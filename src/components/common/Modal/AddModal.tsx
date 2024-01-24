@@ -96,7 +96,7 @@ export default function AddModal({ videoId }: ModalProps) {
 
   const handleSubmit = () => {
     const playlist_id = selectedPlaylistId; //담을 플리
-    const music = String(videoId); //선택한 음악
+    const music = parseInt(videoId); //선택한 음악
     const data = { playlist_id, music };
     // console.log(data);
     putMyPlayList(data, {
