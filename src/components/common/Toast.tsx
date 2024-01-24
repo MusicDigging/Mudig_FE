@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import SuccessIcon from '../../img/success-icon.svg';
 import ErrorIcon from '../../img/error-icon.svg';
 import WarningIcon from '../../img/warning-icon.svg';
-import { Toast } from '../../library/atom';
 
 interface Props {
   setToast: any;
