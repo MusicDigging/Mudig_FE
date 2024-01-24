@@ -9,9 +9,21 @@ interface CreatePlaylistReq {
   year: string;
 }
 
+interface PutPlaylistReq {
+  del_music_list: string;
+  move_music: string;
+  title: string;
+  content: string;
+  is_public: boolean;
+}
 
 interface LikePlaylistReq {
   playlist_id: number;
+}
+
+interface AddPlaylistReq {
+  playlist_id: number;
+  music: number;
 }
 
 export const useCreatePlaylist = () => {
@@ -53,7 +65,7 @@ export const useMyPlayList = () => {
 };
 
 export const usePutMyPlayList = () => {
-  const putMyPlayList = async (data) => {
+  const putMyPlayList = async (data: AddPlaylistReq) => {
     const response = await privateInstance.put('/playlist/add/', {
       playlist_id: data.playlist_id,
       music: data.music, //랜덤뮤비 아이디 값은 문자열로!
@@ -107,8 +119,9 @@ export const useDeletePlaylist = () => {
 
   return useMutation(deletePlaylist);
 };
-export const useModifyPlaylist = (id) => {
-  const modifyPlaylist = (data) => {
+
+export const useModifyPlaylist = (id: number) => {
+  const modifyPlaylist = (data: PutPlaylistReq) => {
     const response = privateInstance.put(`/playlist/detail/${id}/edit/`, data);
     return response;
   };

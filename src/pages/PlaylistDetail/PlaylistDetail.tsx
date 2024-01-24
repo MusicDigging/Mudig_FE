@@ -11,7 +11,7 @@ import {
   toastAtom,
   commentEditIdAtom,
 } from '../../library/atom';
-
+import { Music } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import Toast from '../../components/common/Toast';
@@ -20,6 +20,7 @@ import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
+import Loading from '../../components/Loading/Loading';
 
 export default function PlaylistDetail() {
   const navigate = useNavigate();
@@ -47,13 +48,13 @@ export default function PlaylistDetail() {
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (!data || isLoading) return null;
+  if (!data || isLoading) return <Loading />;
   if (isError) {
     navigate('/*');
-    return;
+    // return;
   }
   const { playlist, comments, music, user } = data;
-  const musicList = music.map((obj) => obj.information);
+  const musicList = music.map((obj: Music) => obj.information);
   const musicLength = music.length;
 
   return (

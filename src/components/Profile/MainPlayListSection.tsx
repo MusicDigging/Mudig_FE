@@ -10,6 +10,7 @@ import { Playlist } from '../../types/playlist';
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
 import WhitePlayIcon from '../../img/play-icon-white.svg';
+import Loading from '../Loading/Loading';
 
 interface Props {
   data: Playlist;
@@ -20,7 +21,7 @@ export default function MainPlayListSection(props: Props) {
   const { data: musicData, isLoading: musicLoading } =
     useGetPlaylistMusic(music);
 
-  if (musicLoading) return;
+  if (musicLoading) return <Loading />;
 
   return (
     <MainPlayListSectionWrap>

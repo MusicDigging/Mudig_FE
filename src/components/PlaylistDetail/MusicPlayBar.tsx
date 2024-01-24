@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
+import { Playlist } from '../../types/playlist';
 import { useLikePlaylist } from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
@@ -12,7 +13,17 @@ import ShareIcon from '../../img/share-icon.svg';
 import LikeIcon from '../../img/like-icon.svg';
 import LikeActiveIcon from '../../img/like-active-icon.svg';
 
-export default function MusicPlayBar(props) {
+interface Props {
+  playlist: Playlist;
+  playlistId: number;
+  pause: boolean;
+  setPause: React.Dispatch<React.SetStateAction<boolean>>;
+  playing: boolean;
+  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrMusic: React.Dispatch<React.SetStateAction<number | null>>;
+}
+
+export default function MusicPlayBar(props: Props) {
   const {
     playlist,
     playlistId,
