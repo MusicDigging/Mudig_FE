@@ -11,11 +11,9 @@ interface CreatePlaylistReq {
 
 interface PutPlaylistReq {
   del_music_list: string;
-  add_music_list: string;
   move_music: string;
   title: string;
   content: string;
-  image: string;
   is_public: boolean;
 }
 

@@ -117,10 +117,10 @@ export default function PlayListInfo(props: Props) {
           </Title>
         )}
         {!isModifyPath && !isPlaylistSummary && (
-          <WriterInfo to={`/user/profile/${user.id}`} state={{ id: user.id }}>
-            <CircleImage src={user.image} alt='프로필 이미지' />
+          <WriterInfo to={`/user/profile/${user?.id}`} state={{ id: user?.id }}>
+            <CircleImage src={user?.image} alt='프로필 이미지' />
             <img src={ProfileBadge} alt='프로필 작성자 배지' />
-            <p>{user.name}</p>
+            <p>{user?.name}</p>
           </WriterInfo>
         )}
         <Desc>
@@ -139,10 +139,13 @@ export default function PlayListInfo(props: Props) {
           <ThumbnailBlurBox />
           <MoreInfoBox>
             <h2>{playlistDesc?.title || playlist?.title}</h2>
-            <WriterInfo to={`/user/profile/${user.id}`} state={{ id: user.id }}>
-              <CircleImage src={user.image} alt='프로필 이미지' />
+            <WriterInfo
+              to={`/user/profile/${user?.id}`}
+              state={{ id: user?.id }}
+            >
+              <CircleImage src={user?.image} alt='프로필 이미지' />
               <img src={ProfileBadge} alt='프로필 작성자 배지' />
-              <p>{user.name}</p>
+              <p>{user?.name}</p>
             </WriterInfo>
             <div>
               <p>{playlistDesc?.content || playlist?.content}</p>
