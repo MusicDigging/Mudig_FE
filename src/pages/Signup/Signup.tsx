@@ -3,7 +3,7 @@ import { Button } from '../../components/common/Button/Button';
 import * as S from './SignupStyle';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
-import { isLoginAtom, userInfoAtom } from '../../library/atom';
+import { isLoginAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
@@ -14,6 +14,7 @@ import {
 } from '../../library/apis/api';
 export default function Signup() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setSignupInfo = useSetRecoilState(signUpInfoAtom);
   const isLogin = useRecoilValue(isLoginAtom);
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function Signup() {
     const result = query.get('code') || false;
     const hasScope = socialQuery.get('scope');
     //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
-    if ((result, hasScope)) {
+    if (result && hasScope) {
       sendCode(result, 'google');
       //url에서 scope값이 없다면 send code post 요청시 social = 'kakako'로 설정
     } else if (result) {
@@ -41,7 +42,7 @@ export default function Signup() {
     }
   }, []);
 
-  const sendCode = async (code, social) => {
+  const sendCode = async (code: string, social: string) => {
     try {
       let response;
       if (social === 'kakao') {
@@ -67,7 +68,7 @@ export default function Signup() {
         navigate('/main');
       } else {
         const email = response.email;
-        setUserInfo({ email, type: 'social' });
+        setSignupInfo({ email, type: 'social' });
         navigate('/setprofile');
       }
       // console.log(response);

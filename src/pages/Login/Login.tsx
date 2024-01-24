@@ -5,7 +5,12 @@ import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { isLoginAtom, toastAtom, userInfoAtom } from '../../library/atom';
+import {
+  isLoginAtom,
+  signUpInfoAtom,
+  toastAtom,
+  userInfoAtom,
+} from '../../library/atom';
 import {
   getKakaoInfo,
   getGoogleInfo,
@@ -17,6 +22,7 @@ import Toast from '../../components/common/Toast';
 export default function Login() {
   const [toast, setToast] = useRecoilState(toastAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setSignupInfo = useSetRecoilState(signUpInfoAtom);
   const navigate = useNavigate();
   const location = useLocation();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
@@ -84,7 +90,7 @@ export default function Login() {
         //가입 이력이 없고 뮤딕 프로필 설정이 필요한 경우
       } else {
         const email = response.email;
-        setUserInfo({ email, type: 'social' });
+        setSignupInfo({ email, type: 'social' });
         navigate('/setprofile');
       }
       // console.log(response);

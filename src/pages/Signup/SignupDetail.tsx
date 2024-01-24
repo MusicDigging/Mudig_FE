@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
-import { SignUpAtom, userInfoAtom } from '../../library/atom';
+import { SignUpAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import Toast from '../../components/common/Toast';
 export default function SignupDetail() {
-  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const setUserInfo = useSetRecoilState(signUpInfoAtom);
   const [toast, setToast] = useState(false);
   const navigate = useNavigate();
   const type = 'mudig';
-  const onSubmit = ({ email, password }) => {
+
+  interface ISubmitProps {
+    email: string;
+    password: string;
+  }
+
+  const onSubmit = ({ email, password }: ISubmitProps) => {
     setUserInfo({ email, password, type });
     navigate('/setprofile');
   };

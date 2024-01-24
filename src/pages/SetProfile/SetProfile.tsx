@@ -1,8 +1,13 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import { userInfoAtom, isLoginAtom, toastAtom } from '../../library/atom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  userInfoAtom,
+  isLoginAtom,
+  toastAtom,
+  signUpInfoAtom,
+} from '../../library/atom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import BasicProfileImage from '../../img/basic-profile-img.svg';
@@ -15,6 +20,7 @@ interface IUserProfileData {
   nickName: string;
   about?: string;
   genre: string[];
+  password?: string;
   image?: string;
 }
 export default function SetProfile() {
@@ -22,12 +28,12 @@ export default function SetProfile() {
 
   const { mutate: postUserProfile } = useUserProfile();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const signupInfo = useRecoilValue(signUpInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState<string[]>([]);
   const [previewImg, setPreviewImg] = useState(BasicProfileImage);
   const [uploadImg, setUploadImg] = useState(null);
   const fileInput = useRef(null);
-  const userType = userInfo.type;
   const [toast, setToast] = useRecoilState(toastAtom);
   // 장르 선택 함수 props
   const handleChipSelect = (newSelectedChips: string[]) => {
@@ -38,8 +44,8 @@ export default function SetProfile() {
 
   const onSubmit = async (data: IUserProfileData) => {
     const formData = new FormData();
-    formData.append('email', userInfo.email);
-    formData.append('password', userInfo.password);
+    formData.append('email', signupInfo.email);
+    formData.append('password', signupInfo.password ?? '');
     formData.append('name', data.nickName);
     formData.append('about', data.about || '소개글을 작성해주세요.');
     formData.append('genre', selectGenre);

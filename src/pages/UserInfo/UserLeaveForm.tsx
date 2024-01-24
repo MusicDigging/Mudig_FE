@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
 import usePasswordToggle from '../../hooks/ussPasswordToggle';
@@ -17,13 +17,13 @@ export default function UserLeaveForm() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setToast = useSetRecoilState(toastAtom);
   const navigate = useNavigate();
-
-  const userEmail = useRecoilValue(userInfoAtom).email;
+  const userEmail = useRecoilValue(userInfoAtom)?.email;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const { mutate: userResign } = useUserResign();
   const methods = useForm({
     defaultValues: {
       email: userEmail,
+      password: '',
     },
 
     mode: 'onSubmit',
@@ -33,13 +33,13 @@ export default function UserLeaveForm() {
 
   const { isValid, errors } = formState;
   const password = getValues('password');
-  const passwordError = errors['password'];
+  const passwordError = errors['password'] as FieldValues['password'];
 
   const handleResign = () => {
     userResign(password, {
       onSuccess: (data) => {
         setIsLogin(false);
-        setUserInfo({});
+        setUserInfo(null);
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         setToast({ content: '회원탈퇴가 완료되었습니다.', type: 'success' });

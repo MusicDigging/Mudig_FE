@@ -3,6 +3,7 @@ export interface User {
   email: string;
   name: string;
   image: string;
+
   genre: string | string[];
   about: string;
   rep_playlist: number | null;
@@ -10,4 +11,10 @@ export interface User {
     access: string;
     refresh: string;
   };
+}
+
+export interface ISignup {
+  email: string;
+  password?: string;
+  type: string;
 }

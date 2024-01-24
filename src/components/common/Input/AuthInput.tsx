@@ -3,8 +3,9 @@ import { useFormContext } from 'react-hook-form';
 import styled from 'styled-components';
 import hideEye from '../../../img/hidePw-icon.svg';
 import showEye from '../../../img/showPw-Icon.svg';
+import { IInputProps, IStyledInputProps } from '../../../types/input';
 
-export const AuthInput = (props) => {
+export const AuthInput = (props: IInputProps) => {
   const {
     placeholder,
     type,
@@ -37,11 +38,10 @@ export const AuthInput = (props) => {
   );
 };
 
-const InputStyle = styled.input`
+const InputStyle = styled.input<IStyledInputProps>`
   width: 100%;
   height: 44px;
   border-radius: 8px;
-
   padding-left: 16px;
   margin-bottom: ${(props) => (props.marginBottom ? '8px' : '0')};
 `;
