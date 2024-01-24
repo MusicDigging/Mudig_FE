@@ -8,13 +8,11 @@ import {
   userInfoAtom,
   PlayListAtom,
   backAnimationAtom,
-  toastAtom,
   commentEditIdAtom,
 } from '../../library/atom';
 import { Music } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
-import Toast from '../../components/common/Toast';
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
@@ -32,7 +30,6 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState<boolean>(true);
   const [playing, setPlaying] = useState<boolean>(false);
   const [currMusic, setCurrMusic] = useState<number | null>(null);
-  const [toast, setToast] = useRecoilState(toastAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
@@ -48,7 +45,7 @@ export default function PlaylistDetail() {
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
-  if (!data || isLoading) return <Loading />;
+  if (!data || isLoading) return <Loading isLoading={isLoading} />;
   if (isError) {
     navigate('/*');
     // return;
@@ -60,9 +57,6 @@ export default function PlaylistDetail() {
   return (
     <>
       <PlaylistDetailWrap>
-        {toast && (
-          <Toast setToast={setToast} text={toast.content} type={toast.type} />
-        )}
         <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
           <MusicPlayer

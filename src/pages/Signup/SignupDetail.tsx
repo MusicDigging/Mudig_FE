@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
-import { SignUpAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
-import { useSetRecoilState } from 'recoil';
+import {
+  SignUpAtom,
+  signUpInfoAtom,
+  toastAtom,
+  userInfoAtom,
+} from '../../library/atom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import Toast from '../../components/common/Toast';
+
 export default function SignupDetail() {
   const setUserInfo = useSetRecoilState(signUpInfoAtom);
-  const [toast, setToast] = useState(false);
+  const [toast, setToast] = useRecoilState(toastAtom);
   const navigate = useNavigate();
   const type = 'mudig';
 
@@ -21,23 +26,15 @@ export default function SignupDetail() {
     navigate('/setprofile');
   };
   const handleToastMessage = () => {
-    setToast(true);
+    setToast({
+      content: '해당메일로 인증번호가 전송되었습니다. ✉️',
+      type: 'success',
+    });
   };
 
   return (
     <SingupDetailWrap>
-      {toast && (
-        // <ToastBox>
-        <Toast
-          setToast={setToast}
-          text='해당메일로 인증번호가 전송되었습니다  ✉️'
-          type='success'
-        />
-        // </ToastBox>
-      )}
-
       <PageNum>1/2</PageNum>
-
       <SignupDetailBox>
         <DetailTitle>
           회원가입을 위해 <br />

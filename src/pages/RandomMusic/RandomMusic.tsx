@@ -9,8 +9,6 @@ import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import { IVideoData } from '../../types/RandomMv';
-import Toast from '../../components/common/Toast';
-import { toastAtom } from '../../library/atom';
 
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
@@ -20,7 +18,6 @@ export default function RandomMusic() {
   const selectId = id.join(',');
   //개별 뮤비 아이디
   const [videoId, setVideoId] = useState('');
-  const [toast, setToast] = useRecoilState(toastAtom);
   const [page, setPage] = useState(0);
   const targetRef = useRef<HTMLDivElement>(null);
   const [allVideos, setAllVideos] = useState<IVideoData[]>([]);
@@ -82,11 +79,7 @@ export default function RandomMusic() {
 
   return (
     <>
-      {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
       <MainHeader />
-
       <PlayerWrap>
         {allVideos &&
           allVideos.map((video, index) => (

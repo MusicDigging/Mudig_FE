@@ -81,9 +81,9 @@ export default function EditProfile() {
 
   return (
     <S.EditProfileWrap>
-      {toast && (
+      {/* {toast && (
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
+      )} */}
       <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='' />
       </S.MoveBackBtn>

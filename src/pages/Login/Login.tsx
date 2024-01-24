@@ -5,12 +5,7 @@ import { AuthForm } from '../../components/common/Form/AuthForm';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-  isLoginAtom,
-  signUpInfoAtom,
-  toastAtom,
-  userInfoAtom,
-} from '../../library/atom';
+import { isLoginAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
 import {
   getKakaoInfo,
   getGoogleInfo,
@@ -18,9 +13,7 @@ import {
 } from '../../library/apis/api';
 import { useMutation, useQuery } from 'react-query';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import Toast from '../../components/common/Toast';
 export default function Login() {
-  const [toast, setToast] = useRecoilState(toastAtom);
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setSignupInfo = useSetRecoilState(signUpInfoAtom);
   const navigate = useNavigate();
@@ -109,9 +102,9 @@ export default function Login() {
 
   return (
     <LoginWrap>
-      {toast && (
+      {/* {toast && (
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
+      )} */}
       <LoginHeader>
         <LoginTitle>
           선곡 고민 끝, <br />

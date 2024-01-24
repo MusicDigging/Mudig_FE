@@ -1,19 +1,13 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProfileInput from '../../components/common/Input/ProfileInput';
-import {
-  userInfoAtom,
-  isLoginAtom,
-  toastAtom,
-  signUpInfoAtom,
-} from '../../library/atom';
+import { userInfoAtom, isLoginAtom, signUpInfoAtom } from '../../library/atom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import BasicProfileImage from '../../img/basic-profile-img.svg';
 // import { postUserProfile } from '../../library/apis/api';
 import { useUserProfile } from '../../hooks/queries/useUserInfo';
-import Toast from '../../components/common/Toast';
 import { IUserProfileData } from '../../types/profile';
 
 export default function SetProfile() {
@@ -27,7 +21,6 @@ export default function SetProfile() {
   const [previewImg, setPreviewImg] = useState(BasicProfileImage);
   const [uploadImg, setUploadImg] = useState<File | null>(null);
   const fileInput = useRef(null);
-  const [toast, setToast] = useRecoilState(toastAtom);
   // 장르 선택 함수 props
   const handleChipSelect = (newSelectedChips: string[]) => {
     setGenre(newSelectedChips);
@@ -73,9 +66,6 @@ export default function SetProfile() {
 
   return (
     <SetProfileWrap>
-      {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
       <PageNum>2/2</PageNum>
       <SetProfileTitle>
         가입을 축하드려요! <br />

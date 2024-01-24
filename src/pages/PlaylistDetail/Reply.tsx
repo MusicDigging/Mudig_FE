@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Comment } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import {
-  toastAtom,
   backAnimationAtom,
   commentEditIdAtom,
   commentAtom,
@@ -27,7 +26,6 @@ export default function Reply() {
 
   const [modalId, setModalId] = useState<number | null>(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
-  const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
@@ -55,9 +53,6 @@ export default function Reply() {
 
   return (
     <S.CommentWrap>
-      {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
       <S.CommentBox
         initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}

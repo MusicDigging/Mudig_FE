@@ -2,14 +2,12 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
-  toastAtom,
   backAnimationAtom,
   commentEditIdAtom,
   commentAtom,
 } from '../../library/atom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
-import Toast from '../../components/common/Toast';
 import { filterComments, filterReplies } from '../../library/CommentUtils';
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentList from '../../components/PlaylistDetail/CommentList';
@@ -23,7 +21,6 @@ export default function Comment() {
   const location = useLocation();
   const state = location.state || {};
   const { playlistId, playlistWriter } = state;
-  const [toast, setToast] = useRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
   const backAnimation = useRecoilValue(backAnimationAtom);
@@ -44,9 +41,9 @@ export default function Comment() {
 
   return (
     <S.CommentWrap>
-      {toast && (
+      {/* {toast && (
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )}
+      )} */}
       <S.CommentBox
         initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
