@@ -98,7 +98,7 @@ export default function AddModal({ videoId }: ModalProps) {
     // console.log(data);
     putMyPlayList(data, {
       onSuccess: (data) => {
-        console.log(data);
+        // console.log(data);
         setToast({
           content: '플레이리스트에 추가 되었습니다.',
           type: 'success',

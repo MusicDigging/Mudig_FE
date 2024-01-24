@@ -39,7 +39,7 @@ const onResponseError = async (error: AxiosError) => {
         const newAccessToken = response.data.access;
 
         localStorage.setItem('token', newAccessToken);
-        console.log(response.data);
+        // console.log(response.data);
 
         originalRequest.headers!.Authorization = `Bearer ${newAccessToken}`;
         // console.log('토큰 교체 완료');
