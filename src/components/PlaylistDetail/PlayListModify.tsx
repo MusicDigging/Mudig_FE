@@ -13,7 +13,6 @@ import { useRecoilState } from 'recoil';
 import { PlayListAtom, toastAtom } from '../../library/atom';
 import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
 import { useNavigate } from 'react-router-dom';
-import { Music } from '../../types/playlist';
 
 interface Props {
   playlistDesc: {
