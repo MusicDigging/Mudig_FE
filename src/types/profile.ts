@@ -1,10 +1,10 @@
 import { Playlist } from './playlist';
 
-export interface FormData {
+export interface FormDataType {
   nickName: string;
   about: string;
   genre: string;
-  rep_playlist: string;
+  rep_playlist: string | null;
   image: File | null;
 }
 

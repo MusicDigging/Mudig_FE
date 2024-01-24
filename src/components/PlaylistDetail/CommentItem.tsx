@@ -214,9 +214,11 @@ export default function CommentItem(props: Props) {
               </div>
             </UserInfo>
           </UserInfoBox>
-          <Comment $color={comment.is_active ? '' : 'var(--sub-font-color)'}>
+          <CommentDesc
+            $color={comment.is_active ? '' : 'var(--sub-font-color)'}
+          >
             {comment.is_active ? comment.content : '삭제된 댓글입니다.'}
-          </Comment>
+          </CommentDesc>
         </DescBox>
       </CommentBox>
       <CommentReplies>{children}</CommentReplies>
@@ -281,7 +283,7 @@ const UserInfo = styled.div`
   }
 `;
 
-const Comment = styled.p<{ $color: string }>`
+const CommentDesc = styled.p<{ $color: string }>`
   padding: 8px 0;
   font-size: var(--font-md);
   color: ${(props) => props.$color};
