@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -14,7 +15,6 @@ import CommentList from '../../components/PlaylistDetail/CommentList';
 
 import { ReactComponent as BackIcon } from '../../img/left-arrow-Icon.svg';
 import * as S from './CommentStyle';
-import React from 'react';
 
 export default function Comment() {
   const navigate = useNavigate();

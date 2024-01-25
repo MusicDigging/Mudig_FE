@@ -1,8 +1,10 @@
+import React from 'react';
 import { useState, useRef } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
 
 import { IProfile } from '../../types/profile';
+import { IUserProfile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
 import { useMyPlayList } from '../../hooks/queries/usePlaylist';
@@ -13,8 +15,7 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
-import React from 'react';
-import { IUserProfile } from '../../types/profile';
+
 export default function EditProfile() {
   const navigate = useNavigate();
   const location = useLocation();

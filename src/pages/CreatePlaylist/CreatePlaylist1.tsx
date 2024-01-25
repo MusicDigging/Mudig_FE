@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 
+import { ICreatePlaylist } from '../../types/playlist';
+
 import CharacterImg from '../../img/character-img2.svg';
 import * as S from './CreatePlaylistStyle';
 
-export interface CreatePlaylist {
-  situations?: string;
-  genre?: string;
-  year?: string;
-  backAnimation?: boolean;
-}
-
 export default function CreateNewPlaylist1() {
   const location = useLocation();
-  const state: CreatePlaylist = location.state || {};
-  const { genre, year, backAnimation }: CreatePlaylist = state;
+  const state: ICreatePlaylist = location.state || {};
+  const { genre, year, backAnimation }: ICreatePlaylist = state;
   const [situations, setSituations] = useState<string>(
     (state && state.situations) || '',
   );

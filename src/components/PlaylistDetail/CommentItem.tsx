@@ -38,7 +38,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-interface CommentLinkProps {
+interface ICommentLink {
   children: React.ReactNode;
   to: string;
   state: { id: number };
@@ -85,7 +85,7 @@ export default function CommentItem(props: Props) {
     ? '/user/profile/my'
     : `/user/profile/${comment.writer}`;
 
-  const CommentLink = ({ children, to, state }: CommentLinkProps) => (
+  const CommentLink = ({ children, to, state }: ICommentLink) => (
     <Link to={to} state={state}>
       {children}
     </Link>

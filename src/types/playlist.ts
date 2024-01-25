@@ -54,3 +54,10 @@ export interface IPlaylistDesc {
   content: string;
   is_public: boolean;
 }
+
+export interface ICreatePlaylist {
+  situations?: string;
+  genre?: string;
+  year?: string;
+  backAnimation?: boolean;
+}

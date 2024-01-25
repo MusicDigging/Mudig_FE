@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import {
@@ -30,9 +30,9 @@ export default function PlaylistDetail() {
   const [pause, setPause] = useState<boolean>(true);
   const [playing, setPlaying] = useState<boolean>(false);
   const [currMusic, setCurrMusic] = useState<number | null>(null);
-  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
-  const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
+  const setEditId = useSetRecoilState(commentEditIdAtom);
+  const setPlaylistInfo = useSetRecoilState(PlayListAtom);
+  const setBackAnimation = useSetRecoilState(backAnimationAtom);
 
   useEffect(() => {
     setEditId(null);
