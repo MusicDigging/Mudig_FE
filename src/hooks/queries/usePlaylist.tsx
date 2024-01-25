@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
 
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
 
 interface CreatePlaylistReq {
   situations: string;
@@ -86,7 +86,7 @@ export const useGetPlaylistMusic = (ids: number[]) => {
     },
     {
       select: (response) => {
-        const data = response.data.music.filter((item: Music) =>
+        const data = response.data.music.filter((item: IMusic) =>
           ids.includes(item.id),
         );
         return data;

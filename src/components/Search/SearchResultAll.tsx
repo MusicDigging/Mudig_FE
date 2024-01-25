@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import PlayListItem from '../common/PlayList/PlayListItem';
-import { CircleImage } from '../common/Image/Image';
-import EmptySearch from './EmptySearch';
 import { Link } from 'react-router-dom';
-import SearchResultTitle from './SearchResultTitle';
+import { CircleImage } from '../common/Image/Image';
 import AddPlaylist from '../../img/add-video-icon.svg';
-import { SearchResult } from '../../types/searchResult';
+import PlayListItem from '../common/PlayList/PlayListItem';
+import EmptySearch from './EmptySearch';
+import SearchResultTitle from './SearchResultTitle';
+import { ISearchResult } from '../../types/search';
 
 interface Props {
-  result: SearchResult;
+  result: ISearchResult;
   handleAddPlaylist: (arg0: number) => void;
   handleNavPlaylist: React.MouseEventHandler;
   handleNavMusic: React.MouseEventHandler;

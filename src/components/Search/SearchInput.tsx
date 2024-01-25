@@ -1,6 +1,6 @@
+import styled from 'styled-components';
 import { useEffect, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import SearchIcon from '../../img/search-icon.svg';
 interface Props {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;

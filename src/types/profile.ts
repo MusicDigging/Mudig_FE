@@ -1,4 +1,4 @@
-import { Playlist } from './playlist';
+import { IPlaylist } from './playlist';
 
 export interface FormDataType {
   nickName: string;
@@ -38,8 +38,8 @@ export interface Follow {
 
 export interface ProfileData {
   profile: Profile;
-  playlist: Playlist;
-  liked_playlists?: Playlist;
+  playlist: IPlaylist;
+  liked_playlists?: IPlaylist;
   following: Follow[];
   follower: Follow[];
   UserId: number;

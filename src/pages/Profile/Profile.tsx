@@ -7,7 +7,7 @@ import {
   useGetFollowing,
   useGetFollower,
 } from '../../hooks/queries/useProfile';
-import { Playlist } from '../../types/playlist';
+import { IPlaylist } from '../../types/playlist';
 import { userInfoAtom } from '../../library/atom';
 
 import Loading from '../../components/Loading/Loading';
@@ -59,13 +59,13 @@ export default function Profile() {
   }
 
   const repPlaylist = profileData.playlist.filter(
-    (item: Playlist) => item.id === profileData.profile.rep_playlist,
+    (item: IPlaylist) => item.id === profileData.profile.rep_playlist,
   )[0];
 
   const playlist = profileData.playlist
-    .filter((item: Playlist) => (my_id !== user_id ? item.is_public : item))
+    .filter((item: IPlaylist) => (my_id !== user_id ? item.is_public : item))
     .sort(
-      (a: Playlist, b: Playlist) =>
+      (a: IPlaylist, b: IPlaylist) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     );
 

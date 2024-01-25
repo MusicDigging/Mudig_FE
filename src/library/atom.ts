@@ -1,18 +1,18 @@
 import { atom, RecoilValue } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
-import { Music, Playlist } from '../types/playlist';
+import { IMusic, IPlaylist } from '../types/playlist';
 
-import { ISignup, User } from '../types/user';
+import { ISignup, IUser } from '../types/user';
 
 const { persistAtom } = recoilPersist();
-export interface Toast {
+export interface IToast {
   content: string;
   type: 'success' | 'error' | 'warning';
 }
 
 interface PlaylistTypes {
-  playlist: Playlist;
-  music: Music[];
+  playlist: IPlaylist;
+  music: IMusic[];
 }
 
 // 회원가입 토큰 정보
@@ -48,7 +48,7 @@ export const PlayListAtom = atom<PlaylistTypes>({
   },
 });
 
-export const userInfoAtom = atom<User>({
+export const userInfoAtom = atom<IUser>({
   key: 'userInfoAtom',
   default: {
     id: 0,
@@ -96,7 +96,7 @@ export const commentAtom = atom<string>({
   default: '',
 });
 
-export const toastAtom = atom<Toast | null>({
+export const toastAtom = atom<IToast | null>({
   key: 'toastAtom',
   default: null,
 });

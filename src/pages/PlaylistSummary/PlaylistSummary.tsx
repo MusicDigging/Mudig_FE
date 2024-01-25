@@ -1,19 +1,20 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import { Button } from '../../components/common/Button/Button';
 import PlayList from '../../components/common/PlayList/PlayList';
+import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import Loading from '../../components/Loading/Loading';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
-import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
+
 export default function PlaylistSummary() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
   const playlistId = state?.playlist; // 플리 요약 수정 시 id값 임의로 주기
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading isLoading={isLoading} />;
 
   const { user, playlist, music } = data;
 
@@ -25,7 +26,7 @@ export default function PlaylistSummary() {
       <PlayListInfo user={user} playlist={playlist} />
       <PlayListBox>
         <PlayList>
-          {music.map((item: Music) => (
+          {music.map((item: IMusic) => (
             <PlayListItem
               key={item.id}
               img={item.thumbnail}

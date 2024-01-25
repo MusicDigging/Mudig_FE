@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import SearchNav from '../../components/Search/SearchNav';
-import SearchResultAll from '../../components/Search/SearchResultAll';
-import SearchResultByType from '../../components/Search/SearchResultByType';
 import { useSearch } from '../../hooks/queries/useSearch';
 import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
+import SearchNav from '../../components/Search/SearchNav';
+import SearchResultAll from '../../components/Search/SearchResultAll';
+import SearchResultByType from '../../components/Search/SearchResultByType';
 import AddModal from '../../components/common/Modal/AddModal';
 import Loading from '../../components/Loading/Loading';
 
@@ -22,7 +22,6 @@ export default function SearchResult() {
   });
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const [musicId, setMusicId] = useState<number>(0);
-
   const handleAddPlaylist = (musicId: number) => {
     setMusicId(musicId);
     setModalOpen(true);
@@ -42,7 +41,7 @@ export default function SearchResult() {
     setCurrentNav({ all: true, playlist: false, music: false, user: false });
   }, [keyword]);
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading isLoading={isLoading} />;
 
   return (
     <>

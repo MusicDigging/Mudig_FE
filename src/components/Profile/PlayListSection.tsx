@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Playlist } from '../../types/playlist';
+import { IPlaylist } from '../../types/playlist';
 
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
@@ -10,7 +10,7 @@ import PlayIcon from '../../img/play-icon.svg';
 
 interface Props {
   type: string;
-  data: Playlist[];
+  data: IPlaylist[];
   isMyProfile: boolean;
   isEmpty?: boolean;
 }
@@ -21,7 +21,7 @@ export default function PlayListSection(props: Props) {
 
   const handleSortLatestBtn = () => {
     playlists.sort(
-      (a: Playlist, b: Playlist) =>
+      (a: IPlaylist, b: IPlaylist) =>
         new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
     );
     setSortType('latest');

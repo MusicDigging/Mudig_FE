@@ -1,4 +1,4 @@
-export interface Playlist {
+export interface IPlaylist {
   id: number;
   like_count: number;
   like_playlist: boolean;
@@ -40,11 +40,17 @@ export interface Reply {
   [key: string]: Comment[];
 }
 
-export interface Music {
+export interface IMusic {
   id: number;
   information: string;
   singer: string;
   song: string;
   thumbnail: string;
   created_at: string;
+}
+
+export interface IPlaylistDesc {
+  title: string;
+  content: string;
+  is_public: boolean;
 }

@@ -1,12 +1,12 @@
 import React, { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
 import { Image } from '../common/Image/Image';
 
 interface Props {
   id: number;
-  data: Music[];
+  data: IMusic[];
 }
 
 export default function MainPlayList(props: Props) {
