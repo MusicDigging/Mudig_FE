@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import PlayListItem from './PlayListItem';
+import type { DroppableProvidedProps } from 'react-beautiful-dnd';
 
 interface Props {
   children: React.ReactNode;
-  innerRef?: any;
-  droppableProps?: any;
+  innerRef?: (element: HTMLElement | null) => void;
+  droppableProps?: DroppableProvidedProps;
 }
 
 export default function PlayList(props: Props) {
