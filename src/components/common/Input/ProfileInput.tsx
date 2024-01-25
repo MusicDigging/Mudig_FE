@@ -8,7 +8,7 @@ import axios from 'axios';
 import { IUserProfileData } from '../../../types/profile';
 import { Profile } from '../../../types/profile';
 
-interface IProfileInputProps {
+interface Props {
   profile?: Profile | undefined;
   btnText: string;
   onSubmit: SubmitHandler<IUserProfileData>;
@@ -22,7 +22,7 @@ interface FormValue {
   genre: string;
 }
 
-export default function ProfileInput(props: IProfileInputProps): ReactElement {
+export default function ProfileInput(props: Props): ReactElement {
   const { profile, btnText, onSubmit, onChipSelect, children } = props;
 
   const [nickNameCount, setNickNameCount] = useState(profile?.name.length || 0);

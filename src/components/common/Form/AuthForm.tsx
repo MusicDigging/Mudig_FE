@@ -8,29 +8,11 @@ import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-
+import { ILogin } from '../../../types/setUser';
 interface ILoginData {
   email: string;
   password: string;
 }
-
-interface ILoginResponse {
-  user: {
-    id: number;
-    name: string;
-    about: string;
-    genre: string;
-    email: string;
-    image: string;
-    rep_playlist: null | any;
-  };
-  message: string;
-  token: {
-    access: string;
-    refresh: string;
-  };
-}
-
 export const AuthForm = () => {
   const navigate = useNavigate();
   const emailRegex = /^\S+@\S+\.\S+$/;
@@ -48,7 +30,7 @@ export const AuthForm = () => {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
-    onSuccess: (data: ILoginResponse) => {
+    onSuccess: (data: ILogin) => {
       const { user, token } = data;
       const { id, email, name, image, genre, about, rep_playlist } = user;
       const { access, refresh } = token;
