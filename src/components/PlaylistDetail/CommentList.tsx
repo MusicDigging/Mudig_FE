@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import CommentItem from './CommentItem';
-import { Comment, Reply } from '../../types/playlist';
+import { IComment, IReply } from '../../types/playlist';
 import { ReactComponent as CommentIcon } from '../../img/comment-icon.svg';
 
 interface Props {
-  comments: Comment[];
-  replies: Reply;
+  comments: IComment[];
+  replies: IReply;
   playlistId: number;
   playlistWriter: number;
   visibleCount?: number;
@@ -19,7 +19,7 @@ export default function CommentList(props: Props) {
   const navigate = useNavigate();
   const [modalId, setModalId] = useState<number | null>(null); // 모달창 활성화된 comment id
 
-  const [opendReply, setOpendReply] = useState<Reply>({});
+  const [opendReply, setOpendReply] = useState<IReply>({});
 
   const handleReplyBtnClick = (commentId: number) => {
     if (replies[commentId])

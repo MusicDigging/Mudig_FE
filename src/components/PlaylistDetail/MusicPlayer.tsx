@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
-import { IMusic } from '../../types/playlist';
-
 interface Props {
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;

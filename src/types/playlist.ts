@@ -14,7 +14,7 @@ export interface IPlaylist {
   music: number[];
 }
 
-export interface WriterProfile {
+export interface IWriterProfile {
   id: number;
   name: string;
   image: string;
@@ -24,20 +24,20 @@ export interface WriterProfile {
   rep_playlist: number;
 }
 
-export interface Comment {
+export interface IComment {
   is_active: boolean;
   playlist: number;
   id: number;
   content: string;
   writer: number;
   parent: number | null;
-  writer_profile: WriterProfile;
+  writer_profile: IWriterProfile;
   created_at: string;
   updated_at: string;
 }
 
-export interface Reply {
-  [key: string]: Comment[];
+export interface IReply {
+  [key: string]: IComment[];
 }
 
 export interface IMusic {

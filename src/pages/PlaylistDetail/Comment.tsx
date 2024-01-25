@@ -1,4 +1,4 @@
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
@@ -21,8 +21,8 @@ export default function Comment() {
   const location = useLocation();
   const state = location.state || {};
   const { playlistId, playlistWriter } = state;
-  const [content, setContent] = useRecoilState(commentAtom);
-  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const setContent = useSetRecoilState(commentAtom);
+  const setEditId = useSetRecoilState(commentEditIdAtom);
   const backAnimation = useRecoilValue(backAnimationAtom);
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 

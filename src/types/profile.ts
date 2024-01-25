@@ -1,6 +1,6 @@
 import { IPlaylist } from './playlist';
 
-export interface FormDataType {
+export interface IFormData {
   nickName: string;
   about: string;
   genre: string;
@@ -8,7 +8,7 @@ export interface FormDataType {
   image: File | null;
 }
 
-export interface Profile {
+export interface IProfile {
   id: number;
   name: string;
   about: string;
@@ -19,7 +19,7 @@ export interface Profile {
   image: string;
 }
 
-export interface IUserProfileData {
+export interface IUserProfile {
   email?: string;
   password?: string;
   nickName: string;
@@ -29,7 +29,7 @@ export interface IUserProfileData {
   image?: File | null;
 }
 
-export interface Follow {
+export interface IFollow {
   id: number;
   profile_image: string;
   nickname: string;
@@ -37,10 +37,10 @@ export interface Follow {
 }
 
 export interface ProfileData {
-  profile: Profile;
+  profile: IProfile;
   playlist: IPlaylist;
   liked_playlists?: IPlaylist;
-  following: Follow[];
-  follower: Follow[];
+  following: IFollow[];
+  follower: IFollow[];
   UserId: number;
 }

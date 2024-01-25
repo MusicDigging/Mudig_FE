@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { Image } from '../common/Image/Image';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
-interface Playlist {
+interface IRepPlaylist {
   id: number;
   thumbnail: string;
   title: string;
 }
 
 interface Props {
-  publicPlaylist: Playlist[];
+  publicPlaylist: IRepPlaylist[];
   repPlaylist: number | null;
   setRepPlaylist: React.Dispatch<React.SetStateAction<number | null>>;
 }
@@ -20,9 +20,9 @@ export default function SetRepPlaylist(props: Props) {
   const { publicPlaylist, repPlaylist, setRepPlaylist } = props;
 
   const [isPlaylistShowed, setisPlaylistShowed] = useState(false);
-  const [currRepPlaylist, setCurrRepPlaylist] = useState<Playlist | undefined>(
-    publicPlaylist?.find((obj) => obj.id === repPlaylist),
-  );
+  const [currRepPlaylist, setCurrRepPlaylist] = useState<
+    IRepPlaylist | undefined
+  >(publicPlaylist?.find((obj) => obj.id === repPlaylist));
 
   const handlePrivateView = () => {
     setisPlaylistShowed(!isPlaylistShowed);

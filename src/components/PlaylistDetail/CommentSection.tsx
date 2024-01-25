@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import CommentList from './CommentList';
-import { Comment } from '../../types/playlist';
+import { IComment } from '../../types/playlist';
 import { backAnimationAtom } from '../../library/atom';
 import { filterComments, filterReplies } from '../../library/CommentUtils';
 
@@ -12,7 +12,7 @@ import { ReactComponent as PenIcon } from '../../img/pen-icon.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
 interface Props {
-  comments: Comment[];
+  comments: IComment[];
   playlistId: number;
   playlistWriter: number;
 }
@@ -21,11 +21,11 @@ export default function CommentSection(props: Props) {
   const { comments, playlistId, playlistWriter } = props;
   const navigate = useNavigate();
   const [more, setMore] = useState<boolean>(false);
-  const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
+  const setBackAnimation = useSetRecoilState(backAnimationAtom);
   const [visibleCount, setVisibleCount] = useState<number>(2);
 
   const replies = filterReplies(comments);
-  const filteredComments: Comment[] =
+  const filteredComments: IComment[] =
     comments.length > 0 ? filterComments(comments, replies) : comments;
 
   const handleMore = () => {

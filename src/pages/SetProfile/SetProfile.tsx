@@ -8,7 +8,7 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import BasicProfileImage from '../../img/basic-profile-img.svg';
 // import { postUserProfile } from '../../library/apis/api';
 import { useUserProfile } from '../../hooks/queries/useUserInfo';
-import { IUserProfileData } from '../../types/profile';
+import { IUserProfile } from '../../types/profile';
 
 export default function SetProfile() {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function SetProfile() {
 
   const selectGenre = genre.join(',');
 
-  const onSubmit = async (data: IUserProfileData) => {
+  const onSubmit = async (data: IUserProfile) => {
     const formData = new FormData();
     formData.append('email', signupInfo.email);
     formData.append('password', signupInfo.password ?? '');

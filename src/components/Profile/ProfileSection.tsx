@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { isLoginAtom } from '../../library/atom';
@@ -10,7 +10,7 @@ import { useLogout } from '../../hooks/queries/useProfile';
 
 import ProfileImage from '../common/Image/ProfileImage';
 import useFollowUser from '../../hooks/queries/useFollow';
-import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
+import { MiniModalWrap } from '../common/Modal/MiniModal';
 
 import MoreBtnIcon from '../../img/more-icon.svg';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function ProfileSection(props: Props) {
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const { isMyProfile } = props;
   const data = props.data;

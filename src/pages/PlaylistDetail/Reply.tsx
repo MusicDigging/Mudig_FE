@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Comment } from '../../types/playlist';
+import { IComment } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import {
   backAnimationAtom,
@@ -35,9 +35,9 @@ export default function Reply() {
   if (isLoading) return null;
   const { comments } = data;
 
-  const comment = comments.find((comment: Comment) => comment.id === parentId);
+  const comment = comments.find((comment: IComment) => comment.id === parentId);
   const replies = comments.filter(
-    (reply: Comment) => reply.parent === parentId && reply.is_active,
+    (reply: IComment) => reply.parent === parentId && reply.is_active,
   );
 
   const handleReplyBtnClick = (id: number) => {
@@ -84,7 +84,7 @@ export default function Reply() {
 
                 {isReplyOpen &&
                   replies.map(
-                    (reply: Comment) =>
+                    (reply: IComment) =>
                       reply.is_active && (
                         <CommentItem
                           key={reply.id}

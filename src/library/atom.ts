@@ -1,4 +1,4 @@
-import { atom, RecoilValue } from 'recoil';
+import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { IMusic, IPlaylist } from '../types/playlist';
 

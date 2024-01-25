@@ -1,13 +1,12 @@
 import { useState, useRef } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useNavigate, useLocation } from 'react-router';
 
-import { FormDataType, Profile } from '../../types/profile';
+import { IProfile } from '../../types/profile';
 import { toastAtom, userInfoAtom } from '../../library/atom';
 import { useEditProfile } from '../../hooks/queries/useProfile';
 import { useMyPlayList } from '../../hooks/queries/usePlaylist';
 
-import Toast from '../../components/common/Toast';
 import ProfileInput from '../../components/common/Input/ProfileInput';
 import SetRepPlaylist from '../../components/EditProfile/SetRepPlaylist';
 import SetProfileImage from '../../components/EditProfile/SetProfileImage';
@@ -15,18 +14,18 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
 import React from 'react';
-import { IUserProfileData } from '../../types/profile';
+import { IUserProfile } from '../../types/profile';
 export default function EditProfile() {
   const navigate = useNavigate();
   const location = useLocation();
   const fileInput = useRef<HTMLInputElement>(null);
-  const data = location.state as { profile: Profile };
+  const data = location.state as { profile: IProfile };
   const { profile } = data;
   const { data: myPlaylistData, isLoading } = useMyPlayList();
   const [genre, setGenre] = useState<string[]>(profile?.genre.split(',') || []);
   const [uploadImg, setUploadImg] = useState<File | null>(null);
-  const [toast, setToast] = useRecoilState(toastAtom);
-  const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
+  const setToast = useSetRecoilState(toastAtom);
+  const setUserInfo = useSetRecoilState(userInfoAtom);
   const [repPlaylist, setRepPlaylist] = useState<number | null>(
     profile.rep_playlist,
   );
@@ -37,7 +36,7 @@ export default function EditProfile() {
 
   const { mutate: editProfile } = useEditProfile();
 
-  const onSubmit = async (data: IUserProfileData) => {
+  const onSubmit = async (data: IUserProfile) => {
     const formData = new FormData();
     const genreArr = genre.join(',');
     formData.append('name', data.nickName);

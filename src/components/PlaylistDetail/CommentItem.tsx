@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,14 +7,13 @@ import {
   toastAtom,
   commentAtom,
   userInfoAtom,
-  backAnimationAtom,
   commentEditIdAtom,
 } from '../../library/atom';
-import { Comment, Reply } from '../../types/playlist';
+import { IComment } from '../../types/playlist';
 import { useDeleteComment } from '../../hooks/queries/useComment';
 
 import { CircleImage } from '../common/Image/Image';
-import MiniModal, { MiniModalWrap } from '../common/Modal/MiniModal';
+import { MiniModalWrap } from '../common/Modal/MiniModal';
 
 import {
   convertDatetime,
@@ -26,8 +25,8 @@ import { ReactComponent as ProfileBadge } from '../../img/badge-icon.svg';
 
 interface Props {
   playlistId: number;
-  comment: Comment;
-  replies?: Comment[];
+  comment: IComment;
+  replies?: IComment[];
   writer?: number;
   isActive?: boolean;
   parentId?: number | null;
@@ -61,10 +60,10 @@ export default function CommentItem(props: Props) {
   const location = useLocation();
   const currentPath = location.pathname;
   const myId = useRecoilValue(userInfoAtom)?.id;
-  const [toast, setToast] = useRecoilState(toastAtom);
-  const [content, setContent] = useRecoilState(commentAtom);
+  const setToast = useSetRecoilState(toastAtom);
+  const setContent = useSetRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
-  const [animation, setAnimation] = useRecoilState(backAnimationAtom);
+  // const [animation, setAnimation] = useRecoilState(backAnimationAtom);
   const { mutate: deleteComment } = useDeleteComment();
 
   const isMyComment = myId === comment?.writer;

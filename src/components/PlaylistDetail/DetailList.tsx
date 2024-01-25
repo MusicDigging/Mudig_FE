@@ -6,8 +6,6 @@ import { IMusic } from '../../types/playlist';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 
-import PlayingIcon from '../../img/playing-icon.svg';
-import TestImg from '../../img/thumbnail-img.svg';
 import { ReactComponent as ArrowIcon } from '../../img/arrow-icon.svg';
 
 interface Props {
