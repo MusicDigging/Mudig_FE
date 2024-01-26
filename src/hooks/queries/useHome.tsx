@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query';
 import { privateInstance } from '../../library/apis/axiosInstance';
-interface Playlist {
+interface IPlaylist {
   id: string;
   title: string;
 }

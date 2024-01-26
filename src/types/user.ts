@@ -12,9 +12,3 @@ export interface IUser {
     refresh: string;
   };
 }
-
-export interface ISignup {
-  email: string;
-  password?: string;
-  type: string;
-}

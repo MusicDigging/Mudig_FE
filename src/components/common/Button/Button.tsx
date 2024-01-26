@@ -85,11 +85,6 @@ interface ChipButtonProps {
   selectedChips?: string[];
 }
 
-interface IToast {
-  content: string;
-  type: string;
-}
-
 export function ChipButton(props: ChipButtonProps) {
   const { name, onSelect, selectedChips } = props;
   const setToast = useSetRecoilState(toastAtom);

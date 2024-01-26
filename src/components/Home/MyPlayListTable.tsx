@@ -5,19 +5,17 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 
-interface PlaylistItem {
+interface IPlaylistItem {
   id: string;
   thumbnail: string;
   title: string;
   music: string[];
 }
 
-interface MyPlayListTableProps {
-  playlistData: PlaylistItem[];
+interface Props {
+  playlistData: IPlaylistItem[];
 }
-export default function MyPlayListTable({
-  playlistData,
-}: MyPlayListTableProps) {
+export default function MyPlayListTable({ playlistData }: Props) {
   return (
     <MyPlayListTableWrap>
       <PlayListBox>

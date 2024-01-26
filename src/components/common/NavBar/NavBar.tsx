@@ -99,11 +99,11 @@ const NavBarWrap = styled.nav`
     }
   }
 `;
-interface StyledLinkProps {
+interface Props {
   $active: boolean;
 }
 
-const StyledLink = styled(Link)<StyledLinkProps>`
+const StyledLink = styled(Link)<Props>`
   ${({ $active }) =>
     $active &&
     css`
