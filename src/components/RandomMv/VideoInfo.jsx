@@ -1,11 +1,7 @@
 // VideoInfo.js
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import addIcon from '../../img/add-icon.svg';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-
-import { modalAtom } from '../../atoms/modalAtom';
+import addIcon from '../../img/add-video-icon.svg';
 
 const VideoInfo = ({ title, views, onAddButtonClick }) => {
   const handleAddButtonClick = () => {
