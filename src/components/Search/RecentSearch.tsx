@@ -1,13 +1,11 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
 import styled from 'styled-components';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import CloseIcon from '../../img/close-icon.svg';
 import TimePastIcon from '../../img/time-past-icon.svg';
-interface StoredKeyword {
-  id: number;
-  keyword: string;
-}
+import { IStoredKeyword } from '../../types/search';
+
 interface Props {
-  recentKeywords: StoredKeyword[];
+  recentKeywords: IStoredKeyword[];
   handleRemoveAllRecentKeyword: () => void;
   handleRemoveRecentKeyword: (arg0: number) => void;
 }
@@ -25,7 +23,7 @@ export default function RecentSearch() {
         <>
           <p>최근 검색어</p>
           <RecentSearchList>
-            {recentKeywords.map(({ id, keyword }: StoredKeyword) => {
+            {recentKeywords.map(({ id, keyword }: IStoredKeyword) => {
               return (
                 <li key={id}>
                   <div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { Playlist } from '../../types/playlist';
+import { IPlaylist } from '../../types/playlist';
 import { useLikePlaylist } from '../../hooks/queries/usePlaylist';
 
 import MiniModal from '../common/Modal/MiniModal';
@@ -14,7 +14,7 @@ import LikeIcon from '../../img/like-icon.svg';
 import LikeActiveIcon from '../../img/like-active-icon.svg';
 
 interface Props {
-  playlist: Playlist;
+  playlist: IPlaylist;
   playlistId: number;
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,12 +1,16 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import OrderChangeIcon from '../../../img/hamburger-icon.svg';
 import { Image } from '../Image/Image';
+import type {
+  DraggableProvidedDraggableProps,
+  DraggableProvidedDragHandleProps,
+} from 'react-beautiful-dnd';
 
 interface Props {
-  innerRef?: any;
-  dragHandleProps?: any;
-  draggableProps?: any;
+  innerRef?: (element: HTMLElement | null) => void;
+  draggableProps?: DraggableProvidedDraggableProps;
+  dragHandleProps?: DraggableProvidedDragHandleProps | null | undefined;
   modify?: boolean;
   children?: React.ReactNode;
   img: string;
@@ -17,8 +21,8 @@ interface Props {
 export default function PlayListItem(props: Props) {
   const {
     innerRef,
-    dragHandleProps,
     draggableProps,
+    dragHandleProps,
     modify,
     children,
     img,

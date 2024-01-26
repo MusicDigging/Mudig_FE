@@ -1,38 +1,34 @@
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { PlayListAtom, toastAtom } from '../../library/atom';
+import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import PlayList from '../common/PlayList/PlayList';
 import CloseIcon from '../../img/close-icon.svg';
-import React, { useState, useEffect } from 'react';
 import {
   DragDropContext,
   Draggable,
   Droppable,
   DropResult,
 } from 'react-beautiful-dnd';
-import { useRecoilState } from 'recoil';
-import { PlayListAtom, toastAtom } from '../../library/atom';
-import { useModifyPlaylist } from '../../hooks/queries/usePlaylist';
-import { useNavigate } from 'react-router-dom';
+import { IPlaylistDesc } from '../../types/playlist';
 
 interface Props {
-  playlistDesc: {
-    title: string;
-    content: string;
-    is_public: boolean;
-  };
+  playlistDesc: IPlaylistDesc;
 }
-export default function PlayListModify({ playlistDesc }: Props) {
+
+export default function PlayListModifyList({ playlistDesc }: Props) {
   const navigate = useNavigate();
-  const [playlistInfo, setPlayListInfo] = useRecoilState(PlayListAtom);
+  const playlistInfo = useRecoilValue(PlayListAtom);
   const [music, setMusic] = useState(playlistInfo.music || []);
   const { mutate: modifyPlaylist } = useModifyPlaylist(
     playlistInfo.playlist.id,
   );
   const [delMusic, setDelMusic] = useState<number[]>([]);
   const [changedOrder, setChangedOrder] = useState([]);
-  const [toast, setToast] = useRecoilState(toastAtom);
-
-  const [isLoading, setIsLoading] = useState(false);
+  const setToast = useSetRecoilState(toastAtom);
 
   // 음악 삭제 handler
   const handleDelBtn = (itemId: number) => {
@@ -51,15 +47,12 @@ export default function PlayListModify({ playlistDesc }: Props) {
       content: playlistDesc.content,
       is_public: playlistDesc.is_public,
     };
-    setIsLoading(true);
     modifyPlaylist(reqData, {
       onSuccess: () => {
-        setIsLoading(false);
         setToast({ content: '수정에 성공하였습니다.', type: 'success' });
         navigate(-1);
       },
-      onError: (error) => {
-        setIsLoading(false);
+      onError: () => {
         setToast({ content: '수정에 실패하였습니다.', type: 'warning' });
       },
     });

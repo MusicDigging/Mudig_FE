@@ -5,15 +5,11 @@ import { useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom, toastAtom } from '../../../library/atom';
-interface PlaylistDesc {
-  title: string;
-  content: string;
-  is_public: boolean;
-}
+import { IPlaylistDesc } from '../../../types/playlist';
 
 interface Props {
-  playlistDesc: PlaylistDesc;
-  setPlaylistDesc: React.Dispatch<React.SetStateAction<PlaylistDesc>>;
+  playlistDesc: IPlaylistDesc;
+  setPlaylistDesc: React.Dispatch<React.SetStateAction<IPlaylistDesc>>;
 }
 
 export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {

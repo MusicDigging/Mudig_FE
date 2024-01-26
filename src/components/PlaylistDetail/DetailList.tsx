@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import MusicWave from './MusicWave';
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
 import PlayList from '../common/PlayList/PlayList';
 import PlayListItem from '../common/PlayList/PlayListItem';
 
@@ -15,7 +15,7 @@ interface Props {
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
   playing: boolean;
   setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  music: Music[];
+  music: IMusic[];
   currMusic: number | null;
   setCurrMusic: React.Dispatch<React.SetStateAction<number | null>>;
 }
