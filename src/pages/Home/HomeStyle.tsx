@@ -62,7 +62,7 @@ export const BackButton = styled.button`
 export const MorePlaylistWrap = styled.div`
   .morePlaylistName {
     position: absolute;
-    top: 17px;
+    top: 25px;
     left: 55px;
   }
 `;
