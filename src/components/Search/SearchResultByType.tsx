@@ -1,17 +1,17 @@
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { CircleImage } from '../common/Image/Image';
 import PlayListItem from '../common/PlayList/PlayListItem';
 import EmptySearch from './EmptySearch';
 import SearchResultTitle from './SearchResultTitle';
 import AddPlaylist from '../../img/add-video-icon.svg';
-import { SearchResult } from '../../types/searchResult';
-import { SearchNavProps } from './SearchNav';
+import { ISearchResult } from '../../types/search';
+import { ISearchNav } from '../../types/search';
 
 interface Props {
-  result: SearchResult;
-  currentNav: SearchNavProps;
+  result: ISearchResult;
+  currentNav: ISearchNav;
   handleAddPlaylist: (arg0: number) => void;
 }
 export default function SearchResultByType(props: Props) {

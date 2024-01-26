@@ -16,12 +16,12 @@ import MoreIcon from '../../img/more-icon.svg';
 import MudigIcon from '../../img/playlistinfo-mudig.svg';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import ProfileBadge from '../../img/badge-icon.svg';
-import { User } from '../../types/user';
-import { Playlist } from '../../types/playlist';
+import { IUser } from '../../types/user';
+import { IPlaylist } from '../../types/playlist';
 
 interface Props {
-  user?: User;
-  playlist: Playlist;
+  user?: IUser;
+  playlist: IPlaylist;
   playlistDesc?: { title: string; content: string; is_public: boolean };
   playing?: boolean;
 }

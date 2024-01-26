@@ -5,7 +5,7 @@ import { useGetPlaylistMusic } from '../../hooks/queries/usePlaylist';
 
 import MainPlayList from './MainPlayList';
 import { Image } from '../common/Image/Image';
-import { Playlist } from '../../types/playlist';
+import { IPlaylist } from '../../types/playlist';
 
 import NoteIcon from '../../img/note-icon.svg';
 import VinylImg from '../../img/vinyl-record-img.svg';
@@ -13,7 +13,7 @@ import WhitePlayIcon from '../../img/play-icon-white.svg';
 import Loading from '../Loading/Loading';
 
 interface Props {
-  data: Playlist;
+  data: IPlaylist;
 }
 
 export default function MainPlayListSection(props: Props) {

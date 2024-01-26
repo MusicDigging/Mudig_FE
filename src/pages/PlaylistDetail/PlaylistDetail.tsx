@@ -10,7 +10,7 @@ import {
   backAnimationAtom,
   commentEditIdAtom,
 } from '../../library/atom';
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 
 import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
@@ -51,7 +51,7 @@ export default function PlaylistDetail() {
     // return;
   }
   const { playlist, comments, music, user } = data;
-  const musicList = music.map((obj: Music) => obj.information);
+  const musicList = music.map((obj: IMusic) => obj.information);
   const musicLength = music.length;
 
   return (

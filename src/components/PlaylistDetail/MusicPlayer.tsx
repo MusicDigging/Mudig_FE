@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import styled from 'styled-components';
 
-import { Music } from '../../types/playlist';
+import { IMusic } from '../../types/playlist';
 
 interface Props {
   pause: boolean;

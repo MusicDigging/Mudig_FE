@@ -1,15 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { Dispatch, SetStateAction } from 'react';
+import { ISearchNav } from '../../types/search';
 
-export interface SearchNavProps {
-  all: boolean;
-  playlist: boolean;
-  music: boolean;
-  user: boolean;
-}
 interface Props {
-  currentNav: SearchNavProps;
-  setCurrentNav: Dispatch<SetStateAction<SearchNavProps>>;
+  currentNav: ISearchNav;
+  setCurrentNav: Dispatch<SetStateAction<ISearchNav>>;
 }
 export default function SearchNav({ currentNav, setCurrentNav }: Props) {
   const handleNavAll = () => {

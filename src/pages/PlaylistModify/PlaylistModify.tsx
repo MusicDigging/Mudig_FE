@@ -1,11 +1,11 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
+import { PlayListAtom } from '../../library/atom';
 import Modal from '../../components/common/Modal/Modal';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
-import PlayListModify from '../../components/PlaylistDetail/PlayListModify';
-import { useState } from 'react';
-import { PlayListAtom, toastAtom } from '../../library/atom';
+import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyList';
 
 export default function PlaylistModify() {
   const modalOpen = useRecoilValue(modalAtom);
@@ -25,7 +25,7 @@ export default function PlaylistModify() {
         playlist={playlistInfo.playlist}
         playlistDesc={playlistDesc}
       />
-      <PlayListModify playlistDesc={playlistDesc} />
+      <PlayListModifyList playlistDesc={playlistDesc} />
     </PlaylistModifyBox>
   );
 }
