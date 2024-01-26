@@ -18,11 +18,11 @@ interface IPlaylist {
   title: string;
 }
 
-interface ModalProps {
+interface Props {
   videoId: string;
 }
 
-export default function AddModal({ videoId }: ModalProps) {
+export default function AddModal({ videoId }: Props) {
   const navigate = useNavigate();
   const { data } = useMyPlayList();
   const { mutate: putMyPlayList } = usePutMyPlayList();

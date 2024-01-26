@@ -16,12 +16,12 @@ export default function SignupDetail() {
   const navigate = useNavigate();
   const type = 'mudig';
 
-  interface ISubmitProps {
+  interface Props {
     email: string;
     password: string;
   }
 
-  const onSubmit = ({ email, password }: ISubmitProps) => {
+  const onSubmit = ({ email, password }: Props) => {
     setUserInfo({ email, password, type });
     navigate('/setprofile');
   };

@@ -6,18 +6,13 @@ import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
 import { useState, useEffect } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
-
-interface ISignupFormProps {
+import { IOtpResponse } from '../../../types/setUser';
+interface Props {
   onSubmit: (data: { email: string; password: string }) => void;
   onEmailToastMsg?: () => void;
 }
 
-interface IOtpResponse {
-  message: string;
-  otp: string;
-}
-
-export const SignupForm = ({ onSubmit, onEmailToastMsg }: ISignupFormProps) => {
+export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const { mutate: postOtpValid } = useOtpValid();

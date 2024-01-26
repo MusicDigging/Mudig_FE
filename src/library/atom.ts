@@ -2,7 +2,8 @@ import { atom, RecoilValue } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { IMusic, IPlaylist } from '../types/playlist';
 
-import { ISignup, IUser } from '../types/user';
+import { User } from '../types/user';
+import { ISignup } from '../types/setUser';
 
 const { persistAtom } = recoilPersist();
 export interface IToast {

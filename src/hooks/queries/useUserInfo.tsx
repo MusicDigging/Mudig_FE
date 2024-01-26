@@ -17,12 +17,12 @@ export const useOtpValid = () => {
 };
 
 //비밀번호 변경
-interface IPasswordData {
+interface IPassword {
   password: string;
   newPassword: string;
 }
 export const useChangePassword = () => {
-  const changePassword = async (data: IPasswordData) => {
+  const changePassword = async (data: IPassword) => {
     const response = await privateInstance.put('/user/changepassword/', {
       old_password: data.password,
       new_password: data.newPassword,
@@ -33,14 +33,6 @@ export const useChangePassword = () => {
   const mutation = useMutation(changePassword);
   return mutation;
 };
-
-interface IUserProfileData {
-  email: string;
-  name: string;
-  about?: string;
-  genre: string[];
-  image?: string;
-}
 
 export const useUserProfile = () => {
   const postUserProfile = async (formData: FormData) => {

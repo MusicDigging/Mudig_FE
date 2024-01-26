@@ -2,12 +2,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import addIcon from '../../img/add-icon.svg';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { IVideoInfoProps } from '../../types/RandomMv';
-import { modalAtom } from '../../atoms/modalAtom';
 
-const VideoInfo = ({ title, views, onAddButtonClick }: IVideoInfoProps) => {
+export interface Props {
+  title: string;
+  views: string;
+  onAddButtonClick?: () => void;
+}
+
+const VideoInfo = ({ title, views, onAddButtonClick }: Props) => {
   const handleAddButtonClick = () => {
     //플리추가 콜백
     if (onAddButtonClick) {
