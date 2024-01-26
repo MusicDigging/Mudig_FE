@@ -7,13 +7,13 @@ import MyPlayListTable from '../../components/Home/MyPlayListTable';
 import NotFound from '../NotFound/NotFound';
 
 // playlistType의 타입 정의
-type PlaylistType = 'recommend' | 'hot' | 'new';
+type IPlaylistType = 'recommend' | 'hot' | 'new';
 
 // playlistData의 구조에 대한 타입 정의 (예시)
 
 export default function MorePlaylist() {
   const navigate = useNavigate();
-  const { playlistType } = useParams<{ playlistType: PlaylistType }>(); // useParams 타입 지정
+  const { playlistType } = useParams<{ playlistType: IPlaylistType }>(); // useParams 타입 지정
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const data = query.get('data');

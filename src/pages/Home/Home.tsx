@@ -10,14 +10,14 @@ import Loading from '../../components/Loading/Loading';
 import NotFound from '../NotFound/NotFound';
 import { Link, useNavigate } from 'react-router-dom';
 
-interface HomeData {
-  liked_playlist: Playlist[];
-  my_playlist: Playlist[];
-  playlist_all: Playlist[];
-  recommend_pli: Playlist[];
+interface IHomeData {
+  liked_playlist: IPlaylist[];
+  my_playlist: IPlaylist[];
+  playlist_all: IPlaylist[];
+  recommend_pli: IPlaylist[];
 }
 
-interface Playlist {
+interface IPlaylist {
   id: string;
   title: string;
 }
@@ -32,7 +32,7 @@ export default function Home() {
 
   const { liked_playlist, my_playlist, playlist_all, recommend_pli } = data;
 
-  const handleMoreClick = (playlistType: string, data: Playlist[]) => {
+  const handleMoreClick = (playlistType: string, data: IPlaylist[]) => {
     navigate(
       `/main/${playlistType}?data=${encodeURIComponent(JSON.stringify(data))}`,
     );
