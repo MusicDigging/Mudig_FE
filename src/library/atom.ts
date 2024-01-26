@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { IMusic, IPlaylist } from '../types/playlist';
 
-import { User } from '../types/user';
+import { IUser } from '../types/user';
 import { ISignup } from '../types/setUser';
 
 const { persistAtom } = recoilPersist();
