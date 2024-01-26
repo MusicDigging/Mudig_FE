@@ -20,7 +20,7 @@ interface Props {
 }
 export default function PlayListTable({ liSize, playlistData }: Props) {
   return (
-    <PlayListTableWrap liSize={liSize}>
+    <PlayListTableWrap>
       <ul className='scrollable-element'>
         {playlistData &&
           playlistData.map((item) => (
@@ -54,7 +54,7 @@ PlayListTable.defaultProps = {
   },
 };
 
-const PlayListTableWrap = styled.div<ILiSize>`
+const PlayListTableWrap = styled.div`
   ul {
     width: 100%;
     display: flex;
