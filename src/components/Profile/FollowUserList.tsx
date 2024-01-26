@@ -2,22 +2,19 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import User from '../common/User';
 
-interface UserDataType {
+interface IUserDataType {
   id: number;
   nickname: string;
   profile_image: string;
   is_following: boolean;
 }
 
-interface FollowUserListProps {
-  users: UserDataType[];
-  onFollowClick: (user: UserDataType) => void; // 함수 타입 정의
+interface Props {
+  users: IUserDataType[];
+  onFollowClick: (user: IUserDataType) => void; // 함수 타입 정의
 }
 
-export default function FollowUserList({
-  users,
-  onFollowClick,
-}: FollowUserListProps) {
+export default function FollowUserList({ users, onFollowClick }: Props) {
   if (!users || users.length === 0) {
     return <div>사용자가 없습니다.</div>;
   }

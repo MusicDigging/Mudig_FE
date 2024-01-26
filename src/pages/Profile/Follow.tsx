@@ -12,7 +12,7 @@ import { useRecoilValue } from 'recoil';
 import useFollowUser from '../../hooks/queries/useFollow';
 import BGImg from '../../img/background-img2.svg';
 
-interface UserData {
+interface IUserData {
   id: number;
   nickname: string;
   profile_image: string;
@@ -29,7 +29,7 @@ export default function Follow() {
     'followers',
   );
   const [refreshData, setRefreshData] = useState(false);
-  const [users, setUsers] = useState<UserData[]>([]);
+  const [users, setUsers] = useState<IUserData[]>([]);
   const { data: followers, isLoading: followingLoading } = useGetFollower(
     parseInt(id) || myId,
   );
@@ -53,7 +53,7 @@ export default function Follow() {
 
   const { followUser } = useFollowUser(); // 커스텀 훅 사용
 
-  const handleFollowClick = (user: UserData) => {
+  const handleFollowClick = (user: IUserData) => {
     const isUnfollowing = user.is_following;
     followUser(user.id, isUnfollowing, {
       onSuccess: () => {
@@ -76,9 +76,9 @@ export default function Follow() {
   };
 
   const renderUserList = (
-    data: UserData[],
+    data: IUserData[],
     listType: 'followers' | 'followings',
-    onFollowClick: (user: UserData) => void,
+    onFollowClick: (user: IUserData) => void,
   ) => {
     if (!Array.isArray(data) || data.length === 0) {
       return <p id='FollowNone'>앗! 아직 비어있어요</p>;

@@ -4,6 +4,9 @@ import KakaoIcon from '../../img/kakao-icon.svg';
 import { Button } from '../../components/common/Button/Button';
 import closeIcon from '../../img/close-icon.svg';
 import GoogleGrayIcon from '../../img/google-gray-icon.svg';
+interface Props {
+  bold: boolean;
+}
 
 export default function Intro() {
   return (
@@ -40,9 +43,6 @@ export default function Intro() {
   );
 }
 
-interface TitleProps {
-  bold: boolean;
-}
 const IntroWrap = styled.div`
   width: 100%;
   height: 100%;
@@ -58,7 +58,7 @@ const IntroText = styled.div`
   text-align: center;
   margin-bottom: 24px;
 `;
-const Title = styled.span<TitleProps>`
+const Title = styled.span<Props>`
   color: #191919;
   font-size: var(--font-xl);
   font-weight: ${(props) =>

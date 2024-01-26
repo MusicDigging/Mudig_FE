@@ -4,27 +4,21 @@ import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
 import { Link } from 'react-router-dom';
 
-interface PlaylistItem {
+interface IPlaylistItem {
   id: string; // 혹은 number
   thumbnail: string;
   title: string;
 }
 
-interface LiSize {
+interface ILiSize {
   width: string;
 }
 
-interface PlayListTableProps {
-  liSize: LiSize;
-  playlistData: PlaylistItem[];
+interface Props {
+  liSize: ILiSize;
+  playlistData: IPlaylistItem[];
 }
-interface PlayListTableWrapProps {
-  liSize: LiSize;
-}
-export default function PlayListTable({
-  liSize,
-  playlistData,
-}: PlayListTableProps) {
+export default function PlayListTable({ liSize, playlistData }: Props) {
   return (
     <PlayListTableWrap liSize={liSize}>
       <ul className='scrollable-element'>
@@ -60,7 +54,7 @@ PlayListTable.defaultProps = {
   },
 };
 
-const PlayListTableWrap = styled.div<PlayListTableWrapProps>`
+const PlayListTableWrap = styled.div<ILiSize>`
   ul {
     width: 100%;
     display: flex;
@@ -91,7 +85,7 @@ const PlayListTableWrap = styled.div<PlayListTableWrapProps>`
   }
 `;
 
-const StyledListItem = styled.li<{ liSize: LiSize }>`
+const StyledListItem = styled.li<{ liSize: ILiSize }>`
   width: ${(props) => props.liSize?.width};
   p {
     white-space: nowrap;
@@ -104,12 +98,12 @@ const StyledListItem = styled.li<{ liSize: LiSize }>`
   position: relative;
 `;
 
-const ImageBox = styled.div<{ liSize: LiSize }>`
+const ImageBox = styled.div<{ liSize: ILiSize }>`
   width: ${(props) => props.liSize?.width};
   height: ${(props) => props.liSize?.width};
   border-radius: 8px;
 `;
-const PlayIconImg = styled.img<{ liSize: LiSize }>`
+const PlayIconImg = styled.img<{ liSize: ILiSize }>`
   position: absolute;
   bottom: ${(props) =>
     0.17647 * parseInt(props.liSize.width, 10) - 12.32353 + 26}px;
