@@ -8,9 +8,9 @@
 
 ## 테스트 계정
 
-| 로그인 유형     | 아이디 | 비밀번호 |
-| --------------- | ------ | -------- |
-| **테스트 계정** | `mudig011@email.com`  | `Mudig011`    |
+| 로그인 유형     | 아이디               | 비밀번호   |
+| --------------- | -------------------- | ---------- |
+| **테스트 계정** | `mudig011@email.com` | `Mudig011` |
 
 <!-- 목차 작성하기 -->
 
@@ -174,73 +174,84 @@
 # 페이지 소개
 
 - ### 회원가입 페이지
-|이메일 회원가입|구글 회원가입|카카오 회원가입|
-|---|---|---|
-|<img width="300" alt="이메일회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/abadfe50-9f00-4723-af8f-69aa50896f46"/>|<img width="300" alt="구글 회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/9ab77077-fdac-4466-8e95-28d6ca7f6664"/>|<img width="300" alt="카카오 회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/a9c477d2-3cfd-461f-9bd2-ff3182b6e178"/>|
+
+  | 이메일 회원가입                                                                                                                              | 구글 회원가입                                                                                                                               | 카카오 회원가입                                                                                                                               |
+  | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="이메일회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/abadfe50-9f00-4723-af8f-69aa50896f46"/> | <img width="300" alt="구글 회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/9ab77077-fdac-4466-8e95-28d6ca7f6664"/> | <img width="300" alt="카카오 회원가입" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/a9c477d2-3cfd-461f-9bd2-ff3182b6e178"/> |
 
 - ### 로그인 페이지
-|이메일 로그인|구글 로그인|카카오 로그인|
-|---|---|---|
-|<img width="300" alt="이메일로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/20082ab6-923d-4683-9214-3586f3d9f901"/>|<img width="300" alt="구글 로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/fd58cb56-42f7-4c1d-9960-c0524c4ccc0e"/>|<img width="300" alt="카카오 로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/ace2ceeb-a525-47ac-9a3d-4df49d70fccb"/>|
+
+  | 이메일 로그인                                                                                                                              | 구글 로그인                                                                                                                               | 카카오 로그인                                                                                                                               |
+  | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="이메일로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/20082ab6-923d-4683-9214-3586f3d9f901"/> | <img width="300" alt="구글 로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/fd58cb56-42f7-4c1d-9960-c0524c4ccc0e"/> | <img width="300" alt="카카오 로그인" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/ace2ceeb-a525-47ac-9a3d-4df49d70fccb"/> |
 
 - ### 홈 페이지
-|홈|스플래시|
-|---|---|
-|<img width="300" alt="홈" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/ed33ff1a-e79f-410f-8cb2-bf796c7214e1"/>|<img width="300" alt="스플래시" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/59e4632c-c976-4c63-89fe-fec7d4341d18"/>|
+
+  | 홈                                                                                                                               | 스플래시                                                                                                                               |
+  | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="홈" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/ed33ff1a-e79f-410f-8cb2-bf796c7214e1"/> | <img width="300" alt="스플래시" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/59e4632c-c976-4c63-89fe-fec7d4341d18"/> |
 
 - ### 검색 페이지
-|검색|
-|---|
-|<img width="300" alt="검색" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/d5a8752a-ff83-48db-b5ce-37d7988ac90c"/>|
+
+  | 검색                                                                                                                               |
+  | ---------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="검색" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/d5a8752a-ff83-48db-b5ce-37d7988ac90c"/> |
 
 - ### 플리 생성 페이지
-|플리 생성|
-|---|
-|<img width="300" alt="플리생성" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/15525cc5-5fa4-405c-b7db-df251ce3a899"/>|
+
+  | 플리 생성                                                                                                                              |
+  | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="플리생성" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/15525cc5-5fa4-405c-b7db-df251ce3a899"/> |
 
 - ### 플리 상세 페이지
-|플리 상세|플리 삭제|플리 좋아요|
-|---|---|---|
-|<img width="300" alt="플리상세" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/0ea7f454-1135-4387-a049-d3e41205c689"/>|<img width="300" alt="플리상세" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/895ab130-83c2-4ff2-8f36-2c3d1f64a686"/>|<img width="300" alt="플리좋아요" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/a19b3bf1-9e2d-49b7-876e-631a6e3436cd"/>|
+  | 플리 상세                                                                                                                              | 플리 삭제                                                                                                                              | 플리 좋아요                                                                                                                              |
+  | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="플리상세" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/0ea7f454-1135-4387-a049-d3e41205c689"/> | <img width="300" alt="플리상세" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/895ab130-83c2-4ff2-8f36-2c3d1f64a686"/> | <img width="300" alt="플리좋아요" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/a19b3bf1-9e2d-49b7-876e-631a6e3436cd"/> |
 
-|댓글|대댓글|
-|---|---|
-|<img width="300" alt="댓글" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/df8edbbf-3fe6-436d-b245-66645f3b8294"/>|<img width="300" alt="대댓글" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/7f374218-75df-4a1b-ba5b-c9aa57215f9d"/>|
+| 댓글                                                                                                                               | 대댓글                                                                                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| <img width="300" alt="댓글" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/df8edbbf-3fe6-436d-b245-66645f3b8294"/> | <img width="300" alt="대댓글" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/7f374218-75df-4a1b-ba5b-c9aa57215f9d"/> |
 
 - ### 플리 수정 페이지
-|플리 수정|
-|---|
-|<img width="300" alt="플리수정" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/5aca7e9c-d98f-4360-a8c5-9380f1497c9d"/>|
+
+  | 플리 수정                                                                                                                              |
+  | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="플리수정" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/5aca7e9c-d98f-4360-a8c5-9380f1497c9d"/> |
 
 - ### 랜덤 뮤비 페이지
-|랜덤 뮤비|랜덤뮤비_곡추가|
-|---|---|
-|<img width="300" alt="랜덤뮤비" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/e261d794-6c18-4f6d-b347-81b642c4401f"/>|<img width="300" alt="랜덤뮤비곡추가" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/2eff8cdd-1896-4696-aea5-d10b9aa35775"/>|
+
+  | 랜덤 뮤비                                                                                                                              | 랜덤뮤비\_곡추가                                                                                                                             |
+  | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="랜덤뮤비" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/e261d794-6c18-4f6d-b347-81b642c4401f"/> | <img width="300" alt="랜덤뮤비곡추가" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/2eff8cdd-1896-4696-aea5-d10b9aa35775"/> |
 
 - ### 프로필 페이지
-|마이 프로필|아더 프로필|로그아웃|
-|---|---|---|
-|<img width="300" alt="마이프로필" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/d98c37f4-2ffc-4275-b297-9c3149e809e0"/>|<img width="300" alt="아더프로필" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/79bddec4-753e-4af1-8414-0df3624ea081"/>|<img width="300" alt="로그아웃" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/bd6e046f-8454-4847-8cb3-5316cdb35d6a"/>|
+
+  | 마이 프로필                                                                                                                              | 아더 프로필                                                                                                                              | 로그아웃                                                                                                                               |
+  | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="마이프로필" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/d98c37f4-2ffc-4275-b297-9c3149e809e0"/> | <img width="300" alt="아더프로필" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/79bddec4-753e-4af1-8414-0df3624ea081"/> | <img width="300" alt="로그아웃" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/bd6e046f-8454-4847-8cb3-5316cdb35d6a"/> |
 
 - ### 팔로우
-|팔로우&언팔로우|팔로잉&팔로워 리스트|
-|---|---|
-|<img width="300" alt="팔로우&언팔로우" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/f908213d-abfe-4d31-be26-eb71eacdc4a9"/>|<img width="300" alt="팔로우&언팔로우" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/20a1dfb7-8317-4000-9283-79b299c6ef1d"/>|
+
+  | 팔로우&언팔로우                                                                                                                               | 팔로잉&팔로워 리스트                                                                                                                          |
+  | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="팔로우&언팔로우" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/f908213d-abfe-4d31-be26-eb71eacdc4a9"/> | <img width="300" alt="팔로우&언팔로우" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/20a1dfb7-8317-4000-9283-79b299c6ef1d"/> |
 
 - ### 프로필 수정 페이지
-|프로필 수정|
-|---|
-|<img width="300" alt="프로필수정" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/0a32fceb-ecbe-4ecb-aa1a-72949a5a187e"/>|
+
+  | 프로필 수정                                                                                                                              |
+  | ---------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="프로필수정" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/0a32fceb-ecbe-4ecb-aa1a-72949a5a187e"/> |
 
 - ### 이벤트 페이지
-|이벤트 페이지|
-|---|
-|<img width="300" alt="랜덤뮤비" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/dbc90d4a-d629-4088-8a2b-1c01566cfee4"/>|
+
+  | 이벤트 페이지                                                                                                                          |
+  | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="랜덤뮤비" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/dbc90d4a-d629-4088-8a2b-1c01566cfee4"/> |
 
 - ### 비밀번호 변경, 회원탈퇴 페이지
-|비밀번호 변경|회원탈퇴|
-|---|---|
-|<img width="300" alt="비밀번호변경" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/94bb4199-5408-40e2-9eb7-46304b3afa08"/>|<img width="300" alt="회원탈퇴" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/80f5b675-c680-4601-b4ee-3715867f3e3d"/>|
+  | 비밀번호 변경                                                                                                                              | 회원탈퇴                                                                                                                               |
+  | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+  | <img width="300" alt="비밀번호변경" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/94bb4199-5408-40e2-9eb7-46304b3afa08"/> | <img width="300" alt="회원탈퇴" src="https://github.com/MusicDigging/Mudig_FE/assets/107910342/80f5b675-c680-4601-b4ee-3715867f3e3d"/> |
 
 # 핵심 기능/코드
 
@@ -684,7 +695,11 @@ useMutation Delete 요청 성공 시 쿼리 데이터를 제거하는 `queryClie
 
 ### 이지수
 
-### 윤서준
+<summary><h3>윤서준</h3></summary>
+
+이번 뮤딕 프로젝트를 통해 디자이너와 백엔드 개발자분들과 협업을 진행하게 되었습니다. PM이 없는 상태에서 기획을 시작하여 중간 기획 수정사항이 여러번 생기기도 했지만, 팀원들간의 지속적인 소통을 통해 원할하게 조정할 수 있었습니다. 또한 백엔드 분들과의 협업을 통해 API의 설계부터 생성까지의 작업을 확인하고 이해할 수 있게 되어 좋았습니다.
+
+</details>
 
 # 유저 피드백 이후
 
