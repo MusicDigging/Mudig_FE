@@ -5,13 +5,13 @@ import { Button, ChipButton } from '../Button/Button';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import axios from 'axios';
-import { IUserProfileData } from '../../../types/profile';
-import { Profile } from '../../../types/profile';
+import { IUserProfile } from '../../../types/profile';
+import { IProfile } from '../../../types/profile';
 
 interface Props {
-  profile?: Profile | undefined;
+  profile?: IProfile | undefined;
   btnText: string;
-  onSubmit: SubmitHandler<IUserProfileData>;
+  onSubmit: SubmitHandler<IUserProfile>;
   onChipSelect?: (newSelectedChips: string[]) => void;
   children?: ReactElement;
 }

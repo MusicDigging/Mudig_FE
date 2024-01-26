@@ -5,7 +5,7 @@ import {
 } from '../../library/apis/axiosInstance';
 
 export const useGetProfile = (user_id: number) => {
-  const { data, isLoading, isFetching, isError, refetch } = useQuery(
+  const { data, isLoading, isError } = useQuery(
     ['get-profile', user_id],
     () => {
       return privateInstance.get(`/user/profile/${user_id}/`);

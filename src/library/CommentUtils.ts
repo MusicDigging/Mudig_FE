@@ -1,6 +1,6 @@
-import { Comment, Reply } from '../types/playlist';
+import { IComment, IReply } from '../types/playlist';
 
-export const filterComments = (comments: Comment[], replies: Reply) =>
+export const filterComments = (comments: IComment[], replies: IReply) =>
   comments
     .filter(
       ({ parent, is_active, id }) =>
@@ -11,10 +11,10 @@ export const filterComments = (comments: Comment[], replies: Reply) =>
         new Date(b).getTime() - new Date(a).getTime(),
     );
 
-export const filterReplies = (comments: Comment[]) =>
+export const filterReplies = (comments: IComment[]) =>
   comments
     .filter(({ parent, is_active }) => parent !== null && is_active)
-    .reduce((repliesGroup: Reply, data) => {
+    .reduce((repliesGroup: IReply, data) => {
       const { parent } = data;
       if (parent !== null) {
         repliesGroup[parent] = [...(repliesGroup[parent] || []), data];

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -33,7 +33,7 @@ export default function PlayListInfo(props: Props) {
   const myId = useRecoilValue(userInfoAtom).id;
   const [moreInfoView, setMoreInfoView] = useState(false);
   const [miniModalOpen, setMiniModalOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const setModalOpen = useSetRecoilState(modalAtom);
   const { mutate: deletePlaylist } = useDeletePlaylist();
   const isModifyPath =
     location.pathname.includes('/playlist/detail/') &&

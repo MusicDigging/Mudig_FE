@@ -3,7 +3,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import { Link, LinkProps } from 'react-router-dom';
 
-interface NextLinkProps extends LinkProps {
+interface INextLink extends LinkProps {
   disabled?: boolean;
 }
 
@@ -125,7 +125,7 @@ export const LinkBox = styled.div`
   gap: 16px;
 `;
 
-export const NextLink = styled(Link)<NextLinkProps>`
+export const NextLink = styled(Link)<INextLink>`
   width: 100%;
   height: 44px;
   display: flex;

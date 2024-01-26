@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import {
@@ -23,7 +23,7 @@ export default function CommentForm(props: Props) {
   const { mutate: writeReply } = useWriteReply();
   const { mutate: editComment } = useEditComment();
   const { mutate: writeComment } = useWriteComment();
-  const [toast, setToast] = useRecoilState(toastAtom);
+  const setToast = useSetRecoilState(toastAtom);
   const [content, setContent] = useRecoilState(commentAtom);
   const [editId, setEditId] = useRecoilState(commentEditIdAtom);
 

@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styled from 'styled-components';
 
 import { IPlaylist } from '../../types/playlist';
 import { useLikePlaylist } from '../../hooks/queries/usePlaylist';
-
-import MiniModal from '../common/Modal/MiniModal';
 
 import PlayIcon from '../../img/play-icon.svg';
 import PauseIcon from '../../img/pause-Icon.svg';
@@ -96,10 +94,6 @@ const PlayBtn = styled.button`
   height: 62px;
   border-radius: 50%;
   box-shadow: 0px -2px 20px 0px rgba(215, 176, 243, 0.25);
-`;
-
-const MoreBtnBox = styled.div`
-  position: relative;
 `;
 
 const LikeBtn = styled.button`
