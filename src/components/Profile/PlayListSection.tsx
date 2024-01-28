@@ -81,21 +81,22 @@ export default function PlayListSection(props: Props) {
         )}
         <PlayList>
           {playlists.map((playlist) => (
-            <Link
-              key={playlist.id}
-              to={`/playlist/detail/${playlist.id}`}
-              state={{ id: playlist.id }}
-            >
-              <PlayListItem
-                img={`${playlist.thumbnail}`}
-                title={playlist.title}
-                info={`${playlist.music.length}곡`}
+            <li key={playlist.id}>
+              <Link
+                to={`/playlist/detail/${playlist.id}`}
+                state={{ id: playlist.id }}
               >
-                <PlayBtnStyle type='button'>
-                  <img src={PlayIcon} alt='재생 바로가기 아이콘' />
-                </PlayBtnStyle>
-              </PlayListItem>
-            </Link>
+                <PlayListItem
+                  img={`${playlist.thumbnail}`}
+                  title={playlist.title}
+                  info={`${playlist.music.length}곡`}
+                >
+                  <PlayBtnStyle type='button'>
+                    <img src={PlayIcon} alt='재생 바로가기 아이콘' />
+                  </PlayBtnStyle>
+                </PlayListItem>
+              </Link>
+            </li>
           ))}
         </PlayList>
       </PlayListBox>

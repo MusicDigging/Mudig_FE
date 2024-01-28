@@ -78,13 +78,14 @@ export default function ProfileSection(props: Props) {
 
   return (
     <ProfileSectionWrap>
+      <h2 className='a11y-hidden'>프로필 정보</h2>
       <ProfileNavBtn>
         <button onClick={() => navigate(-1)}>
           <img src={BackBtnIcon} alt='뒤로가기 버튼' />
         </button>
         {isMyProfile && (
           <div>
-            <button onClick={handleMoreBtnClick}>
+            <button onClick={handleMoreBtnClick} aria-label='더보기'>
               <img src={MoreBtnIcon} alt='' />
             </button>
             {isModalOpen && (

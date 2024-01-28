@@ -17,13 +17,13 @@ export default function MainPlayList(props: Props) {
     <MainPlayListWrap>
       <ul className='scrollable-element'>
         {musicData.map((music) => (
-          <Link to={`/playlist/detail/${id}`} key={music.id} state={{ id }}>
-            <StyledListItem>
+          <StyledListItem key={music.id}>
+            <Link to={`/playlist/detail/${id}`} state={{ id }}>
               <Image src={music.thumbnail} alt='음악 이미지' />
               <h4>{music.song}</h4>
               <p>{music.singer}</p>
-            </StyledListItem>
-          </Link>
+            </Link>
+          </StyledListItem>
         ))}
       </ul>
     </MainPlayListWrap>

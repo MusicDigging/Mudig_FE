@@ -38,7 +38,7 @@ export default function MainPlayListSection(props: Props) {
             </Thumbnail>
             <img src={VinylImg} alt='레코드 이미지' />
           </MainPlayListImgBox>
-          <h4>{title}</h4>
+          <h3>{title}</h3>
         </Link>
         <p>{music.length}곡</p>
       </MainPlayListInfoBox>
@@ -69,7 +69,7 @@ const MainPlayListInfoBox = styled.div`
   flex-direction: column;
   align-items: center;
 
-  h4 {
+  h3 {
     text-align: center;
     margin-bottom: 6px;
     height: 20px;
