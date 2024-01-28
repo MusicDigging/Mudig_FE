@@ -11,7 +11,6 @@ export default function PlaylistModify() {
   const modalOpen = useRecoilValue(modalAtom);
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [playlistDesc, setPlaylistDesc] = useState({
-    // 플리 설명 state
     title: playlistInfo.playlist?.title,
     content: playlistInfo.playlist?.content,
     is_public: playlistInfo.playlist?.is_public,
