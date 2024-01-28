@@ -102,9 +102,6 @@ export default function Login() {
 
   return (
     <LoginWrap>
-      {/* {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )} */}
       <LoginHeader>
         <LoginTitle>
           선곡 고민 끝, <br />
