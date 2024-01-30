@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
-import {
-  SignUpAtom,
-  signUpInfoAtom,
-  toastAtom,
-  userInfoAtom,
-} from '../../library/atom';
+import { signUpInfoAtom, toastAtom } from '../../library/atom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
