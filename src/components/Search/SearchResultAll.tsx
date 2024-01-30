@@ -36,23 +36,23 @@ export default function SearchResultAll(props: Props) {
             {result.recent_playlists.length !== 0 ? (
               result.recent_playlists.map((item) => {
                 return (
-                  <Link
-                    to={`/playlist/detail/${item.playlist.id}`}
-                    key={item.playlist.id}
-                    state={{ id: item.playlist.id }}
-                  >
-                    <PlayListItem
-                      key={item.playlist.id}
-                      img={item.playlist.thumbnail}
-                      title={item.playlist.title}
-                      info={
-                        typeof item.writer === 'string' &&
-                        item.writer === '유저 정보 없음'
-                          ? '알 수 없는 사용자'
-                          : item.writer.name
-                      }
-                    />
-                  </Link>
+                  <li key={item.playlist.id}>
+                    <Link
+                      to={`/playlist/detail/${item.playlist.id}`}
+                      state={{ id: item.playlist.id }}
+                    >
+                      <PlayListItem
+                        img={item.playlist.thumbnail}
+                        title={item.playlist.title}
+                        info={
+                          typeof item.writer === 'string' &&
+                          item.writer === '유저 정보 없음'
+                            ? '알 수 없는 사용자'
+                            : item.writer.name
+                        }
+                      />
+                    </Link>
+                  </li>
                 );
               })
             ) : (
@@ -92,21 +92,22 @@ export default function SearchResultAll(props: Props) {
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {
                 return (
-                  <Link
-                    to={`/user/profile/${user.id}`}
-                    key={user.id}
-                    state={{ id: user.id }}
-                  >
-                    <UserItem key={user.id}>
-                      <UserImgBox>
-                        <CircleImage src={user.image} alt='유저이미지' />
-                      </UserImgBox>
-                      <UserInfoBox>
-                        <div>{user.name}</div>
-                        <p>{user.about}</p>
-                      </UserInfoBox>
-                    </UserItem>
-                  </Link>
+                  <li key={user.id}>
+                    <Link
+                      to={`/user/profile/${user.id}`}
+                      state={{ id: user.id }}
+                    >
+                      <UserItem>
+                        <UserImgBox>
+                          <CircleImage src={user.image} alt='유저이미지' />
+                        </UserImgBox>
+                        <UserInfoBox>
+                          <div>{user.name}</div>
+                          <p>{user.about}</p>
+                        </UserInfoBox>
+                      </UserItem>
+                    </Link>
+                  </li>
                 );
               })
             ) : (
@@ -129,7 +130,7 @@ const UserList = styled.ul`
   flex-direction: column;
   gap: 16px;
 `;
-const UserItem = styled.li`
+const UserItem = styled.div`
   display: flex;
   gap: 16px;
   align-items: center;

@@ -27,12 +27,13 @@ export default function PlaylistSummary() {
       <PlayListBox>
         <PlayList>
           {music.map((item: IMusic) => (
-            <PlayListItem
-              key={item.id}
-              img={item.thumbnail}
-              title={item.song}
-              info={item.singer}
-            />
+            <li key={item.id}>
+              <PlayListItem
+                img={item.thumbnail}
+                title={item.song}
+                info={item.singer}
+              />
+            </li>
           ))}
         </PlayList>
       </PlayListBox>
