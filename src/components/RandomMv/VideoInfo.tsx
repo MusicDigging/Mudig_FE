@@ -1,7 +1,6 @@
 // VideoInfo.js
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import addIcon from '../../img/add-icon.svg';
+import addIcon from '../../img/add-video-icon.svg';
 
 export interface Props {
   title: string;

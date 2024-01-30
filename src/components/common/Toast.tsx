@@ -39,7 +39,13 @@ export default function Toast({ setToast, text, type }: Props) {
                 ? ErrorIcon
                 : WarningIcon
           }
-          alt=''
+          alt={
+            type === 'success'
+              ? '성공 아이콘'
+              : type === 'error'
+                ? '에러 아이콘'
+                : '경고 아이콘'
+          }
         />
         <p>{text}</p>
       </ToastBox>

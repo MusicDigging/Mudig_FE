@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { CircleImage } from '../../components/common/Image/Image';
 import { userInfoAtom } from '../../library/atom';
 
-interface UserProps {
+interface Props {
   user: number; // 혹은 적절한 타입으로 변경
   name: string;
   profilePicture: string;
@@ -19,7 +19,7 @@ export default function User({
   profilePicture,
   isFollowing,
   onFollowClick,
-}: UserProps) {
+}: Props) {
   const myInfo = useRecoilValue(userInfoAtom);
 
   const handleClick = () => {

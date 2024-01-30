@@ -15,6 +15,7 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
+import { IUser } from '../../types/user';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function EditProfile() {
         setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
         // userInfoAtom 상태 업데이트
         navigate(-1);
-        setUserInfo((prevUserInfo) => {
+        setUserInfo((prevUserInfo: IUser) => {
           if (prevUserInfo !== null) {
             return {
               ...prevUserInfo,
@@ -81,9 +82,6 @@ export default function EditProfile() {
 
   return (
     <S.EditProfileWrap>
-      {/* {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )} */}
       <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
         <img src={ArrowIcon} alt='' />
       </S.MoveBackBtn>
