@@ -67,33 +67,33 @@ export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {
     <ModalWrap>
       <ModalBox>
         <ModalForm>
-          <label>
-            <TitleInput
-              type='text'
-              name='playlistTitle'
-              id='playlistTitle'
-              defaultValue={playlistDesc.title || playlistInfo.playlist.title}
-              placeholder='플레이리스트의 제목을 입력해주세요.'
-              autoComplete='off'
-              onChange={changeModifyDesc}
-              maxLength={50}
-              required
-            />
+          <label htmlFor='playlistTitle' className='a11y-hidden'>
+            플레이리스트 제목
           </label>
-          <label>
-            <ContentTextArea
-              name='playlistDescription'
-              id='playlistDescription'
-              defaultValue={
-                playlistDesc.content || playlistInfo.playlist.content
-              }
-              placeholder='플레이리스트에 대한 설명을 입력해주세요.'
-              autoComplete='off'
-              onChange={changeModifyDesc}
-              maxLength={150}
-              required
-            />
+          <TitleInput
+            type='text'
+            name='playlistTitle'
+            id='playlistTitle'
+            defaultValue={playlistDesc.title || playlistInfo.playlist.title}
+            placeholder='플레이리스트의 제목을 입력해주세요.'
+            autoComplete='off'
+            onChange={changeModifyDesc}
+            maxLength={50}
+            required
+          />
+          <label htmlFor='playlistDescription' className='a11y-hidden'>
+            플레이리스트 설명
           </label>
+          <ContentTextArea
+            name='playlistDescription'
+            id='playlistDescription'
+            defaultValue={playlistDesc.content || playlistInfo.playlist.content}
+            placeholder='플레이리스트에 대한 설명을 입력해주세요.'
+            autoComplete='off'
+            onChange={changeModifyDesc}
+            maxLength={150}
+            required
+          />
           <PrivateCheckBtn
             type='button'
             onClick={handlePrivateView}
