@@ -32,7 +32,7 @@ export default function SearchInput({ setInputValue, onSubmit }: Props) {
         ref={inputRef}
       />
       <button>
-        <img src={SearchIcon} alt='검색버튼' />
+        <img src={SearchIcon} alt='검색' />
       </button>
     </form>
   );
