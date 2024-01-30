@@ -71,6 +71,9 @@ export default function Profile() {
 
   return (
     <S.ProfileWrap>
+      <h1 className='a11y-hidden'>
+        {my_id === user_id ? '마이' : '유저'} 프로필
+      </h1>
       <ProfileSection
         isMyProfile={my_id === user_id}
         data={{
