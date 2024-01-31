@@ -30,7 +30,7 @@ export default function PlaylistModify() {
 }
 
 const PlaylistModifyBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  /* display: flex;
+  flex-direction: column; */
+  /* height: 100%; */
 `;

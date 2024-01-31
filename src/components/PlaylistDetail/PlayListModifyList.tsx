@@ -134,7 +134,8 @@ export default function PlayListModifyList({ playlistDesc }: Props) {
   );
 }
 
-const PlayListModifyWrap = styled.div`
+const PlayListModifyWrap = styled.section`
+  height: calc(100vh - 355px);
   flex: 1 0 0;
   padding: 25px 16px;
   background-color: #fff;
