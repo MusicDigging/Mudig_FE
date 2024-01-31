@@ -32,6 +32,10 @@ const GlobalStyle = createGlobalStyle`
        --font-bold: 700;
        --font-regular: 400;
        --font-semi-bold: 500;
+       /* -ms-overflow-style: none; */
+       ::-webkit-scrollbar {
+         display: none;
+       }
   }
     
  // Reset

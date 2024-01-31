@@ -104,6 +104,7 @@ export default function PlayListSection(props: Props) {
   );
 }
 const PlayListSectionWrap = styled.section<{ maxHeight: string }>`
+  height: ${(props) => props.maxHeight};
   flex: 1 0 auto;
   min-height: ${(props) => props.maxHeight};
   padding: 0px 16px;

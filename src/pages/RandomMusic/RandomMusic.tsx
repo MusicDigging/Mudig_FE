@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 
 import { IVideoData } from '../../types/RandomMv';
+import TopButton from '../../components/common/Button/TopButton';
 
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
@@ -81,6 +82,7 @@ export default function RandomMusic() {
     <>
       <MainHeader />
       <PlayerWrap>
+        {/* <TopButton /> */}
         {allVideos &&
           allVideos.map((video, index) => (
             <PlayerBox id={video.id} key={index}>
@@ -100,7 +102,8 @@ export default function RandomMusic() {
 }
 
 const PlayerWrap = styled.main`
-  margin-top: 6px;
+  /* margin-top: 6px; */
+  padding-top: 70px;
 `;
 
 const PlayerBox = styled.div`

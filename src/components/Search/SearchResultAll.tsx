@@ -119,10 +119,11 @@ export default function SearchResultAll(props: Props) {
     </>
   );
 }
-const SearchListBox = styled.div`
+const SearchListBox = styled.main`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  height: calc(100vh - 150px);
 `;
 const SearchListSection = styled.section``;
 const UserList = styled.ul`

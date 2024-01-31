@@ -82,7 +82,8 @@ export default function Search() {
 }
 const SearchWrap = styled.div`
   background-color: #fff;
-  height: 100%;
+  min-height: 100dvh;
+  /* height: 100%; */
   padding: 13px 16px;
   form {
     width: 100%;

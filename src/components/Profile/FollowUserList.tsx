@@ -36,5 +36,10 @@ export default function FollowUserList({ users, onFollowClick }: Props) {
 }
 
 const FollowUserListWrap = styled.div`
-  padding: 20px;
+  height: calc(100vh - 140px);
+  padding: 20px 20px 79px;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

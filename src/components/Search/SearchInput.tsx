@@ -24,22 +24,24 @@ export default function SearchInput({ setInputValue, onSubmit }: Props) {
     }
   }, [path]);
   return (
-    <form onSubmit={onSubmit} role='search'>
-      <label htmlFor='search' className='a11y-hidden'>
-        검색
-      </label>
-      <Input
-        id='search'
-        onChange={handleInputChange}
-        type='text'
-        placeholder='플리, 유저, 노래를 검색하세요'
-        autoComplete='off'
-        ref={inputRef}
-      />
-      <button>
-        <img src={SearchIcon} alt='검색' />
-      </button>
-    </form>
+    <header>
+      <form onSubmit={onSubmit} role='search'>
+        <label htmlFor='search' className='a11y-hidden'>
+          검색
+        </label>
+        <Input
+          id='search'
+          onChange={handleInputChange}
+          type='text'
+          placeholder='플리, 유저, 노래를 검색하세요'
+          autoComplete='off'
+          ref={inputRef}
+        />
+        <button>
+          <img src={SearchIcon} alt='검색' />
+        </button>
+      </form>
+    </header>
   );
 }
 const Input = styled.input`

@@ -5,6 +5,7 @@ import HomeIcon from '../../../img/home_icon.svg';
 import PlaylistIcon from '../../../img/playlist_icon.svg';
 import MovieIcon from '../../../img/movie_icon.svg';
 import ProfileIcon from '../../../img//profile_icon.svg';
+import TopButton from '../Button/TopButton';
 
 function NavBar(): JSX.Element {
   const location = useLocation();
@@ -13,6 +14,7 @@ function NavBar(): JSX.Element {
 
   return (
     <NavBarWrap>
+      <TopButton />
       <ul>
         <StyledLink to='/main' $active={isActive('/main')}>
           <li>
@@ -60,7 +62,7 @@ const NavBarWrap = styled.nav`
   width: 100%; /* 반응형을 위해 100%로 설정 */
   max-width: 430px; /* 최대 430px */
   min-width: 360px; /* 최소 360px */
-
+  z-index: 15;
   ul {
     margin: 0 auto; /* 중앙 정렬 */
     padding: 0;

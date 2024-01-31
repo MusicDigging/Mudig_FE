@@ -113,10 +113,10 @@ const PlaylistDetailWrap = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const PlayListDetailBox = styled.main`
+const PlayListDetailBox = styled.section`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  /* height: 100%; */
   padding-bottom: 0;
   background-color: #fff;
 `;

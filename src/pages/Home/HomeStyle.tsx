@@ -4,11 +4,12 @@ import MoreImg from '../../img/right-arrow-icon.svg';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export const HomeWrap = styled.main`
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   background: url(${BgImg}) top left / cover no-repeat;
 `;
 export const HomeSection = styled.section`
+  padding-top: 70px;
   #bold {
     font-weight: 500;
   }

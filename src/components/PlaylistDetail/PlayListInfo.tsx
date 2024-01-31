@@ -40,6 +40,7 @@ export default function PlayListInfo(props: Props) {
     location.pathname.includes('/edit');
   const isPlaylistSummary = location.pathname.includes('/playlist/summary');
 
+  console.log(playlist);
   const handleMoveBackBtnClick = () => {
     navigate(-1);
   };

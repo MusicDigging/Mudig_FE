@@ -30,18 +30,20 @@ export default function Layout({ children }: Props) {
   );
 
   return (
-    <LayoutWrap>
+    <>
+      {/* <LayoutWrap> */}
       <Header />
       {toast && (
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
       {children}
       {isNavBarShowed && <NavBar />}
-    </LayoutWrap>
+      {/* </LayoutWrap> */}
+    </>
   );
 }
 
 const LayoutWrap = styled.div`
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 `;

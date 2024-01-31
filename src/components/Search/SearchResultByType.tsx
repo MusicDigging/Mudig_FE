@@ -173,11 +173,12 @@ const TabButton = styled.button<{ active: boolean }>`
   color: ${(props) => (props.active ? 'var(--main-color)' : '#767676')};
   font-size: var(--font-md);
 `;
-const PlaylistWrap = styled.div`
+const PlaylistWrap = styled.main`
   display: flex;
   flex-direction: column;
   gap: 15px;
   padding-top: 54px;
+  height: calc(100vh - 150px);
 `;
 const UserList = styled.ul`
   display: flex;
