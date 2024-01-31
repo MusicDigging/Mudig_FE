@@ -58,7 +58,7 @@ export default function Reply() {
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
       >
         <S.CommentTop>
-          <S.BackBtn onClick={handleBackBtn}>
+          <S.BackBtn onClick={handleBackBtn} aria-label='뒤로 가기'>
             <BackIcon />
           </S.BackBtn>
           <h1>답글 달기</h1>
