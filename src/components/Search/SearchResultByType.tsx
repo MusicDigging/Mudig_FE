@@ -156,10 +156,7 @@ const TabButtonBox = styled.div`
   padding-bottom: 18px;
   display: flex;
   gap: 12px;
-  position: fixed;
-  z-index: 2;
-  width: 398px;
-  min-width: 328px;
+  width: 100%;
   background: #fff;
 `;
 const TabButton = styled.button<{ active: boolean }>`
@@ -177,7 +174,11 @@ const PlaylistWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-top: 54px;
+  height: calc(100vh - 270px);
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const UserList = styled.ul`
   display: flex;

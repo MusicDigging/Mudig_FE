@@ -123,6 +123,11 @@ const SearchListBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  height: calc(100vh - 230px);
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SearchListSection = styled.section``;
 const UserList = styled.ul`

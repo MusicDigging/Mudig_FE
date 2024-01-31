@@ -71,8 +71,6 @@ export default function SearchResult() {
 
 const SearchResultBox = styled.div`
   position: relative;
-  height: calc(100% - 89px);
-  overflow-y: scroll;
   padding-bottom: 116px;
   &::-webkit-scrollbar {
     display: none;
