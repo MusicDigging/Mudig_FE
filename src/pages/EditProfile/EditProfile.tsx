@@ -83,7 +83,7 @@ export default function EditProfile() {
   return (
     <S.EditProfileWrap>
       <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
-        <img src={ArrowIcon} alt='' />
+        <img src={ArrowIcon} alt='뒤로가기 버튼' />
       </S.MoveBackBtn>
       <S.EditProfileBox>
         <SetProfileImage

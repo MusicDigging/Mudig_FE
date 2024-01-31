@@ -16,7 +16,7 @@ export default function ResignModal({
   return (
     <ModalWrap>
       <ModalBox>
-        <ModalImg src={warningIcon} alt='' />
+        <ModalImg src={warningIcon} alt='경고 아이콘' />
         <ModalTextBox>
           <h1>정말로 탈퇴하시겠어요?</h1>
           <p>
@@ -37,20 +37,20 @@ const ModalWrap = styled.div`
   z-index: 100;
   top: 0;
   width: 100%;
-
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalBox = styled.div`
   display: flex;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 322px;
   position: absolute;
   top: 25%;
-  left: 5%;
+  left: 13%;
   padding: 20px 16px 16px 16px;
   border-radius: 10px;
   background-color: white;
