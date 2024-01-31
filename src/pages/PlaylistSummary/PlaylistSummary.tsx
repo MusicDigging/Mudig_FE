@@ -12,7 +12,7 @@ export default function PlaylistSummary() {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state;
-  const playlistId = state?.playlist | 292; // 플리 요약 수정 시 id값 임의로 주기
+  const playlistId = state?.playlist; // 플리 요약 수정 시 id값 임의로 주기
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
   if (isLoading) return <Loading isLoading={isLoading} />;
 
