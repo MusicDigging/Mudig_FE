@@ -17,6 +17,7 @@ export default function PlaylistModify() {
   });
   return (
     <PlaylistModifyBox>
+      <h1 className='a11y-hidden'>플레이리스트 수정</h1>
       {modalOpen && (
         <Modal playlistDesc={playlistDesc} setPlaylistDesc={setPlaylistDesc} />
       )}
@@ -29,8 +30,4 @@ export default function PlaylistModify() {
   );
 }
 
-const PlaylistModifyBox = styled.div`
-  /* display: flex;
-  flex-direction: column; */
-  /* height: 100%; */
-`;
+const PlaylistModifyBox = styled.div``;

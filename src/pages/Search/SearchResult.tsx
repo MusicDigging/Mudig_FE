@@ -42,9 +42,9 @@ export default function SearchResult() {
   }, [keyword]);
 
   if (isLoading) return <Loading isLoading={isLoading} />;
-
   return (
     <>
+      <h1 className='a11y-hidden'>검색 결과</h1>
       {modalOpen && <AddModal videoId={musicId.toString()} />}
       <SearchNav currentNav={currentNav} setCurrentNav={setCurrentNav} />
       <SearchResultBox>
