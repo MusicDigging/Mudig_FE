@@ -54,7 +54,7 @@ export default function SearchResultByType(props: Props) {
     return (
       <ul>
         <SearchResultTitle title='노래 검색결과' />
-        {result.search_music[0].music_count !== 0 ? (
+        {result.search_music.length !== 0 ? (
           musicResult.map((music) => {
             return (
               <PlayListItem
@@ -122,31 +122,34 @@ export default function SearchResultByType(props: Props) {
       )}
       {/* 유저 결과만 */}
       {type === 'user' && (
-        <UserList>
-          {result.users.length !== 0 ? (
-            result.users.map((user) => {
-              return (
-                <Link
-                  to={`/user/profile/${user.id}`}
-                  key={user.id}
-                  state={{ id: user.id }}
-                >
-                  <UserItem key={user.id}>
-                    <UserImgBox>
-                      <CircleImage src={user.image} alt='유저이미지' />
-                    </UserImgBox>
-                    <UserInfoBox>
-                      <div>{user.name}</div>
-                      <p>{user.about}</p>
-                    </UserInfoBox>
-                  </UserItem>
-                </Link>
-              );
-            })
-          ) : (
-            <EmptySearch />
-          )}
-        </UserList>
+        <>
+          <h2 className='a11y-hidden'>유저 검색 결과</h2>
+          <UserList>
+            {result.users.length !== 0 ? (
+              result.users.map((user) => {
+                return (
+                  <Link
+                    to={`/user/profile/${user.id}`}
+                    key={user.id}
+                    state={{ id: user.id }}
+                  >
+                    <UserItem key={user.id}>
+                      <UserImgBox>
+                        <CircleImage src={user.image} alt='유저이미지' />
+                      </UserImgBox>
+                      <UserInfoBox>
+                        <div>{user.name}</div>
+                        <p>{user.about}</p>
+                      </UserInfoBox>
+                    </UserItem>
+                  </Link>
+                );
+              })
+            ) : (
+              <EmptySearch />
+            )}
+          </UserList>
+        </>
       )}
     </>
   );
