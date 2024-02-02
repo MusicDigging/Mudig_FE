@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { PlayListAtom } from '../../library/atom';
@@ -15,15 +15,23 @@ export default function PlaylistModify() {
     content: playlistInfo.playlist?.content,
     is_public: playlistInfo.playlist?.is_public,
   });
+  const modalRef = useRef(null);
+  const openButtonRef = useRef(null);
   return (
     <PlaylistModifyBox>
       <h1 className='a11y-hidden'>플레이리스트 수정</h1>
       {modalOpen && (
-        <Modal playlistDesc={playlistDesc} setPlaylistDesc={setPlaylistDesc} />
+        <Modal
+          playlistDesc={playlistDesc}
+          setPlaylistDesc={setPlaylistDesc}
+          modalRef={modalRef}
+          openButtonRef={openButtonRef}
+        />
       )}
       <PlayListInfo
         playlist={playlistInfo.playlist}
         playlistDesc={playlistDesc}
+        openButtonRef={openButtonRef}
       />
       <PlayListModifyList playlistDesc={playlistDesc} />
     </PlaylistModifyBox>
