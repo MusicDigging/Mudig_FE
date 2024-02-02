@@ -31,6 +31,7 @@ export default function SearchResultAll(props: Props) {
           <SearchResultTitle
             title='플리 검색결과'
             handleNav={handleNavPlaylist}
+            ariaLabel='플레이리스트 검색결과 더보기'
           />
           <ul>
             {result.recent_playlists.length !== 0 ? (
@@ -61,7 +62,11 @@ export default function SearchResultAll(props: Props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle title='노래 검색결과' handleNav={handleNavMusic} />
+          <SearchResultTitle
+            title='노래 검색결과'
+            handleNav={handleNavMusic}
+            ariaLabel='노래 검색결과 더보기'
+          />
           <ul>
             {result.search_music.length !== 0 ? (
               result.search_music[0].music.slice(0, 3).map((item) => {
@@ -76,7 +81,7 @@ export default function SearchResultAll(props: Props) {
                       type='button'
                       onClick={() => handleAddPlaylist(item.id)}
                     >
-                      <img src={AddPlaylist} alt='플리에추가' />
+                      <img src={AddPlaylist} alt='플레이리스트에추가' />
                     </button>
                   </PlayListItem>
                 );
@@ -87,7 +92,11 @@ export default function SearchResultAll(props: Props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle title='유저 검색결과' handleNav={handleNavUser} />
+          <SearchResultTitle
+            title='유저 검색결과'
+            handleNav={handleNavUser}
+            ariaLabel='유저 검색결과 더보기'
+          />
           <UserList>
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {

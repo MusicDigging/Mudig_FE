@@ -23,7 +23,10 @@ export default function SearchResultByType(props: Props) {
   const PlayList = () => {
     return (
       <ul>
-        <SearchResultTitle title='플리 검색결과' />
+        <SearchResultTitle
+          title='플리 검색결과'
+          ariaLabel='플리 검색결과 더보기'
+        />
         {result.playlists.length !== 0 ? (
           result.playlists.map((item) => (
             <Link
@@ -53,7 +56,10 @@ export default function SearchResultByType(props: Props) {
   const MusicList = () => {
     return (
       <ul>
-        <SearchResultTitle title='노래 검색결과' />
+        <SearchResultTitle
+          title='노래 검색결과'
+          ariaLabel='노래 검색결과 더보기'
+        />
         {result.search_music.length !== 0 ? (
           musicResult.map((music) => {
             return (
