@@ -30,6 +30,8 @@ import RecentSearch from '../components/Search/RecentSearch';
 import Comment from '../pages/PlaylistDetail/Comment';
 import Reply from '../pages/PlaylistDetail/Reply';
 import MorePlaylist from '../pages/Home/MorePlaylist';
+import FindPassword from '../pages/FindPassword/FindPassword';
+import ResetPassword from '../pages/ResetPassword/ResetPassword';
 
 export function Router() {
   return (
@@ -63,6 +65,8 @@ export function Router() {
             <Route path='profile/:id/follow' element={<Follow />} />
             <Route path='profile/edit' element={<EditProfile />} />
             <Route path='password' element={<ChangePassword />} />
+            <Route path='password/find' element={<FindPassword />} />
+            <Route path='password/reset' element={<ResetPassword />} />
             <Route path='resign' element={<Resign />} />
           </Route>
           <Route path='/playlist/detail'>
