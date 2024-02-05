@@ -712,6 +712,8 @@ useMutation Delete 요청 성공 시 쿼리 데이터를 제거하는 `queryClie
 
 </details>
 
-# 유저 피드백 이후
+# 유저 피드백
+유저 피드백과 관련된 내용은 [Mudig Wiki](https://github.com/MusicDigging/Mudig_FE/wiki/%EC%9C%A0%EC%A0%80%ED%94%BC%EB%93%9C%EB%B0%B1)를 통해 확인할 수 있습니다.
+
 
 <a href="#top">🔼 Top</a>
