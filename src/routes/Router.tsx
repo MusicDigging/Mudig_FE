@@ -42,6 +42,8 @@ export function Router() {
         <Route path='/register' element={<Signup />} />
         <Route path='/register/detail' element={<SignupDetail />} />
         <Route path='/setprofile' element={<SetProfile />} />
+        <Route path='/password/find' element={<FindPassword />} />
+        <Route path='/password/reset' element={<ResetPassword />} />
         <Route element={<PrivateRoute />}>
           <Route path='/event' element={<EventPage />} />
           <Route path='/main' element={<Outlet />}>
@@ -65,8 +67,6 @@ export function Router() {
             <Route path='profile/:id/follow' element={<Follow />} />
             <Route path='profile/edit' element={<EditProfile />} />
             <Route path='password' element={<ChangePassword />} />
-            <Route path='password/find' element={<FindPassword />} />
-            <Route path='password/reset' element={<ResetPassword />} />
             <Route path='resign' element={<Resign />} />
           </Route>
           <Route path='/playlist/detail'>
