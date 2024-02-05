@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ResetPasswordForm from './ResetPasswordForm';
+import { useEffect } from 'react';
 
 export default function ResetPassword() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    const token = searchParams.get('token');
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  }, []);
+
   return (
     <UserLeavewWrap>
       <BackBtn>

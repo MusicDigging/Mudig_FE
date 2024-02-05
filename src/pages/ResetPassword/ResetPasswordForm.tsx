@@ -4,29 +4,25 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
 import usePasswordToggle from '../../hooks/ussPasswordToggle';
-import { isLoginAtom, toastAtom, userInfoAtom } from '../../library/atom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useChangePassword } from '../../hooks/queries/useUserInfo';
+import { toastAtom } from '../../library/atom';
+import { useSetRecoilState } from 'recoil';
+import {
+  useChangePassword,
+  useSetNewPassword,
+} from '../../hooks/queries/useUserInfo';
 import { useNavigate } from 'react-router-dom';
-interface IFormData {
-  email?: string;
-  password: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+
 export default function ResetPasswordForm() {
   const navigate = useNavigate();
-  const userEmail = useRecoilValue(userInfoAtom)?.email;
-  const { mutate: changePassword } = useChangePassword();
-  const setIsLogin = useSetRecoilState(isLoginAtom);
-  const setUserInfo = useSetRecoilState(userInfoAtom);
+
+  const { mutate: setNewPassword } = useSetNewPassword();
+
   const setToast = useSetRecoilState(toastAtom);
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
     defaultValues: {
-      email: userEmail,
+      email: '',
       password: '',
-      newPassword: '',
       confirmPassword: '',
     },
 
@@ -35,31 +31,17 @@ export default function ResetPasswordForm() {
 
   const { formState, setError, watch, getValues } = methods;
   const { isValid } = formState;
-
-  const handlePasswordSubmit = (data: IFormData) => {
-    changePassword(data, {
+  const password = watch('password');
+  const handlePasswordSubmit = () => {
+    setNewPassword(password, {
       onSuccess: (data) => {
         setToast({
           content: '비밀번호 변경이 완료되었습니다.',
           type: 'success',
         });
-        setIsLogin(false);
-        setUserInfo({
-          id: 0,
-          email: '',
-          name: '',
-          image: '',
-          genre: '',
-          about: '',
-          rep_playlist: null,
-          token: {
-            access: '',
-            refresh: '',
-          },
-        });
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
         navigate('/login');
+        localStorage.removeItem('token');
+        console.log(data);
       },
       onError: (error) => {
         console.error('비밀번호 변경 실패', error);
@@ -72,9 +54,6 @@ export default function ResetPasswordForm() {
     <FormProvider {...methods}>
       <FormWrap onSubmit={methods.handleSubmit(handlePasswordSubmit)}>
         <InputBox>
-          <InputTitle>이메일 </InputTitle>
-          <SignupInput placeholder='이메일' type='text' name='email' />
-
           <InputTitle>새 비밀번호</InputTitle>
           <SignupInput
             validation={{
@@ -89,7 +68,7 @@ export default function ResetPasswordForm() {
             }}
             placeholder='새 비밀번호'
             type='password'
-            name='newPassword'
+            name='password'
             showPassword={showPassword.newPassword}
             toggleShowPassword={() => toggleShowPassword('newPassword')}
           />
@@ -104,7 +83,7 @@ export default function ResetPasswordForm() {
               validate: {
                 comfirmPw: (fieldValue: string) => {
                   return (
-                    fieldValue == watch('newPassword') ||
+                    fieldValue == watch('password') ||
                     '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. '
                   );
                 },
@@ -124,7 +103,7 @@ export default function ResetPasswordForm() {
           <Button
             text='변경'
             type='submit'
-            onClick={() => handlePasswordSubmit(getValues())}
+            // onClick={() => handlePasswordSubmit(getValues())}
             disabled={!isValid}
           ></Button>
         </ButtonBox>
