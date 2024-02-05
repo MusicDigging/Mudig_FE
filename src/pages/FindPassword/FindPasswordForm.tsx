@@ -2,21 +2,30 @@ import styled from 'styled-components';
 import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
-import { isLoginAtom, userInfoAtom } from '../../library/atom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { useUserResign } from '../../hooks/queries/useUserInfo';
-import ResignModal from '../../components/common/Modal/ResignModal';
+import { useSetRecoilState } from 'recoil';
+import { useFindPassword } from '../../hooks/queries/useUserInfo';
+
 import { useNavigate } from 'react-router-dom';
 import { toastAtom } from '../../library/atom';
-import { modalAtom } from '../../atoms/modalAtom';
+import { useState } from 'react';
+import { AxiosError } from 'axios';
+
+interface MyResponse {
+  data: {
+    message: string;
+  };
+
+  status: number;
+  message: string;
+  statusText: string;
+}
+
 export default function FindPasswordForm() {
   const emailRegex = /^\S+@\S+\.\S+$/;
-  const [isModalOpen, setModalOpen] = useRecoilState(modalAtom);
-  const setIsLogin = useSetRecoilState(isLoginAtom);
-  const setUserInfo = useSetRecoilState(userInfoAtom);
-  const setToast = useSetRecoilState(toastAtom);
   const navigate = useNavigate();
-  const { mutate: userResign } = useUserResign();
+  const setToast = useSetRecoilState(toastAtom);
+  const { mutate: findPassword } = useFindPassword();
+
   const methods = useForm({
     defaultValues: {
       email: '',
@@ -26,60 +35,37 @@ export default function FindPasswordForm() {
     mode: 'onSubmit',
   });
 
-  const { formState, setError, getValues } = methods;
+  const { setError, watch } = methods;
 
-  const { isValid, errors } = formState;
-  const password = getValues('password');
-  const passwordError = errors['password'] as FieldValues['password'];
+  const email = watch('email');
 
-  const handleResign = () => {
-    userResign(password, {
-      onSuccess: (data) => {
-        setIsLogin(false);
-        setUserInfo({
-          id: 0,
-          email: '',
-          name: '',
-          image: '',
-          genre: '',
-          about: '',
-          rep_playlist: null,
-          token: {
-            access: '',
-            refresh: '',
-          },
-        });
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
+  const onSubmit = () => {
+    findPassword(email, {
+      onSuccess: async (data) => {
         setToast({
-          content: '새 비밀번호 설정이 완료되었습니다. 다시 로그인 해주세요.',
+          content: '해당 이메일로 비밀번호 재설정 링크가 전송되었습니다.',
           type: 'success',
         });
-        // console.log(data);
       },
 
       onError: (error) => {
-        console.error('회원탈퇴 실패', error);
-        setModalOpen(false);
-        setError('password', {
-          message: '현재 비밀번호가 일치하지 않습니다.',
-        });
+        console.error('비밀번호 찾기 실패', error);
+        const axiosError = error as AxiosError<MyResponse>;
+        if (axiosError.response) {
+          setError('email', {
+            message: axiosError.response.data.message,
+          });
+        }
       },
     });
-
-    setModalOpen(false);
-  };
-
-  const onSubmit = () => {
-    setModalOpen(true);
   };
 
   return (
     <>
-      {isModalOpen && <ResignModal handleResign={handleResign} />}
       <FormProvider {...methods}>
         <FormWrap onSubmit={methods.handleSubmit(onSubmit)}>
           <InputBox>
+            <InputTitle>이메일</InputTitle>
             <SignupInput
               validation={{
                 pattern: {
@@ -93,11 +79,12 @@ export default function FindPasswordForm() {
               name='email'
             />
           </InputBox>
+
           <ButtonBox>
             <Button
               text='비밀번호 찾기'
               type='submit'
-              disabled={!isValid || passwordError}
+              // disabled={!isValid || passwordError}
             ></Button>
           </ButtonBox>
         </FormWrap>
@@ -121,6 +108,11 @@ const InputBox = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 4px;
+`;
+
+const InputTitle = styled.p`
+  font-size: var(--font-md);
 `;
 
 const ButtonBox = styled.div`

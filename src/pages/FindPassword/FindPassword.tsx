@@ -15,7 +15,7 @@ export default function FindPassword() {
       <FindPasswordTitle>
         본인확인을 위해
         <br />
-        뮤딕아이디의 아이디를
+        뮤딕아이디의 이메일을
         <br />
         입력해주세요
       </FindPasswordTitle>
