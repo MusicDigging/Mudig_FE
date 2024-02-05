@@ -137,14 +137,8 @@ export default function Login() {
           <NavUserInfoLink onClick={() => navigate('/register')}>
             회원가입
           </NavUserInfoLink>
-          <NavUserInfoLink
-            onClick={() =>
-              alert(
-                '아이디 · 비밀번호 찾기는 현재 개발 중입니다. 불편을 드려 죄송합니다. ',
-              )
-            }
-          >
-            아이디 · 비밀번호 찾기{' '}
+          <NavUserInfoLink onClick={() => navigate('/password/find')}>
+            비밀번호 찾기
           </NavUserInfoLink>
         </NavUserInfo>
       </LoginMain>
