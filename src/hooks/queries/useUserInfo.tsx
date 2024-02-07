@@ -58,3 +58,41 @@ export const useUserResign = () => {
   const mutation = useMutation(userResign);
   return mutation;
 };
+
+export const useEmailValid = () => {
+  const emailValid = async (email: string) => {
+    console.log(email);
+    const response = await axiosInstance.post('/user/findemail/', {
+      email: email,
+    });
+
+    return response.data;
+  };
+  const mutation = useMutation(emailValid);
+  return mutation;
+};
+
+export const useFindPassword = () => {
+  const findPassword = async (email: string) => {
+    console.log(email);
+    const response = await axiosInstance.post('/user/find_pw/', {
+      email: email,
+    });
+
+    return response.data;
+  };
+  const mutation = useMutation(findPassword);
+  return mutation;
+};
+
+export const useSetNewPassword = () => {
+  const setNewPassword = async (password: string) => {
+    console.log(password);
+    const response = await privateInstance.put('/user/pwchange/', {
+      new_password: password,
+    });
+    return response.data;
+  };
+  const mutation = useMutation(setNewPassword);
+  return mutation;
+};

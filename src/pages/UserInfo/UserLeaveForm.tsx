@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
@@ -34,19 +33,6 @@ export default function UserLeaveForm() {
   const { isValid, errors } = formState;
   const password = getValues('password');
   const passwordError = errors['password'] as FieldValues['password'];
-  const reset = {
-    id: 0,
-    email: '',
-    name: '',
-    image: '',
-    genre: '',
-    about: '',
-    rep_playlist: null,
-    token: {
-      access: '',
-      refresh: '',
-    },
-  };
 
   const handleResign = () => {
     userResign(password, {

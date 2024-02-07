@@ -41,15 +41,12 @@ export default function Comment() {
 
   return (
     <S.CommentWrap>
-      {/* {toast && (
-        <Toast setToast={setToast} text={toast.content} type={toast.type} />
-      )} */}
       <S.CommentBox
         initial={{ x: backAnimation ? -300 : 300, opacity: 0 }}
         animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
       >
         <S.CommentTop>
-          <S.BackBtn onClick={handleBackBtn}>
+          <S.BackBtn onClick={handleBackBtn} aria-label='뒤로 가기'>
             <BackIcon />
           </S.BackBtn>
           <h1>댓글 쓰기</h1>

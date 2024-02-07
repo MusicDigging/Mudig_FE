@@ -31,7 +31,7 @@ export const AuthInput = (props: IInputProps) => {
       />
       {type === 'password' && (
         <EyeIcon onClick={toggleShowPassword}>
-          <img src={showPassword ? showEye : hideEye} alt='눈 모양 아이콘' />
+          <EyeImg src={showPassword ? showEye : hideEye} alt='눈 모양 아이콘' />
         </EyeIcon>
       )}
     </>
@@ -47,6 +47,11 @@ const InputStyle = styled.input<IStyledInputProps>`
 `;
 
 const Label = styled.label``;
+
+const EyeImg = styled.img`
+  width: 18px;
+  height: 18px;
+`;
 
 const EyeIcon = styled.span`
   cursor: pointer;
