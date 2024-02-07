@@ -15,7 +15,7 @@ export default function SetProfile() {
 
   const { mutate: postUserProfile } = useUserProfile();
   const [userInfo, setUserInfo] = useRecoilState(userInfoAtom);
-  const signupInfo = useRecoilValue(signUpInfoAtom);
+  const [signupInfo, setSignupInfo] = useRecoilState(signUpInfoAtom);
   const userType = signupInfo.type;
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState<string[]>([]);
@@ -59,6 +59,7 @@ export default function SetProfile() {
           rep_playlist,
           token,
         });
+        setSignupInfo({ email: '', password: '', type: '' });
         navigate('/main');
       },
       onError: (error) => {
