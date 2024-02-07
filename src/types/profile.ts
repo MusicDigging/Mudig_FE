@@ -21,7 +21,7 @@ export interface IProfile {
 
 export interface IUserProfile {
   email?: string;
-  password?: string;
+  password?: string | null;
   nickName: string;
   about: string;
   genre: string;
