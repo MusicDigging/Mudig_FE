@@ -13,13 +13,15 @@ import {
 } from '../../library/apis/api';
 import { useMutation, useQuery } from 'react-query';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+
+import { ILogin, ISignup } from '../../types/setUser';
 export default function Login() {
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setSignupInfo = useSetRecoilState(signUpInfoAtom);
   const navigate = useNavigate();
   const location = useLocation();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-  //카카오, 구글 로그인 링크 get 요청
+
   const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
   const { data: googleData } = useQuery('google', getGoogleInfo);
 
@@ -62,34 +64,41 @@ export default function Login() {
       }
       //가입 이력이 있을 경우
       if (response.message === '로그인 성공') {
-        const { user, token } = response;
-        const { id, email, name, image, genre, about, rep_playlist } = user;
-        const { access, refresh } = token;
-        localStorage.setItem('token', access);
-        localStorage.setItem('refreshToken', refresh);
-        setIsLogin(true);
-        setUserInfo({
-          id,
-          email,
-          name,
-          image,
-          genre,
-          about,
-          rep_playlist,
-          token,
-        });
-
-        navigate('/main');
+        handleSuccessLogin(response);
         //가입 이력이 없고 뮤딕 프로필 설정이 필요한 경우
       } else {
-        const email = response.email;
-        setSignupInfo({ email, type: 'social' });
-        navigate('/setprofile');
+        handleMoveSignUp(response);
       }
       // console.log(response);
     } catch (error) {
       console.error('Error', error);
     }
+  };
+
+  const handleSuccessLogin = (response: ILogin) => {
+    const { user, token } = response;
+    const { id, email, name, image, genre, about, rep_playlist } = user;
+    const { access, refresh } = token;
+    localStorage.setItem('token', access);
+    localStorage.setItem('refreshToken', refresh);
+    setIsLogin(true);
+    setUserInfo({
+      id,
+      email,
+      name,
+      image,
+      genre,
+      about,
+      rep_playlist,
+      token,
+    });
+    navigate('/main');
+  };
+
+  const handleMoveSignUp = (response: ISignup) => {
+    const email = response.email;
+    setSignupInfo({ email, type: 'social' });
+    navigate('/setprofile');
   };
 
   const kakaoLoginHandler = () => {
