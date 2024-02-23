@@ -34,12 +34,19 @@ export const useChangePassword = () => {
   return mutation;
 };
 
-export const useUserProfile = () => {
-  const postUserProfile = async (formData: FormData) => {
-    // const { userType, formData } = userData;
-    // const apiUrl = userType === 'social' ? '/user/socialjoin/' : '/user/join/';
+interface IuserData {
+  formData: FormData;
+  userType: string;
+}
 
-    const response = await imgPrivateInstance.post('/user/join/', formData);
+export const useUserProfile = () => {
+  const postUserProfile = async (userData: IuserData) => {
+    console.log(userData);
+    const { userType, formData } = userData;
+
+    const apiUrl = userType === 'social' ? '/user/socialjoin/' : '/user/join/';
+
+    const response = await imgPrivateInstance.post(apiUrl, formData);
     return response.data;
   };
 
