@@ -54,9 +54,8 @@ export default function DetailList(props: Props) {
     <DetailListWrap>
       <PlayList>
         {music.map((item, index) => (
-          <li>
+          <li key={item.id}>
             <PlayListBtn
-              key={item.id}
               value={item.information}
               onClick={() => handlePlayListBtnClick(index)}
               display={index + 1 > visibleCount ? 'none' : 'block'}

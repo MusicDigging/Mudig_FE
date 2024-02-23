@@ -42,9 +42,9 @@ export default function SearchResult() {
   }, [keyword]);
 
   if (isLoading) return <Loading isLoading={isLoading} />;
-
   return (
     <>
+      <h1 className='a11y-hidden'>검색 결과</h1>
       {modalOpen && <AddModal videoId={musicId.toString()} />}
       <SearchNav currentNav={currentNav} setCurrentNav={setCurrentNav} />
       <SearchResultBox>
@@ -71,8 +71,6 @@ export default function SearchResult() {
 
 const SearchResultBox = styled.div`
   position: relative;
-  height: calc(100% - 89px);
-  overflow-y: scroll;
   padding-bottom: 116px;
   &::-webkit-scrollbar {
     display: none;

@@ -24,9 +24,10 @@ interface Props {
   playlist: IPlaylist;
   playlistDesc?: { title: string; content: string; is_public: boolean };
   playing?: boolean;
+  openButtonRef?: React.RefObject<HTMLButtonElement>;
 }
 export default function PlayListInfo(props: Props) {
-  const { user, playlist, playlistDesc, playing } = props;
+  const { user, playlist, playlistDesc, playing, openButtonRef } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
@@ -49,7 +50,7 @@ export default function PlayListInfo(props: Props) {
   const handleCloseBtn = () => {
     setMoreInfoView(false);
   };
-  const handleModify = () => {
+  const handleModifyModal = () => {
     setModalOpen(true);
   };
 
@@ -110,7 +111,11 @@ export default function PlayListInfo(props: Props) {
           <Title>
             <h2>{playlistDesc?.title || playlist?.title}</h2>
             {isModifyPath && (
-              <ModifyBtn onClick={handleModify}>
+              <ModifyBtn
+                onClick={handleModifyModal}
+                aria-haspopup='dialog'
+                ref={openButtonRef}
+              >
                 <img src={PenIcon} alt='수정' />
               </ModifyBtn>
             )}

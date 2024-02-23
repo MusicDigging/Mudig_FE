@@ -22,17 +22,18 @@ export default function PlaylistSummary() {
     navigate('/user/profile/my');
   };
   return (
-    <>
+    <main>
       <PlayListInfo user={user} playlist={playlist} />
       <PlayListBox>
         <PlayList>
           {music.map((item: IMusic) => (
-            <PlayListItem
-              key={item.id}
-              img={item.thumbnail}
-              title={item.song}
-              info={item.singer}
-            />
+            <li key={item.id}>
+              <PlayListItem
+                img={item.thumbnail}
+                title={item.song}
+                info={item.singer}
+              />
+            </li>
           ))}
         </PlayList>
       </PlayListBox>
@@ -40,15 +41,14 @@ export default function PlaylistSummary() {
       <BtnBox>
         <Button onClick={handleNextBtn} text='확인' btnWidth='100%' />
       </BtnBox>
-    </>
+    </main>
   );
 }
-const PlayListBox = styled.div`
+const PlayListBox = styled.section`
   background: #fff;
-  padding: 10px 16px 180px;
-  height: calc(100vh - 364px);
+  padding: 10px 16px 70px;
+  height: calc(100vh - 472px);
   overflow-y: scroll;
-  -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -56,16 +56,15 @@ const PlayListBox = styled.div`
 const BlurBox = styled.div`
   position: absolute;
   bottom: 89px;
-  width: 360px;
+  width: 100%;
   height: 170px;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
   z-index: 5;
 `;
 const BtnBox = styled.div`
   position: absolute;
-  width: 90%;
-  min-width: 328px;
+  width: 100%;
   z-index: 10;
-  bottom: 113px;
-  left: 15.5px;
+  bottom: 99px;
+  padding: 10px 16px;
 `;
