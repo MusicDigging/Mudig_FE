@@ -11,103 +11,13 @@ import {
   getGoogleInfo,
   postUserCode,
 } from '../../library/apis/api';
-import { useMutation, useQuery } from 'react-query';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { ILogin, ISignup } from '../../types/setUser';
+import { useSocialLogin } from '../../hooks/useSocialLogin';
 export default function Login() {
-  const setUserInfo = useSetRecoilState(userInfoAtom);
-  const setSignupInfo = useSetRecoilState(signUpInfoAtom);
   const navigate = useNavigate();
-  const location = useLocation();
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
-  const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
-  const { data: googleData } = useQuery('google', getGoogleInfo);
-
-  const query = new URLSearchParams(location.search);
-  const socialQuery = new URLSearchParams(location.search);
-
-  useEffect(() => {
-    const now = new Date();
-    const hours = now.getHours(); // 0-23 사이의 시간
-    if (isLogin) {
-      if (hours >= 18 && hours < 24) {
-        navigate('/event');
-        console.log(now, hours, isLogin);
-      } else {
-        // 로그인 상태라면 메인 페이지로 이동
-        navigate('/main');
-      }
-      return;
-    }
-
-    // 쿼리 파라미터 값 가져오기
-    const result = query.get('code') || false;
-
-    const hasScope = socialQuery.get('scope');
-    //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
-    if (result && hasScope) {
-      sendCode(result, 'google');
-    } else if (result) {
-      sendCode(result, 'kakao');
-    }
-  }, [navigate, isLogin]);
-
-  const sendCode = async (code: string, social: string) => {
-    try {
-      let response;
-      if (social === 'kakao') {
-        response = await postUserCode(code, 'kakao');
-      } else if (social === 'google') {
-        response = await postUserCode(code, 'google');
-      }
-      //가입 이력이 있을 경우
-      if (response.message === '로그인 성공') {
-        handleSuccessLogin(response);
-        //가입 이력이 없고 뮤딕 프로필 설정이 필요한 경우
-      } else {
-        handleMoveSignUp(response);
-      }
-      // console.log(response);
-    } catch (error) {
-      console.error('Error', error);
-    }
-  };
-
-  const handleSuccessLogin = (response: ILogin) => {
-    const { user, token } = response;
-    const { id, email, name, image, genre, about, rep_playlist } = user;
-    const { access, refresh } = token;
-    localStorage.setItem('token', access);
-    localStorage.setItem('refreshToken', refresh);
-    setIsLogin(true);
-    setUserInfo({
-      id,
-      email,
-      name,
-      image,
-      genre,
-      about,
-      rep_playlist,
-      token,
-    });
-    navigate('/main');
-  };
-
-  const handleMoveSignUp = (response: ISignup) => {
-    const email = response.email;
-    setSignupInfo({ email, type: 'social' });
-    navigate('/setprofile');
-  };
-
-  const kakaoLoginHandler = () => {
-    window.location.href = kakaoData.url;
-  };
-
-  const googleLoginHandler = () => {
-    window.location.href = googleData.url;
-  };
+  const kakaoLoginHandler = useSocialLogin(getKakaoInfo, 'kakao');
+  const googleLoginHandler = useSocialLogin(getGoogleInfo, 'google');
 
   return (
     <LoginWrap>
