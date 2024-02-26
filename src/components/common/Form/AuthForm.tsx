@@ -13,10 +13,13 @@ interface ILoginData {
   email: string;
   password: string;
 }
+
+const emailRegex = /^\S+@\S+\.\S+$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
+const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해 주세요`;
 export const AuthForm = () => {
   const navigate = useNavigate();
-  const emailRegex = /^\S+@\S+\.\S+$/;
-  const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
+
   const methods = useForm({
     defaultValues: {
       email: '',
@@ -26,7 +29,6 @@ export const AuthForm = () => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-  const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해 주세요`;
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
@@ -91,7 +93,7 @@ export const AuthForm = () => {
           <AuthInput
             validation={{
               pattern: {
-                value: pawwrodRegex,
+                value: passwordRegex,
                 message: errorMessage,
               },
               required: true, //true
@@ -149,14 +151,6 @@ const ErrorBox = styled.div`
 `;
 
 const ErrorMsg = styled.span``;
-const CheckboxContainer = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-`;
 
 const Label = styled.label`
   display: flex;
@@ -166,7 +160,6 @@ const Label = styled.label`
   justify-content: flex-start;
   gap: 6px;
 `;
-
 const ButtonBox = styled.div`
   margin-top: 16px;
 `;
