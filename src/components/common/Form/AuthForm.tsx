@@ -13,10 +13,11 @@ interface ILoginData {
   email: string;
   password: string;
 }
+const emailRegex = /^\S+@\S+\.\S+$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
+const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해 주세요`;
 export const AuthForm = () => {
   const navigate = useNavigate();
-  const emailRegex = /^\S+@\S+\.\S+$/;
-  const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
     defaultValues: {
       email: '',
@@ -26,7 +27,7 @@ export const AuthForm = () => {
   });
   const { formState } = methods;
   const { isValid, errors } = formState;
-  const errorMessage = `아이디(로그인 전용 아이디) 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해 주세요`;
+
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const { mutate } = useMutation(loginUser, {
@@ -66,7 +67,7 @@ export const AuthForm = () => {
     if (checkbox) {
       const autoLogin = checkbox.checked;
       localStorage.setItem('autoLogin', autoLogin ? 'true' : 'false');
-      checkbox.click();
+      // checkbox.click();
     }
   };
 
@@ -91,7 +92,7 @@ export const AuthForm = () => {
           <AuthInput
             validation={{
               pattern: {
-                value: pawwrodRegex,
+                value: passwordRegex,
                 message: errorMessage,
               },
               required: true, //true
@@ -103,15 +104,14 @@ export const AuthForm = () => {
             toggleShowPassword={() => toggleShowPassword('password')}
           />
 
-          <Label htmlFor='checkbox' onClick={handleCheckboxChange}>
+          <AutoLoginCheckBox>
             <CheckboxInput
               type='checkbox'
               onClick={handleCheckboxChange}
               id='checkbox'
             />
-            <CheckboxLabel id='checkbox'>로그인 상태 유지</CheckboxLabel>
-          </Label>
-
+            <label htmlFor='checkbox'>로그인 상태 유지</label>
+          </AutoLoginCheckBox>
           {/* 이메일 비밀번호 불일치& 유효성검사 실패시 에러메시지 */}
           <ErrorBox>
             {errors.email || errors.password ? (
@@ -158,15 +158,6 @@ const CheckboxContainer = styled.div`
   gap: 6px;
 `;
 
-const Label = styled.label`
-  display: flex;
-  width: 100%;
-  margin-top: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-`;
-
 const ButtonBox = styled.div`
   margin-top: 16px;
 `;
@@ -188,7 +179,13 @@ const CheckboxInput = styled.input`
     background-color: var(--btn-background-color);
   }
 `;
-
+const AutoLoginCheckBox = styled.div`
+  display: flex;
+  margin-top: 16px;
+  gap: 6px;
+  align-items: center;
+  font-size: var(--font-md);
+`;
 const CheckboxLabel = styled.label`
   font-size: var(--font-md);
   color: var(--font--color);

@@ -7,83 +7,13 @@ import { isLoginAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import {
-  getKakaoInfo,
-  getGoogleInfo,
-  postUserCode,
-} from '../../library/apis/api';
+import { getKakaoInfo, getGoogleInfo } from '../../library/apis/api';
+import { useSocialLogin } from '../../hooks/useSocialLogin';
 export default function Signup() {
-  const setUserInfo = useSetRecoilState(userInfoAtom);
-  const setSignupInfo = useSetRecoilState(signUpInfoAtom);
-  const isLogin = useRecoilValue(isLoginAtom);
-  const location = useLocation();
   const navigate = useNavigate();
-  const { data: kakaoData } = useQuery('kakao', getKakaoInfo);
-  const { data: googleData } = useQuery('google', getGoogleInfo);
 
-  const query = new URLSearchParams(location.search);
-  const socialQuery = new URLSearchParams(location.search);
-
-  useEffect(() => {
-    if (isLogin) {
-      navigate('/main');
-      return;
-    }
-
-    // 쿼리 파라미터 값 code(소셜 로그인 인가코드) 가져오기
-    const result = query.get('code') || false;
-    const hasScope = socialQuery.get('scope');
-    //url에서 scope값을 가지고 있다면 send code post 요청시 social = 'google'로 설정
-    if (result && hasScope) {
-      sendCode(result, 'google');
-      //url에서 scope값이 없다면 send code post 요청시 social = 'kakako'로 설정
-    } else if (result) {
-      sendCode(result, 'kakao');
-    }
-  }, []);
-
-  const sendCode = async (code: string, social: string) => {
-    try {
-      let response;
-      if (social === 'kakao') {
-        response = await postUserCode(code, 'kakao');
-      } else if (social === 'google') {
-        response = await postUserCode(code, 'google');
-      }
-
-      if (response.message === '로그인 성공') {
-        const { id, email, name, image, genre, about, rep_playlist } =
-          response.user;
-        const token = response.token;
-        setUserInfo({
-          id,
-          email,
-          name,
-          image,
-          genre,
-          about,
-          rep_playlist,
-          token,
-        });
-        navigate('/main');
-      } else {
-        const email = response.email;
-        setSignupInfo({ email, type: 'social' });
-        navigate('/setprofile');
-      }
-      // console.log(response);
-    } catch (error) {
-      console.error('Error', error);
-    }
-  };
-
-  const kakaoLoginHandler = () => {
-    window.location.href = kakaoData.url;
-  };
-
-  const googleLoginHandler = () => {
-    window.location.href = googleData.url;
-  };
+  const kakaoLoginHandler = useSocialLogin(getKakaoInfo, 'kakao');
+  const googleLoginHandler = useSocialLogin(getGoogleInfo, 'google');
 
   return (
     <S.SignupWrap>
