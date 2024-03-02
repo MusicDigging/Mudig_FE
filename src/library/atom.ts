@@ -16,17 +16,6 @@ interface PlaylistTypes {
   music: IMusic[];
 }
 
-// 회원가입 토큰 정보
-export const SignUpAtom = atom<{
-  isLogin: boolean;
-}>({
-  key: 'SignUpAtom',
-  default: {
-    isLogin: false,
-  },
-  effects_UNSTABLE: [persistAtom],
-});
-
 export const PlayListAtom = atom<PlaylistTypes>({
   key: 'PlayListAtom',
   default: {
@@ -74,7 +63,6 @@ export const signUpInfoAtom = atom<ISignup>({
     password: '',
     type: '',
   },
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const isLoginAtom = atom<boolean>({
