@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
 import { signUpInfoAtom, toastAtom } from '../../library/atom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 export default function SignupDetail() {
   const setUserInfo = useSetRecoilState(signUpInfoAtom);
-  const [toast, setToast] = useRecoilState(toastAtom);
+  const setToast = useSetRecoilState(toastAtom);
   const navigate = useNavigate();
   const type = 'mudig';
 
@@ -52,18 +52,11 @@ const SingupDetailWrap = styled.div`
   height: 100%;
 `;
 
-// const ToastBox = styled.div`
-//   position: absolute;
-//   top: 13px;
-//   left: 13px;
-//   z-index: 1;
-//   width: 94%;
-// `;
 const SignupDetailBox = styled.div`
   display: flex;
   position: relative;
   top: 56px;
-  /* left: 16px; */
+
   line-height: 33px;
 `;
 
