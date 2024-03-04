@@ -14,7 +14,7 @@ interface Props {
   setUploadImg: React.Dispatch<React.SetStateAction<File | null>>;
   setPreviewImg: React.Dispatch<React.SetStateAction<string>>;
 }
-
+const supportedFormats = ['.jpg', '.png', '.jpeg', '.bmp', '.tif', '.heic'];
 export default function SetProfileImage(props: Props) {
   const { fileInput, src, setUploadImg, setPreviewImg } = props;
   const setToast = useSetRecoilState(toastAtom);
@@ -55,14 +55,7 @@ export default function SetProfileImage(props: Props) {
     }
 
     //이미지 지원 형식 확인
-    if (
-      !file.name.includes('png') &&
-      !file.name.includes('jpg') &&
-      !file.name.includes('jpeg') &&
-      !file.name.includes('bmp') &&
-      !file.name.includes('tif') &&
-      !file.name.includes('heic')
-    ) {
+    if (!supportedFormats.some((format) => file.name.includes(format))) {
       setToast({
         content:
           '이미지 형식을 확인해 주세요! (지원형식: .jpg, .png, .jpeg, .bmp, .tif, *.heic)',
@@ -80,7 +73,7 @@ export default function SetProfileImage(props: Props) {
           <img src={UploadImgBtn} alt='이미지 업로드 버튼' />
           <input
             type='file'
-            accept='image/jpg,impge/png,image/jpeg'
+            accept='image/jpg, image/png, image/jpeg, image/bmp, image/tif, image/heic'
             ref={fileInput}
             onChange={handleImageChange}
             style={{ display: 'none' }}
