@@ -1,9 +1,9 @@
-import React, { ReactHTMLElement, ReactElement, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import styled from 'styled-components';
 import { debounce, DebouncedFunc } from 'lodash';
 import { Button, ChipButton } from '../Button/Button';
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import axios from 'axios';
 import { IUserProfile } from '../../../types/profile';
 import { IProfile } from '../../../types/profile';
@@ -40,9 +40,7 @@ export default function ProfileInput(props: Props): ReactElement {
       about: profile?.about || '',
     },
     mode: 'onBlur',
-    // react-hook-form의 reslover란? 저도 처음 사용해 보는 것이라 찾아보니 아래와 같다고 합니다
-    // /resolver를 사용하면 비동기적인 검증이 필요한 경우에도 쉽게 처리할 수 있다.
-    // resolver 함수 내에서 async/await를 사용하여 비동기 작업을 수행하고, 검증 결과에 따라 폼을 유효하거나 유효하지 않은 상태로 설정할 수 있다.
+
     resolver: async (data) => {
       const errors: Record<string, { type: string; message: string }> = {};
       try {
@@ -96,7 +94,6 @@ export default function ProfileInput(props: Props): ReactElement {
     setValue('nickName', value, { shouldValidate: true });
   };
 
-  // Explicitly define the type of the debounced function
   const handleNickNameChecked: DebouncedFunc<
     (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>
   > = debounce(handleNickNameLengthChange, 1000);
