@@ -31,28 +31,29 @@ export default function SearchResultAll(props: Props) {
           <SearchResultTitle
             title='플리 검색결과'
             handleNav={handleNavPlaylist}
+            ariaLabel='플레이리스트 검색결과 더보기'
           />
           <ul>
             {result.recent_playlists.length !== 0 ? (
               result.recent_playlists.map((item) => {
                 return (
-                  <Link
-                    to={`/playlist/detail/${item.playlist.id}`}
-                    key={item.playlist.id}
-                    state={{ id: item.playlist.id }}
-                  >
-                    <PlayListItem
-                      key={item.playlist.id}
-                      img={item.playlist.thumbnail}
-                      title={item.playlist.title}
-                      info={
-                        typeof item.writer === 'string' &&
-                        item.writer === '유저 정보 없음'
-                          ? '알 수 없는 사용자'
-                          : item.writer.name
-                      }
-                    />
-                  </Link>
+                  <li key={item.playlist.id}>
+                    <Link
+                      to={`/playlist/detail/${item.playlist.id}`}
+                      state={{ id: item.playlist.id }}
+                    >
+                      <PlayListItem
+                        img={item.playlist.thumbnail}
+                        title={item.playlist.title}
+                        info={
+                          typeof item.writer === 'string' &&
+                          item.writer === '유저 정보 없음'
+                            ? '알 수 없는 사용자'
+                            : item.writer.name
+                        }
+                      />
+                    </Link>
+                  </li>
                 );
               })
             ) : (
@@ -61,7 +62,11 @@ export default function SearchResultAll(props: Props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle title='노래 검색결과' handleNav={handleNavMusic} />
+          <SearchResultTitle
+            title='노래 검색결과'
+            handleNav={handleNavMusic}
+            ariaLabel='노래 검색결과 더보기'
+          />
           <ul>
             {result.search_music.length !== 0 ? (
               result.search_music[0].music.slice(0, 3).map((item) => {
@@ -76,7 +81,7 @@ export default function SearchResultAll(props: Props) {
                       type='button'
                       onClick={() => handleAddPlaylist(item.id)}
                     >
-                      <img src={AddPlaylist} alt='플리에추가' />
+                      <img src={AddPlaylist} alt='플레이리스트에추가' />
                     </button>
                   </PlayListItem>
                 );
@@ -87,26 +92,31 @@ export default function SearchResultAll(props: Props) {
           </ul>
         </SearchListSection>
         <SearchListSection>
-          <SearchResultTitle title='유저 검색결과' handleNav={handleNavUser} />
+          <SearchResultTitle
+            title='유저 검색결과'
+            handleNav={handleNavUser}
+            ariaLabel='유저 검색결과 더보기'
+          />
           <UserList>
             {result.recent_users.length !== 0 ? (
               result.recent_users.map((user) => {
                 return (
-                  <Link
-                    to={`/user/profile/${user.id}`}
-                    key={user.id}
-                    state={{ id: user.id }}
-                  >
-                    <UserItem key={user.id}>
-                      <UserImgBox>
-                        <CircleImage src={user.image} alt='유저이미지' />
-                      </UserImgBox>
-                      <UserInfoBox>
-                        <div>{user.name}</div>
-                        <p>{user.about}</p>
-                      </UserInfoBox>
-                    </UserItem>
-                  </Link>
+                  <li key={user.id}>
+                    <Link
+                      to={`/user/profile/${user.id}`}
+                      state={{ id: user.id }}
+                    >
+                      <UserItem>
+                        <UserImgBox>
+                          <CircleImage src={user.image} alt='유저이미지' />
+                        </UserImgBox>
+                        <UserInfoBox>
+                          <div>{user.name}</div>
+                          <p>{user.about}</p>
+                        </UserInfoBox>
+                      </UserItem>
+                    </Link>
+                  </li>
                 );
               })
             ) : (
@@ -122,6 +132,11 @@ const SearchListBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  height: calc(100vh - 230px);
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const SearchListSection = styled.section``;
 const UserList = styled.ul`
@@ -129,7 +144,7 @@ const UserList = styled.ul`
   flex-direction: column;
   gap: 16px;
 `;
-const UserItem = styled.li`
+const UserItem = styled.div`
   display: flex;
   gap: 16px;
   align-items: center;

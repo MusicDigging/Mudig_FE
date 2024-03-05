@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { toastAtom } from '../../../library/atom';
 import { useSetRecoilState } from 'recoil';
+import React, { forwardRef, Ref } from 'react';
 
 interface IButtonProps {
   type?: 'button' | 'submit' | 'reset';
   text: string;
   onClick?: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
   disabled?: boolean;
   btnBgColor?: string;
   btnColor?: string;
@@ -15,40 +17,46 @@ interface IButtonProps {
   btnHeight?: string;
   imgSrc?: string;
   alt?: string;
+  // ref?: React.RefObject<HTMLButtonElement>;
 }
 
-export function Button(props: IButtonProps) {
-  const {
-    type,
-    text,
-    onClick,
-    disabled,
-    btnBgColor,
-    btnColor,
-    btnMargin,
-    btnBorder,
-    btnWidth,
-    btnHeight,
-    imgSrc,
-  } = props;
+export const Button = forwardRef(
+  (props: IButtonProps, ref: Ref<HTMLButtonElement>) => {
+    const {
+      type,
+      text,
+      onClick,
+      onKeyDown,
+      disabled,
+      btnBgColor,
+      btnColor,
+      btnMargin,
+      btnBorder,
+      btnWidth,
+      btnHeight,
+      imgSrc,
+    } = props;
 
-  return (
-    <ButtonStyle
-      type={type ? type : 'button'}
-      onClick={onClick}
-      btnBgColor={btnBgColor}
-      btnBorder={btnBorder}
-      btnMargin={btnMargin}
-      btnColor={btnColor}
-      btnWidth={btnWidth}
-      btnHeight={btnHeight}
-      disabled={disabled}
-      imgSrc={imgSrc}
-    >
-      {text}
-    </ButtonStyle>
-  );
-}
+    return (
+      <ButtonStyle
+        type={type ? type : 'button'}
+        onClick={onClick}
+        onKeyDown={onKeyDown}
+        btnBgColor={btnBgColor}
+        btnBorder={btnBorder}
+        btnMargin={btnMargin}
+        btnColor={btnColor}
+        btnWidth={btnWidth}
+        btnHeight={btnHeight}
+        disabled={disabled}
+        imgSrc={imgSrc}
+        ref={ref}
+      >
+        {text}
+      </ButtonStyle>
+    );
+  },
+);
 
 interface IButtonStyleProps {
   btnWidth?: string;

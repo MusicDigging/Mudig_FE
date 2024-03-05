@@ -57,6 +57,7 @@ export default function PlaylistDetail() {
   return (
     <>
       <PlaylistDetailWrap>
+        <h1 className='a11y-hidden'>플레이리스트 상세 페이지</h1>
         <PlayListInfo user={user} playlist={playlist} playing={playing} />
         {playing && (
           <MusicPlayer

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Button } from '../Button/Button';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom, toastAtom } from '../../../library/atom';
@@ -10,20 +10,28 @@ import { IPlaylistDesc } from '../../../types/playlist';
 interface Props {
   playlistDesc: IPlaylistDesc;
   setPlaylistDesc: React.Dispatch<React.SetStateAction<IPlaylistDesc>>;
+  modalRef: React.RefObject<HTMLDivElement>;
+  openButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
-export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {
+export default function Modal({
+  playlistDesc,
+  setPlaylistDesc,
+  modalRef,
+  openButtonRef,
+}: Props) {
   const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const setToast = useSetRecoilState(toastAtom);
+  const modifyButtonRef = useRef<HTMLButtonElement>(null);
   // 모달 Close
   const handleClose = () => {
     setPlaylistDesc(playlistInfo.playlist);
     setModalOpen(false);
+    openButtonRef.current?.focus();
   };
-
   // 공개 여부 토글 view 여부
   const handlePrivateView = () => {
     setIsPrivateView(!isPrivateView);
@@ -63,37 +71,76 @@ export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {
     setModalOpen(false);
   };
 
+  const handleFocusModal = (e: React.KeyboardEvent) => {
+    if (!e.shiftKey && e.keyCode === 9) {
+      e.preventDefault();
+      modalRef.current?.focus();
+    }
+  };
+
+  const handleFocusModifyButton = (e: React.KeyboardEvent) => {
+    if (e.shiftKey && e.keyCode === 9) {
+      e.preventDefault();
+      modifyButtonRef.current?.focus();
+    }
+  };
+
+  useEffect(() => {
+    if (modalOpen) {
+      modalRef.current?.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    const escModalClose = (e: KeyboardEvent) => {
+      if (e.keyCode === 27) {
+        handleClose();
+      }
+    };
+    window.addEventListener('keydown', escModalClose);
+    return () => window.removeEventListener('keydown', escModalClose);
+  }, [setModalOpen]);
+
   return (
     <ModalWrap>
-      <ModalBox>
+      <ModalBox
+        role='dialog'
+        aria-labelledby='modal-modify'
+        tabIndex={0}
+        ref={modalRef}
+      >
+        <h3 id='modal-modify' className='a11y-hidden'>
+          플레이리스트 설명 수정
+        </h3>
         <ModalForm>
-          <label>
-            <TitleInput
-              type='text'
-              name='playlistTitle'
-              id='playlistTitle'
-              defaultValue={playlistDesc.title || playlistInfo.playlist.title}
-              placeholder='플레이리스트의 제목을 입력해주세요.'
-              autoComplete='off'
-              onChange={changeModifyDesc}
-              maxLength={50}
-              required
-            />
+          <label htmlFor='playlistTitle' className='a11y-hidden'>
+            플레이리스트 제목
           </label>
-          <label>
-            <ContentTextArea
-              name='playlistDescription'
-              id='playlistDescription'
-              defaultValue={
-                playlistDesc.content || playlistInfo.playlist.content
-              }
-              placeholder='플레이리스트에 대한 설명을 입력해주세요.'
-              autoComplete='off'
-              onChange={changeModifyDesc}
-              maxLength={150}
-              required
-            />
+          <TitleInput
+            type='text'
+            name='playlistTitle'
+            id='playlistTitle'
+            defaultValue={playlistDesc.title || playlistInfo.playlist.title}
+            placeholder='플레이리스트의 제목을 입력해주세요.'
+            autoComplete='off'
+            onChange={changeModifyDesc}
+            onKeyDown={handleFocusModifyButton}
+            maxLength={50}
+            required
+          />
+          <label htmlFor='playlistDescription' className='a11y-hidden'>
+            플레이리스트 설명
           </label>
+          <ContentTextArea
+            name='playlistDescription'
+            id='playlistDescription'
+            defaultValue={playlistDesc.content || playlistInfo.playlist.content}
+            placeholder='플레이리스트에 대한 설명을 입력해주세요.'
+            autoComplete='off'
+            onChange={changeModifyDesc}
+            maxLength={150}
+            required
+          />
           <PrivateCheckBtn
             type='button'
             onClick={handlePrivateView}
@@ -143,6 +190,8 @@ export default function Modal({ playlistDesc, setPlaylistDesc }: Props) {
                 btnBorder='none'
                 btnColor='var(--btn-point-color)'
                 onClick={handleModifyClick}
+                onKeyDown={handleFocusModal}
+                ref={modifyButtonRef}
               />
             </BtnBox>
           )}

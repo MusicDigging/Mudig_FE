@@ -54,26 +54,27 @@ export default function DetailList(props: Props) {
     <DetailListWrap>
       <PlayList>
         {music.map((item, index) => (
-          <PlayListBtn
-            key={item.id}
-            value={item.information}
-            onClick={() => handlePlayListBtnClick(index)}
-            display={index + 1 > visibleCount ? 'none' : 'block'}
-            $bgColor={index === currMusic ? 'rgba(137, 105, 255, 0.08)' : ''}
-          >
-            <PlayListItem
-              img={item.thumbnail}
-              title={item.song}
-              info={item.singer}
+          <li key={item.id}>
+            <PlayListBtn
+              value={item.information}
+              onClick={() => handlePlayListBtnClick(index)}
+              display={index + 1 > visibleCount ? 'none' : 'block'}
+              $bgColor={index === currMusic ? 'rgba(137, 105, 255, 0.08)' : ''}
             >
-              {index === currMusic && !pause && <MusicWave />}
-            </PlayListItem>
-          </PlayListBtn>
+              <PlayListItem
+                img={item.thumbnail}
+                title={item.song}
+                info={item.singer}
+              >
+                {index === currMusic && !pause && <MusicWave />}
+              </PlayListItem>
+            </PlayListBtn>
+          </li>
         ))}
       </PlayList>
       {music.length > 2 && (
         <ExtendBtn onClick={handleMore} more={more}>
-          <ArrowIcon fill='black' />
+          <ArrowIcon fill='black' aria-label='음악 목록 더보기' />
         </ExtendBtn>
       )}
     </DetailListWrap>

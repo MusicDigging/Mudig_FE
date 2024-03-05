@@ -14,6 +14,7 @@ export default function SetProfile() {
   const { mutate: postUserProfile } = useUserProfile();
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const signupInfo = useRecoilValue(signUpInfoAtom);
+  const userType = signupInfo.type;
   const setIsLogin = useSetRecoilState(isLoginAtom);
   const [genre, setGenre] = useState<string[]>([]);
   const [previewImg, setPreviewImg] = useState(BasicProfileImage);
@@ -28,7 +29,9 @@ export default function SetProfile() {
 
   const handleUserInfo = (data: IUserProfile) => {
     formData.append('email', signupInfo.email);
-    formData.append('password', signupInfo.password ?? '');
+    if (signupInfo.password) {
+      formData.append('password', signupInfo.password);
+    }
     formData.append('name', data.nickName);
     formData.append('about', data.about || '소개글을 작성해주세요.');
     formData.append('genre', selectGenre);
@@ -37,7 +40,8 @@ export default function SetProfile() {
 
   const SubmitUserProfile = async (data: IUserProfile) => {
     handleUserInfo(data);
-    postUserProfile(formData, {
+    const userData = { formData, userType };
+    postUserProfile(userData, {
       onSuccess: (data) => {
         const { user, token } = data;
         const { id, email, name, image, genre, about, rep_playlist } = user;
@@ -55,6 +59,7 @@ export default function SetProfile() {
           rep_playlist,
           token,
         });
+
         navigate('/main');
       },
       onError: (error) => {

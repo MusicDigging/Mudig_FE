@@ -102,23 +102,25 @@ export default function PlayListModifyList({ playlistDesc }: Props) {
                   disableInteractiveElementBlocking
                 >
                   {(provided) => (
-                    <PlayListItem
-                      innerRef={provided.innerRef}
-                      dragHandleProps={provided.dragHandleProps}
-                      draggableProps={provided.draggableProps}
-                      modify={true}
-                      img={item.thumbnail}
-                      title={item.song}
-                      info={item.singer}
-                    >
-                      <DelBtn
-                        type='button'
-                        name='삭제'
-                        onClick={() => handleDelBtn(item.id)}
+                    <li>
+                      <PlayListItem
+                        innerRef={provided.innerRef}
+                        dragHandleProps={provided.dragHandleProps}
+                        draggableProps={provided.draggableProps}
+                        modify={true}
+                        img={item.thumbnail}
+                        title={item.song}
+                        info={item.singer}
                       >
-                        <img src={CloseIcon} alt='삭제' />
-                      </DelBtn>
-                    </PlayListItem>
+                        <DelBtn
+                          type='button'
+                          name='삭제'
+                          onClick={() => handleDelBtn(item.id)}
+                        >
+                          <img src={CloseIcon} alt='삭제' />
+                        </DelBtn>
+                      </PlayListItem>
+                    </li>
                   )}
                 </Draggable>
               ))}
@@ -132,7 +134,8 @@ export default function PlayListModifyList({ playlistDesc }: Props) {
   );
 }
 
-const PlayListModifyWrap = styled.div`
+const PlayListModifyWrap = styled.section`
+  height: calc(100vh - 355px);
   flex: 1 0 0;
   padding: 25px 16px;
   background-color: #fff;

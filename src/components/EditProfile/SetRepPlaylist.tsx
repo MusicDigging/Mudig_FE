@@ -47,7 +47,10 @@ export default function SetRepPlaylist(props: Props) {
         >
           {repPlaylist || currRepPlaylist ? (
             <>
-              <Image src={currRepPlaylist?.thumbnail} />
+              <Image
+                src={currRepPlaylist?.thumbnail}
+                alt={currRepPlaylist?.thumbnail}
+              />
               <div>
                 <strong>{currRepPlaylist?.title}</strong>
               </div>
@@ -68,7 +71,7 @@ export default function SetRepPlaylist(props: Props) {
                   onClick={() => handleRepPlaylistCheck(item?.id)}
                 >
                   <>
-                    <Image src={item?.thumbnail} />
+                    <Image src={item?.thumbnail} alt={item?.thumbnail} />
                     <div>
                       <strong>{item?.title}</strong>
                     </div>

@@ -34,7 +34,7 @@ export default function PlayListItem(props: Props) {
       <PlayListItemBox>
         {modify && (
           <button type='button' {...dragHandleProps}>
-            <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경 아이콘' />
+            <img src={OrderChangeIcon} alt='플레이 리스트 순서 변경' />
           </button>
         )}
         <PlayListItemInfo>
@@ -53,7 +53,7 @@ export default function PlayListItem(props: Props) {
   );
 }
 
-const PlayListItemWrap = styled.li`
+const PlayListItemWrap = styled.div`
   width: 100%;
   display: flex;
   align-items: center;

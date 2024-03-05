@@ -23,7 +23,10 @@ export default function SearchResultByType(props: Props) {
   const PlayList = () => {
     return (
       <ul>
-        <SearchResultTitle title='플리 검색결과' />
+        <SearchResultTitle
+          title='플리 검색결과'
+          ariaLabel='플리 검색결과 더보기'
+        />
         {result.playlists.length !== 0 ? (
           result.playlists.map((item) => (
             <Link
@@ -53,8 +56,11 @@ export default function SearchResultByType(props: Props) {
   const MusicList = () => {
     return (
       <ul>
-        <SearchResultTitle title='노래 검색결과' />
-        {result.search_music[0].music_count !== 0 ? (
+        <SearchResultTitle
+          title='노래 검색결과'
+          ariaLabel='노래 검색결과 더보기'
+        />
+        {result.search_music.length !== 0 ? (
           musicResult.map((music) => {
             return (
               <PlayListItem
@@ -122,31 +128,34 @@ export default function SearchResultByType(props: Props) {
       )}
       {/* 유저 결과만 */}
       {type === 'user' && (
-        <UserList>
-          {result.users.length !== 0 ? (
-            result.users.map((user) => {
-              return (
-                <Link
-                  to={`/user/profile/${user.id}`}
-                  key={user.id}
-                  state={{ id: user.id }}
-                >
-                  <UserItem key={user.id}>
-                    <UserImgBox>
-                      <CircleImage src={user.image} alt='유저이미지' />
-                    </UserImgBox>
-                    <UserInfoBox>
-                      <div>{user.name}</div>
-                      <p>{user.about}</p>
-                    </UserInfoBox>
-                  </UserItem>
-                </Link>
-              );
-            })
-          ) : (
-            <EmptySearch />
-          )}
-        </UserList>
+        <>
+          <h2 className='a11y-hidden'>유저 검색 결과</h2>
+          <UserList>
+            {result.users.length !== 0 ? (
+              result.users.map((user) => {
+                return (
+                  <Link
+                    to={`/user/profile/${user.id}`}
+                    key={user.id}
+                    state={{ id: user.id }}
+                  >
+                    <UserItem key={user.id}>
+                      <UserImgBox>
+                        <CircleImage src={user.image} alt='유저이미지' />
+                      </UserImgBox>
+                      <UserInfoBox>
+                        <div>{user.name}</div>
+                        <p>{user.about}</p>
+                      </UserInfoBox>
+                    </UserItem>
+                  </Link>
+                );
+              })
+            ) : (
+              <EmptySearch />
+            )}
+          </UserList>
+        </>
       )}
     </>
   );
@@ -156,10 +165,7 @@ const TabButtonBox = styled.div`
   padding-bottom: 18px;
   display: flex;
   gap: 12px;
-  position: fixed;
-  z-index: 2;
-  width: 398px;
-  min-width: 328px;
+  width: 100%;
   background: #fff;
 `;
 const TabButton = styled.button<{ active: boolean }>`
@@ -177,7 +183,11 @@ const PlaylistWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-top: 54px;
+  height: calc(100vh - 270px);
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const UserList = styled.ul`
   display: flex;

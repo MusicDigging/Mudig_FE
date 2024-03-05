@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SignupForm } from '../../components/common/Form/SignupForm';
 import { signUpInfoAtom, toastAtom } from '../../library/atom';

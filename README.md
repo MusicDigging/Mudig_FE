@@ -38,7 +38,8 @@
 <tr>
  <td align="center" width="100px">사용 기술</td>
  <td width="800px">
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp  
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">&nbsp
   <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>&nbsp
   <img src="https://img.shields.io/badge/React%20Hook%20Form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=ffffff"/>&nbsp  
   <img src="https://img.shields.io/badge/recoil-3578E5?style=for-the-badge&logo=recoil&logoColor=white"/>&nbsp 
@@ -460,7 +461,7 @@ export default function RandomMusic() {
 > 적용 이유
 
 - 플레이리스트를 수정할 때 요구사항 중 하나인 순서 변경에서 drag & drop 기능을 사용해야 했습니다.
-- 이때, 단순히 순서만 변경하면 되었기에 초보자도 쉽게 쓸 수 있는 라이브러리이면서, 성능과 애니메이션 효과가 돋보이는 **react-beautiful-dnd** 라이브러리를 사용하여 구현하기로 결정했습니다.
+- 이때, 단순히 순서만 변경하면 되었기에 초보자도 쉽게 쓸 수 있는 라이브러리이면서, 접근성을 보장하고 성능과 애니메이션 효과가 돋보이는 **react-beautiful-dnd** 라이브러리를 사용하여 구현하기로 결정했습니다.
 <details>
 <summary>코드 보기</summary>
 
@@ -711,6 +712,8 @@ useMutation Delete 요청 성공 시 쿼리 데이터를 제거하는 `queryClie
 
 </details>
 
-# 유저 피드백 이후
+# 유저 피드백
+유저 피드백과 관련된 내용은 [Mudig Wiki](https://github.com/MusicDigging/Mudig_FE/wiki/%EC%9C%A0%EC%A0%80%ED%94%BC%EB%93%9C%EB%B0%B1)를 통해 확인할 수 있습니다.
+
 
 <a href="#top">🔼 Top</a>
