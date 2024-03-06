@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '../../components/common/Button/Button';
 import * as S from './SignupStyle';
 import KakaoIcon from '../../img/kakao-icon.svg';
 import GoogleIcon from '../../img/google-icon.svg';
-import { isLoginAtom, signUpInfoAtom, userInfoAtom } from '../../library/atom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
+
+import { useNavigate } from 'react-router-dom';
+
 import { getKakaoInfo, getGoogleInfo } from '../../library/apis/api';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
 export default function Signup() {
@@ -37,13 +36,13 @@ export default function Signup() {
             alt='카카오로 회원가입하기 버튼'
           />
           <Button
-            text='구글로 시작하기'
+            text='Google로 시작하기'
             btnBgColor='#FFF'
             btnBorder='1px solid #DBDBDB'
             btnColor={'var(--font-color)'}
             imgSrc={GoogleIcon}
             onClick={googleLoginHandler}
-            alt='구글로 회원가입하기 버튼'
+            alt='Google로 회원가입하기 버튼'
           />
         </S.SignupBtnBox>
         <S.Span>또는</S.Span>

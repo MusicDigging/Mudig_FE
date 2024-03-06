@@ -55,7 +55,7 @@ const SignupDetailBox = styled.div`
   display: flex;
   position: relative;
   top: 56px;
-  /* left: 16px; */
+
   line-height: 33px;
 `;
 

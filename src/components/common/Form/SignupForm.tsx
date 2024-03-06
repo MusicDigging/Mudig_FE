@@ -1,10 +1,9 @@
 import { useForm, FormProvider } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
 import styled from 'styled-components';
 import { SignupInput } from '../Input/SignupInput';
 import { Button } from '../Button/Button';
 import usePasswordToggle from '../../../hooks/ussPasswordToggle';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 import { IOtpResponse } from '../../../types/setUser';
 interface Props {
@@ -24,7 +23,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
     },
     mode: 'onBlur',
   });
-  const { formState, control, watch, setError } = methods;
+  const { formState, watch, setError } = methods;
   const { isValid } = formState;
 
   const watchEmail = watch('email');
@@ -32,17 +31,13 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
 
   const { toggleShowPassword, showPassword } = usePasswordToggle();
   const [isEmailValidated, setIsEmailValidated] = useState(false);
-  const [showTimeText, setShowTimeText] = useState(false);
+
   const [otpNum, setOtpNum] = useState('');
 
   //인증버튼 활성화 확인 여부 변수
   const disabledConfirm = emailRegex.test(watchEmail);
   const isOtpValidated = isEmailValidated && watchOtpNum !== '';
   const formIsValid = isValid && isOtpValidated;
-
-  useEffect(() => {
-    // console.log('이메일 인증 활성화 :', isEmailValidated);
-  }, [isEmailValidated]);
 
   const handleEmailValidation = () => {
     if (!disabledConfirm) {
@@ -56,8 +51,8 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
         if (onEmailToastMsg) {
           onEmailToastMsg();
         }
-        const { message, otp } = data;
-        // console.log(otp);
+        const otp = data.otp;
+
         setOtpNum(otp);
       },
       onError: (error) => {
