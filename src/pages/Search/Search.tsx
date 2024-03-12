@@ -20,18 +20,9 @@ export default function Search() {
 
   // 최근 검색어 추가
   const handleAddRecentKeyword = (keyword: string) => {
-    const isKeywordExist = recentKeywords.some(
-      (item: IStoredKeyword) => item.keyword === keyword,
+    const updatedKeywords = recentKeywords.filter(
+      (item: IStoredKeyword) => item.keyword !== keyword,
     );
-    let updatedKeywords;
-    // 이미 검색한 단어인 경우
-    if (isKeywordExist) {
-      updatedKeywords = recentKeywords.filter(
-        (item: IStoredKeyword) => item.keyword !== keyword,
-      );
-    } else {
-      updatedKeywords = recentKeywords;
-    }
 
     const newKeyword = {
       id: Date.now(),
@@ -53,7 +44,11 @@ export default function Search() {
   };
   // 검색했을 때 로컬스토리지에 저장
   useEffect(() => {
-    localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
+    console.log('run!');
+    // localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
+    if (JSON.stringify(storedKeywords) !== JSON.stringify(recentKeywords)) {
+      localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
+    }
   }, [recentKeywords]);
 
   // 검색 페이지일 때 7일 이내 검색 기록만 남기도록 함
