@@ -8,13 +8,13 @@ interface Props {
 }
 export default function SearchNav({ currentNav, setCurrentNav }: Props) {
   const handleNavAll = () => {
-    setCurrentNav({ all: true, playlist: false, music: false, user: false });
+    setCurrentNav({ all: true, playlist: false, user: false });
   };
   const handleNavPlaylist = () => {
-    setCurrentNav({ all: false, playlist: true, music: false, user: false });
+    setCurrentNav({ all: false, playlist: true, user: false });
   };
   const handleNavUser = () => {
-    setCurrentNav({ all: false, playlist: false, music: false, user: true });
+    setCurrentNav({ all: false, playlist: false, user: true });
   };
   return (
     <nav>
