@@ -33,7 +33,6 @@ export default function PlaylistDetail() {
   const setEditId = useSetRecoilState(commentEditIdAtom);
   const setPlaylistInfo = useSetRecoilState(PlayListAtom);
   const setBackAnimation = useSetRecoilState(backAnimationAtom);
-
   useEffect(() => {
     setEditId(null);
   }, []);

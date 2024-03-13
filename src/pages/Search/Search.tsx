@@ -44,11 +44,7 @@ export default function Search() {
   };
   // 검색했을 때 로컬스토리지에 저장
   useEffect(() => {
-    console.log('run!');
-    // localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
-    if (JSON.stringify(storedKeywords) !== JSON.stringify(recentKeywords)) {
-      localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
-    }
+    localStorage.setItem('recent_keywords', JSON.stringify(recentKeywords));
   }, [recentKeywords]);
 
   // 검색 페이지일 때 7일 이내 검색 기록만 남기도록 함
