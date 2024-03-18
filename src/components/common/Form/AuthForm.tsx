@@ -7,7 +7,7 @@ import { loginUser } from '../../../library/apis/api';
 import { useMutation } from 'react-query';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import usePasswordToggle from '../../../hooks/ussPasswordToggle';
+import usePasswordToggle from '../../../hooks/usePasswordToggle';
 import { ILogin } from '../../../types/setUser';
 interface ILoginData {
   email: string;

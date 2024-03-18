@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useForm, FormProvider, FieldValues } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
-import usePasswordToggle from '../../hooks/ussPasswordToggle';
+import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { isLoginAtom, userInfoAtom } from '../../library/atom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useUserResign } from '../../hooks/queries/useUserInfo';
