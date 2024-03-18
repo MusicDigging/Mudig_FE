@@ -23,6 +23,5 @@ export interface IStoredKeyword {
 export interface ISearchNav {
   all: boolean;
   playlist: boolean;
-  music: boolean;
   user: boolean;
 }
