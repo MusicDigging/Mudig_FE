@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NavBar from '../NavBar/NavBar';
-import BackgroundImg from '../../../img/background-img.svg';
 import Toast from '../Toast';
 import { useRecoilState } from 'recoil';
 import { toastAtom } from '../../../library/atom';
