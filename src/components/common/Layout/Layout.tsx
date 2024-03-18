@@ -2,7 +2,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Header from '../Header/Header';
 import NavBar from '../NavBar/NavBar';
 import BackgroundImg from '../../../img/background-img.svg';
 import Toast from '../Toast';
@@ -31,7 +30,6 @@ export default function Layout({ children }: Props) {
 
   return (
     <LayoutWrap>
-      <Header />
       {toast && (
         <Toast setToast={setToast} text={toast.content} type={toast.type} />
       )}
