@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoAtom } from '../../library/atom';
 import * as S from './HomeStyle';
@@ -8,14 +9,6 @@ import PlayListTable from '../../components/Home/PlayListTable';
 import useGetHome from '../../hooks/queries/useHome';
 import Loading from '../../components/Loading/Loading';
 import NotFound from '../NotFound/NotFound';
-import { Link, useNavigate } from 'react-router-dom';
-
-interface IHomeData {
-  liked_playlist: IPlaylist[];
-  my_playlist: IPlaylist[];
-  playlist_all: IPlaylist[];
-  recommend_pli: IPlaylist[];
-}
 
 interface IPlaylist {
   id: string;

@@ -6,7 +6,7 @@ import PlaylistIcon from '../../../img/playlist_icon.svg';
 import MovieIcon from '../../../img/movie_icon.svg';
 import ProfileIcon from '../../../img//profile_icon.svg';
 
-function NavBar(): JSX.Element {
+export default function NavBar() {
   const location = useLocation();
 
   const isActive = (path: string): boolean => location.pathname === path;
@@ -48,7 +48,6 @@ function NavBar(): JSX.Element {
     </NavBarWrap>
   );
 }
-export default NavBar;
 
 const NavBarWrap = styled.nav`
   border-top: 1px solid var(--border-color);
