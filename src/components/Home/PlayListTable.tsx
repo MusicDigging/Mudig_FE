@@ -5,7 +5,7 @@ import { Image } from '../common/Image/Image';
 import { Link } from 'react-router-dom';
 
 interface IPlaylistItem {
-  id: string; // 혹은 number
+  id: string;
   thumbnail: string;
   title: string;
 }
@@ -21,7 +21,7 @@ interface Props {
 export default function PlayListTable({ liSize, playlistData }: Props) {
   return (
     <PlayListTableWrap>
-      <ul className='scrollable-element'>
+      <ul>
         {playlistData &&
           playlistData.map((item) => (
             <Link
@@ -31,7 +31,6 @@ export default function PlayListTable({ liSize, playlistData }: Props) {
             >
               <StyledListItem key={item.id} liSize={liSize}>
                 <ImageBox liSize={liSize}>
-                  {/* Use thumbnail URL from the data */}
                   <Image src={`${item.thumbnail}`} alt={item.title} />
                 </ImageBox>
                 <PlayIconImg
@@ -39,7 +38,7 @@ export default function PlayListTable({ liSize, playlistData }: Props) {
                   alt='재생 바로가기 아이콘'
                   liSize={liSize}
                 />
-                <p>{item.title}</p> {/* Display the title */}
+                <p>{item.title}</p>
               </StyledListItem>
             </Link>
           ))}
@@ -108,5 +107,5 @@ const PlayIconImg = styled.img<{ liSize: ILiSize }>`
   bottom: ${(props) =>
     0.17647 * parseInt(props.liSize.width, 10) - 12.32353 + 26}px;
   right: ${(props) => 0.17647 * parseInt(props.liSize.width, 10) - 12.32353}px;
-  width: 19.5px; // 레이어 이미지의 고정된 가로 길이
+  width: 19.5px;
 `;

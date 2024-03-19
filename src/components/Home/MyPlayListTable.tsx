@@ -27,7 +27,7 @@ export default function MyPlayListTable({ playlistData }: Props) {
               state={{ id: item.id }}
             >
               <PlayListItem
-                key={item.id} // Assuming each item has a unique 'id'
+                key={item.id}
                 img={item.thumbnail}
                 title={item.title}
                 info={`${item.music.length}곡`}
@@ -46,7 +46,6 @@ export default function MyPlayListTable({ playlistData }: Props) {
 
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
-  background-color: transperate;
   display: flex;
   flex-direction: column;
   gap: 16px;

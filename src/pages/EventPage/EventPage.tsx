@@ -7,8 +7,7 @@ import Loading from '../../components/Loading/Loading';
 export default function EventPage() {
   const [inputValue, setInputValue] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [responseData, setResponseData] = useState<string | null>(null); // 'any' 대신 구체적인 타입을 사용할 수 있습니다
-
+  const [responseData, setResponseData] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleClose = () => {
@@ -55,10 +54,10 @@ export default function EventPage() {
           type='text'
           value={inputValue}
           onChange={handleInputChange}
-        ></input>
+        />
         <div id='textValue'>{inputValue.length}/100</div>
         <S.NotTodayBox>
-          <input type='checkbox' id='inputCheckbox'></input>
+          <input type='checkbox' id='inputCheckbox' />
           <p>오늘하루 보지 않기</p>
         </S.NotTodayBox>
         <S.SubmitButton
