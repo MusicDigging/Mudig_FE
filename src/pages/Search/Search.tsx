@@ -20,18 +20,9 @@ export default function Search() {
 
   // 최근 검색어 추가
   const handleAddRecentKeyword = (keyword: string) => {
-    const isKeywordExist = recentKeywords.some(
-      (item: IStoredKeyword) => item.keyword === keyword,
+    const updatedKeywords = recentKeywords.filter(
+      (item: IStoredKeyword) => item.keyword !== keyword,
     );
-    let updatedKeywords;
-    // 이미 검색한 단어인 경우
-    if (isKeywordExist) {
-      updatedKeywords = recentKeywords.filter(
-        (item: IStoredKeyword) => item.keyword !== keyword,
-      );
-    } else {
-      updatedKeywords = recentKeywords;
-    }
 
     const newKeyword = {
       id: Date.now(),

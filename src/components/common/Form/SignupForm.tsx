@@ -2,7 +2,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import styled from 'styled-components';
 import { SignupInput } from '../Input/SignupInput';
 import { Button } from '../Button/Button';
-import usePasswordToggle from '../../../hooks/ussPasswordToggle';
+import usePasswordToggle from '../../../hooks/usePasswordToggle';
 import { useState } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 import { IOtpResponse } from '../../../types/setUser';

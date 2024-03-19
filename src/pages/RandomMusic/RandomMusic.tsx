@@ -13,49 +13,43 @@ import { IVideoData } from '../../types/RandomMv';
 export default function RandomMusic() {
   const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
   const { mutate: getRandomMv } = useRandomMv();
-  //랜덤뮤비 중복 방지 위해 post 요청 보낼 id
   const [id, setId] = useState<string[]>([]);
   const selectId = id.join(',');
-  //개별 뮤비 아이디
   const [videoId, setVideoId] = useState('');
   const [page, setPage] = useState(0);
   const targetRef = useRef<HTMLDivElement>(null);
   const [allVideos, setAllVideos] = useState<IVideoData[]>([]);
   const [isEnd, setIsEnd] = useState(false);
-  //버튼 클릭히 해당 뮤비 아이디 함수`
+
   const handleAddButtonClick = (videoId: string) => {
     // console.log(`선택된 뮤비 ${videoId}`);
     setVideoId(videoId);
     setModalOpen(true);
   };
 
-  useEffect(() => {
-    const fetchRandomMv = async () => {
-      const data = { selectId, page };
-      // console.log(data);
-      getRandomMv(data, {
-        onSuccess: (newVideoData: IVideoData[]) => {
-          if (newVideoData.length === 0) {
-            setIsEnd(true);
-            return;
-          }
-          //받아온 뮤비들의 id값 갱신하여 [id, setId] 에 저장
-          const dataId = newVideoData.map((video) => video.id);
-          setId((prevId) => [...prevId, ...dataId]);
-          setPage((prevPage) => prevPage + 1);
-          //기존 비디오랑 새로 받아오는 비디오
-          setAllVideos((prevVideos) => [...prevVideos, ...newVideoData]);
-        },
-        onError: (error) => {
-          console.error('랜덤뮤비 불러오기 실패', error);
-        },
-      });
-    };
+  const fetchRandomMv = async () => {
+    const data = { selectId, page };
+    getRandomMv(data, {
+      onSuccess: (newVideoData: IVideoData[]) => {
+        if (newVideoData.length === 0) {
+          setIsEnd(true);
+          return;
+        }
+        const dataId = newVideoData.map((video) => video.id);
+        setId((prevId) => [...prevId, ...dataId]);
+        setPage((prevPage) => prevPage + 1);
+        setAllVideos((prevVideos) => [...prevVideos, ...newVideoData]);
+      },
+      onError: (error) => {
+        console.error('랜덤뮤비 불러오기 실패', error);
+      },
+    });
+  };
 
+  useEffect(() => {
     const observerCallback = async ([entry]: IntersectionObserverEntry[]) => {
       if (entry.isIntersecting) {
         await fetchRandomMv();
-        // console.log('스크롤 이벤트 발생!');
       }
     };
 
@@ -75,7 +69,7 @@ export default function RandomMusic() {
     return () => {
       observer.disconnect();
     };
-  }, [page]);
+  }, [page, id]);
 
   return (
     <>
