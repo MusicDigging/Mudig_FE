@@ -24,12 +24,8 @@ export default function PlayListTable({ liSize, playlistData }: Props) {
       <ul>
         {playlistData &&
           playlistData.map((item) => (
-            <Link
-              to={`/playlist/detail/${item.id}`}
-              key={item.id}
-              state={{ id: item.id }}
-            >
-              <StyledListItem key={item.id} liSize={liSize}>
+            <StyledListItem key={item.id} liSize={liSize}>
+              <Link to={`/playlist/detail/${item.id}`} state={{ id: item.id }}>
                 <ImageBox liSize={liSize}>
                   <Image src={`${item.thumbnail}`} alt={item.title} />
                 </ImageBox>
@@ -39,8 +35,8 @@ export default function PlayListTable({ liSize, playlistData }: Props) {
                   liSize={liSize}
                 />
                 <p>{item.title}</p>
-              </StyledListItem>
-            </Link>
+              </Link>
+            </StyledListItem>
           ))}
       </ul>
     </PlayListTableWrap>

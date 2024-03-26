@@ -21,22 +21,23 @@ export default function MyPlayListTable({ playlistData }: Props) {
       <PlayListBox>
         <PlayList>
           {playlistData.map((item) => (
-            <Link
-              to={`/playlist/detail/${item.id}`}
-              key={item.id}
-              state={{ id: item.id }}
-            >
-              <PlayListItem
-                key={item.id}
-                img={item.thumbnail}
-                title={item.title}
-                info={`${item.music.length}곡`}
-              >
-                <PlayBtnStyle type='button'>
-                  <img id='playImg' src={PlayIcon} alt='재생 바로가기 아이콘' />
-                </PlayBtnStyle>
-              </PlayListItem>
-            </Link>
+            <li key={item.id}>
+              <Link to={`/playlist/detail/${item.id}`} state={{ id: item.id }}>
+                <PlayListItem
+                  img={item.thumbnail}
+                  title={item.title}
+                  info={`${item.music.length}곡`}
+                >
+                  <PlayBtnStyle type='button'>
+                    <img
+                      id='playImg'
+                      src={PlayIcon}
+                      alt='재생 바로가기 아이콘'
+                    />
+                  </PlayBtnStyle>
+                </PlayListItem>
+              </Link>
+            </li>
           ))}
         </PlayList>
       </PlayListBox>
