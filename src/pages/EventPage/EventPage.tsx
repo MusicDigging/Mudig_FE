@@ -3,12 +3,19 @@ import * as S from './EventPageStyle';
 import { useNavigate } from 'react-router-dom';
 import { privateInstance } from '../../library/apis/axiosInstance';
 import Loading from '../../components/Loading/Loading';
+import useCreateEvent from '../../hooks/queries/useEvent';
 
 export default function EventPage() {
   const [inputValue, setInputValue] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [responseData, setResponseData] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { mutate, isLoading, error } = useCreateEvent({
+    onSuccess: (data) => {
+      navigate('/playlist/summary', { state: { playlist: data.playlist.id } });
+    },
+    onError: (error) => {
+      alert('플레이리스트 생성에 실패했습니다.');
+    },
+  });
 
   const handleClose = () => {
     navigate('/main');
@@ -21,25 +28,8 @@ export default function EventPage() {
     }
   };
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const response = await privateInstance.post('/playlist/event/', {
-        situations: inputValue,
-      });
-
-      if (response.status === 200) {
-        setResponseData(response.data); // 데이터 저장
-        navigate('/playlist/summary', {
-          state: { playlist: response.data.playlist.id },
-        }); // PlaylistSummary 페이지로 이동
-      }
-    } catch (error) {
-      console.error('전송 실패', error);
-      alert('생성 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handleSubmit = () => {
+    mutate(inputValue);
   };
 
   return (
