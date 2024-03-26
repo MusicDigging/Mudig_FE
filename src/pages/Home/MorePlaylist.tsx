@@ -10,12 +10,11 @@ import NotFound from '../NotFound/NotFound';
 type IPlaylistType = 'recommend' | 'hot' | 'new';
 
 export default function MorePlaylist() {
+  const location = useLocation();
+  const state = location?.state;
+  const { data: playlistData } = state;
   const navigate = useNavigate();
   const { playlistType } = useParams<{ playlistType: IPlaylistType }>();
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const data = query.get('data');
-  const playlistData = data ? JSON.parse(decodeURIComponent(data)) : null;
   const userInfo = useRecoilValue(userInfoAtom);
 
   // 컴포넌트 공통 렌더링 로직

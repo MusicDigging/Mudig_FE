@@ -26,9 +26,9 @@ export default function Home() {
   const { liked_playlist, my_playlist, playlist_all, recommend_pli } = data;
 
   const handleMoreClick = (playlistType: string, data: IPlaylist[]) => {
-    navigate(
-      `/main/${playlistType}?data=${encodeURIComponent(JSON.stringify(data))}`,
-    );
+    navigate(`/main/${playlistType}`, {
+      state: { data: data },
+    });
   };
 
   return (
