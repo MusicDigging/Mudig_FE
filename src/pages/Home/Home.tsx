@@ -1,88 +1,53 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userInfoAtom } from '../../library/atom';
 import * as S from './HomeStyle';
 import MainHeader from '../../components/common/Header/MainHeader';
-import MyPlayListTable from '../../components/Home/MyPlayListTable';
 import PlayListTable from '../../components/Home/PlayListTable';
+import MyPlayListTable from '../../components/Home/MyPlayListTable';
 import useGetHome from '../../hooks/queries/useHome';
 import Loading from '../../components/Loading/Loading';
 import NotFound from '../NotFound/NotFound';
 
-interface IPlaylist {
-  id: string;
-  title: string;
-}
-
 export default function Home() {
   const { data, isLoading, error } = useGetHome();
   const userInfo = useRecoilValue(userInfoAtom);
-  const navigate = useNavigate();
 
   if (isLoading) return <Loading isLoading={isLoading} />;
   if (error) return <NotFound />;
 
   const { liked_playlist, my_playlist, playlist_all, recommend_pli } = data;
 
-  const handleMoreClick = (playlistType: string, data: IPlaylist[]) => {
-    navigate(`/main/${playlistType}`, {
-      state: { data: data },
-    });
-  };
-
   return (
     <>
       <MainHeader />
       <S.HomeWrap>
         <S.HomeSection>
-          <S.PlaylistNameBox
-            onClick={() => handleMoreClick('recommend', recommend_pli)}
-          >
-            <h2 id='bold'>{userInfo.name}님을 위한 플레이리스트</h2>
-            <S.MoreBtn aria-label='더보기' />
-          </S.PlaylistNameBox>
+          {/* 추천 플레이리스트 섹션 */}
           <PlayListTable
-            liSize={{ width: '152px' }}
+            title={`${userInfo.name}님을 위한 플레이리스트`}
             playlistData={recommend_pli}
+            liSize={{ width: '152px' }}
+            moreLink='/main/recommend'
           />
-          <S.PlaylistNameBox
-            onClick={() => handleMoreClick('hot', liked_playlist)}
-          >
-            <h2>지금 핫한🔥 플레이리스트</h2>
-            <S.MoreBtn aria-label='더보기' />
-          </S.PlaylistNameBox>
+
+          {/* 인기 플레이리스트 섹션 */}
           <PlayListTable
-            liSize={{ width: '118px' }}
+            title='지금 핫한🔥 플레이리스트'
             playlistData={liked_playlist}
-          />
-          <Link to='/user/profile/my'>
-            <S.PlaylistNameBox>
-              <h2>내가 생성한 플레이리스트</h2>
-              <S.MoreBtn aria-label='더보기' />
-            </S.PlaylistNameBox>
-          </Link>
-          {my_playlist && my_playlist.length > 0 ? (
-            <MyPlayListTable playlistData={my_playlist} />
-          ) : (
-            <S.MyPlayListNoneInfo>
-              <p id='MyPlayListNoneInfoText'>앗 ! 아직 비어있어요</p>
-              <Link to='/playlist/create1'>
-                <button id='MyPlayListNoneInfoBtn'>
-                  플레이리스트 생성하러 가기
-                </button>
-              </Link>
-            </S.MyPlayListNoneInfo>
-          )}
-          <S.PlaylistNameBox
-            onClick={() => handleMoreClick('new', playlist_all)}
-          >
-            <h2>신규 플레이리스트</h2>
-            <S.MoreBtn aria-label='더보기' />
-          </S.PlaylistNameBox>
-          <PlayListTable
             liSize={{ width: '118px' }}
+            moreLink='/main/hot'
+          />
+
+          {/* 내가 생성한 플레이리스트 섹션 */}
+          <MyPlayListTable playlistData={my_playlist} />
+
+          {/* 신규 플레이리스트 섹션 */}
+          <PlayListTable
+            title='신규 플레이리스트'
             playlistData={playlist_all}
+            liSize={{ width: '118px' }}
+            moreLink='/main/new'
           />
         </S.HomeSection>
       </S.HomeWrap>

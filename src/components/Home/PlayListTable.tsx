@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import PlayIcon from '../../img/play-icon-white.svg';
 import { Image } from '../common/Image/Image';
-import { Link } from 'react-router-dom';
+import * as S from '../../pages/Home/HomeStyle';
 
 interface IPlaylistItem {
   id: string;
@@ -17,32 +18,46 @@ interface ILiSize {
 interface Props {
   liSize: ILiSize;
   playlistData: IPlaylistItem[];
+  title: string; // 각 섹션의 타이틀을 위한 프로퍼티
+  moreLink: string; // "더 보기" 링크의 경로를 위한 프로퍼티
 }
-export default function PlayListTable({ liSize, playlistData }: Props) {
+
+export default function PlayListTable({
+  liSize,
+  playlistData,
+  title,
+  moreLink,
+}: Props) {
   return (
     <PlayListTableWrap>
+      {/* 섹션 타이틀과 "더 보기" 버튼 */}
+      <S.PlaylistNameBox>
+        <h2>{title}</h2>
+        <Link to={moreLink}>
+          <S.MoreBtn />
+        </Link>
+      </S.PlaylistNameBox>
       <ul>
-        {playlistData &&
-          playlistData.map((item) => (
-            <StyledListItem key={item.id} liSize={liSize}>
-              <Link to={`/playlist/detail/${item.id}`} state={{ id: item.id }}>
-                <ImageBox liSize={liSize}>
-                  <Image src={`${item.thumbnail}`} alt={item.title} />
-                </ImageBox>
-                <PlayIconImg
-                  src={PlayIcon}
-                  alt='재생 바로가기 아이콘'
-                  liSize={liSize}
-                />
-                <p>{item.title}</p>
-              </Link>
-            </StyledListItem>
-          ))}
+        {playlistData.map((item) => (
+          <StyledListItem key={item.id} liSize={liSize}>
+            <Link to={`/playlist/detail/${item.id}`} state={{ id: item.id }}>
+              <ImageBox liSize={liSize}>
+                <Image src={item.thumbnail} alt={item.title} />
+              </ImageBox>
+              <PlayIconImg
+                src={PlayIcon}
+                alt='재생 바로가기 아이콘'
+                liSize={liSize}
+              />
+              <p>{item.title}</p>
+            </Link>
+          </StyledListItem>
+        ))}
       </ul>
     </PlayListTableWrap>
   );
 }
-// 기본 props 설정
+
 PlayListTable.defaultProps = {
   liSize: {
     width: '118px', // 기본 너비 설정
