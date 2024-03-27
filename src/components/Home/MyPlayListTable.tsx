@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
+import * as S from '../../pages/Home/HomeStyle';
 
 interface IPlaylistItem {
   id: string;
@@ -15,48 +16,67 @@ interface IPlaylistItem {
 interface Props {
   playlistData: IPlaylistItem[];
 }
+
 export default function MyPlayListTable({ playlistData }: Props) {
   return (
     <MyPlayListTableWrap>
-      <PlayListBox>
-        <PlayList>
-          {playlistData.map((item) => (
-            <Link
-              to={`/playlist/detail/${item.id}`}
-              key={item.id}
-              state={{ id: item.id }}
-            >
-              <PlayListItem
-                key={item.id} // Assuming each item has a unique 'id'
-                img={item.thumbnail}
-                title={item.title}
-                info={`${item.music.length}곡`}
-              >
-                <PlayBtnStyle type='button'>
-                  <img id='playImg' src={PlayIcon} alt='재생 바로가기 아이콘' />
-                </PlayBtnStyle>
-              </PlayListItem>
-            </Link>
-          ))}
-        </PlayList>
-      </PlayListBox>
+      <Link to='/user/profile/my'>
+        <S.PlaylistNameBox>
+          <h2>내가 생성한 플레이리스트</h2>
+          <S.MoreBtn aria-label='더보기' />
+        </S.PlaylistNameBox>
+      </Link>
+      {playlistData && playlistData.length > 0 ? (
+        <PlayListBox>
+          <PlayList>
+            {playlistData.map((item) => (
+              <li key={item.id}>
+                <Link
+                  to={`/playlist/detail/${item.id}`}
+                  state={{ id: item.id }}
+                >
+                  <PlayListItem
+                    img={item.thumbnail}
+                    title={item.title}
+                    info={`${item.music.length}곡`}
+                  >
+                    <PlayBtnStyle type='button'>
+                      <img
+                        id='playImg'
+                        src={PlayIcon}
+                        alt='재생 바로가기 아이콘'
+                      />
+                    </PlayBtnStyle>
+                  </PlayListItem>
+                </Link>
+              </li>
+            ))}
+          </PlayList>
+        </PlayListBox>
+      ) : (
+        <S.MyPlayListNoneInfo>
+          <p>앗! 아직 비어있어요.</p>
+          <Link to='/playlist/create1'>
+            <button>플레이리스트 생성하러 가기</button>
+          </Link>
+        </S.MyPlayListNoneInfo>
+      )}
     </MyPlayListTableWrap>
   );
 }
 
 const MyPlayListTableWrap = styled.section`
   border-radius: 8px 8px 0 0;
-  background-color: transperate;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 16px 0;
 `;
 
 const PlayListBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 0 16px 0 16px;
 `;
 
 const PlayBtnStyle = styled.button`

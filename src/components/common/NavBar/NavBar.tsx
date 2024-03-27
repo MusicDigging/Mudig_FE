@@ -6,7 +6,7 @@ import PlaylistIcon from '../../../img/playlist_icon.svg';
 import MovieIcon from '../../../img/movie_icon.svg';
 import ProfileIcon from '../../../img//profile_icon.svg';
 
-function NavBar(): JSX.Element {
+export default function NavBar() {
   const location = useLocation();
 
   const isActive = (path: string): boolean => location.pathname === path;
@@ -14,41 +14,40 @@ function NavBar(): JSX.Element {
   return (
     <NavBarWrap>
       <ul>
-        <StyledLink to='/main' $active={isActive('/main')}>
-          <li>
-            <img src={HomeIcon} alt='홈 버튼'></img>
+        <li>
+          <StyledLink to='/main' $active={isActive('/main')}>
+            <img src={HomeIcon} alt='홈 버튼' />
             <p>메인</p>
-          </li>
-        </StyledLink>
-        <StyledLink
-          to='/playlist/create1'
-          $active={isActive('/playlist/create1')}
-        >
-          <li>
-            <img src={PlaylistIcon} alt='플리 생성 버튼'></img>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink
+            to='/playlist/create1'
+            $active={isActive('/playlist/create1')}
+          >
+            <img src={PlaylistIcon} alt='플리 생성 버튼' />
             <p>플리 생성</p>
-          </li>
-        </StyledLink>
-        <StyledLink to='/randomplay' $active={isActive('/randomplay')}>
-          <li>
-            <img src={MovieIcon} alt='랜덤 뮤비 버튼'></img>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink to='/randomplay' $active={isActive('/randomplay')}>
+            <img src={MovieIcon} alt='랜덤 뮤비 버튼' />
             <p>뮤비</p>
-          </li>
-        </StyledLink>
-        <StyledLink
-          to='/user/profile/my'
-          $active={isActive('/user/profile/my')}
-        >
-          <li>
-            <img src={ProfileIcon} alt='프로필 버튼'></img>
+          </StyledLink>
+        </li>
+        <li>
+          <StyledLink
+            to='/user/profile/my'
+            $active={isActive('/user/profile/my')}
+          >
+            <img src={ProfileIcon} alt='프로필 버튼' />
             <p>마이페이지</p>
-          </li>
-        </StyledLink>
+          </StyledLink>
+        </li>
       </ul>
     </NavBarWrap>
   );
 }
-export default NavBar;
 
 const NavBarWrap = styled.nav`
   border-top: 1px solid var(--border-color);
@@ -75,27 +74,10 @@ const NavBarWrap = styled.nav`
       overflow: hidden;
     }
 
-    img {
-      width: 24px;
-      height: 24px;
-      margin: 24px auto 0 auto;
-      display: block;
-      object-fit: cover;
-      object-position: 0;
-    }
-
     p {
       font-size: 12px;
       display: block;
       text-align: center;
-    }
-
-    li:hover img {
-      object-position: -24px;
-    }
-
-    li:hover p {
-      color: #7d4fff;
     }
   }
 `;
@@ -104,14 +86,33 @@ interface Props {
 }
 
 const StyledLink = styled(Link)<Props>`
+  display: block;
+  text-decoration: none;
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin: 24px auto 0 auto;
+    display: block;
+    object-fit: cover;
+    object-position: 0; /* 기본값 */
+  }
+
+  p {
+    font-size: 12px;
+    display: block;
+    text-align: center;
+    color: black; /* 기본 텍스트 색상 */
+  }
+
   ${({ $active }) =>
     $active &&
     css`
-      li img {
-        object-position: -24px center;
+      img {
+        object-position: -24px center; /* 활성 상태일 때 변경 */
       }
       p {
-        color: #7d4fff;
+        color: #7d4fff; /* 활성 상태일 때 텍스트 색상 변경 */
       }
     `}
 `;

@@ -4,19 +4,19 @@ import Logo from '../../../img/logo.svg';
 import SearchIcon from '../../../img/search-icon.svg';
 import { Link } from 'react-router-dom';
 
-function MainHeader(): JSX.Element {
+export default function MainHeader() {
   return (
     <MainHeaderWrap>
       <Link to={'/main'}>
-        <img src={Logo} alt='로고'></img>
+        <img src={Logo} alt='로고' />
       </Link>
       <Link to={'/search'}>
-        <Search />
+        <Search aria-label='검색' />
       </Link>
     </MainHeaderWrap>
   );
 }
-export default MainHeader;
+
 const MainHeaderWrap = styled.header`
   height: 70px;
   padding: 23px 16px;

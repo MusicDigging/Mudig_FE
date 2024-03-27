@@ -34,8 +34,6 @@ const InfoWrap = styled.div`
 
   img {
     cursor: pointer;
-    width: 25px;
-    height: 31px;
   }
 `;
 
