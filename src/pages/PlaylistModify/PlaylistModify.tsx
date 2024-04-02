@@ -1,6 +1,5 @@
-import styled from 'styled-components';
 import { useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { PlayListAtom } from '../../library/atom';
 import Modal from '../../components/common/Modal/Modal';
@@ -9,7 +8,7 @@ import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyLi
 
 export default function PlaylistModify() {
   const modalOpen = useRecoilValue(modalAtom);
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+  const playlistInfo = useRecoilValue(PlayListAtom);
   const [playlistDesc, setPlaylistDesc] = useState({
     title: playlistInfo.playlist?.title,
     content: playlistInfo.playlist?.content,
@@ -18,7 +17,7 @@ export default function PlaylistModify() {
   const modalRef = useRef(null);
   const openButtonRef = useRef(null);
   return (
-    <PlaylistModifyBox>
+    <div>
       <h1 className='a11y-hidden'>플레이리스트 수정</h1>
       {modalOpen && (
         <Modal
@@ -34,8 +33,6 @@ export default function PlaylistModify() {
         openButtonRef={openButtonRef}
       />
       <PlayListModifyList playlistDesc={playlistDesc} />
-    </PlaylistModifyBox>
+    </div>
   );
 }
-
-const PlaylistModifyBox = styled.div``;
