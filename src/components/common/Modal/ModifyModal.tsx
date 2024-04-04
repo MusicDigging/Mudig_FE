@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import React, { useRef, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom, toastAtom } from '../../../library/atom';
 import { Button } from '../Button/Button';
 import { IPlaylistDesc } from '../../../types/playlist';
 import * as S from './ModifyModalStyle';
+import useFocusModal from '../../../hooks/useFocusModal';
 
 interface Props {
   playlistDesc: IPlaylistDesc;
@@ -20,16 +21,19 @@ export default function ModifyModal({
   modalRef,
   openButtonRef,
 }: Props) {
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+  const playlistInfo = useRecoilValue(PlayListAtom);
+  const setToast = useSetRecoilState(toastAtom);
+  const setIsModalOpen = useSetRecoilState(modalAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
-  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-  const setToast = useSetRecoilState(toastAtom);
   const modifyButtonRef = useRef<HTMLButtonElement>(null);
+  const { handleFocusModal, handleFocusLastButton } = useFocusModal({
+    modalRef,
+  });
   // 모달 Close
   const handleClose = () => {
     setPlaylistDesc(playlistInfo.playlist);
-    setModalOpen(false);
+    setIsModalOpen(false);
     openButtonRef.current?.focus();
   };
   // 공개 여부 토글 view 여부
@@ -68,38 +72,8 @@ export default function ModifyModal({
       });
       return;
     }
-    setModalOpen(false);
+    setIsModalOpen(false);
   };
-
-  const handleFocusModal = (e: React.KeyboardEvent) => {
-    if (!e.shiftKey && e.keyCode === 9) {
-      e.preventDefault();
-      modalRef.current?.focus();
-    }
-  };
-
-  const handleFocusModifyButton = (e: React.KeyboardEvent) => {
-    if (e.shiftKey && e.keyCode === 9) {
-      e.preventDefault();
-      modifyButtonRef.current?.focus();
-    }
-  };
-
-  useEffect(() => {
-    if (modalOpen) {
-      modalRef.current?.focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    const escModalClose = (e: KeyboardEvent) => {
-      if (e.keyCode === 27) {
-        handleClose();
-      }
-    };
-    window.addEventListener('keydown', escModalClose);
-    return () => window.removeEventListener('keydown', escModalClose);
-  }, [setModalOpen]);
 
   return (
     <S.ModalWrap>
@@ -124,7 +98,7 @@ export default function ModifyModal({
             placeholder='플레이리스트의 제목을 입력해주세요.'
             autoComplete='off'
             onChange={changeModifyDesc}
-            onKeyDown={handleFocusModifyButton}
+            onKeyDown={(e) => handleFocusLastButton(e, modifyButtonRef)}
             maxLength={50}
             required
           />
@@ -190,7 +164,7 @@ export default function ModifyModal({
                 btnBorder='none'
                 btnColor='var(--btn-point-color)'
                 onClick={handleModifyClick}
-                onKeyDown={handleFocusModal}
+                onKeyDown={(e) => handleFocusModal(e, modalRef)}
                 ref={modifyButtonRef}
               />
             </S.BtnBox>
