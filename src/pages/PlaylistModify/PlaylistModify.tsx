@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { modalAtom } from '../../atoms/modalAtom';
 import { PlayListAtom } from '../../library/atom';
-import Modal from '../../components/common/Modal/Modal';
+import Modal from '../../components/common/Modal/ModifyModal';
 import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyList';
 
