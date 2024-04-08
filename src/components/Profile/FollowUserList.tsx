@@ -37,4 +37,7 @@ export default function FollowUserList({ users, onFollowClick }: Props) {
 
 const FollowUserListWrap = styled.div`
   padding: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
+  padding-bottom: 130px;
 `;
