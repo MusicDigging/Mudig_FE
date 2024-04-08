@@ -28,30 +28,20 @@ export default function Follow() {
   const [activeList, setActiveList] = useState<'followers' | 'followings'>(
     'followers',
   );
-  const [refreshData, setRefreshData] = useState(false);
   const [users, setUsers] = useState<IUserData[]>([]);
-  const { data: followers, isLoading: followingLoading } = useGetFollower(
-    parseInt(id) || myId,
-  );
-  const { data: followings, isLoading: followerLoading } = useGetFollowing(
-    parseInt(id) || myId,
-  );
+  const { data: followers } = useGetFollower(parseInt(id) || myId);
+  const { data: followings } = useGetFollowing(parseInt(id) || myId);
 
   useEffect(() => {
-    const shouldRefetch = refreshData || location.state?.type;
-    if (shouldRefetch) {
-      setRefreshData(false);
-    }
-
     if (
       location.state?.type === 'followers' ||
       location.state?.type === 'followings'
     ) {
       setActiveList(location.state.type);
     }
-  }, [refreshData, location.state]);
+  }, [location.state]);
 
-  const { followUser } = useFollowUser(); // 커스텀 훅 사용
+  const { followUser } = useFollowUser();
 
   const handleFollowClick = (user: IUserData) => {
     const isUnfollowing = user.is_following;
@@ -77,32 +67,13 @@ export default function Follow() {
 
   const renderUserList = (
     data: IUserData[],
-    listType: 'followers' | 'followings',
     onFollowClick: (user: IUserData) => void,
   ) => {
     if (!Array.isArray(data) || data.length === 0) {
       return <p id='FollowNone'>앗! 아직 비어있어요</p>;
     }
-    return (
-      <FollowUserList
-        users={data.map(transformUserData)}
-        onFollowClick={onFollowClick}
-      />
-    );
+    return <FollowUserList users={data} onFollowClick={onFollowClick} />;
   };
-
-  interface userDataProps {
-    id: number;
-    nickname: string;
-    profile_image: string;
-    is_following: boolean;
-  }
-  const transformUserData = (userData: userDataProps) => ({
-    id: userData.id,
-    nickname: userData.nickname,
-    profile_image: userData.profile_image,
-    is_following: userData.is_following,
-  });
 
   return (
     <FollowWrap>
@@ -124,9 +95,9 @@ export default function Follow() {
         </ListToggleButton>
       </ListToggleButtonWrap>
       {activeList === 'followers' &&
-        renderUserList(followers, 'followers', handleFollowClick)}
+        renderUserList(followers, handleFollowClick)}
       {activeList === 'followings' &&
-        renderUserList(followings, 'followings', handleFollowClick)}
+        renderUserList(followings, handleFollowClick)}
     </FollowWrap>
   );
 }

@@ -11,7 +11,7 @@ interface IUserDataType {
 
 interface Props {
   users: IUserDataType[];
-  onFollowClick: (user: IUserDataType) => void; // 함수 타입 정의
+  onFollowClick: (user: IUserDataType) => void;
 }
 
 export default function FollowUserList({ users, onFollowClick }: Props) {
