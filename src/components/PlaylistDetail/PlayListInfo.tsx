@@ -75,12 +75,12 @@ export default function PlayListInfo(props: Props) {
       isPlaylistSummary={isPlaylistSummary}
       backgroundUrl={`https://mudigbucket.s3.ap-northeast-2.amazonaws.com/${playlist.thumbnail}`}
     >
-      {!isPlaylistSummary && (
+      {/* {!isPlaylistSummary && (
         <MoveBackBtn onClick={handleMoveBackBtnClick}>
           <img src={ArrowIcon} alt='뒤로가기' />
         </MoveBackBtn>
-      )}
-      {(!isPlaylistSummary || isModifyPath) && (
+      )} */}
+      {/* {(!isPlaylistSummary || isModifyPath) && (
         <MoreBtnBox>
           {user?.id === myId && (
             <button onClick={toggleModal}>
@@ -99,7 +99,7 @@ export default function PlayListInfo(props: Props) {
             </MiniModalStyle>
           )}
         </MoreBtnBox>
-      )}
+      )} */}
       {!playing && (
         <ThumbnailBox isPlaylistSummary={isPlaylistSummary}>
           {isPlaylistSummary && <SummaryTitle>{playlist.title}</SummaryTitle>}
