@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 import { IMusic, IPlaylist } from '../types/playlist';
 
-import { IUser } from '../types/user';
+import { IMyData, IUser } from '../types/user';
 import { ISignup } from '../types/setUser';
 
 const { persistAtom } = recoilPersist();
@@ -14,6 +14,7 @@ export interface IToast {
 interface PlaylistTypes {
   playlist: IPlaylist;
   music: IMusic[];
+  user: IUser;
 }
 
 export const PlayListAtom = atom<PlaylistTypes>({
@@ -35,10 +36,19 @@ export const PlayListAtom = atom<PlaylistTypes>({
       music: [],
     },
     music: [],
+    user: {
+      id: 0,
+      email: '',
+      name: '',
+      image: '',
+      genre: '',
+      about: '',
+      rep_playlist: null,
+    },
   },
 });
 
-export const userInfoAtom = atom<IUser>({
+export const userInfoAtom = atom<IMyData>({
   key: 'userInfoAtom',
   default: {
     id: 0,
