@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import styled from 'styled-components';
+import { useQueryClient } from 'react-query';
 
 import {
   userInfoAtom,
@@ -21,11 +21,10 @@ import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
 import Loading from '../../components/Loading/Loading';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
-import { MiniModalWrap } from '../../components/common/Modal/MiniModal';
-import { useQueryClient } from 'react-query';
-import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
+import * as S from './PlaylistDetailStyle';
 
 export default function PlaylistDetail() {
   const navigate = useNavigate();
@@ -83,19 +82,19 @@ export default function PlaylistDetail() {
 
   return (
     <>
-      <PlaylistDetailWrap>
+      <S.PlaylistDetailWrap>
         <h1 className='a11y-hidden'>플레이리스트 상세 페이지</h1>
-        <MoveBackBtn onClick={handleMoveBackBtnClick}>
+        <S.MoveBackBtn onClick={handleMoveBackBtnClick}>
           <img src={ArrowIcon} alt='뒤로가기' />
-        </MoveBackBtn>
-        <MoreBtnBox>
+        </S.MoveBackBtn>
+        <S.MoreBtnBox>
           {user?.id === myId && (
             <button onClick={toggleModal}>
               <img src={MoreIcon} alt='더보기 버튼' />
             </button>
           )}
           {user?.id === myId && miniModalOpen && (
-            <MiniModalStyle>
+            <S.MiniModalStyle>
               <button onClick={handleDeleteBtnClick}>플리 삭제</button>
               <Link
                 to={`/playlist/detail/${playlist?.id}/edit`}
@@ -103,9 +102,9 @@ export default function PlaylistDetail() {
               >
                 플리 수정
               </Link>
-            </MiniModalStyle>
+            </S.MiniModalStyle>
           )}
-        </MoreBtnBox>
+        </S.MoreBtnBox>
         <Information>
           <Information.Thumbnail playing={playing} />
           <Information.InfoBox>
@@ -134,9 +133,9 @@ export default function PlaylistDetail() {
           setPlaying={setPlaying}
           setCurrMusic={setCurrMusic}
         />
-        <PlayListDetailBox>
+        <S.PlayListDetailBox>
           {musicLength === 0 ? (
-            <MusicNothingSection>
+            <S.MusicNothingSection>
               <p>들을 수 있는 노래가 없어요 🥲</p>
               {myId === user.id && (
                 <>
@@ -144,7 +143,7 @@ export default function PlaylistDetail() {
                   <Link to='/randomplay'>음악 추가하러 가기</Link>
                 </>
               )}
-            </MusicNothingSection>
+            </S.MusicNothingSection>
           ) : (
             <DetailList
               pause={pause}
@@ -161,73 +160,8 @@ export default function PlaylistDetail() {
             playlistWriter={playlist.writer}
             comments={comments}
           />
-        </PlayListDetailBox>
-      </PlaylistDetailWrap>
+        </S.PlayListDetailBox>
+      </S.PlaylistDetailWrap>
     </>
   );
 }
-const PlaylistDetailWrap = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-const PlayListDetailBox = styled.main`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding-bottom: 0;
-  background-color: #fff;
-`;
-const MusicNothingSection = styled.section`
-  &,
-  a {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  width: 100%;
-  text-align: center;
-  font-size: var(--font-md);
-  color: var(--font-color);
-  line-height: normal;
-  padding: 50px 16px 66px;
-  p {
-    font-weight: var(--font-semi-bold);
-  }
-  span {
-    font-size: var(--font-sm);
-  }
-  a {
-    width: 243px;
-    height: 44px;
-    padding: 8px 16px;
-    margin-top: 16px;
-    border-radius: 10px;
-    background: #f5f2ff;
-    color: var(--main-color);
-    font-weight: var(--semi-font-bold);
-  }
-`;
-export const MoveBackBtn = styled.button`
-  position: absolute;
-  top: 22px;
-  left: 16px;
-  filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
-    brightness(104%) contrast(101%);
-  z-index: 5;
-`;
-const MoreBtnBox = styled.div`
-  position: absolute;
-  top: 22px;
-  right: 16px;
-  z-index: 5;
-  img {
-    filter: invert(100%) sepia(75%) saturate(1%) hue-rotate(10deg)
-      brightness(104%) contrast(101%);
-  }
-`;
-const MiniModalStyle = styled(MiniModalWrap)`
-  right: 0;
-  top: 32px;
-`;
