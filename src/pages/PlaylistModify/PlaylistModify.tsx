@@ -6,7 +6,7 @@ import { PlayListAtom } from '../../library/atom';
 import Modal from '../../components/common/Modal/ModifyModal';
 import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyList';
 import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
-import { MoveBackBtn } from '../PlaylistDetail/PlaylistDetail';
+import { MoveBackBtn } from '../PlaylistDetail/PlaylistDetailStyle';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function PlaylistModify() {
