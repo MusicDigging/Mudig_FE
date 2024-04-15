@@ -1,15 +1,18 @@
-import styled from 'styled-components';
 import { useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import { modalAtom } from '../../atoms/modalAtom';
 import { PlayListAtom } from '../../library/atom';
-import Modal from '../../components/common/Modal/Modal';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
+import Modal from '../../components/common/Modal/ModifyModal';
 import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyList';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
+import { MoveBackBtn } from '../PlaylistDetail/PlaylistDetailStyle';
+import ArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function PlaylistModify() {
-  const modalOpen = useRecoilValue(modalAtom);
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useRecoilState(modalAtom);
+  const playlistInfo = useRecoilValue(PlayListAtom);
   const [playlistDesc, setPlaylistDesc] = useState({
     title: playlistInfo.playlist?.title,
     content: playlistInfo.playlist?.content,
@@ -17,10 +20,19 @@ export default function PlaylistModify() {
   });
   const modalRef = useRef(null);
   const openButtonRef = useRef(null);
+  const handleOpenModifyModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleMoveBackBtnClick = () => {
+    navigate(-1);
+  };
   return (
-    <PlaylistModifyBox>
+    <div>
       <h1 className='a11y-hidden'>플레이리스트 수정</h1>
-      {modalOpen && (
+      <MoveBackBtn onClick={handleMoveBackBtnClick}>
+        <img src={ArrowIcon} alt='뒤로가기' />
+      </MoveBackBtn>
+      {isModalOpen && (
         <Modal
           playlistDesc={playlistDesc}
           setPlaylistDesc={setPlaylistDesc}
@@ -28,14 +40,21 @@ export default function PlaylistModify() {
           openButtonRef={openButtonRef}
         />
       )}
-      <PlayListInfo
-        playlist={playlistInfo.playlist}
-        playlistDesc={playlistDesc}
-        openButtonRef={openButtonRef}
-      />
+      <Information>
+        <Information.Thumbnail />
+        <Information.InfoBox>
+          <Information.Title modifiedTitle={playlistDesc.title} />
+          <Information.ModifyBtn
+            isOpenModifyModal={handleOpenModifyModal}
+            openButtonRef={openButtonRef}
+          />
+          <Information.Desc modifiedContent={playlistDesc.content} />
+          <Information.PrivateIndicator
+            modifiedPublic={playlistDesc.is_public}
+          />
+        </Information.InfoBox>
+      </Information>
       <PlayListModifyList playlistDesc={playlistDesc} />
-    </PlaylistModifyBox>
+    </div>
   );
 }
-
-const PlaylistModifyBox = styled.div``;

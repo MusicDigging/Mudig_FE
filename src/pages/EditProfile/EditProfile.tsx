@@ -15,7 +15,7 @@ import SetProfileImage from '../../components/EditProfile/SetProfileImage';
 
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import * as S from './EditProfileStyle';
-import { IUser } from '../../types/user';
+import { IMyData } from '../../types/user';
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ export default function EditProfile() {
         setToast({ content: '프로필 수정이 완료되었습니다.', type: 'success' });
         // userInfoAtom 상태 업데이트
         navigate(-1);
-        setUserInfo((prevUserInfo: IUser) => {
+        setUserInfo((prevUserInfo: IMyData) => {
           if (prevUserInfo !== null) {
             return {
               ...prevUserInfo,
