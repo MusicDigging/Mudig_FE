@@ -20,13 +20,13 @@ import MusicPlayer from '../../components/PlaylistDetail/MusicPlayer';
 import MusicPlayBar from '../../components/PlaylistDetail/MusicPlayBar';
 import CommentSection from '../../components/PlaylistDetail/CommentSection';
 import DetailList from '../../components/PlaylistDetail/DetailList';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import Loading from '../../components/Loading/Loading';
 import ArrowIcon from '../../img/left-arrow-Icon.svg';
 import MoreIcon from '../../img/more-icon.svg';
 import { MiniModalWrap } from '../../components/common/Modal/MiniModal';
 import { useQueryClient } from 'react-query';
-import Information from '../../components/PlaylistDetail/\bPlaylistInfo/PlaylistInfo';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
+
 export default function PlaylistDetail() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,7 +38,6 @@ export default function PlaylistDetail() {
   const [playing, setPlaying] = useState<boolean>(false);
   const [currMusic, setCurrMusic] = useState<number | null>(null);
   const [miniModalOpen, setMiniModalOpen] = useState(false);
-  const [isOpenMoreInfo, setIsOpenMoreInfo] = useState(false);
   const setEditId = useSetRecoilState(commentEditIdAtom);
   const setPlaylistInfo = useSetRecoilState(PlayListAtom);
   const setBackAnimation = useSetRecoilState(backAnimationAtom);
@@ -107,7 +106,6 @@ export default function PlaylistDetail() {
             </MiniModalStyle>
           )}
         </MoreBtnBox>
-        {/* <PlayListInfo user={user} playlist={playlist} playing={playing} /> */}
         <Information>
           <Information.Thumbnail playing={playing} />
           <Information.InfoBox>

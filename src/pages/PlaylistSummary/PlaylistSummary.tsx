@@ -3,11 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import { Button } from '../../components/common/Button/Button';
 import PlayList from '../../components/common/PlayList/PlayList';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import Loading from '../../components/Loading/Loading';
 import { IMusic } from '../../types/playlist';
-import Information from '../../components/PlaylistDetail/\bPlaylistInfo/PlaylistInfo';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
 import { PlayListAtom } from '../../library/atom';
 import { useSetRecoilState } from 'recoil';
 
@@ -29,7 +28,6 @@ export default function PlaylistSummary() {
 
   return (
     <main>
-      {/* <PlayListInfo user={user} playlist={playlist} /> */}
       <Information>
         <Information.SummaryTitle />
         <Information.Thumbnail />

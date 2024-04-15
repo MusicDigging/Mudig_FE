@@ -1,14 +1,13 @@
 import { useRef, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import { modalAtom } from '../../atoms/modalAtom';
 import { PlayListAtom } from '../../library/atom';
 import Modal from '../../components/common/Modal/ModifyModal';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListModifyList from '../../components/PlaylistDetail/PlayListModifyList';
-import Information from '../../components/PlaylistDetail/\bPlaylistInfo/PlaylistInfo';
-import { useNavigate } from 'react-router-dom';
-import ArrowIcon from '../../img/left-arrow-Icon.svg';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
 import { MoveBackBtn } from '../PlaylistDetail/PlaylistDetail';
+import ArrowIcon from '../../img/left-arrow-Icon.svg';
 
 export default function PlaylistModify() {
   const navigate = useNavigate();
@@ -41,11 +40,6 @@ export default function PlaylistModify() {
           openButtonRef={openButtonRef}
         />
       )}
-      {/* <PlayListInfo
-        playlist={playlistInfo.playlist}
-        playlistDesc={playlistDesc}
-        openButtonRef={openButtonRef}
-      /> */}
       <Information>
         <Information.Thumbnail />
         <Information.InfoBox>
