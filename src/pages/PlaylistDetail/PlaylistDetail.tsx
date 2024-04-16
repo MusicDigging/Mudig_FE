@@ -68,7 +68,6 @@ export default function PlaylistDetail() {
     if (!data || isLoading) return;
     const { playlist, music, user } = data;
     setPlaylistInfo({ playlist, music, user });
-    console.log(data);
     setBackAnimation(false);
   }, [data, isLoading, setPlaylistInfo]);
 
