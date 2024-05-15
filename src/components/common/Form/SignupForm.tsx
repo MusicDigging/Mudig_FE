@@ -6,15 +6,15 @@ import usePasswordToggle from '../../../hooks/usePasswordToggle';
 import { useState } from 'react';
 import { useOtpValid } from '../../../hooks/queries/useUserInfo';
 import { IOtpResponse } from '../../../types/setUser';
+
 interface Props {
   onSubmit: (data: { email: string; password: string }) => void;
-  onEmailToastMsg?: () => void;
+  onEmailToastMsg: () => void;
 }
 
 export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
   const emailRegex = /^\S+@\S+\.\S+$/;
   const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
-  const { mutate: postOtpValid } = useOtpValid();
   const methods = useForm({
     defaultValues: {
       email: '',
@@ -39,20 +39,23 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
   const isOtpValidated = isEmailValidated && watchOtpNum !== '';
   const formIsValid = isValid && isOtpValidated;
 
-  const handleEmailValidation = () => {
+  const handleValidateEmail = () => {
     if (!disabledConfirm) {
       setIsEmailValidated(false);
-
-      return;
+    } else {
+      setIsEmailValidated(true);
     }
-    setIsEmailValidated(true);
+  };
+
+  const { mutate: postOtpValid } = useOtpValid();
+  const handleRequestOTP = () => {
+    handleValidateEmail();
     postOtpValid(watchEmail, {
       onSuccess: (data: IOtpResponse) => {
         if (onEmailToastMsg) {
           onEmailToastMsg();
         }
         const otp = data.otp;
-
         setOtpNum(otp);
       },
       onError: (error) => {
@@ -87,7 +90,7 @@ export const SignupForm = ({ onSubmit, onEmailToastMsg }: Props) => {
               btnWidth='101px'
               text='인증'
               type='button'
-              onClick={handleEmailValidation}
+              onClick={handleRequestOTP}
               disabled={!disabledConfirm}
             />
           </EmailValidBox>

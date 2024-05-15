@@ -32,7 +32,6 @@ export default function ProfileInput(props: Props): ReactElement {
     register,
     handleSubmit,
     setValue,
-    control,
     formState: { errors, isValid },
   } = useForm<FormValue>({
     defaultValues: {
@@ -53,7 +52,6 @@ export default function ProfileInput(props: Props): ReactElement {
         } else if (!profile || (profile && data.nickName !== profile?.name)) {
           //닉네임 중복검사 post 요청
           // (현재 프로필 닉네임과 같지 않은 경우만)
-
           const response = await axios.post(
             'https://api.mudig.co.kr/user/checkname/',
             { name: data.nickName },
