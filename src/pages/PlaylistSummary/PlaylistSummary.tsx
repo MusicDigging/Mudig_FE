@@ -3,10 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useGetPlaylistDetail } from '../../hooks/queries/usePlaylist';
 import { Button } from '../../components/common/Button/Button';
 import PlayList from '../../components/common/PlayList/PlayList';
-import PlayListInfo from '../../components/PlaylistDetail/PlayListInfo';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import Loading from '../../components/Loading/Loading';
 import { IMusic } from '../../types/playlist';
+import Information from '../../components/PlaylistDetail/PlaylistInfo/PlaylistInfo';
+import { PlayListAtom } from '../../library/atom';
+import { useSetRecoilState } from 'recoil';
 
 export default function PlaylistSummary() {
   const navigate = useNavigate();
@@ -14,16 +16,27 @@ export default function PlaylistSummary() {
   const state = location.state;
   const playlistId = state?.playlist; // 플리 요약 수정 시 id값 임의로 주기
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
+  const setPlaylistInfo = useSetRecoilState(PlayListAtom);
   if (isLoading) return <Loading isLoading={isLoading} />;
 
   const { user, playlist, music } = data;
+  setPlaylistInfo({ user, playlist, music });
 
   const handleNextBtn = () => {
     navigate('/user/profile/my');
   };
+
   return (
     <main>
-      <PlayListInfo user={user} playlist={playlist} />
+      <Information>
+        <Information.SummaryTitle />
+        <Information.Thumbnail />
+        <Information.InfoBox>
+          <Information.Desc />
+          <Information.PrivateIndicator />
+          <Information.MoreInfoBtn />
+        </Information.InfoBox>
+      </Information>
       <PlayListBox>
         <PlayList>
           {music.map((item: IMusic) => (

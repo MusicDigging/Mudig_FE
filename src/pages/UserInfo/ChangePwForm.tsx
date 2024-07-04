@@ -5,7 +5,7 @@ import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
 import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { isLoginAtom, toastAtom, userInfoAtom } from '../../library/atom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useChangePassword } from '../../hooks/queries/useUserInfo';
 import { useNavigate } from 'react-router-dom';
 interface IFormData {
@@ -14,14 +14,16 @@ interface IFormData {
   newPassword: string;
   confirmPassword: string;
 }
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
+
 export default function ChangePwForm() {
   const navigate = useNavigate();
   const userEmail = useRecoilValue(userInfoAtom)?.email;
   const { mutate: changePassword } = useChangePassword();
   const setIsLogin = useSetRecoilState(isLoginAtom);
-  const setUserInfo = useSetRecoilState(userInfoAtom);
+  const resetUserInfo = useResetRecoilState(userInfoAtom);
   const setToast = useSetRecoilState(toastAtom);
-  const pawwrodRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,16}$/;
   const methods = useForm({
     defaultValues: {
       email: userEmail,
@@ -44,19 +46,7 @@ export default function ChangePwForm() {
           type: 'success',
         });
         setIsLogin(false);
-        setUserInfo({
-          id: 0,
-          email: '',
-          name: '',
-          image: '',
-          genre: '',
-          about: '',
-          rep_playlist: null,
-          token: {
-            access: '',
-            refresh: '',
-          },
-        });
+        resetUserInfo();
         localStorage.removeItem('token');
         localStorage.removeItem('refreshToken');
         navigate('/login');
@@ -79,7 +69,7 @@ export default function ChangePwForm() {
           <SignupInput
             validation={{
               pattern: {
-                value: pawwrodRegex,
+                value: passwordRegex,
                 message:
                   '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
               },
@@ -97,7 +87,7 @@ export default function ChangePwForm() {
           <SignupInput
             validation={{
               pattern: {
-                value: pawwrodRegex,
+                value: passwordRegex,
                 message:
                   '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
               },
@@ -125,7 +115,7 @@ export default function ChangePwForm() {
           <SignupInput
             validation={{
               pattern: {
-                value: pawwrodRegex,
+                value: passwordRegex,
                 message:
                   '비밀번호는 8~16자 영문 대 소문자, 숫자를 조합해서 사용하세요.',
               },

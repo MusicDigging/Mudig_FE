@@ -31,6 +31,7 @@ export default function RandomMusic() {
     const data = { selectId, page };
     getRandomMv(data, {
       onSuccess: (newVideoData: IVideoData[]) => {
+        console.log(data);
         if (newVideoData.length === 0) {
           setIsEnd(true);
           return;

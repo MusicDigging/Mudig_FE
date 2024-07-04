@@ -1,11 +1,12 @@
-import styled from 'styled-components';
-import { Button } from '../Button/Button';
+import React, { useRef, useState } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as ArrowIcon } from '../../../img/arrow-icon.svg';
-import React, { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalAtom } from '../../../atoms/modalAtom';
 import { PlayListAtom, toastAtom } from '../../../library/atom';
+import { Button } from '../Button/Button';
 import { IPlaylistDesc } from '../../../types/playlist';
+import * as S from './ModifyModalStyle';
+import useFocusModal from '../../../hooks/useFocusModal';
 
 interface Props {
   playlistDesc: IPlaylistDesc;
@@ -14,22 +15,25 @@ interface Props {
   openButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
-export default function Modal({
+export default function ModifyModal({
   playlistDesc,
   setPlaylistDesc,
   modalRef,
   openButtonRef,
 }: Props) {
-  const [playlistInfo, setPlaylistInfo] = useRecoilState(PlayListAtom);
+  const playlistInfo = useRecoilValue(PlayListAtom);
+  const setToast = useSetRecoilState(toastAtom);
+  const setIsModalOpen = useSetRecoilState(modalAtom);
   const [isPrivateView, setIsPrivateView] = useState(false);
   const [isPublic, setIsPublic] = useState(playlistDesc.is_public);
-  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
-  const setToast = useSetRecoilState(toastAtom);
   const modifyButtonRef = useRef<HTMLButtonElement>(null);
+  const { handleFocusModal, handleFocusLastButton } = useFocusModal({
+    modalRef,
+  });
   // 모달 Close
   const handleClose = () => {
     setPlaylistDesc(playlistInfo.playlist);
-    setModalOpen(false);
+    setIsModalOpen(false);
     openButtonRef.current?.focus();
   };
   // 공개 여부 토글 view 여부
@@ -68,42 +72,12 @@ export default function Modal({
       });
       return;
     }
-    setModalOpen(false);
+    setIsModalOpen(false);
   };
-
-  const handleFocusModal = (e: React.KeyboardEvent) => {
-    if (!e.shiftKey && e.keyCode === 9) {
-      e.preventDefault();
-      modalRef.current?.focus();
-    }
-  };
-
-  const handleFocusModifyButton = (e: React.KeyboardEvent) => {
-    if (e.shiftKey && e.keyCode === 9) {
-      e.preventDefault();
-      modifyButtonRef.current?.focus();
-    }
-  };
-
-  useEffect(() => {
-    if (modalOpen) {
-      modalRef.current?.focus();
-    }
-  }, []);
-
-  useEffect(() => {
-    const escModalClose = (e: KeyboardEvent) => {
-      if (e.keyCode === 27) {
-        handleClose();
-      }
-    };
-    window.addEventListener('keydown', escModalClose);
-    return () => window.removeEventListener('keydown', escModalClose);
-  }, [setModalOpen]);
 
   return (
-    <ModalWrap>
-      <ModalBox
+    <S.ModalWrap>
+      <S.ModalBox
         role='dialog'
         aria-labelledby='modal-modify'
         tabIndex={0}
@@ -112,11 +86,11 @@ export default function Modal({
         <h3 id='modal-modify' className='a11y-hidden'>
           플레이리스트 설명 수정
         </h3>
-        <ModalForm>
+        <S.ModalForm>
           <label htmlFor='playlistTitle' className='a11y-hidden'>
             플레이리스트 제목
           </label>
-          <TitleInput
+          <S.TitleInput
             type='text'
             name='playlistTitle'
             id='playlistTitle'
@@ -124,14 +98,14 @@ export default function Modal({
             placeholder='플레이리스트의 제목을 입력해주세요.'
             autoComplete='off'
             onChange={changeModifyDesc}
-            onKeyDown={handleFocusModifyButton}
+            onKeyDown={(e) => handleFocusLastButton(e, modifyButtonRef)}
             maxLength={50}
             required
           />
           <label htmlFor='playlistDescription' className='a11y-hidden'>
             플레이리스트 설명
           </label>
-          <ContentTextArea
+          <S.ContentTextArea
             name='playlistDescription'
             id='playlistDescription'
             defaultValue={playlistDesc.content || playlistInfo.playlist.content}
@@ -141,16 +115,16 @@ export default function Modal({
             maxLength={150}
             required
           />
-          <PrivateCheckBtn
+          <S.PrivateCheckBtn
             type='button'
             onClick={handlePrivateView}
             className={isPrivateView ? 'active' : ''}
           >
             {isPublic ? '공개' : '비공개'}
             <ArrowIcon fill='black' />
-          </PrivateCheckBtn>
+          </S.PrivateCheckBtn>
           {isPrivateView ? (
-            <PrivateCheckBtnBox>
+            <S.PrivateCheckBtnBox>
               <ul>
                 <li>
                   <button
@@ -171,9 +145,9 @@ export default function Modal({
                   </button>
                 </li>
               </ul>
-            </PrivateCheckBtnBox>
+            </S.PrivateCheckBtnBox>
           ) : (
-            <BtnBox>
+            <S.BtnBox>
               <Button
                 text='취소'
                 btnWidth='50%'
@@ -190,111 +164,13 @@ export default function Modal({
                 btnBorder='none'
                 btnColor='var(--btn-point-color)'
                 onClick={handleModifyClick}
-                onKeyDown={handleFocusModal}
+                onKeyDown={(e) => handleFocusModal(e, modalRef)}
                 ref={modifyButtonRef}
               />
-            </BtnBox>
+            </S.BtnBox>
           )}
-        </ModalForm>
-      </ModalBox>
-    </ModalWrap>
+        </S.ModalForm>
+      </S.ModalBox>
+    </S.ModalWrap>
   );
 }
-const ModalWrap = styled.div`
-  position: absolute;
-  z-index: 8;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-`;
-const ModalBox = styled.div`
-  position: absolute;
-  top: 25%;
-  left: 5%;
-  min-width: 327px;
-  width: 90%;
-  padding: 16px;
-  border-radius: 10px;
-  background-color: #fff;
-  h2 {
-    margin: 40px 0 0;
-  }
-`;
-const ModalForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  input,
-  textarea {
-    width: 100%;
-    padding: 8px 16px;
-    border-radius: 10px;
-    border: 1px solid var(--modal-border-color);
-    background: rgba(255, 255, 255, 0.6);
-  }
-`;
-const TitleInput = styled.input`
-  font-size: var(--font-md);
-  font-weight: var(--font-semi-bold);
-  line-height: 150%;
-`;
-const ContentTextArea = styled.textarea`
-  resize: none;
-  height: 181px;
-  font-weight: var(--font-regular);
-  line-height: normal;
-  color: var(--tertiary-font-color);
-  font-size: var(--font-md);
-`;
-const PrivateCheckBtn = styled.button`
-  position: relative;
-  border-radius: 10px;
-  border: 1px solid var(--modal-border-color);
-  padding: 8px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--font-md);
-  svg {
-    transform: rotate(90deg);
-  }
-  &:active,
-  &.active {
-    border: 1px solid var(--btn-point-color);
-    color: var(--btn-point-color);
-    svg {
-      transform: rotate(270deg);
-      fill: var(--btn-point-color);
-    }
-  }
-`;
-const PrivateCheckBtnBox = styled.div`
-  min-width: 295px;
-  width: 100%;
-  border-radius: 10px;
-  border: 1px solid var(--modal-border-color);
-  background-color: #fff;
-  line-height: normal;
-  button {
-    width: 100%;
-    text-align: left;
-    padding: 10px 16px;
-    border-radius: 9px;
-    font-size: var(--font-md);
-    &:active,
-    &.active {
-      color: var(--btn-point-color);
-      background-color: #e5dcff;
-      font-weight: var(--font-semi-bold);
-    }
-  }
-`;
-const BtnBox = styled.div`
-  display: flex;
-  gap: 8px;
-  button {
-    font-size: var(--font-md);
-    font-weight: var(--font-semi-bold);
-  }
-`;
