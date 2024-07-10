@@ -14,24 +14,27 @@ export const HomeSection = styled.section`
   }
 `;
 export const MyPlayListNoneInfo = styled.div`
-  width: 100%;
-  margin: auto;
-  #MyPlayListNoneInfoText {
-    font-size: 14px;
-    margin: 34px auto;
-    display: block;
-    font-weight: 100;
-    text-align: center;
+  padding: 40px;
+  height: 100%;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: var(--font-lg);
+    color: #b0b0b0;
   }
-  #MyPlayListNoneInfoBtn {
-    font-weight: 100;
-    width: 243px;
-    display: block;
-    margin: auto;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     height: 44px;
-    color: #7d4fff;
-    background-color: #f5f2ff;
-    border-radius: 5px;
+    color: var(--main-color);
+    border-radius: 10px;
+    border: 1px solid #fff;
+    background: #f5f2ff;
   }
 `;
 export const PlaylistNameBox = styled.div`
