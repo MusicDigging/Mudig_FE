@@ -33,7 +33,7 @@ export default function PlayListTable({
       {/* 섹션 타이틀과 "더 보기" 버튼 */}
       <S.PlaylistNameBox>
         <h2>{title}</h2>
-        <Link to={moreLink}>
+        <Link to={moreLink} state={{ data: playlistData }}>
           <S.MoreBtn />
         </Link>
       </S.PlaylistNameBox>

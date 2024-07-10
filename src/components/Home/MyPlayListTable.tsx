@@ -5,6 +5,7 @@ import PlayList from '../../components/common/PlayList/PlayList';
 import PlayListItem from '../../components/common/PlayList/PlayListItem';
 import PlayIcon from '../../img/play-icon.svg';
 import * as S from '../../pages/Home/HomeStyle';
+import { IPlaylistType } from '../../types/playlist';
 
 interface IPlaylistItem {
   id: string;
@@ -14,18 +15,21 @@ interface IPlaylistItem {
 }
 
 interface Props {
+  playlistType: IPlaylistType;
   playlistData: IPlaylistItem[];
 }
 
-export default function MyPlayListTable({ playlistData }: Props) {
+export default function MyPlayListTable({ playlistType, playlistData }: Props) {
   return (
     <MyPlayListTableWrap>
-      <Link to='/user/profile/my'>
-        <S.PlaylistNameBox>
-          <h2>내가 생성한 플레이리스트</h2>
-          <S.MoreBtn aria-label='더보기' />
-        </S.PlaylistNameBox>
-      </Link>
+      {playlistType === 'my' && (
+        <Link to='/user/profile/my'>
+          <S.PlaylistNameBox>
+            <h2>내가 생성한 플레이리스트</h2>
+            <S.MoreBtn aria-label='더보기' />
+          </S.PlaylistNameBox>
+        </Link>
+      )}
       {playlistData && playlistData.length > 0 ? (
         <PlayListBox>
           <PlayList>
@@ -57,7 +61,7 @@ export default function MyPlayListTable({ playlistData }: Props) {
         <S.MyPlayListNoneInfo>
           <p>앗! 아직 비어있어요.</p>
           <Link to='/playlist/create1'>
-            <button>플레이리스트 생성하러 가기</button>
+            <Link to='/playlist/create1'>플레이리스트 생성하러 가기</Link>
           </Link>
         </S.MyPlayListNoneInfo>
       )}

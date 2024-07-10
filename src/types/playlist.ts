@@ -61,3 +61,5 @@ export interface ICreatePlaylist {
   year?: string;
   backAnimation?: boolean;
 }
+
+export type IPlaylistType = 'recommend' | 'hot' | 'new' | 'my';
