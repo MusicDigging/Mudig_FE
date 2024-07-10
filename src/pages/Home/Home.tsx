@@ -40,7 +40,7 @@ export default function Home() {
           />
 
           {/* 내가 생성한 플레이리스트 섹션 */}
-          <MyPlayListTable playlistData={my_playlist} />
+          <MyPlayListTable playlistType='my' playlistData={my_playlist} />
 
           {/* 신규 플레이리스트 섹션 */}
           <PlayListTable
