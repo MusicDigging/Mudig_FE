@@ -65,6 +65,8 @@ PlayListTable.defaultProps = {
 };
 
 const PlayListTableWrap = styled.div`
+  margin-bottom: 50px;
+
   ul {
     width: 100%;
     display: flex;
