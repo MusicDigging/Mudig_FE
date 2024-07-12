@@ -12,6 +12,8 @@ export const HomeSection = styled.section`
   #bold {
     font-weight: 500;
   }
+
+  margin-bottom: 50px;
 `;
 export const MyPlayListNoneInfo = styled.div`
   padding: 40px;
