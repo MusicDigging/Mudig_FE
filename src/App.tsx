@@ -1,7 +1,5 @@
-import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { BrowserRouter } from 'react-router-dom';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import styled from 'styled-components';
 import BackgroundImg from '../src/img/background-img.svg';
@@ -22,7 +20,6 @@ function App() {
             </Layout>
           </RecoilRoot>
         </BrowserRouter>
-        {/* <ReactQueryDevtools initialIsOpen={false} position='bottom-right' /> */}
       </QueryClientProvider>
     </Wrap>
   );

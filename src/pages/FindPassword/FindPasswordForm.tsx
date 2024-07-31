@@ -1,13 +1,10 @@
 import styled from 'styled-components';
-import { useForm, FormProvider, FieldValues } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
 import { SignupInput } from '../../components/common/Input/SignupInput';
 import { useSetRecoilState } from 'recoil';
 import { useFindPassword } from '../../hooks/queries/useUserInfo';
-
-import { useNavigate } from 'react-router-dom';
 import { toastAtom } from '../../library/atom';
-import { useState } from 'react';
 import { AxiosError } from 'axios';
 
 interface MyResponse {
@@ -22,7 +19,6 @@ interface MyResponse {
 
 export default function FindPasswordForm() {
   const emailRegex = /^\S+@\S+\.\S+$/;
-  const navigate = useNavigate();
   const setToast = useSetRecoilState(toastAtom);
   const { mutate: findPassword } = useFindPassword();
 
@@ -117,6 +113,5 @@ const InputTitle = styled.p`
 
 const ButtonBox = styled.div`
   width: 100%;
-
   bottom: 24px;
 `;

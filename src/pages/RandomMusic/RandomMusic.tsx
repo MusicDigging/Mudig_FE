@@ -19,7 +19,7 @@ export default function RandomMusic() {
   const [page, setPage] = useState(0);
   const targetRef = useRef<HTMLDivElement>(null);
   const [allVideos, setAllVideos] = useState<IVideoData[]>([]);
-  const [isEnd, setIsEnd] = useState(false);
+  const [, setIsEnd] = useState(false);
 
   const handleAddButtonClick = (videoId: string) => {
     // console.log(`선택된 뮤비 ${videoId}`);

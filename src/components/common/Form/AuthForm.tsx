@@ -26,7 +26,7 @@ export const AuthForm = () => {
     mode: 'onSubmit',
   });
   const { formState } = methods;
-  const { isValid, errors } = formState;
+  const { errors } = formState;
 
   const setUserInfo = useSetRecoilState(userInfoAtom);
   const setIsLogin = useSetRecoilState(isLoginAtom);
@@ -149,14 +149,6 @@ const ErrorBox = styled.div`
 `;
 
 const ErrorMsg = styled.span``;
-const CheckboxContainer = styled.div`
-  display: flex;
-  width: 100%;
-  margin-top: 16px;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-`;
 
 const ButtonBox = styled.div`
   margin-top: 16px;
@@ -185,9 +177,4 @@ const AutoLoginCheckBox = styled.div`
   gap: 6px;
   align-items: center;
   font-size: var(--font-md);
-`;
-const CheckboxLabel = styled.label`
-  font-size: var(--font-md);
-  color: var(--font--color);
-  cursor: pointer;
 `;

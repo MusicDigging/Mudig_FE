@@ -40,7 +40,7 @@ export default function ChangePwForm() {
 
   const handlePasswordSubmit = (data: IFormData) => {
     changePassword(data, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         setToast({
           content: '비밀번호 변경이 완료되었습니다.',
           type: 'success',
@@ -122,7 +122,7 @@ export default function ChangePwForm() {
               validate: {
                 comfirmPw: (fieldValue: string) => {
                   return (
-                    fieldValue == watch('newPassword') ||
+                    fieldValue === watch('newPassword') ||
                     '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. '
                   );
                 },

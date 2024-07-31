@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useForm, FormProvider } from 'react-hook-form';
 import { Button } from '../../components/common/Button/Button';
@@ -6,10 +5,7 @@ import { SignupInput } from '../../components/common/Input/SignupInput';
 import usePasswordToggle from '../../hooks/usePasswordToggle';
 import { toastAtom } from '../../library/atom';
 import { useSetRecoilState } from 'recoil';
-import {
-  useChangePassword,
-  useSetNewPassword,
-} from '../../hooks/queries/useUserInfo';
+import { useSetNewPassword } from '../../hooks/queries/useUserInfo';
 import { useNavigate } from 'react-router-dom';
 
 export default function ResetPasswordForm() {
@@ -29,7 +25,7 @@ export default function ResetPasswordForm() {
     mode: 'onBlur',
   });
 
-  const { formState, setError, watch, getValues } = methods;
+  const { formState, setError, watch } = methods;
   const { isValid } = formState;
   const password = watch('password');
   const handlePasswordSubmit = () => {
@@ -83,7 +79,7 @@ export default function ResetPasswordForm() {
               validate: {
                 comfirmPw: (fieldValue: string) => {
                   return (
-                    fieldValue == watch('password') ||
+                    fieldValue === watch('password') ||
                     '새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. '
                   );
                 },

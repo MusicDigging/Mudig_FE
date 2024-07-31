@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import closeIcon from '../../img/close-icon-white.svg';
 import eventPageBg from '../../img/eventPageBg.svg';
 import checkMark from '../../img/checkmark.svg';

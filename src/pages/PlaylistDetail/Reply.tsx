@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -9,8 +9,6 @@ import {
   commentEditIdAtom,
   commentAtom,
 } from '../../library/atom';
-
-import Toast from '../../components/common/Toast';
 import CommentForm from '../../components/PlaylistDetail/CommentForm';
 import CommentItem from '../../components/PlaylistDetail/CommentItem';
 
@@ -26,9 +24,9 @@ export default function Reply() {
 
   const [modalId, setModalId] = useState<number | null>(null);
   const [isReplyOpen, setIsReplyOpen] = useState(true);
-  const [content, setContent] = useRecoilState(commentAtom);
+  const [, setContent] = useRecoilState(commentAtom);
   const [backAnimation, setBackAnimation] = useRecoilState(backAnimationAtom);
-  const [editId, setEditId] = useRecoilState(commentEditIdAtom);
+  const [, setEditId] = useRecoilState(commentEditIdAtom);
 
   const { data, isLoading } = useGetPlaylistDetail(playlistId);
 

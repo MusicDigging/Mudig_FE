@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Link, LinkProps, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import HomeIcon from '../../../img/home_icon.svg';
 import PlaylistIcon from '../../../img/playlist_icon.svg';
 import MovieIcon from '../../../img/movie_icon.svg';

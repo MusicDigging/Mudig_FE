@@ -12,7 +12,6 @@ import {
 } from 'recoil';
 import { useUserResign } from '../../hooks/queries/useUserInfo';
 import ResignModal from '../../components/common/Modal/ResignModal';
-import { useNavigate } from 'react-router-dom';
 import { toastAtom } from '../../library/atom';
 import { modalAtom } from '../../atoms/modalAtom';
 export default function UserLeaveForm() {

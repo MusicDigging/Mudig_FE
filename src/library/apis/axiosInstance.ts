@@ -23,7 +23,6 @@ const onRequest = (config: InternalAxiosRequestConfig) => {
 const onResponseError = async (error: AxiosError) => {
   // console.log('토큰 만료');
   const originalRequest = error.config as AxiosRequestConfig;
-  const isAutoLogin = localStorage.getItem('autoLogin');
   if (error?.response?.status === 401) {
     const refreshToken = localStorage.getItem('refreshToken');
 

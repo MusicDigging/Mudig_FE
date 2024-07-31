@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import UserLeaveForm from './UserLeaveForm';
 import BackBtnIcon from '../../img/left-arrow-Icon.svg';

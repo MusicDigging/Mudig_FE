@@ -26,7 +26,7 @@ export default function AddModal({ videoId }: Props) {
   const navigate = useNavigate();
   const { data } = useMyPlayList();
   const { mutate: putMyPlayList } = usePutMyPlayList();
-  const [modalOpen, setModalOpen] = useRecoilState(modalAtom);
+  const [, setModalOpen] = useRecoilState(modalAtom);
   const setToast = useSetRecoilState(toastAtom);
   const dropdownRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -66,30 +66,6 @@ export default function AddModal({ videoId }: Props) {
   const handleClose = () => {
     setModalOpen(false);
   };
-
-  // 모달창 외부 클릭시 모달 닫기 & esc 모달창 닫기  키보드 이벤트 추가
-  // useEffect(() => {
-  //   const handleOutsideClick = (
-  //     event: React.KeyboardEvent<HTMLInputElement>,
-  //   ) => {
-  //     // event target이 modalRef안에서 일어나지 않은 경우
-  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //       handleClose();
-  //     }
-  //   };
-  //   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //     if (event.key === 'Escape') {
-  //       handleClose();
-  //     }
-  //   };
-  //   document.addEventListener('keydown', handleKeyDown);
-  //   document.addEventListener('mousedown', handleOutsideClick);
-
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //     document.removeEventListener('mousedown', handleOutsideClick);
-  //   };
-  // }, []);
 
   const handleSubmit = () => {
     const playlist_id = selectedPlaylistId; //담을 플리

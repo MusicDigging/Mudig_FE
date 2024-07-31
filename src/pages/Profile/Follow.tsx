@@ -28,7 +28,7 @@ export default function Follow() {
   const [activeList, setActiveList] = useState<'followers' | 'followings'>(
     'followers',
   );
-  const [users, setUsers] = useState<IUserData[]>([]);
+  const [, setUsers] = useState<IUserData[]>([]);
   const { data: followers } = useGetFollower(parseInt(id) || myId);
   const { data: followings } = useGetFollowing(parseInt(id) || myId);
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { userInfoAtom } from '../../library/atom';
 import * as S from './HomeStyle';

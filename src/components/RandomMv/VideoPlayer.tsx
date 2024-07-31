@@ -1,17 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
-import Iframe from 'react-iframe';
+
 import { IVideoUrl } from '../../types/RandomMv';
+import ReactPlayer from 'react-player';
 export default function VideoPlayer({ url }: IVideoUrl) {
   return (
     <VideoBox>
-      <Iframe
-        url={url}
-        title='MusicVideo'
-        width='100%'
-        height='100%'
-        allowFullScreen
-      />
+      <ReactPlayer url={url} width='100%' height='100%' controls />
     </VideoBox>
   );
 }

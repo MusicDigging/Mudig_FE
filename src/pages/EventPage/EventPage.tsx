@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import * as S from './EventPageStyle';
 import { useNavigate } from 'react-router-dom';
-import { privateInstance } from '../../library/apis/axiosInstance';
 import Loading from '../../components/Loading/Loading';
 import useCreateEvent from '../../hooks/queries/useEvent';
 
 export default function EventPage() {
   const [inputValue, setInputValue] = useState<string>('');
   const navigate = useNavigate();
-  const { mutate, isLoading, error } = useCreateEvent({
+  const { mutate, isLoading } = useCreateEvent({
     onSuccess: (data) => {
       navigate('/playlist/summary', { state: { playlist: data.playlist.id } });
     },
-    onError: (error) => {
+    onError: () => {
       alert('플레이리스트 생성에 실패했습니다.');
     },
   });

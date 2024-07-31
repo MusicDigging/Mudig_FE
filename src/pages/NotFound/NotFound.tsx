@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ErrorImg from '../../img/icon_error.svg';
 import leftArrowIcon from '../../img/left-arrow-Icon.svg';
-import NotFoundBG from '../../img/not_found_bg.svg';
 import BGImg from '../../img/background-img2.svg';
 
 export default function NotFound() {
